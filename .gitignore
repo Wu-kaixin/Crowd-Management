@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+
+# Local virtual environments: this project uses conda env C-M instead
+venv/
+.venv/
+env/
+.env/
+
+# Local artifacts
+.DS_Store
+# Reference archives
+Crowd-Management-tested.zip
+*.zip
+
+# Generated simulation outputs
+outputs/*
+!outputs/.gitkeep
