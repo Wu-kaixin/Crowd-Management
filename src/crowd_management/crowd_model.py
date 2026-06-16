@@ -241,9 +241,11 @@ class CrowdEnvironment:
 
     def _record(self) -> None:
         guider_positions = None
+        guider_targets = None
         if self.guiders:
             guider_positions = np.vstack([g.position for g in self.guiders])
-        self.history.append(self.time, self.positions, self.velocities, self.evacuated, guider_positions)
+            guider_targets = np.vstack([g.target_position for g in self.guiders])
+        self.history.append(self.time, self.positions, self.velocities, self.evacuated, guider_positions, guider_targets)
 
 
 def run_simulation(
