@@ -128,6 +128,13 @@ class SimulationConfig:
     def from_yaml(cls, path: str | Path) -> "SimulationConfig":
         with open(path, "r", encoding="utf-8") as f:
             raw = yaml.safe_load(f)
+
+        if "simulation" in raw:
+            return cls._from_sprint_yaml(raw)
+        return cls._from_reference_yaml(raw)
+
+    @classmethod
+    def _from_reference_yaml(cls, raw: dict[str, Any]) -> "SimulationConfig":
         room = RoomConfig(**raw["room"])
         ped_raw = dict(raw["pedestrians"])
         ped_raw["spawn_center"] = as_vec2(ped_raw["spawn_center"], "spawn_center")
@@ -139,6 +146,60 @@ class SimulationConfig:
             seed=int(raw.get("seed", 0)),
             steps=int(raw["steps"]),
             dt=float(raw["dt"]),
+            room=room,
+            pedestrians=pedestrians,
+            guiders=guiders,
+            metrics=metrics,
+        )
+
+    @classmethod
+    def _from_sprint_yaml(cls, raw: dict[str, Any]) -> "SimulationConfig":
+        room_raw = raw["room"]
+        exit_raw = room_raw["exit"]
+        sim_raw = raw["simulation"]
+        crowd_raw = raw["crowd"]
+        forces_raw = raw["forces"]
+        guiders_raw = raw["guiders"]
+
+        room = RoomConfig(
+            width=float(room_raw["width"]),
+            height=float(room_raw["height"]),
+            exit_center_y=float(exit_raw["center"][1]),
+            exit_width=float(exit_raw["width"]),
+            exit_depth=float(exit_raw.get("radius", 0.8)),
+        )
+        pedestrians = PedestrianConfig(
+            count=int(sim_raw["pedestrian_count"]),
+            spawn_center=as_vec2(crowd_raw["initial_center"], "initial_center"),
+            spawn_std=as_vec2(crowd_raw["initial_spread"], "initial_spread"),
+            radius=float(sim_raw["pedestrian_radius"]),
+            desired_speed_mean=float(sim_raw["desired_speed_mean"]),
+            desired_speed_std=float(sim_raw["desired_speed_std"]),
+            max_speed=float(sim_raw["max_speed"]),
+            compliance_mean=float(crowd_raw["compliance_mean"]),
+            compliance_std=float(crowd_raw["compliance_std"]),
+            relaxation_time=float(forces_raw.get("relaxation_time", 0.45)),
+            interaction_range=float(forces_raw.get("interaction_range", max(0.9, forces_raw["repulsion_range"] * 2.0))),
+            repulsion_strength=float(forces_raw.get("repulsion_strength", forces_raw["repulsion_gain"] * 30.0)),
+            repulsion_range=float(forces_raw["repulsion_range"]),
+            wall_repulsion_strength=float(forces_raw.get("wall_repulsion_strength", forces_raw["wall_gain"] * 18.0)),
+            wall_margin=float(forces_raw["wall_range"]),
+            noise_std=float(forces_raw.get("noise_std", 0.02)),
+        )
+        guiders = GuiderConfig(
+            count=int(guiders_raw["count"]),
+            max_speed=float(guiders_raw["max_speed"]),
+            influence_radius=float(guiders_raw["influence_radius"]),
+            guidance_strength=float(guiders_raw["influence_strength"]),
+            target_distance_gain=float(guiders_raw["rear_distance_scale"]),
+            side_spacing=float(guiders_raw["side_spacing"]),
+            min_distance_from_exit=float(guiders_raw.get("min_distance_from_exit", 1.0)),
+        )
+        metrics = MetricsConfig(**raw.get("metrics", {}))
+        return cls(
+            seed=int(raw.get("seed", 0)),
+            steps=int(sim_raw["steps"]),
+            dt=float(sim_raw["dt"]),
             room=room,
             pedestrians=pedestrians,
             guiders=guiders,

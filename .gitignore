@@ -3,19 +3,24 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 *.egg-info/
+build/
+dist/
 
-# Local virtual environments: this project uses conda env C-M instead
+# Environments: do not commit virtual environments
 venv/
 .venv/
 env/
 .env/
 
-# Local artifacts
-.DS_Store
+# Outputs
+outputs/*
+!outputs/.gitkeep
+
 # Reference archives
 Crowd-Management-tested.zip
 *.zip
 
-# Generated simulation outputs
-outputs/*
-!outputs/.gitkeep
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

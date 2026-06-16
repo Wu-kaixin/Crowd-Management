@@ -1,10 +1,13 @@
 name: C-M
 channels:
   - conda-forge
+  - defaults
 dependencies:
-  - python>=3.10
-  - numpy>=1.23
-  - matplotlib>=3.7
-  - pyyaml>=6.0
-  - pytest>=7.0
+  - python=3.12
   - pip
+  - numpy
+  - pyyaml
+  - matplotlib
+  - pytest
+  - pip:
+      - -e .[dev]

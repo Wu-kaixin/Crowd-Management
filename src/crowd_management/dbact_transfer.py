@@ -41,6 +41,31 @@ class DBACTTransferController:
         direction = unit(self.room.exit_center - center, fallback=np.array([1.0, 0.0]))
         return CrowdEstimate(center=center, radius=radius, target_direction=direction, active_count=len(active_positions))
 
+
+    def estimate_crowd_state(self, positions: np.ndarray, evacuated: np.ndarray) -> CrowdEstimate:
+        return self.estimate_crowd(positions, evacuated)
+
+    @staticmethod
+    def compute_crowd_center(positions: np.ndarray, evacuated: np.ndarray | None = None) -> np.ndarray:
+        active = positions if evacuated is None else positions[~evacuated]
+        if len(active) == 0:
+            return np.zeros(2, dtype=float)
+        return np.asarray(active, dtype=float).mean(axis=0)
+
+    @staticmethod
+    def compute_crowd_radius(positions: np.ndarray, center: np.ndarray, evacuated: np.ndarray | None = None) -> float:
+        active = positions if evacuated is None else positions[~evacuated]
+        if len(active) == 0:
+            return 0.1
+        spread = np.linalg.norm(active - center, axis=1)
+        return max(float(np.percentile(spread, 65)), 0.6)
+
+    def compute_target_direction(self, center: np.ndarray) -> np.ndarray:
+        return unit(self.room.exit_center - center, fallback=np.array([1.0, 0.0]))
+
+    def compute_guider_target_positions(self, estimate: CrowdEstimate, n_guiders: int) -> tuple[np.ndarray, np.ndarray]:
+        return self.compute_targets(estimate, n_guiders)
+
     def compute_targets(self, estimate: CrowdEstimate, n_guiders: int) -> tuple[np.ndarray, np.ndarray]:
         if n_guiders <= 0:
             return np.zeros((0, 2), dtype=float), np.zeros((0, 2), dtype=float)

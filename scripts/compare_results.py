@@ -48,6 +48,8 @@ def main() -> None:
         comparison["baseline_final_rate_from_timeseries"] = float(baseline_series["evacuation_rate"][-1])
         comparison["guided_final_rate_from_timeseries"] = float(guided_series["evacuation_rate"][-1])
 
+    with open(output / "summary.json", "w", encoding="utf-8") as f:
+        json.dump(comparison, f, indent=2)
     with open(output / "comparison.json", "w", encoding="utf-8") as f:
         json.dump(comparison, f, indent=2)
     save_comparison_plot(baseline_dir / "timeseries.csv", guided_dir / "timeseries.csv", output / "evacuation_rate_comparison.png")

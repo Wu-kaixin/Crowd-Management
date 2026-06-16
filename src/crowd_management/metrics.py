@@ -75,6 +75,18 @@ def time_series_metrics(history: SimulationHistory, config: MetricsConfig) -> di
     }
 
 
+def path_length_metrics(history: SimulationHistory) -> tuple[float, float]:
+    data = history.as_arrays()
+    positions = data["positions"]
+    if len(positions) <= 1:
+        return 0.0, 0.0
+    step_lengths = np.linalg.norm(np.diff(positions, axis=0), axis=2)
+    per_pedestrian = step_lengths.sum(axis=0)
+    total_path_length = float(per_pedestrian.sum())
+    mean_path_length = float(per_pedestrian.mean()) if len(per_pedestrian) else 0.0
+    return mean_path_length, total_path_length
+
+
 def summary_metrics(history: SimulationHistory, config: MetricsConfig) -> dict[str, float | int | None]:
     series = time_series_metrics(history, config)
     evac_rate = series["evacuation_rate"]
@@ -84,16 +96,27 @@ def summary_metrics(history: SimulationHistory, config: MetricsConfig) -> dict[s
     full_evac_time = None
     if len(evac_rate) and evac_rate[-1] >= 1.0:
         full_evac_time = float(times[np.argmax(evac_rate >= 1.0)])
+    mean_path_length, total_path_length = path_length_metrics(history)
+    final_rate = float(evac_rate[-1]) if len(evac_rate) else 0.0
+    mean_speed = float(np.mean(series["mean_active_speed"])) if len(times) else 0.0
+    mean_congestion = float(np.mean(series["congestion_index"])) if len(times) else 0.0
+    peak_near = int(np.max(series["near_collision_count"])) if len(times) else 0
     return {
         "final_time": float(times[-1]) if len(times) else 0.0,
         "final_evacuated": int(final_mask.sum()) if len(final_mask) else 0,
         "total_pedestrians": int(len(final_mask)) if len(final_mask) else 0,
-        "final_evacuation_rate": float(evac_rate[-1]) if len(evac_rate) else 0.0,
+        "evacuation_rate": final_rate,
+        "final_evacuation_rate": final_rate,
         "full_evacuation_time": full_evac_time,
-        "mean_active_speed_over_time": float(np.mean(series["mean_active_speed"])) if len(times) else 0.0,
+        "mean_speed": mean_speed,
+        "mean_active_speed_over_time": mean_speed,
+        "congestion_index": mean_congestion,
         "peak_congestion_index": float(np.max(series["congestion_index"])) if len(times) else 0.0,
-        "mean_congestion_index": float(np.mean(series["congestion_index"])) if len(times) else 0.0,
-        "peak_near_collision_count": int(np.max(series["near_collision_count"])) if len(times) else 0,
+        "mean_congestion_index": mean_congestion,
+        "near_collision_count": peak_near,
+        "peak_near_collision_count": peak_near,
+        "mean_path_length": mean_path_length,
+        "total_path_length": total_path_length,
     }
 
 
@@ -112,6 +135,9 @@ def save_metrics(history: SimulationHistory, config: MetricsConfig, output_dir: 
         writer.writerow(keys)
         for row in zip(*(series[k] for k in keys)):
             writer.writerow([float(v) for v in row])
+
+    arrays = history.as_arrays()
+    np.savez_compressed(output / "trajectories.npz", **arrays)
     return summary
 
 
