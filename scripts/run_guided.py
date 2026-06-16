@@ -7,6 +7,7 @@ from pathlib import Path
 
 from crowd_management.crowd_model import run_simulation
 from crowd_management.metrics import save_metrics
+from crowd_management.replay import save_replay
 from crowd_management.types import SimulationConfig
 from crowd_management.visualization import save_animation, save_density_heatmap, save_snapshot, save_timeseries_plot
 
@@ -35,6 +36,7 @@ def main() -> None:
     output.mkdir(parents=True, exist_ok=True)
     title = GUIDANCE_MODE_TITLES[args.mode]
     summary = save_metrics(history, cfg.metrics, output)
+    save_replay(history, cfg, output, mode=args.mode, scenario=Path(args.config).stem)
     save_snapshot(history, cfg.room, output / "final_snapshot.png", title=title)
     save_density_heatmap(history, cfg.room, output / "density_heatmap.png")
     save_timeseries_plot(output / "timeseries.csv", output / "timeseries.png", title=f"{args.mode} time series")

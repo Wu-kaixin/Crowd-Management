@@ -10,6 +10,7 @@ from crowd_management.crowd_model import CrowdEnvironment, run_simulation
 from crowd_management.dbact_transfer import DBACTTransferController
 from crowd_management.guider_model import initialize_guiders
 from crowd_management.metrics import save_metrics, summary_metrics, time_series_metrics
+from crowd_management.replay import save_replay
 from crowd_management.types import SimulationConfig, as_vec2, limit_norm, unit
 
 
@@ -114,6 +115,105 @@ def test_guided_modes_run_from_cli(mode, tmp_path):
     assert (output / "metrics.json").is_file()
     assert (output / "final_snapshot.png").is_file()
     assert (output / "trajectories.npz").is_file()
+    assert (output / "replay.npz").is_file()
+
+
+def test_visualization_replay_and_render_scripts(tmp_path):
+    repo = Path(__file__).resolve().parents[1]
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(repo / "src")
+    baseline = tmp_path / "baseline"
+    dbact = tmp_path / "dbact"
+
+    commands = [
+        [
+            sys.executable,
+            str(repo / "scripts" / "run_baseline.py"),
+            "--config",
+            str(repo / "configs" / "simple_room.yaml"),
+            "--output",
+            str(baseline),
+            "--steps",
+            "4",
+        ],
+        [
+            sys.executable,
+            str(repo / "scripts" / "run_guided.py"),
+            "--config",
+            str(repo / "configs" / "simple_room.yaml"),
+            "--output",
+            str(dbact),
+            "--steps",
+            "4",
+            "--mode",
+            "dbact",
+        ],
+    ]
+    for command in commands:
+        result = subprocess.run(command, cwd=repo, env=env, check=False, capture_output=True, text=True)
+        assert result.returncode == 0, result.stderr
+    assert (baseline / "replay.npz").is_file()
+    assert (dbact / "replay.npz").is_file()
+
+    render_commands = [
+        [
+            sys.executable,
+            str(repo / "scripts" / "render_animation.py"),
+            "--run",
+            str(dbact),
+            "--output",
+            str(tmp_path / "dbact_animation.gif"),
+            "--fps",
+            "5",
+            "--heatmap",
+        ],
+        [
+            sys.executable,
+            str(repo / "scripts" / "render_side_by_side.py"),
+            "--runs",
+            str(baseline),
+            str(dbact),
+            "--labels",
+            "baseline",
+            "dbact",
+            "--output",
+            str(tmp_path / "baseline_vs_dbact.gif"),
+            "--fps",
+            "5",
+        ],
+        [
+            sys.executable,
+            str(repo / "scripts" / "render_dashboard.py"),
+            "--runs",
+            str(baseline),
+            str(dbact),
+            "--labels",
+            "baseline",
+            "dbact",
+            "--output",
+            str(tmp_path / "dashboard.png"),
+        ],
+        [
+            sys.executable,
+            str(repo / "scripts" / "render_heatmap_snapshot.py"),
+            "--run",
+            str(dbact),
+            "--times",
+            "0",
+            "0.1",
+            "0.2",
+            "--output",
+            str(tmp_path / "heatmap_snapshots.png"),
+        ],
+    ]
+    for command in render_commands:
+        result = subprocess.run(command, cwd=repo, env=env, check=False, capture_output=True, text=True)
+        assert result.returncode == 0, result.stderr
+
+    assert (tmp_path / "dbact_animation.gif").is_file()
+    assert (tmp_path / "baseline_vs_dbact.gif").is_file()
+    assert (tmp_path / "dashboard.png").is_file()
+    assert (tmp_path / "heatmap_snapshots.png").is_file()
 
 
 def test_multi_run_comparison_outputs(tmp_path):
@@ -131,6 +231,7 @@ def test_multi_run_comparison_outputs(tmp_path):
         out = tmp_path / label
         history = run_simulation(cfg, steps=4, **kwargs)
         save_metrics(history, cfg.metrics, out)
+        save_replay(history, cfg, out, mode=label, scenario="test")
         run_dirs.append(str(out))
         labels.append(label)
 
