@@ -1,4 +1,7 @@
 from pathlib import Path
+import os
+import subprocess
+import sys
 
 import numpy as np
 import pytest
@@ -80,3 +83,86 @@ def test_metrics_include_required_fields_and_save_outputs(tmp_path):
     assert (tmp_path / "metrics.json").is_file()
     assert (tmp_path / "timeseries.csv").is_file()
     assert (tmp_path / "trajectories.npz").is_file()
+
+
+@pytest.mark.parametrize("mode", ["dbact", "static", "random"])
+def test_guided_modes_run_from_cli(mode, tmp_path):
+    repo = Path(__file__).resolve().parents[1]
+    output = tmp_path / mode
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(repo / "src")
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(repo / "scripts" / "run_guided.py"),
+            "--config",
+            str(repo / "configs" / "simple_room.yaml"),
+            "--output",
+            str(output),
+            "--steps",
+            "4",
+            "--mode",
+            mode,
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (output / "metrics.json").is_file()
+    assert (output / "final_snapshot.png").is_file()
+    assert (output / "trajectories.npz").is_file()
+
+
+def test_multi_run_comparison_outputs(tmp_path):
+    repo = Path(__file__).resolve().parents[1]
+    cfg = _config()
+    run_specs = {
+        "baseline": {"guided": False, "guidance_mode": "dbact"},
+        "static": {"guided": True, "guidance_mode": "static"},
+        "random": {"guided": True, "guidance_mode": "random"},
+        "dbact": {"guided": True, "guidance_mode": "dbact"},
+    }
+    run_dirs = []
+    labels = []
+    for label, kwargs in run_specs.items():
+        out = tmp_path / label
+        history = run_simulation(cfg, steps=4, **kwargs)
+        save_metrics(history, cfg.metrics, out)
+        run_dirs.append(str(out))
+        labels.append(label)
+
+    output = tmp_path / "comparison"
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(repo / "src")
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(repo / "scripts" / "compare_results.py"),
+            "--runs",
+            *run_dirs,
+            "--labels",
+            *labels,
+            "--output",
+            str(output),
+        ],
+        cwd=repo,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, result.stderr
+    assert (output / "summary.json").is_file()
+    assert (output / "metrics_comparison.csv").is_file()
+    assert (output / "evacuation_rate_comparison.png").is_file()
+    assert (output / "final_metrics_comparison.png").is_file()
+
+
+def test_two_exits_config_loads_as_prepared_scenario():
+    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "configs" / "two_exits.yaml")
+    assert cfg.pedestrians.count == 220
+    assert cfg.guiders.count == 6
+    assert cfg.room.exit_center_y == 9.0

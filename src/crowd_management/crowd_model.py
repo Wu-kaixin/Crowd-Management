@@ -33,10 +33,15 @@ class CrowdEnvironment:
     adding hybrid modeling, CBF, LLM planning, or exclusion queues.
     """
 
-    def __init__(self, config: SimulationConfig, guided: bool = False) -> None:
+    def __init__(self, config: SimulationConfig, guided: bool = False, guidance_mode: str = "dbact") -> None:
         self.config = config
         self.guided = bool(guided)
+        self.guidance_mode = guidance_mode if self.guided else "none"
+        if self.guidance_mode not in {"none", "dbact", "static", "random"}:
+            raise ValueError(f"Unsupported guidance_mode: {guidance_mode}")
         self.rng = np.random.default_rng(config.seed)
+        self.random_target_interval = 40
+        self.step_index = 0
         self.time = 0.0
         self.pedestrians = self._initialize_pedestrians()
         self.guiders: list[GuiderState] = initialize_guiders(config.guiders, config.room) if guided else []
@@ -44,6 +49,11 @@ class CrowdEnvironment:
         self.guidance_controller = GuidanceController(config.guiders.guidance_strength)
         self.transfer_controller = DBACTTransferController(config.room, config.guiders)
         self.history = SimulationHistory()
+        if self.guided:
+            if self.guidance_mode == "static":
+                self._configure_static_guiders()
+            elif self.guidance_mode == "random":
+                self._assign_random_guider_targets()
         self._record()
 
     def _initialize_pedestrians(self) -> list[PedestrianState]:
@@ -151,12 +161,55 @@ class CrowdEnvironment:
         elif p.position[1] >= room.height - radius:
             p.velocity[1] = min(0.0, p.velocity[1])
 
+    def _configure_static_guiders(self) -> None:
+        if not self.guiders:
+            return
+        center = self.transfer_controller.compute_crowd_center(self.positions, self.evacuated)
+        direction = self.transfer_controller.compute_target_direction(center)
+        lateral = np.array([-direction[1], direction[0]], dtype=float)
+        anchor = center + 0.35 * (self.config.room.exit_center - center)
+        if len(self.guiders) == 1:
+            offsets = [0.0]
+        else:
+            raw = np.linspace(-(len(self.guiders) - 1) / 2.0, (len(self.guiders) - 1) / 2.0, len(self.guiders))
+            offsets = (raw * self.config.guiders.side_spacing).tolist()
+        for guider, offset in zip(self.guiders, offsets):
+            pos = self.config.room.clip_inside(anchor + offset * lateral, margin=0.25)
+            guider.position = pos
+            guider.target_position = pos.copy()
+            guider.velocity[:] = 0.0
+            guider.desired_direction = direction
+
+    def _assign_random_guider_targets(self) -> None:
+        for guider in self.guiders:
+            target = np.array(
+                [
+                    self.rng.uniform(0.5, self.config.room.width - 0.8),
+                    self.rng.uniform(0.5, self.config.room.height - 0.5),
+                ],
+                dtype=float,
+            )
+            guider.target_position = target
+            guider.desired_direction = unit(self.config.room.exit_center - target, fallback=np.array([1.0, 0.0]))
+
+    def _update_guiders(self) -> None:
+        if not self.guided or not self.guiders:
+            return
+        if self.guidance_mode == "dbact":
+            self.transfer_controller.update_guiders(self.guiders, self.positions, self.evacuated)
+            self.guider_model.step(self.guiders, self.config.dt)
+        elif self.guidance_mode == "random":
+            if self.step_index % self.random_target_interval == 0:
+                self._assign_random_guider_targets()
+            self.guider_model.step(self.guiders, self.config.dt)
+        elif self.guidance_mode == "static":
+            for guider in self.guiders:
+                guider.velocity[:] = 0.0
+
     def step(self) -> StepInfo:
         cfg = self.config.pedestrians
         dt = self.config.dt
-        if self.guided and self.guiders:
-            self.transfer_controller.update_guiders(self.guiders, self.positions, self.evacuated)
-            self.guider_model.step(self.guiders, dt)
+        self._update_guiders()
 
         repulsion_forces = self._pedestrian_repulsion_forces()
         for idx, p in enumerate(self.pedestrians):
@@ -174,6 +227,7 @@ class CrowdEnvironment:
             self._apply_boundary_and_exit(p)
 
         self.time += dt
+        self.step_index += 1
         self._record()
         return StepInfo(time=self.time, evacuated_count=int(self.evacuated.sum()), active_count=int((~self.evacuated).sum()))
 
@@ -192,6 +246,11 @@ class CrowdEnvironment:
         self.history.append(self.time, self.positions, self.velocities, self.evacuated, guider_positions)
 
 
-def run_simulation(config: SimulationConfig, guided: bool = False, steps: int | None = None) -> SimulationHistory:
-    env = CrowdEnvironment(config=config, guided=guided)
+def run_simulation(
+    config: SimulationConfig,
+    guided: bool = False,
+    steps: int | None = None,
+    guidance_mode: str = "dbact",
+) -> SimulationHistory:
+    env = CrowdEnvironment(config=config, guided=guided, guidance_mode=guidance_mode)
     return env.run(steps=steps)
