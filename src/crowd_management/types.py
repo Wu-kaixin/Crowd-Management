@@ -235,6 +235,7 @@ class SimulationHistory:
     velocities: list[Array] = field(default_factory=list)
     evacuated: list[Array] = field(default_factory=list)
     guider_positions: list[Array] = field(default_factory=list)
+    guider_targets: list[Array] = field(default_factory=list)
     times: list[float] = field(default_factory=list)
 
     def append(
@@ -244,6 +245,7 @@ class SimulationHistory:
         ped_velocities: Array,
         ped_evacuated: Array,
         guider_positions: Array | None = None,
+        guider_targets: Array | None = None,
     ) -> None:
         self.times.append(float(time))
         self.positions.append(np.asarray(ped_positions, dtype=float).copy())
@@ -251,6 +253,8 @@ class SimulationHistory:
         self.evacuated.append(np.asarray(ped_evacuated, dtype=bool).copy())
         if guider_positions is not None:
             self.guider_positions.append(np.asarray(guider_positions, dtype=float).copy())
+        if guider_targets is not None:
+            self.guider_targets.append(np.asarray(guider_targets, dtype=float).copy())
 
     def as_arrays(self) -> dict[str, Array]:
         data = {
@@ -261,4 +265,6 @@ class SimulationHistory:
         }
         if self.guider_positions:
             data["guider_positions"] = np.asarray(self.guider_positions, dtype=float)
+        if self.guider_targets:
+            data["guider_targets"] = np.asarray(self.guider_targets, dtype=float)
         return data
