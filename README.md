@@ -76,7 +76,8 @@ src/crowd_management/dbact_transfer.py
 ```text
 Crowd-Management/
 ├── configs/
-│   └── simple_room.yaml
+│   ├── simple_room.yaml
+│   └── two_exits.yaml
 ├── src/
 │   └── crowd_management/
 │       ├── __init__.py
@@ -133,13 +134,31 @@ Baseline, no guidance:
 Guided case with transferred DBACT-style controller:
 
 ```bash
-/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/run_guided.py --config configs/simple_room.yaml --output outputs/guided
+/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/run_guided.py --config configs/simple_room.yaml --output outputs/guided --mode dbact
 ```
 
-Compare results:
+Compare first-demo baseline vs guided results:
 
 ```bash
 /home/kaixin/miniconda3/bin/conda run -n C-M python scripts/compare_results.py --baseline outputs/baseline --guided outputs/guided --output outputs/comparison
+```
+
+## Guidance Modes
+
+The guided runner supports three guider baselines:
+
+- `static`: fixed guider placement, used to test whether stationary guidance points are already sufficient.
+- `random`: random moving guiders, used to test whether moving guiders alone produce an advantage.
+- `dbact`: dynamic DBACT-transfer placement around the active crowd, used as the main transferred method.
+
+Run the four-method comparison:
+
+```bash
+/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/run_baseline.py --config configs/simple_room.yaml --output outputs/baseline
+/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/run_guided.py --config configs/simple_room.yaml --output outputs/static --mode static
+/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/run_guided.py --config configs/simple_room.yaml --output outputs/random --mode random
+/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/run_guided.py --config configs/simple_room.yaml --output outputs/dbact --mode dbact
+/home/kaixin/miniconda3/bin/conda run -n C-M python scripts/compare_results.py --runs outputs/baseline outputs/static outputs/random outputs/dbact --labels baseline static random dbact --output outputs/comparison
 ```
 
 To save GIF animations, add `--animation` to `scripts/run_guided.py` or `scripts/run_baseline.py`. Animation is optional and is not required by tests.
@@ -160,7 +179,9 @@ Comparison saves:
 
 - `summary.json`
 - `comparison.json`
+- `metrics_comparison.csv` for multi-run comparisons
 - `evacuation_rate_comparison.png`
+- `final_metrics_comparison.png` for multi-run comparisons
 
 The repository keeps only `outputs/.gitkeep`; generated run outputs are ignored.
 
@@ -170,11 +191,7 @@ The repository keeps only `outputs/.gitkeep`; generated run outputs are ignored.
 /home/kaixin/miniconda3/bin/conda run -n C-M pytest
 ```
 
-Expected result for the current sprint implementation:
-
-```text
-6 passed
-```
+Expected result for the current sprint implementation is shown in `TEST_REPORT.md` and should pass before committing changes.
 
 ## Next Steps
 
