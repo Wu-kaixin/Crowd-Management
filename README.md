@@ -260,6 +260,110 @@ Compare all four methods:
   --output outputs/comparison
 ```
 
+## Visualization Package
+
+Build a presentation-ready visualization package for the current one-exit scenario:
+
+```bash
+python scripts/run_visualization_package.py \
+  --config configs/simple_room.yaml \
+  --modes baseline static random dbact \
+  --steps 400 \
+  --seed 0 \
+  --output runs/visualization_package_v1 \
+  --quality high
+```
+
+Main outputs:
+
+- `comparison/baseline_vs_dbact.mp4`
+- `comparison/four_modes_comparison.mp4`
+- `comparison/four_modes_dashboard.png`
+- `comparison/evacuation_curve.png`
+- `comparison/congestion_curve.png`
+- `comparison/mean_speed_curve.png`
+- `comparison/final_metrics_bar.png`
+- `comparison/heatmap_snapshots.png`
+- `summary/metrics_summary.csv`
+- `summary/VISUALIZATION_PACKAGE_REPORT.md`
+
+For lightweight smoke tests, add `--skip-video` and `--skip-heavy-plots`.
+
+## Density-aware DBACT Guidance
+
+Run the Stage 3 bottleneck/two-exit experiment, where `density_dbact` can redirect part of the crowd toward an alternate exit:
+
+Smoke run:
+
+```bash
+python scripts/run_density_dbact_experiment.py \
+  --config configs/two_exit_bottleneck.yaml \
+  --modes baseline density_dbact \
+  --steps 20 \
+  --seed 0 \
+  --output runs/density_dbact_smoke \
+  --skip-video
+```
+
+Full presentation run:
+
+```bash
+python scripts/run_density_dbact_experiment.py \
+  --config configs/two_exit_bottleneck.yaml \
+  --modes baseline static dbact density_dbact \
+  --steps 800 \
+  --seed 0 \
+  --output runs/density_dbact_v1 \
+  --quality ultra
+```
+
+The main outputs are:
+
+- `comparison/baseline_vs_density_dbact.mp4`
+- `comparison/dbact_vs_density_dbact.mp4`
+- `comparison/four_or_five_modes_comparison.mp4`
+- `comparison/exit_usage_curve.png`
+- `comparison/exit_pressure_curve.png`
+- `comparison/congestion_curve.png`
+- `comparison/evacuation_curve.png`
+- `comparison/final_metrics_bar.png`
+- `comparison/heatmap_snapshots.png`
+- `summary/metrics_summary.csv`
+- `summary/DENSITY_DBACT_REPORT.md`
+
+This is still a feasibility experiment. The purpose is to make route-choice and split-flow guidance visible, not to claim a final crowd-management method.
+
+## Multi-seed Guidance Evaluation
+
+Run repeated guidance evaluations across multiple random seeds:
+
+```bash
+python scripts/run_multi_seed_eval.py \
+  --config configs/simple_room.yaml \
+  --modes baseline static random dbact \
+  --seeds 0 1 2 3 4 5 6 7 8 9 \
+  --steps 400 \
+  --output runs/multi_seed_eval_v1
+```
+
+Mode meanings:
+
+- `baseline` = no guider
+- `static` = fixed guider placement
+- `random` = random guider motion
+- `dbact` = DBACT-transfer dynamic guider placement
+
+The output directory contains one subdirectory per mode/seed pair, plus:
+
+- `summary.csv` and `summary.json` with one row/object per single run;
+- `aggregate_metrics.csv` and `aggregate_metrics.json` with mean, std, min, and max per mode;
+- `evacuation_rate_mean_std.png`;
+- `congestion_index_mean_std.png`;
+- `mean_speed_mean_std.png`;
+- `near_collision_mean_std.png`.
+
+The current goal is statistical comparison across repeated runs, not final proof that DBACT is always better than simpler guidance baselines.
+
 ## Outputs
 
 Each simulation run saves:
