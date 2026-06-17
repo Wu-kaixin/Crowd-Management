@@ -66,13 +66,28 @@ def time_series_metrics(history: SimulationHistory, config: MetricsConfig) -> di
         [near_collision_count(positions[k], evacuated[k], config.near_collision_distance) for k in range(len(positions))],
         dtype=float,
     )
-    return {
+    series = {
         "time": data["times"],
         "evacuation_rate": evacuation_rate(history),
         "mean_active_speed": mean_active_speed(history),
         "congestion_index": congestion,
         "near_collision_count": near,
     }
+    if "evacuation_exit_ids" in data:
+        exit_ids = data["evacuation_exit_ids"]
+        known = exit_ids[exit_ids >= 0]
+        exit_count = int(known.max()) + 1 if known.size else int(max(1, exit_ids.max(initial=-1) + 1))
+        usage = np.zeros((len(exit_ids), exit_count), dtype=float)
+        for k in range(len(exit_ids)):
+            for exit_idx in range(exit_count):
+                usage[k, exit_idx] = float(np.sum(exit_ids[k] == exit_idx))
+        for exit_idx in range(exit_count):
+            series[f"exit_{exit_idx}_usage_count"] = usage[:, exit_idx]
+        total = np.maximum(usage.sum(axis=1), 1.0)
+        if exit_count > 1:
+            ratios = usage / total[:, None]
+            series["exit_imbalance"] = ratios.max(axis=1) - ratios.min(axis=1)
+    return series
 
 
 def path_length_metrics(history: SimulationHistory) -> tuple[float, float]:
@@ -101,7 +116,7 @@ def summary_metrics(history: SimulationHistory, config: MetricsConfig) -> dict[s
     mean_speed = float(np.mean(series["mean_active_speed"])) if len(times) else 0.0
     mean_congestion = float(np.mean(series["congestion_index"])) if len(times) else 0.0
     peak_near = int(np.max(series["near_collision_count"])) if len(times) else 0
-    return {
+    summary = {
         "final_time": float(times[-1]) if len(times) else 0.0,
         "final_evacuated": int(final_mask.sum()) if len(final_mask) else 0,
         "total_pedestrians": int(len(final_mask)) if len(final_mask) else 0,
@@ -118,6 +133,21 @@ def summary_metrics(history: SimulationHistory, config: MetricsConfig) -> dict[s
         "mean_path_length": mean_path_length,
         "total_path_length": total_path_length,
     }
+    if "evacuation_exit_ids" in history.as_arrays():
+        exit_ids = history.as_arrays()["evacuation_exit_ids"][-1]
+        known = exit_ids[exit_ids >= 0]
+        exit_count = int(max(2, known.max() + 1 if known.size else 0))
+        usage_counts = {f"exit_{idx}": int(np.sum(exit_ids == idx)) for idx in range(exit_count)}
+        total_evacuated = max(1, int(np.sum(exit_ids >= 0)))
+        usage_ratios = {key: value / total_evacuated for key, value in usage_counts.items()}
+        summary["exit_usage_count"] = usage_counts
+        summary["exit_usage_ratio"] = usage_ratios
+        if usage_ratios:
+            summary["exit_imbalance"] = float(max(usage_ratios.values()) - min(usage_ratios.values()))
+    if len(times) and len(series["congestion_index"]):
+        dt = float(np.median(np.diff(times))) if len(times) > 1 else 0.0
+        summary["cumulative_congestion"] = float(np.sum(series["congestion_index"]) * dt)
+    return summary
 
 
 def save_metrics(history: SimulationHistory, config: MetricsConfig, output_dir: str | Path) -> dict[str, float | int | None]:
