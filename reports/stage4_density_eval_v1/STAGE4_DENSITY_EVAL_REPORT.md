@@ -12,7 +12,7 @@ Stage 2 videos looked similar in a simple one-exit room. Stage 3 introduced `two
 
 Primary scenario: `configs/two_exit_bottleneck.yaml`.
 
-Seeds: `[0, 1, 2, 3, 4]`. Compared modes: `['baseline', 'static', 'dbact', 'nearest_exit', 'balanced_exit_static', 'density_only', 'exit_pressure_only', 'split_flow_only', 'density_dbact']`.
+Seeds: `[0, 1]`. Compared modes: `['baseline', 'density_dbact', 'nearest_exit', 'balanced_exit_static']`.
 
 ## 4. Compared Methods
 
@@ -26,15 +26,10 @@ Metrics include final evacuation rate, evacuation count, mean speed, congestion 
 
 | mode | final_evacuation_rate_mean | congestion_index_mean | cumulative_congestion_mean | exit_1_usage_ratio_mean | exit_imbalance_mean | composite_score_mean |
 | --- | --- | --- | --- | --- | --- | --- |
-| baseline | 0.9988 | 2.2051 | 85.4759 | 0.0000 | 1.0000 | 0.3487 |
-| static | 0.9988 | 2.2001 | 84.5981 | 0.0000 | 1.0000 | 0.3537 |
-| dbact | 1.0000 | 2.4917 | 92.2167 | 0.0000 | 1.0000 | 0.2719 |
-| nearest_exit | 1.0000 | 1.7827 | 67.7229 | 0.1575 | 0.6850 | 0.5654 |
-| balanced_exit_static | 0.9994 | 1.4516 | 53.4892 | 0.4997 | 0.0256 | 0.8177 |
-| density_only | 0.9994 | 1.1975 | 41.3473 | 0.4891 | 0.0231 | 0.9170 |
-| exit_pressure_only | 0.9694 | 1.5653 | 62.6891 | 0.6647 | 0.3295 | 0.6647 |
-| split_flow_only | 0.9994 | 1.4516 | 53.4892 | 0.4997 | 0.0256 | 0.8177 |
-| density_dbact | 0.9925 | 1.5523 | 62.1684 | 0.6883 | 0.3766 | 0.6830 |
+| baseline | 0.0000 | 5.7478 | 2.0117 | 0.0000 | 0.0000 | -0.5241 |
+| density_dbact | 0.0000 | 5.7286 | 2.0050 | 0.0000 | 0.0000 | -0.1534 |
+| nearest_exit | 0.0000 | 5.7442 | 2.0105 | 0.0000 | 0.0000 | -0.4552 |
+| balanced_exit_static | 0.0000 | 5.7433 | 2.0102 | 0.0000 | 0.0000 | -0.4379 |
 
 ## 7. Fair Baseline Results
 
@@ -56,9 +51,9 @@ Top modes by mean score:
 
 | mode | composite_score_mean | congestion_index_mean | exit_1_usage_ratio_mean |
 | --- | --- | --- | --- |
-| density_only | 0.9170 | 1.1975 | 0.4891 |
-| balanced_exit_static | 0.8177 | 1.4516 | 0.4997 |
-| split_flow_only | 0.8177 | 1.4516 | 0.4997 |
+| density_dbact | -0.1534 | 5.7286 | 0.0000 |
+| balanced_exit_static | -0.4379 | 5.7433 | 0.0000 |
+| nearest_exit | -0.4552 | 5.7442 | 0.0000 |
 
 ## 10. Mechanism Visualization
 
