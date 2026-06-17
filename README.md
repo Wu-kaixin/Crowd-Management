@@ -53,6 +53,8 @@ simple microscopic agent-based crowd model
 + DBACT / cargo-guidance transfer feasibility test
 + baseline vs guided comparison
 + static / random / dbact guidance baselines
++ density-aware split-flow guidance in a two-exit bottleneck
++ robust multi-seed evaluation with fair exit-choice baselines
 + metrics
 + 2D visualization
 + tests
@@ -220,6 +222,17 @@ For non-interactive shell use:
 
 ## Run Simulations
 
+## Stage Overview
+
+| Stage | Meaning |
+|---|---|
+| Stage 1 | simple crowd feasibility sprint |
+| Stage 2 | visualization package and multi-seed one-exit evaluation |
+| Stage 3 | density-aware DBACT visible split-flow demo |
+| Stage 4 | robust multi-seed, fair-baseline, ablation, and mechanism evaluation |
+
+Stage 3 showed visible split-flow and congestion reduction in a two-exit bottleneck scenario. Stage 4 evaluates whether that behavior is robust across seeds and fair against simple exit-choice baselines.
+
 Baseline, no guidance:
 
 ```bash
@@ -332,6 +345,49 @@ The main outputs are:
 - `summary/DENSITY_DBACT_REPORT.md`
 
 This is still a feasibility experiment. The purpose is to make route-choice and split-flow guidance visible, not to claim a final crowd-management method.
+
+## Stage 4 Robust Density Evaluation
+
+Smoke run:
+
+```bash
+python scripts/run_stage4_density_eval.py \
+  --config configs/two_exit_bottleneck.yaml \
+  --modes baseline density_dbact nearest_exit \
+  --seeds 0 1 \
+  --steps 20 \
+  --output runs/stage4_density_eval_smoke \
+  --skip-video
+```
+
+Full robust evaluation:
+
+```bash
+python scripts/run_stage4_density_eval.py \
+  --config configs/two_exit_bottleneck.yaml \
+  --modes baseline static dbact nearest_exit balanced_exit_static density_only exit_pressure_only split_flow_only density_dbact \
+  --seeds 0 1 2 3 4 5 6 7 8 9 \
+  --steps 800 \
+  --output runs/stage4_density_eval_v1 \
+  --quality high
+```
+
+Main outputs:
+
+- `summary/run_metrics.csv`
+- `summary/aggregate_metrics.csv`
+- `summary/composite_scores.csv`
+- `summary/STAGE4_DENSITY_EVAL_REPORT.md`
+- `summary/TEAMS_CHANNEL_REPORT.md`
+- `comparison/robust_metrics_dashboard.png`
+- `comparison/composite_score_mean_std.png`
+- `comparison/tradeoff_scatter.png`
+- `comparison/mechanism_timeline_density_dbact.png`
+- `comparison/mechanism_snapshot_density_dbact.png`
+- `comparison/baseline_vs_density_dbact_mechanism.mp4`
+- `comparison/fair_baselines_comparison.mp4`
+
+The composite score is only an exploratory summary. It should be read together with evacuation rate, cumulative congestion, and exit-usage balance.
 
 ## Multi-seed Guidance Evaluation
 
