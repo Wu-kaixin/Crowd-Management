@@ -6,6 +6,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from .dbact_transfer import DBACTTransferController
+from .density_dbact import DensityDBACTController
 from .guidance_controller import GuidanceController
 from .guider_model import GuiderModel, initialize_guiders
 from .types import (
@@ -33,21 +34,27 @@ class CrowdEnvironment:
     adding hybrid modeling, CBF, LLM planning, or exclusion queues.
     """
 
+    ROUTE_ONLY_MODES = {"nearest_exit", "balanced_exit_static", "density_only", "exit_pressure_only", "split_flow_only"}
+
     def __init__(self, config: SimulationConfig, guided: bool = False, guidance_mode: str = "dbact") -> None:
         self.config = config
         self.guided = bool(guided)
         self.guidance_mode = guidance_mode if self.guided else "none"
-        if self.guidance_mode not in {"none", "dbact", "static", "random"}:
+        if self.guidance_mode not in {"none", "dbact", "static", "random", "density_dbact", *self.ROUTE_ONLY_MODES}:
             raise ValueError(f"Unsupported guidance_mode: {guidance_mode}")
         self.rng = np.random.default_rng(config.seed)
         self.random_target_interval = 40
         self.step_index = 0
         self.time = 0.0
         self.pedestrians = self._initialize_pedestrians()
-        self.guiders: list[GuiderState] = initialize_guiders(config.guiders, config.room) if guided else []
+        self._configure_initial_exit_choices()
+        use_guiders = guided and self.guidance_mode not in self.ROUTE_ONLY_MODES
+        self.guiders: list[GuiderState] = initialize_guiders(config.guiders, config.room) if use_guiders else []
         self.guider_model = GuiderModel(config.guiders, config.room)
         self.guidance_controller = GuidanceController(config.guiders.guidance_strength)
         self.transfer_controller = DBACTTransferController(config.room, config.guiders)
+        self.density_controller = DensityDBACTController(config.room, config.guiders, pressure_radius=config.metrics.exit_pressure_radius)
+        self.route_switch_count = 0
         self.history = SimulationHistory()
         if self.guided:
             if self.guidance_mode == "static":
@@ -77,6 +84,22 @@ class CrowdEnvironment:
             )
         return pedestrians
 
+    def _configure_initial_exit_choices(self) -> None:
+        if len(self.config.room.all_exits) <= 1:
+            return
+        if self.guidance_mode == "nearest_exit":
+            for p in self.pedestrians:
+                distances = [np.linalg.norm(exit_cfg.center(self.config.room.width) - p.position) for exit_cfg in self.config.room.all_exits]
+                p.target_exit_id = int(np.argmin(distances))
+        elif self.guidance_mode in {"balanced_exit_static", "split_flow_only"}:
+            for p in self.pedestrians:
+                p.target_exit_id = p.pid % len(self.config.room.all_exits)
+        elif self.guidance_mode == "density_only":
+            ys = np.asarray([p.position[1] for p in self.pedestrians], dtype=float)
+            threshold = float(np.quantile(ys, 0.58))
+            for p in self.pedestrians:
+                p.target_exit_id = 1 if p.position[1] >= threshold else 0
+
     @property
     def positions(self) -> np.ndarray:
         return np.vstack([p.position for p in self.pedestrians])
@@ -91,7 +114,7 @@ class CrowdEnvironment:
 
     def _goal_force(self, p: PedestrianState) -> np.ndarray:
         ped_cfg = self.config.pedestrians
-        desired_dir = unit(self.config.room.exit_center - p.position, fallback=np.array([1.0, 0.0]))
+        desired_dir = unit(self.config.room.exit_center_by_index(p.target_exit_id) - p.position, fallback=np.array([1.0, 0.0]))
         desired_velocity = p.desired_speed * desired_dir
         return (desired_velocity - p.velocity) / max(ped_cfg.relaxation_time, 1e-6)
 
@@ -128,7 +151,7 @@ class CrowdEnvironment:
             force[0] += cfg.wall_repulsion_strength * (margin - p.position[0]) / margin
 
         # Right wall, except the exit opening.
-        if p.position[0] > room.width - margin and not room.inside_exit_opening(p.position[1]):
+        if p.position[0] > room.width - margin and room.exit_index_for_y(p.position[1]) is None:
             force[0] -= cfg.wall_repulsion_strength * (p.position[0] - (room.width - margin)) / margin
 
         # Bottom and top walls.
@@ -142,9 +165,11 @@ class CrowdEnvironment:
         room = self.config.room
         radius = p.radius
         # Evacuation occurs after crossing the right wall within the exit opening.
-        if p.position[0] >= room.width and room.inside_exit_opening(p.position[1]):
+        exit_idx = room.exit_index_for_y(p.position[1])
+        if p.position[0] >= room.width and exit_idx is not None:
             p.evacuated = True
             p.evacuation_time = self.time
+            p.evacuated_exit_id = exit_idx
             p.velocity[:] = 0.0
             return
 
@@ -152,7 +177,7 @@ class CrowdEnvironment:
         if p.position[0] < radius:
             p.position[0] = radius
             p.velocity[0] = max(0.0, p.velocity[0])
-        if p.position[0] > room.width - radius and not room.inside_exit_opening(p.position[1]):
+        if p.position[0] > room.width - radius and room.exit_index_for_y(p.position[1]) is None:
             p.position[0] = room.width - radius
             p.velocity[0] = min(0.0, p.velocity[0])
         p.position[1] = float(np.clip(p.position[1], radius, room.height - radius))
@@ -193,7 +218,17 @@ class CrowdEnvironment:
             guider.desired_direction = unit(self.config.room.exit_center - target, fallback=np.array([1.0, 0.0]))
 
     def _update_guiders(self) -> None:
-        if not self.guided or not self.guiders:
+        if not self.guided:
+            return
+        if self.guidance_mode == "density_only":
+            self._update_density_only_targets()
+            return
+        if self.guidance_mode == "exit_pressure_only":
+            self.route_switch_count += self.density_controller.update_pedestrian_targets(self.pedestrians)
+            return
+        if self.guidance_mode in {"nearest_exit", "balanced_exit_static", "split_flow_only"}:
+            return
+        if not self.guiders:
             return
         if self.guidance_mode == "dbact":
             self.transfer_controller.update_guiders(self.guiders, self.positions, self.evacuated)
@@ -205,6 +240,28 @@ class CrowdEnvironment:
         elif self.guidance_mode == "static":
             for guider in self.guiders:
                 guider.velocity[:] = 0.0
+        elif self.guidance_mode == "density_dbact":
+            self.route_switch_count += self.density_controller.update_pedestrian_targets(self.pedestrians)
+            self.density_controller.update_guiders(self.guiders, self.pedestrians)
+            self.guider_model.step(self.guiders, self.config.dt)
+
+    def _update_density_only_targets(self) -> None:
+        if len(self.config.room.all_exits) <= 1:
+            return
+        active = [p for p in self.pedestrians if not p.evacuated]
+        if not active:
+            return
+        positions = np.asarray([p.position for p in active], dtype=float)
+        local_counts = np.zeros(len(active), dtype=float)
+        radius = max(1.2, self.config.metrics.congestion_radius * 2.2)
+        for i, pos in enumerate(positions):
+            dist = np.linalg.norm(positions - pos, axis=1)
+            local_counts[i] = float(np.sum((dist < radius) & (dist > 1e-9)))
+        dense_threshold = float(np.quantile(local_counts, 0.56))
+        y_threshold = float(np.quantile(positions[:, 1], 0.55))
+        for p, density in zip(active, local_counts):
+            if density >= dense_threshold and p.position[1] >= y_threshold and p.compliance > 0.2:
+                p.target_exit_id = 1
 
     def step(self) -> StepInfo:
         cfg = self.config.pedestrians
@@ -245,7 +302,18 @@ class CrowdEnvironment:
         if self.guiders:
             guider_positions = np.vstack([g.position for g in self.guiders])
             guider_targets = np.vstack([g.target_position for g in self.guiders])
-        self.history.append(self.time, self.positions, self.velocities, self.evacuated, guider_positions, guider_targets)
+        target_exit_ids = np.asarray([p.target_exit_id for p in self.pedestrians], dtype=int)
+        evacuation_exit_ids = np.asarray([p.evacuated_exit_id for p in self.pedestrians], dtype=int)
+        self.history.append(
+            self.time,
+            self.positions,
+            self.velocities,
+            self.evacuated,
+            guider_positions,
+            guider_targets,
+            target_exit_ids,
+            evacuation_exit_ids,
+        )
 
 
 def run_simulation(

@@ -48,27 +48,69 @@ def perpendicular(vec: Array) -> Array:
 
 
 @dataclass(frozen=True)
+class ExitConfig:
+    id: str
+    center_y: float
+    width: float
+    depth: float = 0.8
+
+    @property
+    def y_min(self) -> float:
+        return self.center_y - self.width / 2.0
+
+    @property
+    def y_max(self) -> float:
+        return self.center_y + self.width / 2.0
+
+    def center(self, room_width: float) -> Array:
+        return np.array([room_width + self.depth, self.center_y], dtype=float)
+
+    def inside_opening(self, y: float) -> bool:
+        return self.y_min <= float(y) <= self.y_max
+
+
+@dataclass(frozen=True)
 class RoomConfig:
     width: float
     height: float
     exit_center_y: float
     exit_width: float
     exit_depth: float = 0.8
+    exits: tuple[ExitConfig, ...] = ()
 
     @property
     def exit_center(self) -> Array:
-        return np.array([self.width + self.exit_depth, self.exit_center_y], dtype=float)
+        return self.exit_by_index(0).center(self.width)
 
     @property
     def exit_y_min(self) -> float:
-        return self.exit_center_y - self.exit_width / 2.0
+        return self.exit_by_index(0).y_min
 
     @property
     def exit_y_max(self) -> float:
-        return self.exit_center_y + self.exit_width / 2.0
+        return self.exit_by_index(0).y_max
 
     def inside_exit_opening(self, y: float) -> bool:
-        return self.exit_y_min <= float(y) <= self.exit_y_max
+        return any(exit_cfg.inside_opening(y) for exit_cfg in self.all_exits)
+
+    @property
+    def all_exits(self) -> tuple[ExitConfig, ...]:
+        if self.exits:
+            return self.exits
+        return (ExitConfig("main", self.exit_center_y, self.exit_width, self.exit_depth),)
+
+    def exit_by_index(self, index: int) -> ExitConfig:
+        exits = self.all_exits
+        return exits[int(np.clip(index, 0, len(exits) - 1))]
+
+    def exit_center_by_index(self, index: int) -> Array:
+        return self.exit_by_index(index).center(self.width)
+
+    def exit_index_for_y(self, y: float) -> int | None:
+        for idx, exit_cfg in enumerate(self.all_exits):
+            if exit_cfg.inside_opening(y):
+                return idx
+        return None
 
     def clip_inside(self, pos: Array, margin: float = 0.05) -> Array:
         """Clip a point inside the room, leaving the exit side slightly open."""
@@ -112,6 +154,7 @@ class GuiderConfig:
 class MetricsConfig:
     congestion_radius: float = 0.55
     near_collision_distance: float = 0.34
+    exit_pressure_radius: float = 2.2
 
 
 @dataclass(frozen=True)
@@ -135,7 +178,15 @@ class SimulationConfig:
 
     @classmethod
     def _from_reference_yaml(cls, raw: dict[str, Any]) -> "SimulationConfig":
-        room = RoomConfig(**raw["room"])
+        room_raw = dict(raw["room"])
+        exits = _parse_exits(room_raw)
+        if exits:
+            primary = exits[0]
+            room_raw["exit_center_y"] = primary.center_y
+            room_raw["exit_width"] = primary.width
+            room_raw["exit_depth"] = primary.depth
+            room_raw["exits"] = exits
+        room = RoomConfig(**room_raw)
         ped_raw = dict(raw["pedestrians"])
         ped_raw["spawn_center"] = as_vec2(ped_raw["spawn_center"], "spawn_center")
         ped_raw["spawn_std"] = as_vec2(ped_raw["spawn_std"], "spawn_std")
@@ -167,6 +218,7 @@ class SimulationConfig:
             exit_center_y=float(exit_raw["center"][1]),
             exit_width=float(exit_raw["width"]),
             exit_depth=float(exit_raw.get("radius", 0.8)),
+            exits=_parse_sprint_exits(room_raw),
         )
         pedestrians = PedestrianConfig(
             count=int(sim_raw["pedestrian_count"]),
@@ -217,6 +269,8 @@ class PedestrianState:
     compliance: float
     evacuated: bool = False
     evacuation_time: float | None = None
+    target_exit_id: int = 0
+    evacuated_exit_id: int = -1
 
 
 @dataclass
@@ -227,6 +281,7 @@ class GuiderState:
     target_position: Array
     desired_direction: Array
     influence_radius: float
+    assigned_exit_id: int = 0
 
 
 @dataclass
@@ -236,6 +291,8 @@ class SimulationHistory:
     evacuated: list[Array] = field(default_factory=list)
     guider_positions: list[Array] = field(default_factory=list)
     guider_targets: list[Array] = field(default_factory=list)
+    target_exit_ids: list[Array] = field(default_factory=list)
+    evacuation_exit_ids: list[Array] = field(default_factory=list)
     times: list[float] = field(default_factory=list)
 
     def append(
@@ -246,6 +303,8 @@ class SimulationHistory:
         ped_evacuated: Array,
         guider_positions: Array | None = None,
         guider_targets: Array | None = None,
+        target_exit_ids: Array | None = None,
+        evacuation_exit_ids: Array | None = None,
     ) -> None:
         self.times.append(float(time))
         self.positions.append(np.asarray(ped_positions, dtype=float).copy())
@@ -255,6 +314,10 @@ class SimulationHistory:
             self.guider_positions.append(np.asarray(guider_positions, dtype=float).copy())
         if guider_targets is not None:
             self.guider_targets.append(np.asarray(guider_targets, dtype=float).copy())
+        if target_exit_ids is not None:
+            self.target_exit_ids.append(np.asarray(target_exit_ids, dtype=int).copy())
+        if evacuation_exit_ids is not None:
+            self.evacuation_exit_ids.append(np.asarray(evacuation_exit_ids, dtype=int).copy())
 
     def as_arrays(self) -> dict[str, Array]:
         data = {
@@ -267,4 +330,34 @@ class SimulationHistory:
             data["guider_positions"] = np.asarray(self.guider_positions, dtype=float)
         if self.guider_targets:
             data["guider_targets"] = np.asarray(self.guider_targets, dtype=float)
+        if self.target_exit_ids:
+            data["target_exit_ids"] = np.asarray(self.target_exit_ids, dtype=int)
+        if self.evacuation_exit_ids:
+            data["evacuation_exit_ids"] = np.asarray(self.evacuation_exit_ids, dtype=int)
         return data
+
+
+def _exit_from_raw(raw: dict[str, Any], index: int) -> ExitConfig:
+    return ExitConfig(
+        id=str(raw.get("id", raw.get("label", f"exit_{index}"))),
+        center_y=float(raw["center"][1] if "center" in raw else raw["center_y"]),
+        width=float(raw["width"]),
+        depth=float(raw.get("radius", raw.get("depth", 0.8))),
+    )
+
+
+def _parse_sprint_exits(room_raw: dict[str, Any]) -> tuple[ExitConfig, ...]:
+    if "exits" in room_raw:
+        return tuple(_exit_from_raw(item, idx) for idx, item in enumerate(room_raw["exits"]))
+    exits = [_exit_from_raw(room_raw["exit"], 0)]
+    for idx, item in enumerate(room_raw.get("alternative_exits", []), start=1):
+        exits.append(_exit_from_raw(item, idx))
+    return tuple(exits)
+
+
+def _parse_exits(room_raw: dict[str, Any]) -> tuple[ExitConfig, ...]:
+    if "exits" not in room_raw:
+        return ()
+    exits = tuple(_exit_from_raw(item, idx) for idx, item in enumerate(room_raw.pop("exits")))
+    room_raw.pop("alternative_exits", None)
+    return exits

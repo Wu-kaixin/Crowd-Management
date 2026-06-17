@@ -7,6 +7,12 @@ from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
+try:
+    import imageio_ffmpeg
+
+    matplotlib.rcParams["animation.ffmpeg_path"] = imageio_ffmpeg.get_ffmpeg_exe()
+except Exception:
+    pass
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
@@ -18,6 +24,7 @@ from .types import RoomConfig
 
 EMPTY_OFFSETS = np.empty((0, 2), dtype=float)
 PED_COLOR = "#2563eb"
+EXIT_TARGET_COLORS = ["#2563eb", "#dc2626", "#16a34a", "#7c3aed"]
 GUIDER_COLOR = "#f97316"
 TARGET_COLOR = "#16a34a"
 EXIT_COLOR = "#22c55e"
@@ -34,20 +41,26 @@ def _draw_room(ax: plt.Axes, room: RoomConfig) -> None:
     ax.plot([0, room.width], [0, 0], color="#111827", linewidth=2.0)
     ax.plot([0, room.width], [room.height, room.height], color="#111827", linewidth=2.0)
     ax.plot([0, 0], [0, room.height], color="#111827", linewidth=2.0)
-    ax.plot([room.width, room.width], [0, room.exit_y_min], color="#111827", linewidth=2.0)
-    ax.plot([room.width, room.width], [room.exit_y_max, room.height], color="#111827", linewidth=2.0)
-    ax.add_patch(
-        Rectangle(
-            (room.width, room.exit_y_min),
-            room.exit_depth,
-            room.exit_width,
-            facecolor=EXIT_COLOR,
-            edgecolor="#15803d",
-            alpha=0.38,
-            linewidth=1.5,
+    exits = room.all_exits
+    y_cursor = 0.0
+    for exit_cfg in sorted(exits, key=lambda item: item.y_min):
+        if exit_cfg.y_min > y_cursor:
+            ax.plot([room.width, room.width], [y_cursor, exit_cfg.y_min], color="#111827", linewidth=2.0)
+        y_cursor = max(y_cursor, exit_cfg.y_max)
+        ax.add_patch(
+            Rectangle(
+                (room.width, exit_cfg.y_min),
+                exit_cfg.depth,
+                exit_cfg.width,
+                facecolor=EXIT_COLOR,
+                edgecolor="#15803d",
+                alpha=0.38,
+                linewidth=1.5,
+            )
         )
-    )
-    ax.text(room.width + room.exit_depth * 0.5, room.exit_center_y, "EXIT", ha="center", va="center", fontsize=8, weight="bold", color="#14532d")
+        ax.text(room.width + exit_cfg.depth * 0.5, exit_cfg.center_y, exit_cfg.id.upper(), ha="center", va="center", fontsize=8, weight="bold", color="#14532d")
+    if y_cursor < room.height:
+        ax.plot([room.width, room.width], [y_cursor, room.height], color="#111827", linewidth=2.0)
 
 
 def _load_metrics_json(run_dir: Path) -> dict:
@@ -116,13 +129,23 @@ def _set_offsets(scatter, values: np.ndarray) -> None:
     scatter.set_offsets(values if len(values) else EMPTY_OFFSETS)
 
 
-def _save_animation(ani: FuncAnimation, fig: plt.Figure, output_path: str | Path, fps: int) -> Path:
+def _target_colors(replay: ReplayData, k: int, active: np.ndarray) -> list[str]:
+    if replay.target_exit_ids.size == 0:
+        return [PED_COLOR] * int(np.sum(active))
+    target_ids = replay.target_exit_ids[k][active]
+    return [EXIT_TARGET_COLORS[int(exit_id) % len(EXIT_TARGET_COLORS)] for exit_id in target_ids]
+
+
+def _save_animation(ani: FuncAnimation, fig: plt.Figure, output_path: str | Path, fps: int, bitrate: int = 12000, dpi: int = 160) -> Path:
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     if output.suffix.lower() == ".mp4" and FFMpegWriter.isAvailable():
-        ani.save(output, writer=FFMpegWriter(fps=fps, bitrate=2200))
+        ani.save(output, writer=FFMpegWriter(fps=fps, bitrate=bitrate), dpi=dpi)
         plt.close(fig)
         return output
+    if output.suffix.lower() == ".mp4":
+        plt.close(fig)
+        raise RuntimeError("MP4 rendering requires ffmpeg. Install ffmpeg or choose a .gif output for lightweight tests.")
     if output.suffix.lower() == ".gif":
         ani.save(output, writer=PillowWriter(fps=fps))
         plt.close(fig)
@@ -162,7 +185,7 @@ def _draw_static_frame(ax: plt.Axes, replay: ReplayData, k: int, title: str, hea
             interpolation="bilinear",
         )
     active = ~replay.pedestrian_evacuated[k]
-    ax.scatter(replay.pedestrian_positions[k][active, 0], replay.pedestrian_positions[k][active, 1], s=14, c=PED_COLOR, edgecolors="none", alpha=0.88, label="pedestrians")
+    ax.scatter(replay.pedestrian_positions[k][active, 0], replay.pedestrian_positions[k][active, 1], s=14, c=_target_colors(replay, k, active), edgecolors="none", alpha=0.88, label="pedestrians")
     if replay.guider_positions.shape[1] > 0:
         guiders = replay.guider_positions[k]
         ax.scatter(guiders[:, 0], guiders[:, 1], marker="^", s=85, c=GUIDER_COLOR, edgecolors="#7c2d12", linewidths=0.6, label="guiders")
@@ -259,6 +282,7 @@ def render_side_by_side_animation(
     fps: int = 15,
     trail_length: int = 8,
     heatmap: bool = True,
+    max_frames: int | None = None,
 ) -> Path:
     runs = [Path(run) for run in run_dirs]
     replays = [load_replay(run) for run in runs]
@@ -270,13 +294,13 @@ def render_side_by_side_animation(
         raise ValueError("render_side_by_side_animation supports exactly 2 or 4 runs")
 
     end_time = min(float(replay.times[-1]) for replay in replays)
-    base_frames = _frame_sequence(replays[0], fps=fps)
+    base_frames = _frame_sequence(replays[0], fps=fps, max_frames=max_frames)
     common_times = [float(replays[0].times[k]) for k in base_frames if float(replays[0].times[k]) <= end_time]
     if not common_times or common_times[-1] < end_time:
         common_times.append(end_time)
 
     rows, cols = (1, 2) if len(replays) == 2 else (2, 2)
-    fig, axes_arr = plt.subplots(rows, cols, figsize=(10 * cols, 5.7 * rows), squeeze=False)
+    fig, axes_arr = plt.subplots(rows, cols, figsize=(10 * cols, 7.0 * rows), squeeze=False)
     axes = list(axes_arr.ravel())
     artists = []
     for ax, replay, label in zip(axes, replays, labels):
@@ -310,6 +334,7 @@ def render_side_by_side_animation(
             k = _nearest_index(replay.times, time_value)
             active = ~replay.pedestrian_evacuated[k]
             _set_offsets(group["ped"], replay.pedestrian_positions[k][active])
+            group["ped"].set_color(_target_colors(replay, k, active))
             if trail_length > 0:
                 start = max(0, k - trail_length)
                 parts = [replay.pedestrian_positions[j][~replay.pedestrian_evacuated[j]] for j in range(start, k + 1)]

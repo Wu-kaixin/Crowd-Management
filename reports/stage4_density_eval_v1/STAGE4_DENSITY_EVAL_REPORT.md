@@ -1,0 +1,81 @@
+# Stage 4 Density-aware DBACT Evaluation Report
+
+## 1. Purpose
+
+Stage 4 turns the Stage 3 visible split-flow demo into a robust multi-seed evaluation with fair exit-choice baselines, ablations, a composite score, and mechanism visualization.
+
+## 2. Background
+
+Stage 2 videos looked similar in a simple one-exit room. Stage 3 introduced `two_exit_bottleneck` and `density_dbact`, producing visible split-flow. Stage 4 checks whether that result is robust across seeds and whether it beats simple fair baselines.
+
+## 3. Scenario
+
+Primary scenario: `configs/two_exit_bottleneck.yaml`.
+
+Seeds: `[0, 1, 2, 3, 4]`. Compared modes: `['baseline', 'static', 'dbact', 'nearest_exit', 'balanced_exit_static', 'density_only', 'exit_pressure_only', 'split_flow_only', 'density_dbact']`.
+
+## 4. Compared Methods
+
+Methods include baseline/static/original DBACT, fair exit-choice baselines (`nearest_exit`, `balanced_exit_static`), ablations (`density_only`, `exit_pressure_only`, `split_flow_only`), and full `density_dbact`.
+
+## 5. Metrics
+
+Metrics include final evacuation rate, evacuation count, mean speed, congestion index, cumulative congestion, near-collision peak, exit usage ratios, exit imbalance, exit pressure, and composite score.
+
+## 6. Multi-seed Results
+
+| mode | final_evacuation_rate_mean | congestion_index_mean | cumulative_congestion_mean | exit_1_usage_ratio_mean | exit_imbalance_mean | composite_score_mean |
+| --- | --- | --- | --- | --- | --- | --- |
+| baseline | 0.9988 | 2.2051 | 85.4759 | 0.0000 | 1.0000 | 0.3487 |
+| static | 0.9988 | 2.2001 | 84.5981 | 0.0000 | 1.0000 | 0.3537 |
+| dbact | 1.0000 | 2.4917 | 92.2167 | 0.0000 | 1.0000 | 0.2719 |
+| nearest_exit | 1.0000 | 1.7827 | 67.7229 | 0.1575 | 0.6850 | 0.5654 |
+| balanced_exit_static | 0.9994 | 1.4516 | 53.4892 | 0.4997 | 0.0256 | 0.8177 |
+| density_only | 0.9994 | 1.1975 | 41.3473 | 0.4891 | 0.0231 | 0.9170 |
+| exit_pressure_only | 0.9694 | 1.5653 | 62.6891 | 0.6647 | 0.3295 | 0.6647 |
+| split_flow_only | 0.9994 | 1.4516 | 53.4892 | 0.4997 | 0.0256 | 0.8177 |
+| density_dbact | 0.9925 | 1.5523 | 62.1684 | 0.6883 | 0.3766 | 0.6830 |
+
+## 7. Fair Baseline Results
+
+Fair baselines can use the secondary exit, so they test whether density_dbact benefits only from exit-choice permission. Compare `density_dbact` against `nearest_exit` and `balanced_exit_static` in the aggregate table and tradeoff plots.
+
+## 8. Ablation Results
+
+The ablation plot compares `density_only`, `exit_pressure_only`, `split_flow_only`, and full `density_dbact`. If split-flow-only is close to density_dbact, the route-choice mechanism explains most of the benefit; if density_dbact improves congestion/balance further, the guider placement adds value.
+
+## 9. Multi-objective Score
+
+Composite score formula:
+
+`score = final_evacuation_rate - 0.25*normalized_congestion_index - 0.25*normalized_cumulative_congestion - 0.20*exit_imbalance - 0.10*normalized_peak_near_collision_count`
+
+The score is heuristic and for exploratory comparison only.
+
+Top modes by mean score:
+
+| mode | composite_score_mean | congestion_index_mean | exit_1_usage_ratio_mean |
+| --- | --- | --- | --- |
+| density_only | 0.9170 | 1.1975 | 0.4891 |
+| balanced_exit_static | 0.8177 | 1.4516 | 0.4997 |
+| split_flow_only | 0.8177 | 1.4516 | 0.4997 |
+
+## 10. Mechanism Visualization
+
+Mechanism plots show density field, exit pressure timeline, secondary-exit usage, and split-flow snapshot for `density_dbact`.
+
+## 11. Interpretation
+
+Density-aware DBACT should be interpreted as preliminary evidence in this two-exit bottleneck scenario, not as a universal crowd-management solution.
+
+## 12. Limitations
+
+- Simple microscopic behavior model
+- Heuristic guider influence and exit-choice model
+- Limited scenario geometry
+- No real crowd calibration
+- MP4 visualization uses CPU/Matplotlib rather than CUDA acceleration
+
+## 13. Next Steps
+
+Run broader parameter sweeps, calibrate pedestrian behavior, test stronger bottlenecks, and later connect to more realistic route-choice or exclusion-queue models.

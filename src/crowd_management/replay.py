@@ -17,6 +17,8 @@ class ReplayData:
     pedestrian_evacuated: np.ndarray
     guider_positions: np.ndarray
     guider_targets: np.ndarray
+    target_exit_ids: np.ndarray
+    evacuation_exit_ids: np.ndarray
     room: RoomConfig
     metrics: MetricsConfig
     mode: str
@@ -68,6 +70,8 @@ def save_replay(
         guider_targets = arrays["guider_targets"]
     else:
         guider_targets = np.zeros((len(times), 0, 2), dtype=float)
+    target_exit_ids = arrays.get("target_exit_ids", np.zeros_like(ped_evacuated, dtype=int))
+    evacuation_exit_ids = arrays.get("evacuation_exit_ids", np.full_like(ped_evacuated, -1, dtype=int))
 
     path = output / "replay.npz"
     np.savez_compressed(
@@ -78,6 +82,8 @@ def save_replay(
         pedestrian_evacuated=ped_evacuated,
         guider_positions=guider_positions,
         guider_targets=guider_targets,
+        target_exit_ids=target_exit_ids,
+        evacuation_exit_ids=evacuation_exit_ids,
         room=_room_to_array(config.room),
         metrics=_metrics_to_array(config.metrics),
         mode=np.asarray(mode),
@@ -102,6 +108,8 @@ def load_replay(path_or_run_dir: str | Path) -> ReplayData:
             pedestrian_evacuated=np.asarray(raw["pedestrian_evacuated"], dtype=bool),
             guider_positions=np.asarray(raw["guider_positions"], dtype=float),
             guider_targets=np.asarray(raw["guider_targets"], dtype=float),
+            target_exit_ids=np.asarray(raw["target_exit_ids"], dtype=int) if "target_exit_ids" in raw else np.zeros_like(raw["pedestrian_evacuated"], dtype=int),
+            evacuation_exit_ids=np.asarray(raw["evacuation_exit_ids"], dtype=int) if "evacuation_exit_ids" in raw else np.full_like(raw["pedestrian_evacuated"], -1, dtype=int),
             room=room,
             metrics=metrics,
             mode=mode,
