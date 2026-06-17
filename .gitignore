@@ -15,6 +15,7 @@ env/
 # Outputs
 outputs/*
 !outputs/.gitkeep
+runs/
 
 # Reference archives
 Crowd-Management-tested.zip
