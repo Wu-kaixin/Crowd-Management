@@ -72,6 +72,32 @@ large-scale city simulation
 full integration with external crowd simulators
 ```
 
+## Current Progress
+
+The repository is currently complete through Stage 4 on the `stage4-robust-density-dbact-evaluation` branch.
+
+Current status:
+
+- Stage 1 established the simple microscopic crowd simulator and baseline/guided runs.
+- Stage 2 added presentation-oriented visualization and one-exit multi-seed evaluation tooling.
+- Stage 3 added `configs/two_exit_bottleneck.yaml` and `density_dbact`, producing visible split-flow in a two-exit bottleneck scene.
+- Stage 4 added robust multi-seed evaluation, fair exit-choice baselines, ablation modes, a heuristic composite score, mechanism visualization, and Teams-ready reporting.
+
+Latest health check:
+
+```text
+pytest: 18 passed
+python -m compileall src scripts: passed
+python -m pip check: no broken requirements
+```
+
+Important Stage 4 interpretation:
+
+- `density_dbact` robustly induces split-flow and reduces congestion compared with single-exit-biased `baseline`, `static`, and original `dbact`.
+- Fair baselines such as `balanced_exit_static`, `split_flow_only`, and `density_only` are strong in the current heuristic simulator.
+- Therefore, the strongest current conclusion is that split-flow / exit-choice is the main mechanism; full density-aware DBACT is promising but not yet proven superior to simple fair split-flow baselines.
+- This remains feasibility evidence, not final validation of a crowd-management method.
+
 ## Simulator Model
 
 The current simulator uses a simple microscopic agent-based crowd model with social-force-like interactions.
@@ -493,6 +519,12 @@ Existing report artifacts:
 ```text
 reports/first_demo/FIRST_DEMO_REPORT.md
 reports/guidance_baselines_v1/GUIDANCE_BASELINES_REPORT.md
+reports/visualization_package_v1/VISUALIZATION_PACKAGE_REPORT.md
+reports/multi_seed_eval_v1/MULTI_SEED_EVAL_REPORT.md
+reports/density_dbact_v1/DENSITY_DBACT_REPORT.md
+reports/stage4_density_eval_v1/STAGE4_DENSITY_EVAL_REPORT.md
+reports/stage4_density_eval_v1/TEAMS_CHANNEL_REPORT.md
+reports/stage4_density_eval_v1/stage4_key_findings.md
 ```
 
 These reports should be read as feasibility evidence, not as final algorithm validation.
@@ -502,29 +534,28 @@ These reports should be read as feasibility evidence, not as final algorithm val
 Run tests with Conda:
 
 ```bash
-/home/kaixin/miniconda3/bin/conda run -n C-M pytest
+conda run -n C-M pytest
 ```
 
-The latest verified result is recorded in:
+The latest verified local health check is:
 
 ```text
-TEST_REPORT.md
+18 passed
 ```
 
 ## Near-Term Plan
 
-The next stage should focus on visualization, not on adding model complexity.
+The next stage should focus on validation and behavior-model quality rather than adding unrelated large systems.
 
 Recommended next implementation targets:
 
-1. replay data export for every run;
-2. high-quality single-run evacuation animation;
-3. baseline vs dbact side-by-side video;
-4. density heatmap overlay;
-5. final dashboard figure for presentation;
-6. heatmap snapshots at selected times.
+1. run the full Stage 4 command with all 10 seeds when time permits;
+2. sweep split-flow, compliance, guider influence radius, and exit-pressure parameters;
+3. design harder bottleneck geometries where dynamic guider placement matters more;
+4. calibrate the pedestrian/exit-choice behavior model against literature or data;
+5. prepare compact presentation slides using the Stage 4 Teams report and key figures.
 
-After the visualization is strong enough, the next research step is to improve the guider-pedestrian interaction model and test scenarios where crowd management matters more, such as two-exit or narrow-exit cases.
+Later work may revisit exclusion queues, hybrid micro-macro models, or LLM-assisted strategy design, but those remain outside the current implemented sprint.
 
 ## Research Interpretation
 
