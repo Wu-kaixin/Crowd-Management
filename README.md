@@ -4,6 +4,8 @@
 
 Reproducible 2D crowd-evacuation experiments with metrics, reports, and visualizations.
 
+Scientific Research Funding: Basic Research (A) ‘Development of Methods for Controlling Traffic Congestion and Crowding and Changing Behaviour Using an Extended Exclusion Queueing Model’ (Research Collaborator)
+
 [English](README.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md)
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
