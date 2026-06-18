@@ -5,6 +5,7 @@
 具備可重現實驗、量化指標、研究報告與視覺化成果的 2D 人群疏散模擬平台。
 
 科學研究經費 基礎研究（A） 「運用擴展排他佇列模型開發交通壅塞與擁擠的控制及行為改變方法」（研究合作者）
+https://kaken.nii.ac.jp/grant/KAKENHI-PROJECT-26H02177/
 
 [English](README.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md)
 
