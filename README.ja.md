@@ -5,6 +5,7 @@
 再現可能な 2D 避難シミュレーション、評価指標、レポート、可視化成果をまとめた研究用プロトタイプ。
 
 科學研究經費 基礎研究（A） 「拡張排他待ち行列モデルを用いた渋滞・混雑の制御および行動変容方法の開発」（研究合作者)
+https://kaken.nii.ac.jp/grant/KAKENHI-PROJECT-26H02177/
 
 [English](README.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md)
 
