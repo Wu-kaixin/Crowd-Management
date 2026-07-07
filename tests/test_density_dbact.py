@@ -10,7 +10,7 @@ from crowd_management.types import SimulationConfig
 
 
 def test_two_exit_bottleneck_config_loads_with_multiple_exits():
-    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "configs" / "two_exit_bottleneck.yaml")
+    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "legacy" / "evacuation_guidance" / "configs" / "two_exit_bottleneck.yaml")
     assert cfg.room.width == 24.0
     assert len(cfg.room.all_exits) >= 2
     assert cfg.room.all_exits[0].id == "main_exit"
@@ -18,7 +18,7 @@ def test_two_exit_bottleneck_config_loads_with_multiple_exits():
 
 
 def test_density_dbact_runs_short_multi_exit_simulation():
-    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "configs" / "two_exit_bottleneck.yaml")
+    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "legacy" / "evacuation_guidance" / "configs" / "two_exit_bottleneck.yaml")
     history = run_simulation(cfg, guided=True, steps=6, guidance_mode="density_dbact")
     data = history.as_arrays()
     assert data["positions"].shape[0] == 7
@@ -39,7 +39,7 @@ def test_density_dbact_experiment_cli_generates_lightweight_outputs(tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_density_dbact_experiment.py"),
             "--config",
-            str(repo / "configs" / "two_exit_bottleneck.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "two_exit_bottleneck.yaml"),
             "--modes",
             "baseline",
             "density_dbact",
