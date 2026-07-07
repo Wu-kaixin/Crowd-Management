@@ -9,11 +9,17 @@
 - 使用 coverage control / CVT 風格方法部署多個 guide agents。
 - 用 coverage ratio、maximum boundary gap、radial deployment error、angular uniformity、guide-guide distance、guide-crowd safety violation 等指標評估。
 
-舊的疏散、DBACT、density-DBACT 實驗已移至：
+## 目前素材
 
-```text
-legacy/evacuation_guidance/
-```
+主 README 只展示新的 ABCG 素材。舊的 DBAct 圖片、GIF、影片素材已集中放入 `legacy/evacuation_guidance/`。
+
+![ABCG static containment grid](reports/media/abcg_static_containment_grid.png)
+
+![ABCG containment animation](reports/media/abcg_static_containment.gif)
+
+![ABCG metrics summary](reports/media/abcg_metrics_summary.png)
+
+## 使用方式
 
 新實驗入口：
 
@@ -21,10 +27,22 @@ legacy/evacuation_guidance/
 python scripts/run_static_containment.py --config configs/static_crowd_circle.yaml --output runs/static_containment_circle --methods random static_circle legacy_center_radius abcg
 ```
 
+重新生成 README 圖片與 GIF：
+
+```bash
+python scripts/build_readme_media.py
+```
+
 測試：
 
 ```bash
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
+```
+
+舊的疏散、DBACT、density-DBACT 實驗已移至：
+
+```text
+legacy/evacuation_guidance/
 ```
 
 詳細英文說明見 [README.md](README.md)。
