@@ -2,9 +2,9 @@
 
 # Crowd Management
 
-Adaptive guide-agent deployment around unknown crowds.
+Research simulator for adaptive guide-agent deployment around unknown crowds.
 
-[English](README.md) | [繁體中文](README.zh-TW.md) | [日本語](README.ja.md)
+[English](README.md) | [Traditional Chinese](README.zh-TW.md) | [Japanese](README.ja.md)
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)
@@ -14,17 +14,19 @@ Adaptive guide-agent deployment around unknown crowds.
 
 </div>
 
-Crowd Management is now centered on **ABCG: Adaptive Boundary-Coverage Guidance**. The current research problem is deliberately narrow: given an unknown static crowd represented as a point cloud, estimate the crowd boundary and deploy multiple guide agents around that boundary at a desired safety distance.
+Crowd Management is a Python research prototype for studying how multiple guide agents can be deployed around an unknown crowd. The active scope is static containment: a crowd is represented as a point cloud, its boundary is estimated, and guide agents are placed around an offset safety boundary.
 
-The previous evacuation / DBACT / density-DBACT line has been archived as legacy material. It remains available for comparison and reproducibility, but it is no longer the main project narrative.
+The current method family is **ABCG: Adaptive Boundary-Coverage Guidance**. It combines radial boundary estimation, coverage-control ideas, CVT-style deployment, and simple safety projection. The goal is to create a small, reproducible platform for testing boundary-aware deployment before adding dynamic crowd response, route choice, evacuation behavior, or real-time safety constraints.
 
-> This is a research prototype, not a calibrated real-world crowd-management product or safety-certified deployment system.
+Previous evacuation-guidance experiments are preserved as legacy baselines. They are available for reproducibility, but they are not the main project direction.
+
+> This repository is a research prototype. It is not a calibrated crowd-safety product, deployment planner, or safety-certified control system.
 
 ---
 
-## Visual Snapshot
+## Visual Overview
 
-The active README media now shows ABCG static unknown-crowd containment. Old DBAct images, GIFs, and videos are kept only under `legacy/evacuation_guidance/`.
+The active media below shows ABCG static containment on circular, elliptical, irregular, and two-cluster point clouds.
 
 ![ABCG static containment grid](reports/media/abcg_static_containment_grid.png)
 
@@ -32,35 +34,34 @@ The active README media now shows ABCG static unknown-crowd containment. Old DBA
 
 ![ABCG metrics summary](reports/media/abcg_metrics_summary.png)
 
-The repository currently commits PNG and GIF media for the new static containment line. Existing DBAct-related MP4/GIF artifacts are archived or kept as ignored local run outputs because they describe the old direction.
+Legacy evacuation, DBAct, and density-DBAct media are stored under `legacy/evacuation_guidance/` and are not used as the main README visuals.
 
 ---
 
-## Current Direction
+## Active Research Scope
 
-Short-term target: **static unknown crowd containment**.
+The current stage evaluates static unknown-crowd containment.
 
-- Crowd state: one static point cloud, no evacuation, no crowd-guide interaction, no communication limits.
-- Estimation: center and radial boundary estimation from observed pedestrian points.
-- Deployment: guide agents cover an offset safety boundary using ABCG / CVT-style coverage control.
-- Metrics: coverage ratio, maximum boundary gap, radial deployment error, angular uniformity, guide-guide separation, and guide-crowd safety violations.
+- **Input:** a static 2D crowd point cloud.
+- **Estimator:** center estimation, radial boundary estimation, and offset safety-boundary construction.
+- **Controller:** ABCG guide-agent placement using weighted boundary coverage.
+- **Baselines:** random deployment, static circular deployment, and legacy center-radius deployment.
+- **Metrics:** coverage ratio, maximum boundary gap, radial deployment error, angular uniformity, minimum guide-guide distance, and guide-crowd safety violations.
 
-Longer-term stages will reintroduce dynamic crowds, behavior response, route choice, local collision avoidance, and evacuation management.
+The next stages can add dynamic crowds, behavior response, local collision avoidance, route choice, and evacuation scenarios after the static containment layer is stable.
 
 ---
 
 ## Quick Start
 
-Create an environment:
+Create or update the conda environment:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .\.venv\Scripts\Activate.ps1
-python -m pip install -U pip
-python -m pip install -e ".[dev]"
+conda env update -n abcg -f environment.yml
+conda activate abcg
 ```
 
-Run the main ABCG experiment:
+Run the main static containment experiment:
 
 ```bash
 python scripts/run_static_containment.py --config configs/static_crowd_circle.yaml --output runs/static_containment_circle --methods random static_circle legacy_center_radius abcg
@@ -87,25 +88,25 @@ pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 
 ---
 
-## Repository Structure
+## Repository Layout
 
 ```text
 Crowd-Management/
-|-- configs/                         # Active static crowd containment scenarios
+|-- configs/                         # Active static containment scenarios
 |-- src/crowd_management/
-|   |-- crowd/                        # Static unknown-crowd point-cloud generators
+|   |-- crowd/                        # Static crowd point-cloud generators
 |   |-- estimation/                   # Boundary and state estimation
-|   |-- controllers/                  # ABCG, CVT, random/static/legacy deployment baselines
-|   |-- experiments/                  # Static containment experiment runner
-|   |-- legacy/evacuation/            # Legacy evacuation / DBACT implementation
+|   |-- controllers/                  # ABCG, CVT, and deployment baselines
+|   |-- experiments/                  # Experiment runners
+|   |-- legacy/evacuation/            # Archived evacuation implementation
 |   |-- containment_metrics.py        # Static containment metrics
-|   `-- containment_visualization.py  # Static containment plots
+|   `-- containment_visualization.py  # Static containment plotting
 |-- scripts/
 |   |-- run_static_containment.py     # Main experiment CLI
-|   |-- build_readme_media.py         # Reproducible README media builder
-|   `-- *_legacy wrappers             # Compatibility wrappers for archived evacuation scripts
+|   |-- build_readme_media.py         # README media generation
+|   `-- legacy wrappers               # Compatibility wrappers for archived scripts
 |-- reports/
-|   `-- media/                        # Active ABCG README media
+|   `-- media/                        # Active ABCG media
 |-- legacy/
 |   `-- evacuation_guidance/           # Archived old configs, reports, media, and scripts
 |-- tests/
@@ -117,31 +118,24 @@ Crowd-Management/
 
 ## Legacy Archive
 
-The old evacuation-guidance direction is stored in one place:
+The earlier evacuation-guidance line is stored in:
 
-- `legacy/evacuation_guidance/configs/`: old evacuation scenario files.
-- `legacy/evacuation_guidance/reports/`: old Stage 1-4 reports, figures, CSV files, GIF media, and archived visual outputs.
-- `legacy/evacuation_guidance/scripts/`: original old CLI implementations.
-- `src/crowd_management/legacy/evacuation/`: old simulator, DBACT-style controller, density-DBACT controller, metrics, replay, and visualization code.
+```text
+legacy/evacuation_guidance/
+src/crowd_management/legacy/evacuation/
+```
 
-Root-level legacy scripts remain as compatibility wrappers, but new work should start from `scripts/run_static_containment.py`.
-
----
-
-## Literature-Backed Roadmap
-
-- Coverage control and CVT provide the main deployment theory for ABCG.
-- Shepherding studies motivate multi-guide containment and later collect/drive extensions.
-- Social-force, CA/floor-field, and navigation-field papers remain as dynamic-crowd and evacuation extensions.
-- RVO/ORCA and safety-control ideas should be added before any future real-time moving-guide claim.
-- Crowd disaster and congestion-risk papers motivate pressure, velocity variance, LOS, bottleneck, and failure-mode metrics.
+The archive contains old scenario files, reports, figures, GIF media, original script implementations, replay utilities, metrics, and evacuation controllers. Root-level compatibility wrappers remain for older commands, but new development should start from `scripts/run_static_containment.py`.
 
 ---
 
-## Project Status
+## Development Status
 
-- Active branch of research: ABCG static unknown-crowd containment.
-- Legacy branch of research: evacuation / DBACT / density-DBACT, archived for reproducibility.
-- Latest local validation: `23 passed`.
+- Active branch: `main`.
+- Active method family: ABCG static unknown-crowd containment.
+- Local validation: `23 passed`.
+- Main committed media: PNG and GIF artifacts under `reports/media/`.
+
+## License
 
 This project is released under the [MIT License](LICENSE).
