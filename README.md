@@ -1,8 +1,8 @@
 <div align="center">
 
-# Crowd Management Simulation Prototype
+# Crowd Management
 
-Reproducible 2D crowd-evacuation experiments with metrics, reports, and visualizations.
+Adaptive guide-agent deployment around unknown crowds, with legacy evacuation-guidance experiments preserved for comparison.
 
 Scientific Research Funding: Basic Research (A) ‘Development of Methods for Controlling Traffic Congestion and Crowding and Changing Behaviour Using an Extended Exclusion Queueing Model’ (Research Collaborator)
 
@@ -12,47 +12,43 @@ https://kaken.nii.ac.jp/grant/KAKENHI-PROJECT-26H02177/
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)
-![Tests](https://img.shields.io/badge/Tests-18%20passed-brightgreen.svg)
+![Tests](https://img.shields.io/badge/Tests-23%20passed-brightgreen.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
 
 </div>
 
-Crowd Management Simulation Prototype is a compact research simulator for testing crowd-evacuation guidance ideas before moving toward larger, real-world systems. It focuses on microscopic pedestrian motion, mobile guider influence, exit-choice behavior, density-aware split flow, reproducible evaluation, and presentation-ready visual outputs.
+Crowd Management is a research simulator for studying adaptive guide-agent deployment around unknown crowds. The current main line is not to prove that a DBACT-style evacuation controller is superior. The refocused problem is more basic and more defensible: given an unknown crowd represented as a point cloud, estimate its boundary and deploy multiple guide agents around that boundary at a desired safety distance.
 
-> This repository is a research prototype, not a calibrated real-world crowd-management product.
+The new method family is **ABCG: Adaptive Boundary-Coverage Guidance**. It is grounded in the core literature on coverage control, centroidal Voronoi tessellations, shepherding, navigation fields, social-force crowd modeling, and collision-avoidance/safety control. Previous DBACT and density-aware evacuation work remains in the repository as a reproducible feasibility sprint and legacy baseline.
 
----
-
-## Visual Showcase
-
-![Baseline vs DBACT animation](reports/media/baseline_vs_dbact.gif)
-
-> A tracked GIF artifact generated from replay data. Unlike local `runs/*.mp4` files, this file is committed under `reports/media/`, so it renders directly on GitHub.
-
-![Visualization dashboard](reports/visualization_upgrade_v1/dashboard.png)
-
-> Dashboard view with evacuation curves, normalized metrics, and final snapshots for multiple guidance modes.
+> This repository is a research prototype, not a calibrated real-world crowd-management product or safety-certified deployment system.
 
 ---
 
-## Media Gallery
+## Legacy Archive
 
-All inline media below points to committed repository files under `reports/`, so GitHub can render them without local run artifacts.
+The previous evacuation-guidance direction has been moved into a single archive:
 
-| Animation | Dashboard |
-| --- | --- |
-| <img src="reports/media/baseline_vs_dbact.gif" alt="Baseline vs DBACT animation" width="100%"> | <img src="reports/visualization_upgrade_v1/dashboard.png" alt="Visualization dashboard" width="100%"> |
+- `legacy/evacuation_guidance/configs/`: old evacuation scenario files.
+- `legacy/evacuation_guidance/reports/`: old Stage 1-4 reports, figures, CSV files, and GIF media.
+- `legacy/evacuation_guidance/scripts/`: original old CLI implementations.
+- `src/crowd_management/legacy/evacuation/`: old simulator, DBACT-style controller, density-DBACT controller, metrics, replay, and visualization code.
 
-| Final Snapshots | Density Heatmap |
-| --- | --- |
-| <img src="reports/visualization_upgrade_v1/all_modes_grid.png" alt="Final snapshots for four modes" width="100%"> | <img src="reports/visualization_upgrade_v1/heatmap_snapshots.png" alt="Density heatmap snapshots" width="100%"> |
+Root-level legacy scripts such as `scripts/run_guided.py` remain as compatibility wrappers, but new work should start from `scripts/run_static_containment.py`.
 
-| Evacuation Curve | Final Metrics |
-| --- | --- |
-| <img src="reports/guidance_baselines_v1/evacuation_rate_comparison.png" alt="Evacuation rate comparison" width="100%"> | <img src="reports/guidance_baselines_v1/final_metrics_comparison.png" alt="Final metrics comparison" width="100%"> |
+---
 
-Generated MP4 videos are still supported by the scripts, but they are stored under `runs/` by default and are intentionally ignored by Git. For GitHub display, use committed GIF or PNG artifacts, or publish large videos through GitHub Releases.
+## Current Research Direction
+
+The short-term target is **static unknown crowd containment**:
+
+- Crowd state: one static point cloud, no evacuation, no crowd-guide interaction, no communication limits.
+- Estimation: center and radial boundary estimation from observed pedestrian points.
+- Deployment: guide agents cover an offset safety boundary using ABCG/CVT-style coverage control.
+- Metrics: boundary coverage ratio, maximum boundary gap, radial deployment error, angular uniformity, minimum guide-guide distance, and guide-crowd safety violations.
+
+Longer-term stages reintroduce dynamic crowds, behavior response, route choice, local collision avoidance, and evacuation management. The old DBACT line is not deleted, but it is no longer the main claim.
 
 ---
 
@@ -60,29 +56,57 @@ Generated MP4 videos are still supported by the scripts, but they are stored und
 
 | Item | Details |
 | --- | --- |
-| Project name | Crowd Management Simulation Prototype |
-| Purpose | Compare crowd-guidance strategies in controlled 2D evacuation scenarios. |
+| Project name | Crowd Management |
+| Purpose | Study adaptive guide-agent deployment, beginning with static unknown-crowd containment. |
 | Core stack | Python 3.12, NumPy, PyYAML, Matplotlib, imageio-ffmpeg, Pytest |
-| Main scenarios | `simple_room.yaml`, `two_exits.yaml`, `two_exit_bottleneck.yaml` |
+| Main new scenarios | `static_crowd_circle.yaml`, `static_crowd_ellipse.yaml`, `static_crowd_nonconvex.yaml`, `static_crowd_two_clusters.yaml` |
+| Legacy scenarios | `legacy/evacuation_guidance/configs/simple_room.yaml`, `legacy/evacuation_guidance/configs/two_exits.yaml`, `legacy/evacuation_guidance/configs/two_exit_bottleneck.yaml` |
 | Output types | CSV metrics, JSON summaries, replay files, PNG charts, GIF animations, Markdown reports |
 
 ---
 
 ## Features
 
+- **Static containment core**: circle, ellipse, nonconvex, and two-cluster static crowd point-cloud scenarios.
+- **Boundary estimation**: radial boundary estimates, safety-boundary offsets, and sample weights for boundary importance.
+- **ABCG deployment**: CVT-style boundary coverage for guide-agent placement around unknown crowds.
+- **Containment metrics**: coverage ratio, maximum boundary gap, radial error, angular uniformity, separation, and safety violations.
 - **Microscopic crowd simulation**: each pedestrian has position, velocity, desired speed, compliance, target exit, and evacuation state.
-- **Multiple guidance modes**: baseline, static, random, DBACT-style, nearest-exit, balanced split-flow, density-only, pressure-only, and density-aware DBACT.
+- **Legacy guidance modes**: baseline, static, random, DBACT-style, nearest-exit, balanced split-flow, density-only, pressure-only, and density-aware DBACT.
 - **Reproducible evaluation**: single-run scripts, multi-seed aggregation, Stage 4 fair baselines, ablations, and composite scoring.
 - **Visualization-first workflow**: snapshots, heatmaps, dashboards, synchronized comparisons, animations, and report-ready figures.
 - **Tested CLI pipeline**: tests cover simulation, density-aware guidance, visualization packaging, multi-seed evaluation, and Stage 4 smoke workflows.
 
 ---
 
-## Results & Visualizations
+## Static Containment Quick Start
+
+Run the new ABCG static containment experiment:
+
+```bash
+python scripts/run_static_containment.py --config configs/static_crowd_circle.yaml --output runs/static_containment_circle --methods random static_circle legacy_center_radius abcg
+```
+
+Important outputs:
+
+- `runs/static_containment_circle/summary.json`
+- `runs/static_containment_circle/summary.csv`
+- `runs/static_containment_circle/abcg/metrics.json`
+- `runs/static_containment_circle/abcg/containment.png`
+
+Run all tests:
+
+```bash
+pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
+```
+
+---
+
+## Legacy Results & Visualizations
 
 ### Stage 4 Density-aware DBACT Evaluation
 
-The latest tracked Stage 4 report evaluates 9 modes across 10 seeds in `configs/two_exit_bottleneck.yaml`.
+This report is now treated as prior feasibility evidence, not the main method claim. It evaluates 9 modes across 10 seeds in `legacy/evacuation_guidance/configs/two_exit_bottleneck.yaml`.
 
 | Mode | Evacuation Rate | Congestion | Cumulative Congestion | Alternate-exit Usage | Exit Imbalance | Composite Score |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -143,19 +167,35 @@ conda activate C-M
 ### 3. One-line Smoke Experiment
 
 ```bash
-python scripts/run_density_dbact_experiment.py --config configs/two_exit_bottleneck.yaml --modes baseline density_dbact --steps 20 --seed 0 --output runs/quick_density_dbact --skip-video --fast-test
+python scripts/run_static_containment.py --config configs/static_crowd_circle.yaml --output runs/static_containment_circle --methods random static_circle legacy_center_radius abcg
 ```
 
 Important outputs:
 
-- `runs/quick_density_dbact/summary/metrics_summary.csv`
-- `runs/quick_density_dbact/summary/DENSITY_DBACT_REPORT.md`
-- `runs/quick_density_dbact/comparison/final_metrics_bar.png`
-- `runs/quick_density_dbact/comparison/exit_usage_curve.png`
+- `runs/static_containment_circle/summary.json`
+- `runs/static_containment_circle/summary.csv`
+- `runs/static_containment_circle/abcg/metrics.json`
+- `runs/static_containment_circle/abcg/containment.png`
 
 ---
 
 ## How It Works
+
+### New Static Containment Line
+
+1. **Generate an unknown crowd point cloud**
+   Static generators create circle, ellipse, irregular/nonconvex, and two-cluster crowds.
+
+2. **Estimate the crowd boundary**
+   The estimator computes a center, radial boundary samples, and an offset safety boundary.
+
+3. **Deploy guide agents**
+   `ABCGController` converts the safety boundary into a weighted coverage-control problem and places guide agents around it.
+
+4. **Evaluate containment**
+   The experiment reports coverage, gap, radial error, angular uniformity, separation, and guide-crowd safety violations.
+
+### Legacy Evacuation Line
 
 1. **Load scenario configuration**
    YAML files define room size, exits, pedestrian count, speed distribution, compliance, guider count, and metric radii.
@@ -182,13 +222,20 @@ Important outputs:
 ```text
 Crowd-Management/
 |-- configs/                         # Scenario definitions
-|-- src/crowd_management/             # Simulator, controllers, metrics, replay, visualization
+|-- src/crowd_management/
+|   |-- crowd/                        # Static unknown-crowd point-cloud generators
+|   |-- estimation/                   # Boundary and state estimation
+|   |-- controllers/                  # ABCG, CVT, random/static/legacy deployment baselines
+|   |-- experiments/                  # Static containment experiment runner
+|   |-- containment_metrics.py        # Static containment metrics
+|   |-- containment_visualization.py  # Static containment plots
+|   |-- crowd_model.py                # Legacy evacuation simulator
+|   |-- dbact_transfer.py             # Legacy DBACT-style baseline
+|   `-- density_dbact.py              # Legacy density-aware evacuation baseline
 |-- scripts/                          # CLI entry points for experiments and rendering
-|-- reports/                          # Tracked reports and GitHub-renderable media
-|   |-- media/                        # Tracked GIF assets for README display
-|   |-- visualization_upgrade_v1/      # Dashboard, heatmaps, final snapshots
-|   |-- guidance_baselines_v1/         # Baseline comparison figures and metrics
-|   `-- stage4_density_eval_v1/        # Stage 4 aggregate CSV and reports
+|-- legacy/
+|   `-- evacuation_guidance/           # Archived old configs, reports, and CLI implementations
+|-- reports/                          # New ABCG reports and committed media
 |-- runs/                             # Local generated runs, ignored by Git
 |-- outputs/                          # Quick local outputs, ignored except .gitkeep
 |-- tests/                            # Simulation, CLI, visualization, and evaluation tests
@@ -206,26 +253,26 @@ Crowd-Management/
 Run basic baseline and DBACT guidance:
 
 ```bash
-python scripts/run_baseline.py --config configs/simple_room.yaml --output outputs/baseline
-python scripts/run_guided.py --config configs/simple_room.yaml --mode dbact --output outputs/dbact
+python scripts/run_baseline.py --config legacy/evacuation_guidance/configs/simple_room.yaml --output outputs/baseline
+python scripts/run_guided.py --config legacy/evacuation_guidance/configs/simple_room.yaml --mode dbact --output outputs/dbact
 ```
 
 Build a visualization package:
 
 ```bash
-python scripts/run_visualization_package.py --config configs/simple_room.yaml --modes baseline static random dbact --steps 400 --seed 0 --output runs/visualization_package_v1 --quality high
+python scripts/run_visualization_package.py --config legacy/evacuation_guidance/configs/simple_room.yaml --modes baseline static random dbact --steps 400 --seed 0 --output runs/visualization_package_v1 --quality high
 ```
 
 Run full Stage 4 evaluation:
 
 ```bash
-python scripts/run_stage4_density_eval.py --config configs/two_exit_bottleneck.yaml --modes baseline static dbact nearest_exit balanced_exit_static density_only exit_pressure_only split_flow_only density_dbact --seeds 0 1 2 3 4 5 6 7 8 9 --steps 800 --output runs/stage4_density_eval_v1 --quality high
+python scripts/run_stage4_density_eval.py --config legacy/evacuation_guidance/configs/two_exit_bottleneck.yaml --modes baseline static dbact nearest_exit balanced_exit_static density_only exit_pressure_only split_flow_only density_dbact --seeds 0 1 2 3 4 5 6 7 8 9 --steps 800 --output runs/stage4_density_eval_v1 --quality high
 ```
 
 Render a GitHub-friendly GIF:
 
 ```bash
-python scripts/render_side_by_side.py --runs runs/visualization_package_v1/baseline runs/visualization_package_v1/dbact --labels baseline dbact --output reports/media/baseline_vs_dbact.gif --fps 5
+python scripts/render_side_by_side.py --runs runs/visualization_package_v1/baseline runs/visualization_package_v1/dbact --labels baseline dbact --output legacy/evacuation_guidance/reports/media/baseline_vs_dbact.gif --fps 5
 ```
 
 Run tests:
@@ -236,9 +283,15 @@ pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 
 ---
 
-## Current Research Direction
+## Literature-backed Roadmap
 
-The next useful work is validation, not adding unrelated large systems. Priority items are parameter sweeps for compliance, guider influence radius, density weighting, exit-pressure weighting, stronger bottleneck geometries, and clearer separation between route-choice effects and guider-placement effects.
+The refactor follows the V2 reading reports:
+
+- Coverage control and CVT provide the main deployment theory for ABCG.
+- Shepherding studies motivate multi-guide containment and later collect/drive extensions.
+- Social-force, CA/floor-field, and navigation-field papers remain as dynamic-crowd and evacuation extensions.
+- RVO/ORCA and safety-control ideas should be added before any future real-time moving-guide claim.
+- Crowd disaster and congestion-risk papers motivate pressure, velocity variance, LOS, bottleneck, and failure-mode metrics.
 
 ---
 

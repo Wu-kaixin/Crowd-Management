@@ -18,7 +18,7 @@ def test_visualization_package_cli_generates_lightweight_outputs(tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_visualization_package.py"),
             "--config",
-            str(repo / "configs" / "simple_room.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "simple_room.yaml"),
             "--modes",
             "baseline",
             "dbact",

@@ -15,7 +15,7 @@ from crowd_management.types import SimulationConfig, as_vec2, limit_norm, unit
 
 
 def _config() -> SimulationConfig:
-    return SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "configs" / "simple_room.yaml")
+    return SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "legacy" / "evacuation_guidance" / "configs" / "simple_room.yaml")
 
 
 def test_config_loads_and_vector_helpers():
@@ -97,7 +97,7 @@ def test_guided_modes_run_from_cli(mode, tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_guided.py"),
             "--config",
-            str(repo / "configs" / "simple_room.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "simple_room.yaml"),
             "--output",
             str(output),
             "--steps",
@@ -130,7 +130,7 @@ def test_visualization_replay_and_render_scripts(tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_baseline.py"),
             "--config",
-            str(repo / "configs" / "simple_room.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "simple_room.yaml"),
             "--output",
             str(baseline),
             "--steps",
@@ -140,7 +140,7 @@ def test_visualization_replay_and_render_scripts(tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_guided.py"),
             "--config",
-            str(repo / "configs" / "simple_room.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "simple_room.yaml"),
             "--output",
             str(dbact),
             "--steps",
@@ -263,7 +263,7 @@ def test_multi_run_comparison_outputs(tmp_path):
 
 
 def test_two_exits_config_loads_as_prepared_scenario():
-    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "configs" / "two_exits.yaml")
+    cfg = SimulationConfig.from_yaml(Path(__file__).resolve().parents[1] / "legacy" / "evacuation_guidance" / "configs" / "two_exits.yaml")
     assert cfg.pedestrians.count == 220
     assert cfg.guiders.count == 6
     assert cfg.room.exit_center_y == 9.0

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "crowd-management"
 version = "0.1.0"
-description = "Simple crowd management simulator for testing cargo-guidance transfer."
+description = "Research simulator for adaptive guide-agent deployment around unknown crowds."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

@@ -18,7 +18,7 @@ def test_stage4_density_eval_smoke_outputs(tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_stage4_density_eval.py"),
             "--config",
-            str(repo / "configs" / "two_exit_bottleneck.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "two_exit_bottleneck.yaml"),
             "--modes",
             "baseline",
             "density_dbact",

@@ -17,7 +17,7 @@ def test_multi_seed_eval_cli_generates_summary_and_aggregate(tmp_path):
             sys.executable,
             str(repo / "scripts" / "run_multi_seed_eval.py"),
             "--config",
-            str(repo / "configs" / "simple_room.yaml"),
+            str(repo / "legacy" / "evacuation_guidance" / "configs" / "simple_room.yaml"),
             "--modes",
             "baseline",
             "static",
