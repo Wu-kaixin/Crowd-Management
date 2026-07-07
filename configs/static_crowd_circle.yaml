@@ -1,0 +1,16 @@
+seed: 0
+room:
+  size: [20.0, 14.0]
+crowd:
+  shape: circle
+  count: 180
+  center: [10.0, 7.0]
+  radius: 2.2
+  noise_std: 0.05
+guiders:
+  count: 8
+containment:
+  safety_distance: 0.85
+  coverage_radius: 1.25
+  min_guider_distance: 0.6
+  boundary_bins: 72

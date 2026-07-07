@@ -1,0 +1,17 @@
+seed: 1
+room:
+  size: [20.0, 14.0]
+crowd:
+  shape: ellipse
+  count: 220
+  center: [10.0, 7.0]
+  axes: [3.2, 1.35]
+  rotation_deg: 24.0
+  noise_std: 0.05
+guiders:
+  count: 9
+containment:
+  safety_distance: 0.85
+  coverage_radius: 1.25
+  min_guider_distance: 0.6
+  boundary_bins: 96
