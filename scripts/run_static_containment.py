@@ -19,7 +19,18 @@ def main() -> None:
     args = parser.parse_args()
     results = run_static_containment(args.config, args.output, methods=args.methods, save_plots=not args.skip_plots)
     for method, summary in results.items():
-        print(f"{method}: coverage={summary['coverage_ratio']:.3f}, gap={summary['max_boundary_gap']:.3f}")
+        print(
+            f"{method}: coverage={summary['coverage_ratio']:.3f}, "
+            f"max_euclidean_distance={summary['max_euclidean_boundary_distance']:.3f}, "
+            f"evaluation_status={summary['evaluation_status']}, "
+            f"boundary_v2_status={summary['boundary_v2_status']}, "
+            f"periodic_plan_status={summary['periodic_plan_status']}, "
+            f"resource_status={summary['resource_status']}, "
+            f"assignment_status={summary['assignment_status']}, "
+            f"episode_status={summary['episode_status']}, "
+            f"safety_filter_status={summary['safety_filter_status']}, "
+            f"safety_projected_steps={summary['safety_projected_steps']}"
+        )
 
 
 if __name__ == "__main__":

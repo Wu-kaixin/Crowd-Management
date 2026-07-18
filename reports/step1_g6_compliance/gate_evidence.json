@@ -1,0 +1,25 @@
+{
+  "g6_status": "UNMET_FROZEN_COMMIT",
+  "checks": {
+    "research_dependencies": true,
+    "reset_step_api": true,
+    "primary_scenarios": true,
+    "required_methods": true,
+    "paired_seed_count_at_least_30": true,
+    "bootstrap_samples_at_least_30": true,
+    "all_primary_records_accounted_for": true,
+    "all_failures_in_denominator": true,
+    "ablations_present": true,
+    "robustness_noise_dropout_scale": true,
+    "statistics_mean_median_ci_effect_worst5_failure": true,
+    "actual_failure_gallery": true,
+    "stress_double_cluster_and_narrow_neck": true,
+    "runtime_p95_memory": true,
+    "run_artifact_contract": true,
+    "frozen_commit": false
+  },
+  "primary_record_count": 600,
+  "expected_primary_record_count": 600,
+  "failure_count": 277,
+  "actual_failure_gallery_count": 2
+}

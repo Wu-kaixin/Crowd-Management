@@ -1,0 +1,18 @@
+{
+  "commit": "fe4e7c1dd310c4eaef814c70e9edb34ec02227ae",
+  "branch": "main",
+  "dirty": true,
+  "dirty_entry_count": 42,
+  "source_sha256": "6a0f5e45643f92e92517b23e37916038a0b2a7b7420b9813f4c94c3e9494e39f",
+  "frozen_commit": false,
+  "freeze_status": "UNFROZEN_DIRTY_WORKTREE",
+  "python": "3.12.13",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.4.6",
+    "scipy": "1.18.0",
+    "shapely": "2.1.2",
+    "matplotlib": "3.11.0",
+    "PyYAML": "6.0.3"
+  }
+}

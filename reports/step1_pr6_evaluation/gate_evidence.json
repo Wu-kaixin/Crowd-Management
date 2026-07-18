@@ -1,0 +1,11 @@
+{
+  "paired_seed_count": 30,
+  "heldout_shape_count": 2,
+  "variant_count": 4,
+  "record_count": 240,
+  "all_records_accounted_for": true,
+  "confidence_intervals_present": true,
+  "failure_gallery_present": true,
+  "frozen_commit": false,
+  "g6_status": "UNMET_FROZEN_COMMIT"
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "shape": "c_shape",
+    "seed": 5,
+    "variant": "radial_neutral",
+    "selection_role": "worst_valid_case",
+    "boundary_status": "VALID",
+    "boundary_reason": "valid",
+    "curve_hausdorff": 1.3534597823375953
+  },
+  {
+    "shape": "c_shape",
+    "seed": 12,
+    "variant": "radial_neutral",
+    "selection_role": "worst_valid_case",
+    "boundary_status": "VALID",
+    "boundary_reason": "valid",
+    "curve_hausdorff": 1.34701387659161
+  },
+  {
+    "shape": "c_shape",
+    "seed": 3,
+    "variant": "radial_neutral",
+    "selection_role": "worst_valid_case",
+    "boundary_status": "VALID",
+    "boundary_reason": "valid",
+    "curve_hausdorff": 1.3361502592887318
+  },
+  {
+    "shape": "c_shape",
+    "seed": 29,
+    "variant": "radial_neutral",
+    "selection_role": "worst_valid_case",
+    "boundary_status": "VALID",
+    "boundary_reason": "valid",
+    "curve_hausdorff": 1.304988727093941
+  },
+  {
+    "shape": "c_shape",
+    "seed": 9,
+    "variant": "radial_neutral",
+    "selection_role": "worst_valid_case",
+    "boundary_status": "VALID",
+    "boundary_reason": "valid",
+    "curve_hausdorff": 1.262426043630426
+  },
+  {
+    "shape": "c_shape",
+    "seed": 6,
+    "variant": "radial_neutral",
+    "selection_role": "worst_valid_case",
+    "boundary_status": "VALID",
+    "boundary_reason": "valid",
+    "curve_hausdorff": 1.2459880518189592
+  }
+]

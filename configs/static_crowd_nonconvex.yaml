@@ -15,3 +15,37 @@ containment:
   coverage_radius: 1.35
   min_guider_distance: 0.6
   boundary_bins: 108
+boundary:
+  estimator: alpha
+  alpha_scale: 2.5
+  alpha_growth_factors: [1.0, 1.25, 1.5, 2.0, 3.0, 4.0]
+  alpha_smoothing_passes: 5
+  min_observation_coverage: 0.8
+  bootstrap_samples: 16
+  bootstrap_min_success_fraction: 0.5
+  bootstrap_confidence_floor: 0.15
+
+resources:
+  required_arc_gap: 2.7
+  min_active_guides: 3
+  increase_hysteresis: 0.1
+  decrease_hysteresis: 0.1
+assignment:
+  switch_penalty: 0.25
+  reserve_cost: 0.0
+  unmet_target_cost: 1000000.0
+motion:
+  dt: 0.1
+  gain: 1.5
+  max_speed: 1.0
+  tracking_rmse_tolerance: 0.03
+  speed_tolerance: 0.03
+  hold_steps: 10
+  max_steps: 400
+safety:
+  enabled: true
+  min_guide_distance: 0.6
+  min_crowd_distance: 0.9
+  room_margin: 0.25
+  residual_tolerance: 1.0e-9
+  max_projection_sweeps: 200

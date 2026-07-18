@@ -1,0 +1,20 @@
+[
+  {
+    "fixture": "double_cluster",
+    "status": "BOUNDARY_INVALID",
+    "reason": "multiple_significant_components",
+    "selection_role": "stress_case"
+  },
+  {
+    "fixture": "capacity_shortfall",
+    "status": "CAPACITY_SHORTFALL",
+    "reason": "insufficient_available_guides",
+    "selection_role": "stress_case"
+  },
+  {
+    "fixture": "narrow_neck",
+    "status": "VALID",
+    "reason": "alpha_candidate_valid",
+    "selection_role": "stress_case"
+  }
+]

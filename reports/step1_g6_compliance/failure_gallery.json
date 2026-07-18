@@ -1,0 +1,14 @@
+[
+  {
+    "fixture": "double_cluster",
+    "status": "BOUNDARY_INVALID",
+    "reason": "multiple_significant_components",
+    "selection_role": "actual_failure"
+  },
+  {
+    "fixture": "capacity_shortfall",
+    "status": "CAPACITY_SHORTFALL",
+    "reason": "insufficient_available_guides",
+    "selection_role": "actual_failure"
+  }
+]
