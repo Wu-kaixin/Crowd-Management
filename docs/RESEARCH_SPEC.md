@@ -1,6 +1,6 @@
 # ABCG-v2 Step 1 Research and Development Specification
 
-Status: PR0-PR5 complete; PR6 formal-compliance implementation and evaluation evidence complete in the working tree; only the user-deferred G6 frozen-commit requirement remains pending.
+Status: **ABCG-v2 Step 1 research-complete**. PR0-PR6 and G0-G6 passed from the clean implementation freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`.
 Authority: `AGENTS.md` and `ABCG-v2 Step 1 Core Development Specification` (2026-07-18).
 Baseline: `main@fe4e7c1dd310c4eaef814c70e9edb34ec02227ae`.
 
@@ -328,15 +328,18 @@ worst valid cases.
 Each primary run writes the resolved config, manifest, observations,
 versioned boundary, plan trace, trajectory, event stream, and metrics under
 ignored `runs/step1_g6_compliance/`. Compact aggregate evidence and the source
-snapshot are written under `reports/step1_g6_compliance/`. The snapshot remains
-`UNFROZEN_DIRTY_WORKTREE`, so the final freeze requirement is still unmet.
+snapshot are written under `reports/step1_g6_compliance/`; raw trajectories
+and repeated per-episode rows remain external artifacts. The formal clean
+checkout records `FROZEN_COMMIT`, while evaluator-generated
+`gate_evidence.json` records `overall_status=PASS`, `frozen_commit=PASS`, and
+the evaluated commit.
 
 ## 5. Current PR6 mathematics and evidence contract
 
 Periodic coverage, resource selection, identity assignment, and fixed-target
 kinematics plus sampled-data velocity safety are CURRENT through PR5. Alpha
 reconstruction, bootstrap confidence, and paired held-out evaluation are
-CURRENT in PR6, subject to the unfrozen-snapshot limitation above.
+CURRENT in PR6 and reproduced from the clean implementation freeze above.
 
 ### 5.1 Boundary and periodic coverage
 
@@ -411,7 +414,7 @@ of robust containment efficacy.
 | PR3 | Adaptive resources, hysteresis, reserve, identity-preserving assignment | G3 | Complete |
 | PR4 | `p_dot=u`, saturation, integrator, state machine, episode traces | G4 | Complete; 74 tests and six smoke paths pass |
 | PR5 | Velocity safety projection, diagnostics, infeasible/emergency state | G5 | Complete; 82 tests and seven smoke scenarios pass |
-| PR6 | Alpha/concave boundary, bootstrap confidence, formal paired closed-loop evaluation | G6 | Formal compliance complete in working tree; frozen commit pending |
+| PR6 | Alpha/concave boundary, bootstrap confidence, formal paired closed-loop evaluation | G6 | Complete; frozen clean-checkout G6 PASS |
 
 No later PR may start when the current gate fails.
 
@@ -461,7 +464,9 @@ conda run --no-capture-output -n abcg python scripts/run_step1_g6_compliance.py 
 `No broken requirements found.` when the environment is healthy.
 
 The PR6 validation snapshot is recorded in `TEST_REPORT.md`. Generated `runs/`
-remain untracked; compact formal G6 evidence is kept under `reports/`.
+remain untracked; compact formal G6 evidence is kept under `reports/`, while
+the full final verification artifacts remain outside the repository to avoid
+a commit-SHA self-reference cycle.
 
 ## 8. Prohibited shortcuts
 
@@ -496,5 +501,8 @@ accounting. It does not establish improved confidence-aware control, dynamic
 reassignment, continuous-time trajectory safety, forward invariance, robust
 containment convergence, real-sensor performance, or human containment
 efficacy. The default static cases still time out when fixed targets conflict
-with sampled-data clearance, and G6 remains formally incomplete until the
-evaluation is reproduced from a reviewed frozen commit.
+with sampled-data clearance. Step 1 is research-complete under the stated
+synthetic, static, single-crowd scope after reproduction from the reviewed
+implementation freeze; this does not broaden any claim to human response,
+containment efficacy, dynamic/multiple crowds, path-planning completeness, or
+unconditional safety.

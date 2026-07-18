@@ -8,7 +8,7 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)
-![Tests](https://img.shields.io/badge/Tests-93%20passed-brightgreen.svg)
+![Tests](https://img.shields.io/badge/Tests-95%20passed-brightgreen.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
 
@@ -16,7 +16,7 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 Crowd Management is a Python research prototype for studying how multiple guide agents can be deployed around an unknown crowd. The active scope is static containment: a crowd is represented as a point cloud, its boundary is estimated, and guide agents are placed around an offset safety boundary.
 
-The current method family is **ABCG: Adaptive Boundary-Coverage Guidance**. It combines radial or alpha-shape boundary estimation, bootstrap uncertainty, periodic coverage planning, adaptive guide allocation, SciPy identity-preserving assignment, a measured-feedback `reset/step` velocity controller, and sampled-data velocity safety projection. PR0-PR6 implementation and formal G6 evaluation evidence are present in the working tree. The frozen-commit condition remains intentionally unmet until review is complete.
+The current method family is **ABCG: Adaptive Boundary-Coverage Guidance**. It combines radial or alpha-shape boundary estimation, bootstrap uncertainty, periodic coverage planning, adaptive guide allocation, SciPy identity-preserving assignment, a measured-feedback `reset/step` velocity controller, and sampled-data velocity safety projection. PR0-PR6 and every G0-G6 gate were reproduced from the clean implementation freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`. **ABCG-v2 Step 1 is research-complete.**
 
 Previous evacuation-guidance experiments are preserved as legacy baselines. They are available for reproducibility, but they are not the main project direction.
 
@@ -118,7 +118,7 @@ Run the formal PR6/G6 closed-loop evaluation:
 python scripts/run_step1_g6_compliance.py --output reports/step1_g6_compliance --run-root runs/step1_g6_compliance
 ```
 
-The formal report is [reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md). The earlier boundary-only PR6 evaluator remains available as a compatibility diagnostic, but it is not sufficient by itself for formal G6. The formal source snapshot is deliberately marked `UNFROZEN_DIRTY_WORKTREE`; committing must happen only after the staged scope is reviewed.
+The formal report is [reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md). The earlier boundary-only PR6 evaluator remains available as a compatibility diagnostic, but it is not sufficient by itself for formal G6. The committed compact evidence records `overall_status=PASS`, `frozen_commit=PASS`, and the exact evaluated implementation commit; raw trajectories and repeated records remain external reproducibility artifacts.
 
 ---
 
@@ -174,9 +174,18 @@ The archive contains old scenario files, reports, figures, GIF media, original s
 
 - Active branch: `main`.
 - Active method family: ABCG static unknown-crowd containment.
-- Step 1 delivery status: PR0-PR5 complete; PR6 formal-compliance implementation/evaluation complete in the working tree; only the user-deferred frozen-commit requirement remains pending.
-- Pre-freeze local validation in Conda `abcg`: `95 passed`.
+- Step 1 delivery status: **ABCG-v2 Step 1 research-complete** after clean-checkout G0-G6 reproduction.
+- Frozen implementation validation in Conda `abcg`: `95 passed`; complete G6 `PASS` with all 600 primary records retained.
 - Main committed media: PNG and GIF artifacts under `reports/media/`.
+
+Research-complete is deliberately narrow: it verifies guide-agent deployment
+around one static unknown crowd in simulation. It does not prove human
+compliance, containment effectiveness, evacuation improvement, behavioral
+change, dynamic/multiple-crowd applicability, or continuous-time safety. U/C
+nonconvex convergence remains limited because fixed-target straight-line
+feedback has no obstacle-routing planner. The sequential sampled-data safety
+projection is an auditable engineering filter, not an unconditional formal
+safety certificate, and all failure states remain research results.
 
 ## License
 

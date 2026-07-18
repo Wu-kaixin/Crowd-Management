@@ -4,7 +4,7 @@
 
 目前主線是 **ABCG: Adaptive Boundary-Coverage Guidance**：
 
-PR6 已加入 alpha-shape 非凸邊界估計、bootstrap 不確定性、U/C 留出形狀各 30 個配對種子、消融、95% 信賴區間與失敗圖集。實作與評估證據已存在工作樹，但評估快照尚未來自凍結提交，因此 G6 的 frozen-commit 條件仍未滿足。
+PR6 已加入 alpha-shape 非凸邊界估計、bootstrap 不確定性、U/C 留出形狀各 30 個配對種子、消融、95% 信賴區間與失敗圖集。G0-G6 已從乾淨的凍結提交 `f2494922b2431bfd9a37a247add8a79acfdc18ed` 全部得到 PASS，**ABCG-v2 Step 1 已達 research-complete**。此結論僅限單一靜態人群模擬，不證明動態人群、真人行為、圍控成效、疏散改善或無條件安全性。
 
 - 從未知靜態人群點雲估計人群中心與邊界。
 - 在估計邊界外建立安全距離邊界。
