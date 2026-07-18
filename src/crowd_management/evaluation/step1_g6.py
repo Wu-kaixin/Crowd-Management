@@ -13,6 +13,7 @@ import importlib.metadata
 import json
 import platform
 import subprocess
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, replace
@@ -940,6 +941,35 @@ def _run_ablations(config: G6EvaluationConfig, primary: list[dict[str, Any]]) ->
     return records
 
 
+def _ablation_summary(records: list[dict[str, Any]], config: G6EvaluationConfig) -> dict[str, Any]:
+    rng = np.random.default_rng(700_004)
+    summary: dict[str, Any] = {}
+    for scenario in (item for item in NONCONVEX_SCENARIOS if item in config.scenarios):
+        summary[scenario] = {}
+        for variant in ABLATION_VARIANTS:
+            subset = [
+                record for record in records if record["scenario"] == scenario and record["variant"] == variant
+            ]
+            summary[scenario][variant] = {
+                "run_count": len(subset),
+                "valid_count": int(sum(bool(record["valid"]) for record in subset)),
+                "status_counts": {
+                    status: int(sum(record["status"] == status for record in subset))
+                    for status in sorted({str(record["status"]) for record in subset})
+                },
+                "metrics": {
+                    metric: _summary(
+                        [float(record[metric]) for record in subset if record.get(metric) is not None],
+                        rng,
+                        config.confidence_interval_resamples,
+                        "lower",
+                    )
+                    for metric in ("curve_chamfer_m", "curve_hausdorff95_m", "plan_h_final", "plan_max_arc_gap_m")
+                },
+            }
+    return summary
+
+
 def _run_robustness_case(
     task: tuple[str, int, str, int, float],
     config: G6EvaluationConfig,
@@ -1153,6 +1183,94 @@ def _repository_snapshot(repo: Path, source_paths: list[Path]) -> dict[str, Any]
     }
 
 
+def _run_preflight_command(repo: Path, name: str, command: list[str]) -> dict[str, Any]:
+    """Run one formal preflight command and retain an auditable compact result."""
+    print(f"[G6 preflight] {name}: {' '.join(command)}", flush=True)
+    started = time.perf_counter()
+    result = subprocess.run(command, cwd=repo, check=False, capture_output=True, text=True)
+    duration_s = time.perf_counter() - started
+    stdout = result.stdout or ""
+    stderr = result.stderr or ""
+    if stdout:
+        print(stdout.rstrip(), flush=True)
+    if stderr:
+        print(stderr.rstrip(), file=sys.stderr, flush=True)
+    return {
+        "name": name,
+        "command": command,
+        "return_code": int(result.returncode),
+        "duration_s": duration_s,
+        "stdout_tail": stdout[-8000:],
+        "stderr_tail": stderr[-8000:],
+    }
+
+
+def run_g6_preflight(repo: str | Path | None = None) -> dict[str, Any]:
+    """Run the mandatory G0-G5 environment and regression checks.
+
+    The formal CLI calls this function directly. The returned evidence is
+    commit-bound and is validated again by :func:`run_g6_evaluation`; there is
+    no command-line switch that can assert a passing preflight manually.
+    """
+    repository = Path(repo).resolve() if repo is not None else Path(__file__).resolve().parents[3]
+
+    def git(*args: str) -> str:
+        result = subprocess.run(["git", *args], cwd=repository, check=False, capture_output=True, text=True)
+        return result.stdout.strip() if result.returncode == 0 else "unknown"
+
+    commit = git("rev-parse", "HEAD")
+    dirty_before = bool(git("status", "--porcelain"))
+    commands = [
+        _run_preflight_command(
+            repository,
+            "pytest",
+            [
+                sys.executable,
+                "-m",
+                "pytest",
+                "--basetemp=.tmp/pytest-temp",
+                "-o",
+                "cache_dir=.tmp/pytest-cache",
+            ],
+        ),
+        _run_preflight_command(
+            repository,
+            "compileall",
+            [sys.executable, "-m", "compileall", "-q", "src", "scripts"],
+        ),
+        _run_preflight_command(repository, "pip_check", [sys.executable, "-m", "pip", "check"]),
+    ]
+    dirty_after = bool(git("status", "--porcelain"))
+    return {
+        "schema": "abcg-v2-step1-preflight-v1",
+        "evaluated_commit": commit,
+        "python_executable": sys.executable,
+        "python_version": platform.python_version(),
+        "environment_name": "abcg" if "abcg" in str(sys.prefix).lower() else Path(sys.prefix).name,
+        "repository_clean_before": not dirty_before,
+        "repository_clean_after": not dirty_after,
+        "commands": commands,
+        "all_passed": all(command["return_code"] == 0 for command in commands),
+    }
+
+
+def _preflight_is_valid(preflight: dict[str, Any] | None, snapshot: dict[str, Any]) -> bool:
+    if not isinstance(preflight, dict):
+        return False
+    commands = preflight.get("commands")
+    if not isinstance(commands, list) or not all(isinstance(command, dict) for command in commands):
+        return False
+    return bool(
+        preflight.get("schema") == "abcg-v2-step1-preflight-v1"
+        and preflight.get("evaluated_commit") == snapshot["commit"]
+        and preflight.get("repository_clean_before") is True
+        and preflight.get("repository_clean_after") is True
+        and preflight.get("all_passed") is True
+        and {command.get("name") for command in commands} == {"pytest", "compileall", "pip_check"}
+        and all(command.get("return_code") == 0 for command in commands)
+    )
+
+
 def _process_peak_memory_bytes() -> int:
     """Return process peak resident memory without tracing every allocation."""
     if platform.system() == "Windows":
@@ -1218,7 +1336,9 @@ def _write_report(
         f"- Bootstrap boundary samples: {config.bootstrap_samples}",
         f"- Initial layouts: balanced perimeter, one-sided, opposed sides",
         f"- Freeze status: `{snapshot['freeze_status']}`",
+        f"- Overall status: `{gate['overall_status']}`",
         f"- G6 status: `{gate['g6_status']}`",
+        f"- Evaluated commit: `{gate['evaluated_commit']}`",
         "",
         "## Primary closed-loop outcomes",
         "",
@@ -1242,7 +1362,11 @@ def _write_report(
             "Analytic truth is used only by the evaluator. Each method receives the same paired observation and initial guide state.",
             "Invalid boundary, capacity, assignment, safety, degraded, and timeout states remain in the denominator.",
             "The report is synthetic Step 1 evidence; it does not claim human-crowd interaction or decentralized Step 2/3 performance.",
-            "A dirty working tree intentionally keeps the frozen-commit condition unmet until the user authorizes a freeze.",
+            (
+                "The evaluator recorded a clean frozen commit."
+                if snapshot["frozen_commit"]
+                else "The evaluator recorded a dirty checkout, so frozen-commit compliance remains unmet."
+            ),
         ]
     )
     (output / "G6_COMPLIANCE_REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1252,6 +1376,8 @@ def run_g6_evaluation(
     output_dir: str | Path,
     config: G6EvaluationConfig,
     run_root: str | Path | None = None,
+    *,
+    preflight_evidence: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Run formal G6 evidence and return explicit gate status."""
     if not isinstance(config, G6EvaluationConfig):
@@ -1271,6 +1397,17 @@ def run_g6_evaluation(
     snapshot = _repository_snapshot(repo, source_paths)
     _write_json(output / "evaluation_config.json", asdict(config))
     _write_json(output / "evaluation_snapshot.json", snapshot)
+    _write_json(
+        output / "preflight_evidence.json",
+        preflight_evidence
+        if preflight_evidence is not None
+        else {
+            "schema": "abcg-v2-step1-preflight-v1",
+            "evaluated_commit": snapshot["commit"],
+            "all_passed": False,
+            "status": "NOT_RUN",
+        },
+    )
 
     started = time.perf_counter()
     cases = [(scenario, seed) for scenario in config.scenarios for seed in config.seeds]
@@ -1283,6 +1420,7 @@ def run_g6_evaluation(
     aggregate = _aggregate(records, config)
     paired = _paired_comparisons(records, config)
     ablations = _run_ablations(config, records)
+    ablation_aggregate = _ablation_summary(ablations, config)
     robustness = _run_robustness(config)
     robustness_aggregate = _robustness_summary(robustness, config)
     stress_fixtures = _failure_fixtures(config)
@@ -1307,6 +1445,7 @@ def run_g6_evaluation(
     _write_json(output / "aggregate.json", aggregate)
     _write_json(output / "paired_comparisons.json", paired)
     _write_json(output / "ablation_records.json", ablations)
+    _write_json(output / "ablation_aggregate.json", ablation_aggregate)
     _write_json(output / "robustness_records.json", robustness)
     _write_json(output / "robustness_aggregate.json", robustness_aggregate)
     performance = {
@@ -1322,7 +1461,9 @@ def run_g6_evaluation(
     _write_json(output / "performance.json", performance)
 
     expected = len(config.seeds) * len(config.scenarios) * len(config.methods)
+    preflight_valid = _preflight_is_valid(preflight_evidence, snapshot)
     checks = {
+        "formal_preflight": preflight_valid,
         "research_dependencies": all(name in snapshot["packages"] for name in ("scipy", "shapely")),
         "reset_step_api": all(hasattr(ABCGv2Controller, name) for name in ("reset", "step")),
         "primary_scenarios": set(config.scenarios) == set(PRIMARY_SCENARIOS),
@@ -1358,21 +1499,55 @@ def run_g6_evaluation(
                 "metrics.json",
             )
         ),
+        "independent_truth_evidence": all(
+            json.loads(
+                (runs / record["scenario"] / record["method"] / f"seed_{record['seed']:03d}" / "manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            ).get("truth_access")
+            == "evaluator_only"
+            for record in records
+        ),
         "frozen_commit": snapshot["frozen_commit"],
     }
-    compliance_without_freeze = all(value for key, value in checks.items() if key != "frozen_commit")
-    if compliance_without_freeze and checks["frozen_commit"]:
+    compliance_without_freeze = all(
+        value for key, value in checks.items() if key not in {"formal_preflight", "frozen_commit"}
+    )
+    g0_to_g5_status = "PASS" if preflight_valid else "UNMET_PREFLIGHT"
+    if preflight_valid and compliance_without_freeze and checks["frozen_commit"]:
         status = "PASS"
-    elif compliance_without_freeze:
+    elif preflight_valid and compliance_without_freeze:
         status = "UNMET_FROZEN_COMMIT"
+    elif not preflight_valid and compliance_without_freeze and checks["frozen_commit"]:
+        status = "UNMET_PREFLIGHT"
+    elif not preflight_valid and compliance_without_freeze:
+        status = "UNMET_PREFLIGHT_AND_FROZEN_COMMIT"
     else:
         status = "UNMET_COMPLIANCE_AND_FROZEN_COMMIT" if not checks["frozen_commit"] else "UNMET_COMPLIANCE"
+    gates = {f"G{index}": g0_to_g5_status for index in range(6)}
+    gates["G6"] = status
+    status_counts = {
+        item_status: int(sum(record["status"] == item_status for record in records))
+        for item_status in sorted({str(record["status"]) for record in records})
+    }
     gate = {
+        "schema": "abcg-v2-step1-gates-v2",
+        "overall_status": "PASS" if all(value == "PASS" for value in gates.values()) else status,
         "g6_status": status,
+        "evaluated_commit": snapshot["commit"],
+        "code_freeze_commit": snapshot["commit"],
+        "frozen_commit": "PASS" if snapshot["frozen_commit"] else "FAIL",
+        "gates": gates,
+        "gate_basis": {
+            "G0-G5": "commit-bound pytest, compileall, and pip check preflight",
+            "G6": "formal paired evaluation checks plus a clean frozen checkout",
+        },
         "checks": checks,
         "primary_record_count": len(records),
         "expected_primary_record_count": expected,
+        "success_count": int(sum(record["success"] for record in records)),
         "failure_count": int(sum(not record["success"] for record in records)),
+        "status_counts": status_counts,
         "actual_failure_gallery_count": len(gallery),
     }
     _write_json(output / "gate_evidence.json", gate)

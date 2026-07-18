@@ -8,8 +8,8 @@
 - Environment: Conda `abcg`
 - Python: `3.12.13`
 - Platform: Windows 11
-- Evaluation source SHA-256: `6a0f5e45643f92e92517b23e37916038a0b2a7b7420b9813f4c94c3e9494e39f`
-- Freeze status: `UNFROZEN_DIRTY_WORKTREE` by user instruction
+- Previous unfrozen evaluation source SHA-256: `6a0f5e45643f92e92517b23e37916038a0b2a7b7420b9813f4c94c3e9494e39f`
+- Freeze status: pre-freeze validation passed; fresh-checkout formal G6 still pending
 
 ## Environment and dependency repair
 
@@ -109,20 +109,22 @@ also preserves a double-cluster `BOUNDARY_INVALID` and a
 observation count and is retained as a stress result rather than mislabelled a
 failure.
 
-Primary compact artifacts:
+Primary compact artifacts retained for the frozen report:
 
 - `reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md`
 - `reports/step1_g6_compliance/gate_evidence.json`
-- `reports/step1_g6_compliance/records.json` and `records.csv`
 - `reports/step1_g6_compliance/aggregate.json`
 - `reports/step1_g6_compliance/paired_comparisons.json`
-- `reports/step1_g6_compliance/ablation_records.json`
-- `reports/step1_g6_compliance/robustness_records.json`
+- `reports/step1_g6_compliance/ablation_aggregate.json`
 - `reports/step1_g6_compliance/robustness_aggregate.json`
 - `reports/step1_g6_compliance/stress_cases.json`
-- `reports/step1_g6_compliance/failure_gallery.json` and `.png`
+- `reports/step1_g6_compliance/failure_gallery.json`
 - `reports/step1_g6_compliance/performance.json`
 - `reports/step1_g6_compliance/evaluation_snapshot.json`
+- `reports/step1_g6_compliance/preflight_evidence.json`
+
+Raw `records.csv`, `records.json`, ablation/robustness rows, and the generated
+gallery image remain reproducible external artifacts and are not versioned.
 
 Large per-run traces remain under ignored `runs/step1_g6_compliance/` and are
 not proposed for commit.
@@ -130,15 +132,15 @@ not proposed for commit.
 ## Test suite and health checks
 
 ```powershell
-conda run -n abcg python -m pytest -q `
-  --basetemp=.tmp/pytest-g6-release `
-  -o cache_dir=.tmp/pytest-cache-g6-release
+conda run --no-capture-output -n abcg python -m pytest `
+  --basetemp=.tmp/pytest-temp `
+  -o cache_dir=.tmp/pytest-cache
 ```
 
 Result:
 
 ```text
-93 passed in 126.07s
+94 passed in 131.00s
 ```
 
 Additional checks:
@@ -148,9 +150,8 @@ conda run -n abcg python -m compileall -q src scripts
 conda run -n abcg python -m pip check
 ```
 
-Both exited zero. Targeted checks also passed: 13 boundary tests, 11
-assignment/resource tests, 11 measured-feedback episode tests, 2 formal G6
-artifact-contract tests, and the complete 70-test `tests/step1` suite.
+Both exited zero. `pip check` printed `No broken requirements found.` Targeted
+formal-G6 evidence-architecture checks also passed: `3 passed in 31.55s`.
 
 ## Gate result
 
@@ -168,11 +169,12 @@ All automatic formal G6 checks are true:
 - runtime/P95/memory evidence;
 - eight required artifacts for every primary run.
 
-`gate_evidence.json` reports `UNMET_FROZEN_COMMIT`. The only false check is
-`frozen_commit`, which is intentionally deferred because the user instructed
-that this compliance closure must not be committed or frozen yet. A reviewed
-commit followed by reproduction from that exact commit is still required
-before G6 may be reported as `PASS`.
+The previous `gate_evidence.json` reports `UNMET_FROZEN_COMMIT`. The evaluator
+now requires an automatic, commit-bound `pytest`/`compileall`/`pip check`
+preflight and writes `overall_status`, `evaluated_commit`, `frozen_commit`, and
+explicit G0-G6 statuses. A reviewed implementation-freeze commit followed by
+fresh-checkout reproduction from that exact commit is still required before G6
+may be reported as `PASS`.
 
 The evidence does not establish continuous-time safety, robust nonconvex
 containment, dynamic crowds, local communication, real-sensor performance, or
