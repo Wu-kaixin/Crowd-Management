@@ -19,6 +19,14 @@ outputs/*
 !outputs/.gitkeep
 runs/
 reports/stage4_density_eval_v1/
+reports/step1_g6_compliance/records.csv
+reports/step1_g6_compliance/records.json
+reports/step1_g6_compliance/ablation_records.json
+reports/step1_g6_compliance/robustness_records.json
+reports/step1_g6_compliance/failure_gallery.png
+reports/step1_pr6_evaluation/records.csv
+reports/step1_pr6_evaluation/records.json
+reports/step1_pr6_evaluation/failure_gallery.png
 
 # Reference archives
 Crowd-Management-tested.zip

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 
-from crowd_management.evaluation import G6EvaluationConfig, run_g6_evaluation
+from crowd_management.evaluation import G6EvaluationConfig, run_g6_evaluation, run_g6_preflight
 
 
 def main() -> None:
@@ -18,6 +18,7 @@ def main() -> None:
     args = parser.parse_args()
     if args.seed_count < 1:
         parser.error("--seed-count must be positive")
+    preflight = run_g6_preflight()
     gate = run_g6_evaluation(
         args.output,
         G6EvaluationConfig(
@@ -29,10 +30,12 @@ def main() -> None:
             workers=args.workers,
         ),
         run_root=args.run_root,
+        preflight_evidence=preflight,
     )
     print(
         f"records={gate['primary_record_count']}/{gate['expected_primary_record_count']}, "
-        f"failures={gate['failure_count']}, g6_status={gate['g6_status']}"
+        f"failures={gate['failure_count']}, overall_status={gate['overall_status']}, "
+        f"g6_status={gate['g6_status']}, evaluated_commit={gate['evaluated_commit']}"
     )
 
 
