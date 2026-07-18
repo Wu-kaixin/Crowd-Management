@@ -140,7 +140,7 @@ conda run --no-capture-output -n abcg python -m pytest `
 Result:
 
 ```text
-94 passed in 131.00s
+95 passed in 73.92s
 ```
 
 Additional checks:
@@ -151,7 +151,13 @@ conda run -n abcg python -m pip check
 ```
 
 Both exited zero. `pip check` printed `No broken requirements found.` Targeted
-formal-G6 evidence-architecture checks also passed: `3 passed in 31.55s`.
+formal-G6 evidence-architecture checks also passed: `4 passed in 15.86s`.
+
+The first fresh-checkout attempt exposed that pytest 9 does not create the
+missing parent of `--basetemp=.tmp/pytest-temp`: 75 tests passed and 19 setup
+items failed with `FileNotFoundError` before their temporary directories could
+be created. The formal preflight now creates only the ignored `.tmp/` parent,
+has a regression test for this behavior, and does not alter test requirements.
 
 ## Gate result
 

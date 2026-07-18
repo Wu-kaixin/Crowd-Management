@@ -3,7 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from crowd_management.evaluation import G6EvaluationConfig, run_g6_evaluation
+from crowd_management.evaluation import G6EvaluationConfig, run_g6_evaluation, run_g6_preflight
+from crowd_management.evaluation import step1_g6 as g6_module
 from crowd_management.evaluation.step1_g6 import _preflight_is_valid
 
 
@@ -118,3 +119,15 @@ def test_preflight_evidence_is_commit_bound_and_requires_all_commands() -> None:
         {**evidence, "commands": [*evidence["commands"][:-1], {"name": "pip_check", "return_code": 1}]},
         snapshot,
     )
+
+
+def test_preflight_creates_missing_ignored_tmp_parent(tmp_path: Path, monkeypatch: object) -> None:
+    def passed_command(repo: Path, name: str, command: list[str]) -> dict[str, object]:
+        return {"name": name, "command": command, "return_code": 0, "duration_s": 0.0}
+
+    monkeypatch.setattr(g6_module, "_run_preflight_command", passed_command)  # type: ignore[attr-defined]
+    evidence = run_g6_preflight(tmp_path)
+
+    assert (tmp_path / ".tmp").is_dir()
+    assert evidence["all_passed"] is True
+    assert {command["name"] for command in evidence["commands"]} == {"pytest", "compileall", "pip_check"}

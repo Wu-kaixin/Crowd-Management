@@ -1220,6 +1220,7 @@ def run_g6_preflight(repo: str | Path | None = None) -> dict[str, Any]:
 
     commit = git("rev-parse", "HEAD")
     dirty_before = bool(git("status", "--porcelain"))
+    (repository / ".tmp").mkdir(parents=True, exist_ok=True)
     commands = [
         _run_preflight_command(
             repository,
