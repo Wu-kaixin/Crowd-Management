@@ -1,0 +1,5402 @@
+[
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46022026929122095,
+    "curve_hausdorff95_m": 1.7360499772575806
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4521910297094287,
+    "curve_hausdorff95_m": 1.7326139824487063
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5028446034606278,
+    "curve_hausdorff95_m": 1.5904234620365583
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4670233304597837,
+    "curve_hausdorff95_m": 1.7016195516610748
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4940097757798265,
+    "curve_hausdorff95_m": 1.623983266411191
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4587080847059142,
+    "curve_hausdorff95_m": 1.7301861065071324
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3709701111055552,
+    "curve_hausdorff95_m": 1.2180828201199931
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45979917414155386,
+    "curve_hausdorff95_m": 1.7091594936570584
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 0,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5801062490047137,
+    "curve_hausdorff95_m": 2.134347705105338
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4626163019556522,
+    "curve_hausdorff95_m": 1.7632996305148285
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4799470070066869,
+    "curve_hausdorff95_m": 1.754203662211925
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4838889421269922,
+    "curve_hausdorff95_m": 1.6602610477184272
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4667915069779448,
+    "curve_hausdorff95_m": 1.7789038920269251
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4647564475624621,
+    "curve_hausdorff95_m": 1.7850681320981916
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4886856257305745,
+    "curve_hausdorff95_m": 1.6949408276549551
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.34895111715852706,
+    "curve_hausdorff95_m": 1.3388868175012987
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4350497943701777,
+    "curve_hausdorff95_m": 1.7997221110334205
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 1,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5434026442212694,
+    "curve_hausdorff95_m": 2.2567132954603304
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4427190877346058,
+    "curve_hausdorff95_m": 1.7952436731046117
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4100162453609689,
+    "curve_hausdorff95_m": 1.8359322610872157
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.40556556720867754,
+    "curve_hausdorff95_m": 1.723560704882833
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41146016247083833,
+    "curve_hausdorff95_m": 1.7956700368560612
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4481953919859647,
+    "curve_hausdorff95_m": 1.7942317264357774
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4096537631871562,
+    "curve_hausdorff95_m": 1.7857480713070693
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.33656711480211343,
+    "curve_hausdorff95_m": 1.3457256586064055
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4234495181080459,
+    "curve_hausdorff95_m": 1.7975409159976798
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 2,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.528020219356269,
+    "curve_hausdorff95_m": 2.2464654913654174
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45027053174522624,
+    "curve_hausdorff95_m": 1.8107711451347246
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45836357847471076,
+    "curve_hausdorff95_m": 1.8411727089312546
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4428227313489629,
+    "curve_hausdorff95_m": 1.8485074476580037
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44823850411104504,
+    "curve_hausdorff95_m": 1.83763644819997
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47365328131470935,
+    "curve_hausdorff95_m": 1.7979513595169632
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47861486848286305,
+    "curve_hausdorff95_m": 1.7817091988631721
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.35544785165186477,
+    "curve_hausdorff95_m": 1.3484296067684185
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47268713496349035,
+    "curve_hausdorff95_m": 1.8007491993294207
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 3,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5830339104517399,
+    "curve_hausdorff95_m": 2.25319837743147
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.403095061798843,
+    "curve_hausdorff95_m": 1.89692925498537
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4213282463509981,
+    "curve_hausdorff95_m": 1.8178886731567911
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3973688937496281,
+    "curve_hausdorff95_m": 1.8763115345429098
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41056216085519137,
+    "curve_hausdorff95_m": 1.9054630029871495
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4213708714831688,
+    "curve_hausdorff95_m": 1.85959616900852
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41488103464576476,
+    "curve_hausdorff95_m": 1.8673565681555353
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.31624954705490105,
+    "curve_hausdorff95_m": 1.3947233692226648
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.39468736161423434,
+    "curve_hausdorff95_m": 1.8656515583115119
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 4,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4944168844492063,
+    "curve_hausdorff95_m": 2.372175365519961
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45479425652770566,
+    "curve_hausdorff95_m": 1.7185022852184464
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4326009894037306,
+    "curve_hausdorff95_m": 1.7448565549337496
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4253438270706234,
+    "curve_hausdorff95_m": 1.8240430767182736
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4179753525637221,
+    "curve_hausdorff95_m": 1.7986129835811364
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4356872153649096,
+    "curve_hausdorff95_m": 1.7630593412915536
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4639203644873218,
+    "curve_hausdorff95_m": 1.8171936039489995
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3271196686055059,
+    "curve_hausdorff95_m": 1.3224576401503974
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4371940491402878,
+    "curve_hausdorff95_m": 1.7552040407175342
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 5,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5338691175529119,
+    "curve_hausdorff95_m": 2.2173491091425976
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4031326377425295,
+    "curve_hausdorff95_m": 1.7549914842069274
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4321400736606381,
+    "curve_hausdorff95_m": 1.6594898702574816
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4336875165929266,
+    "curve_hausdorff95_m": 1.7500478949580793
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43718520371426894,
+    "curve_hausdorff95_m": 1.6678825563274937
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.429721518301269,
+    "curve_hausdorff95_m": 1.7163176369808226
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.32833690658120696,
+    "curve_hausdorff95_m": 1.2508686829383506
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43838854629926316,
+    "curve_hausdorff95_m": 1.6711890839003252
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 6,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5481149846221998,
+    "curve_hausdorff95_m": 2.0915638597155986
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4146194508787002,
+    "curve_hausdorff95_m": 1.863802802576096
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.40892822749870705,
+    "curve_hausdorff95_m": 1.877566366135903
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4011915044874561,
+    "curve_hausdorff95_m": 1.886550971165985
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4323606217791409,
+    "curve_hausdorff95_m": 1.8682581038116077
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41839715527267274,
+    "curve_hausdorff95_m": 1.7144404008532206
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3245624850985972,
+    "curve_hausdorff95_m": 1.401033326024102
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4314865199248641,
+    "curve_hausdorff95_m": 1.8657301597700078
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 7,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48074676659748355,
+    "curve_hausdorff95_m": 2.3481468816057927
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49444388142697426,
+    "curve_hausdorff95_m": 1.5834837102759682
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 8,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4835644611219465,
+    "curve_hausdorff95_m": 1.738903344616353
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44374954326728877,
+    "curve_hausdorff95_m": 1.7811292597694768
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4159417744568762,
+    "curve_hausdorff95_m": 1.7741499344484402
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44907295073241427,
+    "curve_hausdorff95_m": 1.7802179268009044
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4399213795978214,
+    "curve_hausdorff95_m": 1.778347621622224
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.40786682034429367,
+    "curve_hausdorff95_m": 1.8502046234489598
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3304468335607634,
+    "curve_hausdorff95_m": 1.333955442491351
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42865577553912965,
+    "curve_hausdorff95_m": 1.7873877303297736
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 9,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5350648940323319,
+    "curve_hausdorff95_m": 2.234795513657949
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4466250787013494,
+    "curve_hausdorff95_m": 1.801811731427125
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4335617492813443,
+    "curve_hausdorff95_m": 1.8340939132552365
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4424413516284218,
+    "curve_hausdorff95_m": 1.7862247922024885
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 10,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4873596743579215,
+    "curve_hausdorff95_m": 1.684996420642085
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48010043930098867,
+    "curve_hausdorff95_m": 1.6693287520937474
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4980554591049033,
+    "curve_hausdorff95_m": 1.4852006124965842
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4795705736970352,
+    "curve_hausdorff95_m": 1.6855534687400824
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49013681462892184,
+    "curve_hausdorff95_m": 1.675534292022774
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4791339191912022,
+    "curve_hausdorff95_m": 1.678719887581853
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.36785935563476047,
+    "curve_hausdorff95_m": 1.2566226209453146
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46710109065990213,
+    "curve_hausdorff95_m": 1.6858603844658568
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 11,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5825723986970481,
+    "curve_hausdorff95_m": 2.1019783573939494
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48387665947118275,
+    "curve_hausdorff95_m": 1.6655210109146712
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48428841996033756,
+    "curve_hausdorff95_m": 1.5651447370823266
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4746491321073465,
+    "curve_hausdorff95_m": 1.6319364983681934
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48851092952355807,
+    "curve_hausdorff95_m": 1.6617850778687873
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5290616789084872,
+    "curve_hausdorff95_m": 1.5722231703754985
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.523793791250934,
+    "curve_hausdorff95_m": 1.5723348214741268
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.39703851867666323,
+    "curve_hausdorff95_m": 1.1790518097794584
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4916006772334706,
+    "curve_hausdorff95_m": 1.6581447971008816
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 12,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6140659968977361,
+    "curve_hausdorff95_m": 2.0723643378345082
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4524112902761279,
+    "curve_hausdorff95_m": 1.7948581277663274
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4395823246735125,
+    "curve_hausdorff95_m": 1.8262900954523102
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4680117147078485,
+    "curve_hausdorff95_m": 1.7450805003489172
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4444138990033114,
+    "curve_hausdorff95_m": 1.827504921915252
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4374432822244052,
+    "curve_hausdorff95_m": 1.8398873534497646
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4447314246268247,
+    "curve_hausdorff95_m": 1.8245867657760537
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3285079666355723,
+    "curve_hausdorff95_m": 1.380060030879717
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44088815870362164,
+    "curve_hausdorff95_m": 1.834767790367208
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 13,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5396642103752749,
+    "curve_hausdorff95_m": 2.302663357578621
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 14,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5052915068255934,
+    "curve_hausdorff95_m": 1.6621273268463053
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47590614061653685,
+    "curve_hausdorff95_m": 1.7085732023094897
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5106407369892103,
+    "curve_hausdorff95_m": 1.7325474624566584
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4859007390718255,
+    "curve_hausdorff95_m": 1.7036992888472977
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49430164527743914,
+    "curve_hausdorff95_m": 1.6987379413382515
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45648856579285735,
+    "curve_hausdorff95_m": 1.7825991707750468
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3709820787798108,
+    "curve_hausdorff95_m": 1.2741034263464919
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49484649857610963,
+    "curve_hausdorff95_m": 1.6994563673395373
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 15,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6186301133440147,
+    "curve_hausdorff95_m": 2.1242112009317062
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4580593026702166,
+    "curve_hausdorff95_m": 1.711057520078155
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49188923111241456,
+    "curve_hausdorff95_m": 1.698088649999706
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4821942036097542,
+    "curve_hausdorff95_m": 1.6632609437821848
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44625656282620013,
+    "curve_hausdorff95_m": 1.7341964963175651
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4508077308785647,
+    "curve_hausdorff95_m": 1.7420207747266718
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4818126620355744,
+    "curve_hausdorff95_m": 1.6754173852983845
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3385525096435291,
+    "curve_hausdorff95_m": 1.3067384732402314
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45100310283024764,
+    "curve_hausdorff95_m": 1.739835601681661
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 16,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5637305897504408,
+    "curve_hausdorff95_m": 2.173090018486668
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47964103211473585,
+    "curve_hausdorff95_m": 1.7204712819656818
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5072951467622504,
+    "curve_hausdorff95_m": 1.6318567997476647
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5738756726465158,
+    "curve_hausdorff95_m": 1.6068689468405926
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4740813660334099,
+    "curve_hausdorff95_m": 1.7489101956663273
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4954634110292031,
+    "curve_hausdorff95_m": 1.748058472932796
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49320358934797315,
+    "curve_hausdorff95_m": 1.74995383052309
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.37203445434591703,
+    "curve_hausdorff95_m": 1.311012953532603
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49613266676664103,
+    "curve_hausdorff95_m": 1.744075261560732
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 17,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6257359383042301,
+    "curve_hausdorff95_m": 2.1371859817798744
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49563109127647154,
+    "curve_hausdorff95_m": 1.759425508990641
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47775554069006904,
+    "curve_hausdorff95_m": 1.7227859949636826
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5037434148198897,
+    "curve_hausdorff95_m": 1.6988711877552911
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.512757463547449,
+    "curve_hausdorff95_m": 1.6865600196791117
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4619761473910053,
+    "curve_hausdorff95_m": 1.637709764903184
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.34676991422695447,
+    "curve_hausdorff95_m": 1.2283589722413144
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4626879633037152,
+    "curve_hausdorff95_m": 1.6395980336922238
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 18,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5786723886839207,
+    "curve_hausdorff95_m": 2.052085790580177
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47539500434710047,
+    "curve_hausdorff95_m": 1.596176409694179
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4788192235198774,
+    "curve_hausdorff95_m": 1.6256762975815837
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5125602515014338,
+    "curve_hausdorff95_m": 1.4339268408676114
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4977812557502912,
+    "curve_hausdorff95_m": 1.5918855692007012
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4880383662245614,
+    "curve_hausdorff95_m": 1.588211508179612
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4951022459319999,
+    "curve_hausdorff95_m": 1.5814687671488556
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3662400232215164,
+    "curve_hausdorff95_m": 1.191153411013773
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49388245033220146,
+    "curve_hausdorff95_m": 1.5870014481351333
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 19,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6170645689795786,
+    "curve_hausdorff95_m": 1.985568591216469
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4187043186243794,
+    "curve_hausdorff95_m": 1.8030404503664015
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.39493216935192094,
+    "curve_hausdorff95_m": 1.8319154551335912
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42445524041482285,
+    "curve_hausdorff95_m": 1.7810513523522427
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4301004599810273,
+    "curve_hausdorff95_m": 1.7658448631605412
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45393146099271603,
+    "curve_hausdorff95_m": 1.7612616630639373
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4541558839772847,
+    "curve_hausdorff95_m": 1.7573673366346358
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3407332232270628,
+    "curve_hausdorff95_m": 1.3212626313341824
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43110298829855137,
+    "curve_hausdorff95_m": 1.7623969201162872
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 20,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5597322565878347,
+    "curve_hausdorff95_m": 2.1687430445569946
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4583925553526317,
+    "curve_hausdorff95_m": 1.7813119958905363
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4737705155474955,
+    "curve_hausdorff95_m": 1.782668300772608
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49877714885873026,
+    "curve_hausdorff95_m": 1.7691692563301062
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4657047474276832,
+    "curve_hausdorff95_m": 1.768555257721372
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46804089797254206,
+    "curve_hausdorff95_m": 1.7469918548438612
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46866995299969616,
+    "curve_hausdorff95_m": 1.7075772015704287
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.35136837448731834,
+    "curve_hausdorff95_m": 1.3105613051270597
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46793859291054324,
+    "curve_hausdorff95_m": 1.7528068987934702
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 21,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5843959965583552,
+    "curve_hausdorff95_m": 2.1952687103566975
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43268610578006284,
+    "curve_hausdorff95_m": 1.7672992590069225
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4342821644120398,
+    "curve_hausdorff95_m": 1.7033741083993252
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.463787460592331,
+    "curve_hausdorff95_m": 1.6362452672376582
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4354819653013316,
+    "curve_hausdorff95_m": 1.7510626533528986
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4265326609323884,
+    "curve_hausdorff95_m": 1.7786146855460498
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44959777536237744,
+    "curve_hausdorff95_m": 1.7340245905680027
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.32045806314846736,
+    "curve_hausdorff95_m": 1.3338094713582616
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42544735611768125,
+    "curve_hausdorff95_m": 1.7962336966799803
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 22,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5316728206342378,
+    "curve_hausdorff95_m": 2.243209112411764
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5203569115670907,
+    "curve_hausdorff95_m": 1.6683492060856981
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4575162663874309,
+    "curve_hausdorff95_m": 1.7655761413559685
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4921614685396397,
+    "curve_hausdorff95_m": 1.7418107559402212
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5011423053018685,
+    "curve_hausdorff95_m": 1.698623352372172
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5018595456189716,
+    "curve_hausdorff95_m": 1.6813901562723061
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3763794553465794,
+    "curve_hausdorff95_m": 1.273752145673832
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49231111848078074,
+    "curve_hausdorff95_m": 1.7474504164024345
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 23,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6157239971298843,
+    "curve_hausdorff95_m": 2.182542272504767
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4744651641447718,
+    "curve_hausdorff95_m": 1.7290209216689325
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4833987062250219,
+    "curve_hausdorff95_m": 1.7448791643717028
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4786093918918787,
+    "curve_hausdorff95_m": 1.7150470741313684
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46794625472274487,
+    "curve_hausdorff95_m": 1.7538888802047234
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44356741670461064,
+    "curve_hausdorff95_m": 1.76797580639053
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4668424479321602,
+    "curve_hausdorff95_m": 1.7447363173716612
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.33289773872702655,
+    "curve_hausdorff95_m": 1.3259593808924928
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47013288646039686,
+    "curve_hausdorff95_m": 1.7506671667657152
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 24,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5876743901312591,
+    "curve_hausdorff95_m": 2.189017754070989
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.39927549521601924,
+    "curve_hausdorff95_m": 1.819723882346933
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41255633539281966,
+    "curve_hausdorff95_m": 1.7634176353401305
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4285305702140054,
+    "curve_hausdorff95_m": 1.729868216729293
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43840240206492465,
+    "curve_hausdorff95_m": 1.8142288938452302
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3216950586439311,
+    "curve_hausdorff95_m": 1.2974688354242048
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41450062087323847,
+    "curve_hausdorff95_m": 1.8413042585432595
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 25,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5376049251912339,
+    "curve_hausdorff95_m": 2.1434578831048223
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49791965506856495,
+    "curve_hausdorff95_m": 1.6529741279276278
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5265255235482227,
+    "curve_hausdorff95_m": 1.568882464985945
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5499227623591735,
+    "curve_hausdorff95_m": 1.4783987440712727
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5262986808854979,
+    "curve_hausdorff95_m": 1.6485847029366951
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5042537339891922,
+    "curve_hausdorff95_m": 1.6331097994260713
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.493124225260822,
+    "curve_hausdorff95_m": 1.6742112120133228
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.37845344195803565,
+    "curve_hausdorff95_m": 1.224946274468521
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5039273499447988,
+    "curve_hausdorff95_m": 1.6364437215134309
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 26,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6292887306639563,
+    "curve_hausdorff95_m": 2.04788761504896
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46412307609712694,
+    "curve_hausdorff95_m": 1.776800201938793
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46848278137759525,
+    "curve_hausdorff95_m": 1.8158299401246503
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4639291063284601,
+    "curve_hausdorff95_m": 1.738752525489028
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4740530612808993,
+    "curve_hausdorff95_m": 1.7480617719143492
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5009691633039871,
+    "curve_hausdorff95_m": 1.6605794643397618
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4982245387400527,
+    "curve_hausdorff95_m": 1.7228865005581975
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.37593326406589017,
+    "curve_hausdorff95_m": 1.2455303863968956
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49691260795171277,
+    "curve_hausdorff95_m": 1.6591400263405411
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 27,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6152237795744535,
+    "curve_hausdorff95_m": 2.083824836178997
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49627837668491903,
+    "curve_hausdorff95_m": 1.746188511139254
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48966597806398127,
+    "curve_hausdorff95_m": 1.7619729311556276
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47801732970180194,
+    "curve_hausdorff95_m": 1.793411843906912
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4733442057475996,
+    "curve_hausdorff95_m": 1.7980395492744778
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4965247552047003,
+    "curve_hausdorff95_m": 1.7746969870794063
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4709301354011085,
+    "curve_hausdorff95_m": 1.823705066714278
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3727031809371215,
+    "curve_hausdorff95_m": 1.331144175148737
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49636173474989254,
+    "curve_hausdorff95_m": 1.7765164717161215
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 28,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5920636797076937,
+    "curve_hausdorff95_m": 2.2526532551164102
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48923620748740704,
+    "curve_hausdorff95_m": 1.7971601799516308
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48938663401656546,
+    "curve_hausdorff95_m": 1.7994262330407222
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5015236846030848,
+    "curve_hausdorff95_m": 1.790913452282063
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47651456715505425,
+    "curve_hausdorff95_m": 1.803161169388809
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47399106133901353,
+    "curve_hausdorff95_m": 1.813315002494859
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46838681266075527,
+    "curve_hausdorff95_m": 1.8131810488563587
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.35583386416834883,
+    "curve_hausdorff95_m": 1.359913482533385
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47500908186340646,
+    "curve_hausdorff95_m": 1.808330487183035
+  },
+  {
+    "scenario": "c_shape",
+    "seed": 29,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5940921960351602,
+    "curve_hausdorff95_m": 2.257378090707
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45595197108978935,
+    "curve_hausdorff95_m": 1.585498194419412
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4248116277287288,
+    "curve_hausdorff95_m": 1.5987625711841902
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41001564360006393,
+    "curve_hausdorff95_m": 1.6152138568523955
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.444354058338952,
+    "curve_hausdorff95_m": 1.5778624869638627
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45145100504027424,
+    "curve_hausdorff95_m": 1.5822756063087038
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4442664478506756,
+    "curve_hausdorff95_m": 1.5771876535680927
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 0,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5546183369283195,
+    "curve_hausdorff95_m": 1.9935522624635282
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4763993433812876,
+    "curve_hausdorff95_m": 1.5670502980234657
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49627669818257064,
+    "curve_hausdorff95_m": 1.4810279384952039
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4835514241510119,
+    "curve_hausdorff95_m": 1.4916843622638516
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4813917226917069,
+    "curve_hausdorff95_m": 1.5148620123783476
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 1,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6082499435050784,
+    "curve_hausdorff95_m": 1.8000117073322643
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48500370478281796,
+    "curve_hausdorff95_m": 1.4880540311326047
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4955442968354401,
+    "curve_hausdorff95_m": 1.4902555853012949
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5006037293865153,
+    "curve_hausdorff95_m": 1.4098171261148174
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46105627113405667,
+    "curve_hausdorff95_m": 1.5054582829774592
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47742393559144863,
+    "curve_hausdorff95_m": 1.4982033429803217
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4623876709898681,
+    "curve_hausdorff95_m": 1.517207247241971
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3584628814450238,
+    "curve_hausdorff95_m": 1.1236896385469104
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47819484466949247,
+    "curve_hausdorff95_m": 1.4994626929505723
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 2,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5979303784882114,
+    "curve_hausdorff95_m": 1.8742602084036852
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5719073486128528,
+    "curve_hausdorff95_m": 1.4889367171757002
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5603848023735669,
+    "curve_hausdorff95_m": 1.295732212385171
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5638277915078203,
+    "curve_hausdorff95_m": 1.395596257917078
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5658110372834793,
+    "curve_hausdorff95_m": 1.4410432421585448
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5305041473885226,
+    "curve_hausdorff95_m": 1.5184931207192538
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42449969442927543,
+    "curve_hausdorff95_m": 1.0811376155570553
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5458771874321112,
+    "curve_hausdorff95_m": 1.467705689147411
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 3,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.7014569766534762,
+    "curve_hausdorff95_m": 1.7630854859042187
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4274954207475872,
+    "curve_hausdorff95_m": 1.614917465338415
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47299902758846146,
+    "curve_hausdorff95_m": 1.6216413229251065
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4154274549282717,
+    "curve_hausdorff95_m": 1.6072543109477284
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4842072471814417,
+    "curve_hausdorff95_m": 1.6022583245520163
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45615139133651206,
+    "curve_hausdorff95_m": 1.6029209530454873
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.462731493186313,
+    "curve_hausdorff95_m": 1.6084207621380329
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3425330352592152,
+    "curve_hausdorff95_m": 1.2022754939530844
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4555564685509392,
+    "curve_hausdorff95_m": 1.6035292551306801
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 4,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5685750485403903,
+    "curve_hausdorff95_m": 2.005559977257227
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49711560833217017,
+    "curve_hausdorff95_m": 1.5344228076617696
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5074617508215274,
+    "curve_hausdorff95_m": 1.5034848711678959
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48544345192633964,
+    "curve_hausdorff95_m": 1.5437693988793453
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5096020987963965,
+    "curve_hausdorff95_m": 1.496257157076391
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5111939082087508,
+    "curve_hausdorff95_m": 1.4815899157306913
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.38371441602984524,
+    "curve_hausdorff95_m": 1.1115209803196278
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5101578159336738,
+    "curve_hausdorff95_m": 1.483905401432479
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 5,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6379642717471243,
+    "curve_hausdorff95_m": 1.8566434273059298
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4246504496238185,
+    "curve_hausdorff95_m": 1.6016011771082637
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41677780413768817,
+    "curve_hausdorff95_m": 1.6180233444026628
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.427829386396838,
+    "curve_hausdorff95_m": 1.4904987838702226
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43498034230317095,
+    "curve_hausdorff95_m": 1.605559580945437
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43252755542201304,
+    "curve_hausdorff95_m": 1.591932097560931
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42687749965964183,
+    "curve_hausdorff95_m": 1.622664882029289
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3247457004181341,
+    "curve_hausdorff95_m": 1.1940310448599671
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4235760218634971,
+    "curve_hausdorff95_m": 1.5830121906015562
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 6,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5306459276837691,
+    "curve_hausdorff95_m": 1.9714516023762538
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5175734748684463,
+    "curve_hausdorff95_m": 1.5770411803086126
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5183474118666433,
+    "curve_hausdorff95_m": 1.5910742706691716
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5112583194525736,
+    "curve_hausdorff95_m": 1.6307487281272526
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5060790280972303,
+    "curve_hausdorff95_m": 1.6134696169341751
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 7,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6303480173205154,
+    "curve_hausdorff95_m": 2.0224851046231076
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5043897791745923,
+    "curve_hausdorff95_m": 1.3936013280051873
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4761322917476508,
+    "curve_hausdorff95_m": 1.3953798510066542
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4801206954532079,
+    "curve_hausdorff95_m": 1.3965060531602795
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5107234699731945,
+    "curve_hausdorff95_m": 1.385791315943152
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5024425247334152,
+    "curve_hausdorff95_m": 1.379051515919522
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4895405026389419,
+    "curve_hausdorff95_m": 1.3765069438304387
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3771396102775685,
+    "curve_hausdorff95_m": 1.0345332490233254
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5031745022908177,
+    "curve_hausdorff95_m": 1.3813665534469723
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 8,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.629267794090672,
+    "curve_hausdorff95_m": 1.7272454363832646
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44625086887334187,
+    "curve_hausdorff95_m": 1.4044895855102368
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5149254550323692,
+    "curve_hausdorff95_m": 1.354950653363389
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 9,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4883115409524471,
+    "curve_hausdorff95_m": 1.4893543935146463
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5172585094456477,
+    "curve_hausdorff95_m": 1.5010193049007075
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.464461592179669,
+    "curve_hausdorff95_m": 1.5506965081624513
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5115019005730284,
+    "curve_hausdorff95_m": 1.461809157861908
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5094106753808794,
+    "curve_hausdorff95_m": 1.495130598470121
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3840026100790804,
+    "curve_hausdorff95_m": 1.096481948802079
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5270334336005553,
+    "curve_hausdorff95_m": 1.4770143392580204
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 10,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6557526431165546,
+    "curve_hausdorff95_m": 1.8338364417591735
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49337478482108194,
+    "curve_hausdorff95_m": 1.4848424436249594
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48976606397510536,
+    "curve_hausdorff95_m": 1.5025457932259145
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5057106878477364,
+    "curve_hausdorff95_m": 1.489630104012345
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4915786337600663,
+    "curve_hausdorff95_m": 1.482938890587881
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49642580310881235,
+    "curve_hausdorff95_m": 1.4868862666748048
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.37258654223572996,
+    "curve_hausdorff95_m": 1.1153590934530757
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5102354875079993,
+    "curve_hausdorff95_m": 1.4801859216089415
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 11,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6387032728344898,
+    "curve_hausdorff95_m": 1.8519659648642688
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4207145958348537,
+    "curve_hausdorff95_m": 1.6025292644746802
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3805072323880728,
+    "curve_hausdorff95_m": 1.616295237764085
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3857737597223241,
+    "curve_hausdorff95_m": 1.6499523664259395
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4257633241070237,
+    "curve_hausdorff95_m": 1.6294005922265011
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4050751952791421,
+    "curve_hausdorff95_m": 1.6288655273565287
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4030236755097058,
+    "curve_hausdorff95_m": 1.6436280470418558
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3042645723854195,
+    "curve_hausdorff95_m": 1.2218129643949691
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4195820617745051,
+    "curve_hausdorff95_m": 1.6191829006880731
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 12,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5101332356950594,
+    "curve_hausdorff95_m": 2.0183075743031487
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4955928670949059,
+    "curve_hausdorff95_m": 1.4304696518865427
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4927910225035782,
+    "curve_hausdorff95_m": 1.4336170673022302
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47880570403431644,
+    "curve_hausdorff95_m": 1.4066660862982805
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4939304693365858,
+    "curve_hausdorff95_m": 1.430247540068799
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4905653201254242,
+    "curve_hausdorff95_m": 1.4653161796295064
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4864246467136958,
+    "curve_hausdorff95_m": 1.5009385489302718
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.36812288070440946,
+    "curve_hausdorff95_m": 1.0990729083007966
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.491559668555208,
+    "curve_hausdorff95_m": 1.4566078614826392
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 13,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6147947435987146,
+    "curve_hausdorff95_m": 1.8145162090687874
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48001601861777216,
+    "curve_hausdorff95_m": 1.6116901905915881
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4751572154419751,
+    "curve_hausdorff95_m": 1.5838046673509691
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5225252787773059,
+    "curve_hausdorff95_m": 1.382028933741791
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48081401569700966,
+    "curve_hausdorff95_m": 1.5567348741735025
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4762974408509188,
+    "curve_hausdorff95_m": 1.5333160841827074
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4903694377319249,
+    "curve_hausdorff95_m": 1.5297156302083108
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.35761765607354234,
+    "curve_hausdorff95_m": 1.150368997989424
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5061360151179479,
+    "curve_hausdorff95_m": 1.5268852799788097
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 14,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.632794817054139,
+    "curve_hausdorff95_m": 1.9108275930370167
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4837062054159118,
+    "curve_hausdorff95_m": 1.5270958957199896
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5350504005961609,
+    "curve_hausdorff95_m": 1.599317745363393
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4731534896205707,
+    "curve_hausdorff95_m": 1.5474722871050235
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4775427178652888,
+    "curve_hausdorff95_m": 1.5382350382801568
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 15,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4309560366172531,
+    "curve_hausdorff95_m": 1.5524896915096733
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4443282828741104,
+    "curve_hausdorff95_m": 1.5258726077155413
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4495805132921637,
+    "curve_hausdorff95_m": 1.4694616311450561
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3336962645622867,
+    "curve_hausdorff95_m": 1.1445146011532954
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44457375879648825,
+    "curve_hausdorff95_m": 1.533403772214922
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 16,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.555533374467,
+    "curve_hausdorff95_m": 1.922323787424987
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4244342166141172,
+    "curve_hausdorff95_m": 1.6303391429374827
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4042606324673746,
+    "curve_hausdorff95_m": 1.6214945434501182
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4143804501513086,
+    "curve_hausdorff95_m": 1.6331299875611003
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4192894348946389,
+    "curve_hausdorff95_m": 1.6269013718894791
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4243895992293757,
+    "curve_hausdorff95_m": 1.721495859075831
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.31503405581783517,
+    "curve_hausdorff95_m": 1.22029785950532
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42014274734142476,
+    "curve_hausdorff95_m": 1.623946113511706
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 17,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.52810966610055,
+    "curve_hausdorff95_m": 2.0191207024127813
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4781356908098017,
+    "curve_hausdorff95_m": 1.5489333273173396
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47222960917031753,
+    "curve_hausdorff95_m": 1.539671606095782
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4823673302215995,
+    "curve_hausdorff95_m": 1.4894508125798456
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4747315783299746,
+    "curve_hausdorff95_m": 1.5337233165009199
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5165786961008503,
+    "curve_hausdorff95_m": 1.565826620730118
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5287619998113201,
+    "curve_hausdorff95_m": 1.5918168240598933
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.38764552082149906,
+    "curve_hausdorff95_m": 1.174357876097884
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4867222613301564,
+    "curve_hausdorff95_m": 1.568876721189873
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 18,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6098267426158026,
+    "curve_hausdorff95_m": 1.9548488279866794
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4610323652793671,
+    "curve_hausdorff95_m": 1.5793713249532868
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41780940325544336,
+    "curve_hausdorff95_m": 1.612773312074677
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4391986156962177,
+    "curve_hausdorff95_m": 1.577583274579673
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46141342446634026,
+    "curve_hausdorff95_m": 1.5994115580111277
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44661152368165435,
+    "curve_hausdorff95_m": 1.582125109784768
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46090357667987025,
+    "curve_hausdorff95_m": 1.5709805902425398
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3353538125149017,
+    "curve_hausdorff95_m": 1.186848558233502
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4482510541212519,
+    "curve_hausdorff95_m": 1.5865347341362175
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 19,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5574214801638059,
+    "curve_hausdorff95_m": 1.9861297450039554
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4512735791225969,
+    "curve_hausdorff95_m": 1.561487542057104
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4438326211783587,
+    "curve_hausdorff95_m": 1.616525109456934
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4590491136828543,
+    "curve_hausdorff95_m": 1.5779805477127078
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4597354972439818,
+    "curve_hausdorff95_m": 1.579629041612694
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4626382222530239,
+    "curve_hausdorff95_m": 1.5827370637562337
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3451903597998788,
+    "curve_hausdorff95_m": 1.1848170273294816
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43298368614052346,
+    "curve_hausdorff95_m": 1.6024927083595897
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 20,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5404356251168841,
+    "curve_hausdorff95_m": 2.0019290734126387
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4327776971393741,
+    "curve_hausdorff95_m": 1.5573674386401846
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4833106717497391,
+    "curve_hausdorff95_m": 1.5730146942690206
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4390302990612006,
+    "curve_hausdorff95_m": 1.6145661698639144
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4752448152814101,
+    "curve_hausdorff95_m": 1.5647921250891148
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43334531206522775,
+    "curve_hausdorff95_m": 1.5678637781758695
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4596982503925343,
+    "curve_hausdorff95_m": 1.6130862762928921
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3254745910114522,
+    "curve_hausdorff95_m": 1.1759962694974246
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4340573380758239,
+    "curve_hausdorff95_m": 1.562199529052289
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 21,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4761779340166791,
+    "curve_hausdorff95_m": 1.3823963551096679
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5171853485574269,
+    "curve_hausdorff95_m": 1.3774673466870635
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48948529168576405,
+    "curve_hausdorff95_m": 1.3916835588653407
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49557645380042015,
+    "curve_hausdorff95_m": 1.3606214114410073
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.48666006666850925,
+    "curve_hausdorff95_m": 1.3815904991454258
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3652881863449289,
+    "curve_hausdorff95_m": 1.0365309226120591
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47491977235783955,
+    "curve_hausdorff95_m": 1.3662246438012766
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 22,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5258897189273746,
+    "curve_hausdorff95_m": 1.5333162709072536
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4868341902773255,
+    "curve_hausdorff95_m": 1.4550037429538543
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.50673340871714,
+    "curve_hausdorff95_m": 1.4651173048368646
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5280563511779259,
+    "curve_hausdorff95_m": 1.4692772811843144
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5157383327671581,
+    "curve_hausdorff95_m": 1.4775263769000153
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.516527050779697,
+    "curve_hausdorff95_m": 1.4981477966605319
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3870601103676704,
+    "curve_hausdorff95_m": 1.108500305799985
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5180740592086301,
+    "curve_hausdorff95_m": 1.4752737618500813
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 23,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6506543620987698,
+    "curve_hausdorff95_m": 1.8428828706964921
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4468971918601759,
+    "curve_hausdorff95_m": 1.633262411494335
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46513245620519006,
+    "curve_hausdorff95_m": 1.543352921884914
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47713952870110343,
+    "curve_hausdorff95_m": 1.5561331554626636
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4551452733353344,
+    "curve_hausdorff95_m": 1.6250485810313335
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4402421529995986,
+    "curve_hausdorff95_m": 1.6464960934724653
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43832813222434464,
+    "curve_hausdorff95_m": 1.665664175042186
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.33092112997499035,
+    "curve_hausdorff95_m": 1.235186191560475
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.44096328109299754,
+    "curve_hausdorff95_m": 1.642860889698058
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 24,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5574211463666501,
+    "curve_hausdorff95_m": 2.0458110748803255
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4313539975325303,
+    "curve_hausdorff95_m": 1.5670182340014855
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4364911801991649,
+    "curve_hausdorff95_m": 1.539180596949126
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.45200562478215,
+    "curve_hausdorff95_m": 1.406057248970938
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42098783640931775,
+    "curve_hausdorff95_m": 1.536455106471336
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3931539302989503,
+    "curve_hausdorff95_m": 1.553903636622967
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4105567933515846,
+    "curve_hausdorff95_m": 1.5955779409819881
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.29525145696488764,
+    "curve_hausdorff95_m": 1.165438878201687
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.41318444525449083,
+    "curve_hausdorff95_m": 1.5586686328944708
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 25,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.5175799110934463,
+    "curve_hausdorff95_m": 1.942651280524266
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4010246462325793,
+    "curve_hausdorff95_m": 1.5801814904791782
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42425564203524607,
+    "curve_hausdorff95_m": 1.5635435369798056
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4363105421133322,
+    "curve_hausdorff95_m": 1.566418895124647
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.42859502026644203,
+    "curve_hausdorff95_m": 1.5478966498032696
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43828486898124663,
+    "curve_hausdorff95_m": 1.5169908701357016
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4395109694039197,
+    "curve_hausdorff95_m": 1.472906154192652
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3292376384469598,
+    "curve_hausdorff95_m": 1.1377942816550848
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.43735315235408995,
+    "curve_hausdorff95_m": 1.521400248278257
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 26,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.510150642041104,
+    "curve_hausdorff95_m": 1.9064694534921447
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4922127468992433,
+    "curve_hausdorff95_m": 1.6185661930043145
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4998242310460338,
+    "curve_hausdorff95_m": 1.5973402654015527
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4806545206031099,
+    "curve_hausdorff95_m": 1.6156717173742718
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.49867132122007796,
+    "curve_hausdorff95_m": 1.5519665332163128
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47381699668023025,
+    "curve_hausdorff95_m": 1.611878558690955
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46937582975113445,
+    "curve_hausdorff95_m": 1.609257418419302
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3554458940589793,
+    "curve_hausdorff95_m": 1.2089954600321293
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47471936228474476,
+    "curve_hausdorff95_m": 1.610350494323845
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 27,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6189844370080975,
+    "curve_hausdorff95_m": 2.0035556843613382
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.46187498048381104,
+    "curve_hausdorff95_m": 1.5623464200921988
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4403160222153628,
+    "curve_hausdorff95_m": 1.532247083237382
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4816407784189235,
+    "curve_hausdorff95_m": 1.6001886474454536
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4705872951387381,
+    "curve_hausdorff95_m": 1.6270393522147395
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.3614815453676269,
+    "curve_hausdorff95_m": 1.2003528533498569
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4810113972684281,
+    "curve_hausdorff95_m": 1.5962235833162
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 28,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6003946725109864,
+    "curve_hausdorff95_m": 1.9926756936984154
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "dropout",
+    "level": 0.0,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "dropout",
+    "level": 0.15,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4752597228533365,
+    "curve_hausdorff95_m": 1.5136698080144522
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "dropout",
+    "level": 0.3,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.47141499441825674,
+    "curve_hausdorff95_m": 1.5118985910666995
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "noise",
+    "level": 0.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.470137724422597,
+    "curve_hausdorff95_m": 1.5389207782170349
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "noise",
+    "level": 0.04,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4947249904966302,
+    "curve_hausdorff95_m": 1.517320074863471
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "noise",
+    "level": 0.08,
+    "valid": false,
+    "status": "BOUNDARY_INVALID",
+    "curve_chamfer_m": null,
+    "curve_hausdorff95_m": null
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "scale",
+    "level": 0.75,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.37123966843498263,
+    "curve_hausdorff95_m": 1.138080394362604
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "scale",
+    "level": 1.0,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.4650138555174126,
+    "curve_hausdorff95_m": 1.5331797062336314
+  },
+  {
+    "scenario": "u_shape",
+    "seed": 29,
+    "dimension": "scale",
+    "level": 1.25,
+    "valid": true,
+    "status": "VALID",
+    "curve_chamfer_m": 0.6345028072028509,
+    "curve_hausdorff95_m": 1.9025681244529264
+  }
+]

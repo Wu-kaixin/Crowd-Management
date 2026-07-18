@@ -43,7 +43,7 @@ def test_abcg_improves_boundary_gap_over_center_radius_on_ellipse():
     legacy_targets = LegacyCenterRadiusController(safety_distance=0.8).deploy(8, points)
     abc = containment_summary(abc_targets, points, boundary, coverage_radius=1.25, min_crowd_distance=0.8)
     legacy = containment_summary(legacy_targets, points, boundary, coverage_radius=1.25, min_crowd_distance=0.8)
-    assert abc["max_boundary_gap"] <= legacy["max_boundary_gap"]
+    assert abc["max_euclidean_boundary_distance"] <= legacy["max_euclidean_boundary_distance"]
     assert abc["guide_crowd_safety_violation_count"] == 0
 
 

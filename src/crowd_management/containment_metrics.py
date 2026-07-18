@@ -2,23 +2,70 @@
 from __future__ import annotations
 
 import json
+import warnings
 from pathlib import Path
 
 import numpy as np
 
 from .estimation.boundary import BoundaryEstimate
+from .crowd.truth import StaticCrowdTruth
+from .geometry import max_consecutive_arc_gap as _max_consecutive_arc_gap
 from .types import Array
 
 
-def coverage_ratio(guide_points: Array, boundary: BoundaryEstimate, coverage_radius: float) -> float:
-    dist = np.linalg.norm(boundary.safety_points[:, None, :] - guide_points[None, :, :], axis=2)
+def coverage_ratio_to_points(guide_points: Array, boundary_points: Array, coverage_radius: float) -> float:
+    """Return the sampled-boundary coverage ratio for explicit evaluator points."""
+    guides = np.asarray(guide_points, dtype=float)
+    samples = np.asarray(boundary_points, dtype=float)
+    if guides.ndim != 2 or guides.shape[1] != 2 or len(guides) == 0:
+        raise ValueError("guide_points must be a non-empty (M, 2) array.")
+    if samples.ndim != 2 or samples.shape[1] != 2 or len(samples) == 0:
+        raise ValueError("boundary_points must be a non-empty (K, 2) array.")
+    dist = np.linalg.norm(samples[:, None, :] - guides[None, :, :], axis=2)
     covered = np.min(dist, axis=1) <= float(coverage_radius)
     return float(np.mean(covered))
 
 
-def max_boundary_gap(guide_points: Array, boundary: BoundaryEstimate) -> float:
-    dist = np.linalg.norm(boundary.safety_points[:, None, :] - guide_points[None, :, :], axis=2)
+def coverage_ratio(guide_points: Array, boundary: BoundaryEstimate, coverage_radius: float) -> float:
+    """Compatibility evaluator using an estimated safety boundary."""
+    return coverage_ratio_to_points(guide_points, boundary.safety_points, coverage_radius)
+
+
+def max_euclidean_boundary_distance_to_points(guide_points: Array, boundary_points: Array) -> float:
+    """Maximum sampled-boundary distance to the nearest guide, in metres.
+
+    This is an Euclidean nearest-point diagnostic.  It is not the consecutive
+    periodic arc gap introduced by the later CA-ALCC work packages.
+    """
+    guides = np.asarray(guide_points, dtype=float)
+    samples = np.asarray(boundary_points, dtype=float)
+    if guides.ndim != 2 or guides.shape[1] != 2 or len(guides) == 0:
+        raise ValueError("guide_points must be a non-empty (M, 2) array.")
+    if samples.ndim != 2 or samples.shape[1] != 2 or len(samples) == 0:
+        raise ValueError("boundary_points must be a non-empty (K, 2) array.")
+    dist = np.linalg.norm(samples[:, None, :] - guides[None, :, :], axis=2)
     return float(np.max(np.min(dist, axis=1)))
+
+
+def max_euclidean_boundary_distance(guide_points: Array, boundary: BoundaryEstimate) -> float:
+    """Estimated-boundary version of the Euclidean nearest-point diagnostic."""
+    return max_euclidean_boundary_distance_to_points(guide_points, boundary.safety_points)
+
+
+def max_boundary_gap(guide_points: Array, boundary: BoundaryEstimate) -> float:
+    """Deprecated name retained for direct-call compatibility."""
+    warnings.warn(
+        "max_boundary_gap is an Euclidean nearest-point distance; use "
+        "max_euclidean_boundary_distance instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return max_euclidean_boundary_distance(guide_points, boundary)
+
+
+def max_consecutive_arc_gap(target_s: Array, boundary_length: float) -> float:
+    """Return the true periodic gap ``G`` between consecutive arc targets."""
+    return _max_consecutive_arc_gap(target_s, boundary_length)
 
 
 def radial_deployment_error(guide_points: Array, boundary: BoundaryEstimate) -> float:
@@ -68,10 +115,29 @@ def containment_summary(
     boundary: BoundaryEstimate,
     coverage_radius: float,
     min_crowd_distance: float,
-) -> dict[str, float | int]:
+    truth_boundary: StaticCrowdTruth | None = None,
+) -> dict[str, float | int | str]:
+    if truth_boundary is None:
+        evaluation_points = boundary.safety_points
+        evaluation_boundary_source = "estimated_boundary_fallback"
+        evaluation_status = "truth_not_provided"
+        truth_component_count = 0
+    else:
+        evaluation_points = truth_boundary.safety_points
+        evaluation_boundary_source = "analytic_truth_safety_offset"
+        evaluation_status = truth_boundary.status
+        truth_component_count = truth_boundary.component_count
+
+    euclidean_distance = max_euclidean_boundary_distance_to_points(guide_points, evaluation_points)
     return {
-        "coverage_ratio": coverage_ratio(guide_points, boundary, coverage_radius),
-        "max_boundary_gap": max_boundary_gap(guide_points, boundary),
+        "evaluation_status": evaluation_status,
+        "evaluation_boundary_source": evaluation_boundary_source,
+        "truth_component_count": truth_component_count,
+        "coverage_ratio": coverage_ratio_to_points(guide_points, evaluation_points, coverage_radius),
+        "max_euclidean_boundary_distance": euclidean_distance,
+        # Serialized compatibility alias.  Direct Python callers receive a
+        # DeprecationWarning from max_boundary_gap().
+        "max_boundary_gap": euclidean_distance,
         "radial_deployment_error": radial_deployment_error(guide_points, boundary),
         "angular_uniformity_error": angular_uniformity_error(guide_points, boundary.center),
         "minimum_inter_guider_distance": minimum_inter_guider_distance(guide_points),
@@ -83,7 +149,7 @@ def containment_summary(
     }
 
 
-def save_containment_summary(summary: dict[str, float | int], path: str | Path) -> None:
+def save_containment_summary(summary: dict[str, float | int | str], path: str | Path) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:

@@ -1,0 +1,246 @@
+{
+  "u_shape": {
+    "alpha_bootstrap_gain": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.11666810616687373,
+        "ci95_low": 0.11067496795141493,
+        "ci95_high": 0.12302861589328702
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 0.47669869870630155,
+        "ci95_low": 0.439593510548822,
+        "ci95_high": 0.5196151444439583
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.08919685389629312,
+        "ci95_low": 0.07663232421529485,
+        "ci95_high": 0.10207373706364677
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 236.8,
+        "ci95_low": 229.69916666666666,
+        "ci95_high": 243.86833333333334
+      }
+    },
+    "alpha_bootstrap_no_gain": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.11666810616687373,
+        "ci95_low": 0.11052763871469679,
+        "ci95_high": 0.12293677995415113
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 0.47669869870630155,
+        "ci95_low": 0.4405107007430266,
+        "ci95_high": 0.5162192323101865
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.08919685389629312,
+        "ci95_low": 0.07675206094958811,
+        "ci95_high": 0.1022618541416329
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 88.0,
+        "ci95_low": 88.0,
+        "ci95_high": 88.0
+      }
+    },
+    "alpha_neutral": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.11666810616687373,
+        "ci95_low": 0.1107708210997455,
+        "ci95_high": 0.12285570894166524
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 0.47669869870630155,
+        "ci95_low": 0.44058161893669356,
+        "ci95_high": 0.517967780728775
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.08919685389629312,
+        "ci95_low": 0.07664927449128686,
+        "ci95_high": 0.10276314469550879
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 88.0,
+        "ci95_low": 88.0,
+        "ci95_high": 88.0
+      }
+    },
+    "radial_neutral": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.33557181663151037,
+        "ci95_low": 0.3316693517746829,
+        "ci95_high": 0.3392045051470988
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 1.0370710862520915,
+        "ci95_low": 1.0274124169377932,
+        "ci95_high": 1.0479683276465206
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.3451889545820526,
+        "ci95_low": 0.34120456737706434,
+        "ci95_high": 0.3490361946613306
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 65.0,
+        "ci95_low": 65.0,
+        "ci95_high": 65.0
+      }
+    }
+  },
+  "c_shape": {
+    "alpha_bootstrap_gain": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.12838598371697899,
+        "ci95_low": 0.12081860735928959,
+        "ci95_high": 0.13646944987166526
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 0.4658544091878595,
+        "ci95_low": 0.43120265207143954,
+        "ci95_high": 0.5027044673309525
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.0613318083443629,
+        "ci95_low": 0.04714944514553171,
+        "ci95_high": 0.07584590538346446
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 236.23333333333332,
+        "ci95_low": 228.86416666666668,
+        "ci95_high": 243.6025
+      }
+    },
+    "alpha_bootstrap_no_gain": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.12838598371697899,
+        "ci95_low": 0.12055004190547756,
+        "ci95_high": 0.13677366091799306
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 0.4658544091878595,
+        "ci95_low": 0.4313947146946904,
+        "ci95_high": 0.5016032108409745
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.0613318083443629,
+        "ci95_low": 0.04679886093049976,
+        "ci95_high": 0.07751863431600499
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 88.0,
+        "ci95_low": 88.0,
+        "ci95_high": 88.0
+      }
+    },
+    "alpha_neutral": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.12838598371697899,
+        "ci95_low": 0.12060612435346016,
+        "ci95_high": 0.13666939647775708
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 0.4658544091878595,
+        "ci95_low": 0.43202161946935913,
+        "ci95_high": 0.5027639101521931
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.0613318083443629,
+        "ci95_low": 0.047275670241441775,
+        "ci95_high": 0.07610224572772001
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 88.0,
+        "ci95_low": 88.0,
+        "ci95_high": 88.0
+      }
+    },
+    "radial_neutral": {
+      "run_count": 30,
+      "valid_count": 30,
+      "failure_count": 0,
+      "failure_rate": 0.0,
+      "curve_chamfer": {
+        "n": 30,
+        "mean": 0.361282840645047,
+        "ci95_low": 0.35701862347583163,
+        "ci95_high": 0.3661432620867997
+      },
+      "curve_hausdorff": {
+        "n": 30,
+        "mean": 1.1563099905713288,
+        "ci95_low": 1.1222990132516462,
+        "ci95_high": 1.1903209034990707
+      },
+      "length_relative_error": {
+        "n": 30,
+        "mean": 0.31842491285545405,
+        "ci95_low": 0.3127297999247075,
+        "ci95_high": 0.32436724350082197
+      },
+      "plan_iterations": {
+        "n": 30,
+        "mean": 65.0,
+        "ci95_low": 65.0,
+        "ci95_high": 65.0
+      }
+    }
+  }
+}

@@ -4,10 +4,12 @@
 
 目前主線是 **ABCG: Adaptive Boundary-Coverage Guidance**：
 
+PR6 已加入 alpha-shape 非凸邊界估計、bootstrap 不確定性、U/C 留出形狀各 30 個配對種子、消融、95% 信賴區間與失敗圖集。實作與評估證據已存在工作樹，但評估快照尚未來自凍結提交，因此 G6 的 frozen-commit 條件仍未滿足。
+
 - 從未知靜態人群點雲估計人群中心與邊界。
 - 在估計邊界外建立安全距離邊界。
 - 使用 coverage control / CVT 風格方法部署多個 guide agents。
-- 用 coverage ratio、maximum boundary gap、radial deployment error、angular uniformity、guide-guide distance、guide-crowd safety violation 等指標評估。
+- 用 coverage ratio、maximum Euclidean boundary distance、radial deployment error、angular uniformity、guide-guide distance、guide-crowd safety violation 等指標評估。舊有 `max_boundary_gap` 僅為相容別名，並非弧長 gap。
 
 ## 目前素材
 
@@ -25,6 +27,12 @@
 
 ```bash
 python scripts/run_static_containment.py --config configs/static_crowd_circle.yaml --output runs/static_containment_circle --methods random static_circle legacy_center_radius abcg
+```
+
+執行 PR6 配對評估：
+
+```bash
+python scripts/run_step1_g6_compliance.py --output reports/step1_g6_compliance --run-root runs/step1_g6_compliance
 ```
 
 重新生成 README 圖片與 GIF：

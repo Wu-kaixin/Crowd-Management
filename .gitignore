@@ -18,6 +18,7 @@ env/
 outputs/*
 !outputs/.gitkeep
 runs/
+reports/stage4_density_eval_v1/
 
 # Reference archives
 Crowd-Management-tested.zip

@@ -1,0 +1,14 @@
+{
+  "wall_time_s": 2260.9101898999998,
+  "peak_process_resident_memory_bytes": 1700134912,
+  "primary_runtime_ms": {
+    "n": 600,
+    "mean": 15204.425217000025,
+    "median": 9389.364200001182,
+    "ci95_low": 14022.298834162477,
+    "ci95_high": 16498.10261095003,
+    "p95": 50424.48103500153,
+    "worst_5_percent_mean": 60191.736146666626,
+    "direction": "lower"
+  }
+}

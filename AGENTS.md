@@ -33,11 +33,11 @@ python -m pip install -U pip
 python -m pip install -e ".[dev]"
 ```
 
-Conda also works when available:
+Project Conda environment:
 
 ```bash
-conda create -n C-M python=3.12 -y
-conda run -n C-M python -m pip install -e ".[dev]" imageio-ffmpeg
+conda env update -n abcg -f environment.yml
+conda run -n abcg python -m pip install -e ".[dev]"
 ```
 
 ## Testing
@@ -48,7 +48,16 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The current suite has 23 tests.
+The current suite has 88 tests.
+
+Dependency health command:
+
+```bash
+python -m pip check
+```
+
+The success message `No broken requirements found.` has exit code zero and is
+not an error.
 
 ## Main Commands
 
@@ -56,6 +65,12 @@ Run ABCG static containment:
 
 ```bash
 python scripts/run_static_containment.py --config configs/static_crowd_circle.yaml --output runs/static_containment_circle --methods random static_circle legacy_center_radius abcg
+```
+
+Run the PR6 held-out paired evaluation:
+
+```bash
+python scripts/run_step1_pr6_evaluation.py --output reports/step1_pr6_evaluation --seed-count 30
 ```
 
 Regenerate README media:

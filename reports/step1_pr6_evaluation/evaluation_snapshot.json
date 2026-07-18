@@ -1,0 +1,9 @@
+{
+  "commit": "fe4e7c1dd310c4eaef814c70e9edb34ec02227ae",
+  "branch": "main",
+  "dirty": true,
+  "dirty_entry_count": 38,
+  "source_sha256": "d8344d87f47afe8ed470edb05cf4f1455b99432b70adbde32877369e26c01baa",
+  "frozen_commit": false,
+  "freeze_status": "UNFROZEN_DIRTY_WORKTREE"
+}
