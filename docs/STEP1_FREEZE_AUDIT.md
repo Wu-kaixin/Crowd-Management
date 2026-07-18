@@ -8,6 +8,8 @@ Original baseline: `fe4e7c1dd310c4eaef814c70e9edb34ec02227ae`
 
 Intermediate reviewed implementation commit: `ae9b845d5559da9c2703f54ffab3ed94675a5fbb`
 
+Implementation freeze: `f2494922b2431bfd9a37a247add8a79acfdc18ed`
+
 This audit covers only PR0-PR6 for one static, unknown crowd. Dynamic or
 multiple crowds, crowd-guide behavioral interaction, limited communication,
 real-person studies, UAV integration, and frontend work remain out of scope.
@@ -175,3 +177,13 @@ automatically produces all of the following:
 
 After the research-complete documentation commit, the same frozen consistency
 checks and full G6 evaluation must pass again at final `main` HEAD before push.
+
+## Implementation-freeze verification result
+
+The fresh checkout at `f2494922b2431bfd9a37a247add8a79acfdc18ed`
+produced evaluator-generated `overall_status=PASS`, `frozen_commit=PASS`, and
+G0-G6 all `PASS`. The JSON, CSV, and per-run artifact counts each equal 600.
+Terminal accounting is 323 `CONVERGED`, 242 `TIMEOUT`, 5
+`SAFETY_INFEASIBLE`, and 30 `BOUNDARY_INVALID`; all 277 failures remain in the
+denominator. Full artifacts are retained at
+`E:\Crowd-Management-step1-artifacts\f2494922b2431bfd9a37a247add8a79acfdc18ed\`.

@@ -1,0 +1,55 @@
+{
+  "schema": "abcg-v2-step1-preflight-v1",
+  "evaluated_commit": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "python_executable": "D:\\miniconda\\envs\\abcg\\python.exe",
+  "python_version": "3.12.13",
+  "environment_name": "abcg",
+  "repository_clean_before": true,
+  "repository_clean_after": true,
+  "commands": [
+    {
+      "name": "pytest",
+      "command": [
+        "D:\\miniconda\\envs\\abcg\\python.exe",
+        "-m",
+        "pytest",
+        "--basetemp=.tmp/pytest-temp",
+        "-o",
+        "cache_dir=.tmp/pytest-cache"
+      ],
+      "return_code": 0,
+      "duration_s": 75.43430879999869,
+      "stdout_tail": "============================= test session starts =============================\nplatform win32 -- Python 3.12.13, pytest-9.1.0, pluggy-1.6.0\ncachedir: .tmp\\pytest-cache\nrootdir: E:\\Crowd-Management-step1-freeze-verify-v2\nconfigfile: pyproject.toml\ntestpaths: tests\ncollected 95 items\n\ntests\\step1\\test_abcg_v2_episode.py ...........                          [ 11%]\ntests\\step1\\test_arclength.py ........                                   [ 20%]\ntests\\step1\\test_boundary_pr6.py ....                                    [ 24%]\ntests\\step1\\test_boundary_v2.py .........                                [ 33%]\ntests\\step1\\test_g6_compliance.py ....                                   [ 37%]\ntests\\step1\\test_periodic_arc_cvt.py .......                             [ 45%]\ntests\\step1\\test_pr0_spec_truth.py .........                             [ 54%]\ntests\\step1\\test_pr6_evaluation.py ..                                    [ 56%]\ntests\\step1\\test_resources_assignment.py ...........                     [ 68%]\ntests\\step1\\test_velocity_safety.py .......                              [ 75%]\ntests\\test_density_dbact.py ...                                          [ 78%]\ntests\\test_multi_seed_eval.py .                                          [ 80%]\ntests\\test_simulation.py ............                                    [ 92%]\ntests\\test_stage4_density_eval.py .                                      [ 93%]\ntests\\test_static_containment.py .....                                   [ 98%]\ntests\\test_visualization_package.py .                                    [100%]\n\n======================== 95 passed in 75.17s (0:01:15) ========================\n",
+      "stderr_tail": ""
+    },
+    {
+      "name": "compileall",
+      "command": [
+        "D:\\miniconda\\envs\\abcg\\python.exe",
+        "-m",
+        "compileall",
+        "-q",
+        "src",
+        "scripts"
+      ],
+      "return_code": 0,
+      "duration_s": 0.14150950000112061,
+      "stdout_tail": "",
+      "stderr_tail": ""
+    },
+    {
+      "name": "pip_check",
+      "command": [
+        "D:\\miniconda\\envs\\abcg\\python.exe",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "return_code": 0,
+      "duration_s": 0.28757390000100713,
+      "stdout_tail": "No broken requirements found.\n",
+      "stderr_tail": ""
+    }
+  ],
+  "all_passed": true
+}

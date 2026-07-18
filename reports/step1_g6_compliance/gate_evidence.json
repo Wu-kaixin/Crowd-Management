@@ -1,6 +1,25 @@
 {
-  "g6_status": "UNMET_FROZEN_COMMIT",
+  "schema": "abcg-v2-step1-gates-v2",
+  "overall_status": "PASS",
+  "g6_status": "PASS",
+  "evaluated_commit": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "code_freeze_commit": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "frozen_commit": "PASS",
+  "gates": {
+    "G0": "PASS",
+    "G1": "PASS",
+    "G2": "PASS",
+    "G3": "PASS",
+    "G4": "PASS",
+    "G5": "PASS",
+    "G6": "PASS"
+  },
+  "gate_basis": {
+    "G0-G5": "commit-bound pytest, compileall, and pip check preflight",
+    "G6": "formal paired evaluation checks plus a clean frozen checkout"
+  },
   "checks": {
+    "formal_preflight": true,
     "research_dependencies": true,
     "reset_step_api": true,
     "primary_scenarios": true,
@@ -16,10 +35,18 @@
     "stress_double_cluster_and_narrow_neck": true,
     "runtime_p95_memory": true,
     "run_artifact_contract": true,
-    "frozen_commit": false
+    "independent_truth_evidence": true,
+    "frozen_commit": true
   },
   "primary_record_count": 600,
   "expected_primary_record_count": 600,
+  "success_count": 323,
   "failure_count": 277,
+  "status_counts": {
+    "BOUNDARY_INVALID": 30,
+    "CONVERGED": 323,
+    "SAFETY_INFEASIBLE": 5,
+    "TIMEOUT": 242
+  },
   "actual_failure_gallery_count": 2
 }

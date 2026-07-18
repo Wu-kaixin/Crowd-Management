@@ -1,11 +1,11 @@
 {
-  "commit": "fe4e7c1dd310c4eaef814c70e9edb34ec02227ae",
-  "branch": "main",
-  "dirty": true,
-  "dirty_entry_count": 42,
-  "source_sha256": "6a0f5e45643f92e92517b23e37916038a0b2a7b7420b9813f4c94c3e9494e39f",
-  "frozen_commit": false,
-  "freeze_status": "UNFROZEN_DIRTY_WORKTREE",
+  "commit": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "branch": "",
+  "dirty": false,
+  "dirty_entry_count": 0,
+  "source_sha256": "ec422534d59f1bfecee8a5c1693a1be0357d564f855dfccbfc399df2a3a562ed",
+  "frozen_commit": true,
+  "freeze_status": "FROZEN_COMMIT",
   "python": "3.12.13",
   "platform": "Windows-11-10.0.26200-SP0",
   "packages": {

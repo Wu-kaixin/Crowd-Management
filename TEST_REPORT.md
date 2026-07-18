@@ -4,12 +4,13 @@
 
 - Date: 2026-07-18 (Asia/Tokyo)
 - Repository baseline: `main@fe4e7c1dd310c4eaef814c70e9edb34ec02227ae`
-- Delivery stage: ABCG-v2 Step 1 PR6 formal G6 compliance closure
+- Delivery stage: **ABCG-v2 Step 1 research-complete**
 - Environment: Conda `abcg`
 - Python: `3.12.13`
 - Platform: Windows 11
-- Previous unfrozen evaluation source SHA-256: `6a0f5e45643f92e92517b23e37916038a0b2a7b7420b9813f4c94c3e9494e39f`
-- Freeze status: pre-freeze validation passed; fresh-checkout formal G6 still pending
+- Implementation freeze: `f2494922b2431bfd9a37a247add8a79acfdc18ed`
+- Evaluation source SHA-256: `ec422534d59f1bfecee8a5c1693a1be0357d564f855dfccbfc399df2a3a562ed`
+- Freeze status: `FROZEN_COMMIT`; evaluator-generated G0-G6 `PASS`
 
 ## Environment and dependency repair
 
@@ -47,8 +48,8 @@ This message is pip's successful exit-zero result, not an error.
 
 ```powershell
 conda run -n abcg python scripts/run_step1_g6_compliance.py `
-  --output reports/step1_g6_compliance `
-  --run-root runs/step1_g6_compliance `
+  --output E:\Crowd-Management-step1-artifacts\f2494922b2431bfd9a37a247add8a79acfdc18ed\report `
+  --run-root E:\Crowd-Management-step1-artifacts\f2494922b2431bfd9a37a247add8a79acfdc18ed\runs `
   --seed-count 30 `
   --bootstrap-samples 30 `
   --observation-count 120 `
@@ -75,10 +76,10 @@ Additional evidence contains:
 
 ## Formal result
 
-- Wall time: `2260.91 s`
-- Process peak resident memory: `1,700,134,912 bytes`
-- Primary method runtime: mean `15,204.43 ms`, median `9,389.36 ms`, P95
-  `50,424.48 ms`, worst-5% mean `60,191.74 ms`
+- Wall time: `1791.93 s`
+- Process peak resident memory: `125,779,968 bytes`
+- Primary method runtime: mean `13,290.78 ms`, median `8,531.90 ms`, P95
+  `37,270.29 ms`, worst-5% mean `43,943.84 ms`
 - Terminal accounting: `323 CONVERGED`, `242 TIMEOUT`,
   `5 SAFETY_INFEASIBLE`, `30 BOUNDARY_INVALID`
 - All 600 primary records remain in the denominator.
@@ -140,7 +141,7 @@ conda run --no-capture-output -n abcg python -m pytest `
 Result:
 
 ```text
-95 passed in 73.92s
+95 passed in 73.05s
 ```
 
 Additional checks:
@@ -152,6 +153,7 @@ conda run -n abcg python -m pip check
 
 Both exited zero. `pip check` printed `No broken requirements found.` Targeted
 formal-G6 evidence-architecture checks also passed: `4 passed in 15.86s`.
+The formal CLI repeated the full suite automatically: `95 passed in 75.17s`.
 
 The first fresh-checkout attempt exposed that pytest 9 does not create the
 missing parent of `--basetemp=.tmp/pytest-temp`: 75 tests passed and 19 setup
@@ -175,12 +177,19 @@ All automatic formal G6 checks are true:
 - runtime/P95/memory evidence;
 - eight required artifacts for every primary run.
 
-The previous `gate_evidence.json` reports `UNMET_FROZEN_COMMIT`. The evaluator
-now requires an automatic, commit-bound `pytest`/`compileall`/`pip check`
-preflight and writes `overall_status`, `evaluated_commit`, `frozen_commit`, and
-explicit G0-G6 statuses. A reviewed implementation-freeze commit followed by
-fresh-checkout reproduction from that exact commit is still required before G6
-may be reported as `PASS`.
+Evaluator-generated `gate_evidence.json` reports:
+
+- `overall_status = PASS` and `g6_status = PASS`;
+- `frozen_commit = PASS`;
+- `evaluated_commit = f2494922b2431bfd9a37a247add8a79acfdc18ed`;
+- G0, G1, G2, G3, G4, G5, and G6 all `PASS`;
+- no false compliance checks and no `UNMET_*` value;
+- 600 JSON records, 600 CSV rows, 600 run manifests/metrics, 323 successes,
+  and 277 retained failures with matching counts.
+
+The frozen implementation therefore satisfies the Step 1 research-complete
+criterion. Final documentation HEAD is still subject to the second clean
+checkout consistency run described in the freeze audit.
 
 The evidence does not establish continuous-time safety, robust nonconvex
 containment, dynamic crowds, local communication, real-sensor performance, or
