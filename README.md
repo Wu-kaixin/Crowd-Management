@@ -175,7 +175,7 @@ The archive contains old scenario files, reports, figures, GIF media, original s
 - Active branch: `main`.
 - Active method family: ABCG static unknown-crowd containment.
 - Step 1 delivery status: PR0-PR5 complete; PR6 formal-compliance implementation/evaluation complete in the working tree; only the user-deferred frozen-commit requirement remains pending.
-- Pre-freeze local validation in Conda `abcg`: `94 passed`.
+- Pre-freeze local validation in Conda `abcg`: `95 passed`.
 - Main committed media: PNG and GIF artifacts under `reports/media/`.
 
 ## License

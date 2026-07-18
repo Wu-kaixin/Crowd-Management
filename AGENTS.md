@@ -48,7 +48,7 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The current suite has 94 tests.
+The current suite has 95 tests.
 
 Dependency health command:
 
