@@ -9,10 +9,14 @@ It is used only after the episode has terminated.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import Future, ProcessPoolExecutor, as_completed
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass, replace
 import hashlib
 import importlib.metadata
 import json
+import multiprocessing
+import os
 import platform
 from pathlib import Path
 import subprocess
@@ -167,6 +171,7 @@ class G7EvaluationConfig:
     calibration_bootstrap_replicas: int = 4
     phase_grid_size: int = 12
     bootstrap_resamples: int = 2000
+    parallel_workers: int = 24
     available_guides: int = 16
     fixed_active_guides: int = 8
     required_arc_gap: float = 2.2
@@ -230,6 +235,7 @@ class G7EvaluationConfig:
             "calibration_bootstrap_replicas",
             "phase_grid_size",
             "bootstrap_resamples",
+            "parallel_workers",
             "available_guides",
             "fixed_active_guides",
             "hold_steps",
@@ -479,8 +485,12 @@ def load_g7_config(path: str | Path, *, quick: bool = False) -> G7EvaluationConf
     evaluation = raw.get("evaluation", {})
     motion = raw.get("motion", {})
     safety = raw.get("safety", {})
-    if not all(isinstance(item, Mapping) for item in (splits, evaluation, motion, safety)):
-        raise ValueError("splits/evaluation/motion/safety must be mappings")
+    execution = raw.get("execution", {})
+    if not all(
+        isinstance(item, Mapping)
+        for item in (splits, evaluation, motion, safety, execution)
+    ):
+        raise ValueError("splits/evaluation/motion/safety/execution must be mappings")
     allowed_split_keys = {
         "pilot_seeds",
         "calibration_fit_seeds",
@@ -510,6 +520,7 @@ def load_g7_config(path: str | Path, *, quick: bool = False) -> G7EvaluationConf
         "evaluation": evaluation,
         "motion": motion,
         "safety": safety,
+        "execution": execution,
     }
     known = set(G7EvaluationConfig.__dataclass_fields__)
     for group in field_groups.values():
@@ -956,6 +967,27 @@ def create_freeze_manifest(
         ),
         "noninferiority_margin_magnitude": 0.10,
         "candidate_minus_baseline_decision_threshold": -0.10,
+        "execution": {
+            "configured_parallel_workers": config.parallel_workers,
+            "expected_actual_case_workers": min(
+                config.parallel_workers,
+                len(evaluation_cases(config, "holdout")),
+            ),
+            "execution_mode": (
+                "case_process_pool_spawn"
+                if min(config.parallel_workers, len(evaluation_cases(config, "holdout"))) > 1
+                else "serial_case_loop"
+            ),
+            "worker_start_method": "spawn",
+            "worker_numeric_thread_limit": 1,
+            "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+            "record_order": "case_index_then_frozen_method_order",
+            "runtime_measurement_semantics": (
+                "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency"
+            ),
+            "gpu_used": False,
+            "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+        },
         "environment": environment_snapshot(),
     }
     write_strict_json(output_path, manifest)
@@ -1017,6 +1049,27 @@ def verify_freeze_manifest(
             if "g6_fixed_resource_rerun" in evaluation_methods("holdout", quick=quick)
             else 0
         ),
+        "execution": {
+            "configured_parallel_workers": config.parallel_workers,
+            "expected_actual_case_workers": min(
+                config.parallel_workers,
+                len(evaluation_cases(config, "holdout")),
+            ),
+            "execution_mode": (
+                "case_process_pool_spawn"
+                if min(config.parallel_workers, len(evaluation_cases(config, "holdout"))) > 1
+                else "serial_case_loop"
+            ),
+            "worker_start_method": "spawn",
+            "worker_numeric_thread_limit": 1,
+            "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+            "record_order": "case_index_then_frozen_method_order",
+            "runtime_measurement_semantics": (
+                "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency"
+            ),
+            "gpu_used": False,
+            "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+        },
     }
     mismatches = [key for key, value in checks.items() if manifest.get(key) != value]
     if mismatches:
@@ -1069,6 +1122,8 @@ def environment_snapshot() -> dict[str, object]:
         "python": sys.version.split()[0],
         "implementation": platform.python_implementation(),
         "platform": platform.platform(),
+        "logical_cpu_count": os.cpu_count(),
+        "processor_identifier": os.environ.get("PROCESSOR_IDENTIFIER"),
         "packages": packages,
     }
 
@@ -3047,7 +3102,17 @@ def _deterministic_record_projection(row: Mapping[str, object]) -> dict[str, obj
             for raw_key, raw_value in item.items():
                 key = str(raw_key)
                 normalized = key.lower()
-                if "runtime" in normalized or "peak_memory" in normalized:
+                if (
+                    "runtime" in normalized
+                    or "peak_memory" in normalized
+                    or normalized in {
+                        "actual_case_workers",
+                        "case_process_thread_environment",
+                        "execution_mode",
+                        "worker_numeric_thread_limit",
+                        "worker_start_method",
+                    }
+                ):
                     result[key] = None
                 else:
                     result[key] = scrub(raw_value)
@@ -4644,6 +4709,448 @@ def _with_input_generation_metadata(
     return replace(record, metadata=metadata)
 
 
+_WORKER_THREAD_ENVIRONMENT: dict[str, str] = {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "BLIS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "MKL_DYNAMIC": "FALSE",
+}
+
+
+def _configure_case_worker() -> None:
+    """Reassert one numeric-library thread inside each case process.
+
+    The parent installs the same environment before Windows ``spawn`` so the
+    limits are already visible when NumPy/SciPy DLLs load.  Reasserting them in
+    the initializer also documents and preserves the contract if another
+    process start method is used.
+    """
+
+    for name, value in _WORKER_THREAD_ENVIRONMENT.items():
+        os.environ[name] = value
+
+
+@contextmanager
+def _worker_spawn_environment() -> Iterable[None]:
+    """Temporarily install thread limits inherited by spawned workers."""
+
+    previous = {name: os.environ.get(name) for name in _WORKER_THREAD_ENVIRONMENT}
+    try:
+        _configure_case_worker()
+        yield
+    finally:
+        for name, value in previous.items():
+            if value is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = value
+
+
+def _expand_case_failure(
+    case_index: int,
+    case: Mapping[str, object],
+    config: G7EvaluationConfig,
+    methods: Sequence[str],
+    *,
+    config_hash: str,
+    branch_sha: str,
+    frozen_sha: str,
+    calibration_status: str,
+    calibration_factor: float | None,
+    error: Exception,
+    exception_scope: str,
+    input_generation_runtime_ms: float = 0.0,
+    preparation_runtime_ms: float = 0.0,
+    preparation_peak_memory_bytes: int = 0,
+) -> tuple[int, list[tuple[G7Record, dict[str, object]]]]:
+    """Expand one failed case to every frozen method denominator."""
+
+    planning = _emergency_prepared_case(
+        config,
+        case,
+        calibration_status=calibration_status,
+        calibration_factor=calibration_factor,
+    )
+    evaluated: list[tuple[G7Record, dict[str, object]]] = []
+    for method in methods:
+        spec = _method_spec(method)
+        regime = (
+            ResourceRegime.SAME_RESOURCE
+            if spec["resource"] == "fixed"
+            else ResourceRegime.ADAPTIVE_RESOURCE
+        )
+        active_count = (
+            min(config.fixed_active_guides, config.available_guides)
+            if regime == ResourceRegime.SAME_RESOURCE
+            else 0
+        )
+        record, media = _failure_record(
+            planning,
+            method=method,
+            regime=regime,
+            active_count=active_count,
+            status="EVALUATION_ERROR",
+            reason=f"{type(error).__name__}: {error}",
+            config_hash=config_hash,
+            branch_sha=branch_sha,
+            frozen_sha=frozen_sha,
+            runtime_ms=preparation_runtime_ms,
+            peak_memory_bytes=preparation_peak_memory_bytes,
+            diagnostics={
+                "exception_scope": exception_scope,
+                "exception_type": type(error).__name__,
+                "runtime_scope": "case_failed_before_method_deployment",
+                "preparation_runtime_ms": preparation_runtime_ms,
+                "preparation_peak_memory_bytes": preparation_peak_memory_bytes,
+                "adaptive_failure_active_count_semantics": (
+                    "unknown_before_resource_planning_recorded_as_zero"
+                    if regime == ResourceRegime.ADAPTIVE_RESOURCE else None
+                ),
+            },
+        )
+        record = _with_input_generation_metadata(
+            record,
+            runtime_ms=input_generation_runtime_ms,
+        )
+        evaluated.append((record, media))
+    return case_index, evaluated
+
+
+def _evaluate_deployment_case_impl(
+    case_index: int,
+    case: Mapping[str, object],
+    config: G7EvaluationConfig,
+    methods: Sequence[str],
+    *,
+    config_hash: str,
+    branch_sha: str,
+    frozen_sha: str,
+    calibration_status: str,
+    calibration_factor: float | None,
+) -> tuple[int, list[tuple[G7Record, dict[str, object]]]]:
+    """Evaluate a complete case in method order without writing shared files."""
+
+    input_generation_start = perf_counter()
+    input_generation_error: Exception | None = None
+    try:
+        input_config = _g6_config(
+            config,
+            str(case["scenario"]),
+            int(case["seed"]),
+            bootstrap=config.boundary_bootstrap_samples,
+        )
+        observation_truth = _observed_case(
+            str(case["scenario"]),
+            int(case["seed"]),
+            input_config,
+        )
+    except Exception as error:
+        input_generation_error = error
+        observation_truth = (np.empty((0, 2), dtype=float), np.empty((0, 2), dtype=float))
+    input_generation_runtime_ms = (perf_counter() - input_generation_start) * 1000.0
+
+    preparation_error: Exception | None = None
+    preparation_runtime_ms = 0.0
+    preparation_peak = 0
+    if input_generation_error is None:
+        preparation_start = perf_counter()
+        tracemalloc.start()
+        try:
+            planning, truth = _prepare_case(
+                config,
+                str(case["scenario"]),
+                int(case["seed"]),
+                str(case["cohort"]),
+                forced_layout=(
+                    None
+                    if case["forced_layout"] is None
+                    else str(case["forced_layout"])
+                ),
+                calibration_status=calibration_status,
+                calibration_factor=calibration_factor,
+                observation_truth=observation_truth,
+            )
+        except Exception as error:
+            preparation_error = error
+        finally:
+            if tracemalloc.is_tracing():
+                _, preparation_peak = tracemalloc.get_traced_memory()
+                tracemalloc.stop()
+            preparation_runtime_ms = (perf_counter() - preparation_start) * 1000.0
+    else:
+        preparation_error = input_generation_error
+
+    if preparation_error is not None:
+        return _expand_case_failure(
+            case_index,
+            case,
+            config,
+            methods,
+            config_hash=config_hash,
+            branch_sha=branch_sha,
+            frozen_sha=frozen_sha,
+            calibration_status=calibration_status,
+            calibration_factor=calibration_factor,
+            error=preparation_error,
+            exception_scope=(
+                "input_generation"
+                if input_generation_error is not None else "case_preparation"
+            ),
+            input_generation_runtime_ms=input_generation_runtime_ms,
+            preparation_runtime_ms=preparation_runtime_ms,
+            preparation_peak_memory_bytes=preparation_peak,
+        )
+
+    evaluated: list[tuple[G7Record, dict[str, object]]] = []
+    for method in methods:
+        record, media = evaluate_g7_method(
+            planning,
+            truth,
+            config,
+            method,
+            config_hash=config_hash,
+            branch_sha=branch_sha,
+            frozen_sha=frozen_sha,
+        )
+        if method != "g6_fixed_resource_rerun":
+            record = _with_preparation_cost(
+                record,
+                runtime_ms=preparation_runtime_ms,
+                peak_memory_bytes=preparation_peak,
+            )
+        record = _with_input_generation_metadata(
+            record,
+            runtime_ms=input_generation_runtime_ms,
+        )
+        evaluated.append((record, media))
+    return case_index, evaluated
+
+
+def _evaluate_deployment_case(
+    case_index: int,
+    case: Mapping[str, object],
+    config: G7EvaluationConfig,
+    methods: Sequence[str],
+    *,
+    config_hash: str,
+    branch_sha: str,
+    frozen_sha: str,
+    calibration_status: str,
+    calibration_factor: float | None,
+) -> tuple[int, list[tuple[G7Record, dict[str, object]]]]:
+    """Denominator-safe process worker boundary."""
+
+    try:
+        result = _evaluate_deployment_case_impl(
+            case_index,
+            case,
+            config,
+            methods,
+            config_hash=config_hash,
+            branch_sha=branch_sha,
+            frozen_sha=frozen_sha,
+            calibration_status=calibration_status,
+            calibration_factor=calibration_factor,
+        )
+    except Exception as error:
+        result = _expand_case_failure(
+            case_index,
+            case,
+            config,
+            methods,
+            config_hash=config_hash,
+            branch_sha=branch_sha,
+            frozen_sha=frozen_sha,
+            calibration_status=calibration_status,
+            calibration_factor=calibration_factor,
+            error=error,
+            exception_scope="case_worker_unhandled",
+        )
+    returned_index, evaluated = result
+    observed_environment = {
+        name: os.environ.get(name)
+        for name in _WORKER_THREAD_ENVIRONMENT
+    }
+    annotated: list[tuple[G7Record, dict[str, object]]] = []
+    for record, media in evaluated:
+        metadata = dict(record.metadata)
+        metadata["case_process_thread_environment"] = observed_environment
+        annotated.append((replace(record, metadata=metadata), media))
+    return returned_index, annotated
+
+
+def _case_result_or_failure(
+    future: Future[tuple[int, list[tuple[G7Record, dict[str, object]]]]],
+    *,
+    case_index: int,
+    case: Mapping[str, object],
+    config: G7EvaluationConfig,
+    methods: Sequence[str],
+    config_hash: str,
+    branch_sha: str,
+    frozen_sha: str,
+    calibration_status: str,
+    calibration_factor: float | None,
+) -> tuple[int, list[tuple[G7Record, dict[str, object]]]]:
+    """Resolve a future, rejecting process/serialization infrastructure faults.
+
+    Ordinary case-level algorithm exceptions are caught *inside* the worker
+    and expanded to every method.  A broken process, pickling failure, or
+    malformed worker return means the experiment infrastructure itself is not
+    trustworthy; the phase aborts before publishing evidence.
+    """
+
+    try:
+        result = future.result()
+        returned_index, evaluated = result
+        if returned_index != case_index:
+            raise RuntimeError(
+                f"worker returned case index {returned_index}, expected {case_index}"
+            )
+        if len(evaluated) != len(methods):
+            raise RuntimeError(
+                f"worker returned {len(evaluated)} methods, expected {len(methods)}"
+            )
+        returned_methods = tuple(record.method for record, _ in evaluated)
+        if returned_methods != tuple(methods):
+            raise RuntimeError(
+                f"worker method order {returned_methods!r} differs from {tuple(methods)!r}"
+            )
+        return result
+    except Exception as error:
+        raise RuntimeError(
+            "case worker process/serialization infrastructure failure for "
+            f"case_index={case_index}, scenario={case.get('scenario')!r}, "
+            f"seed={case.get('seed')!r}; no evidence may be published"
+        ) from error
+
+
+def _execute_deployment_cases(
+    cases: Sequence[Mapping[str, object]],
+    config: G7EvaluationConfig,
+    methods: Sequence[str],
+    *,
+    config_hash: str,
+    branch_sha: str,
+    frozen_sha: str,
+    calibration_status: str,
+    calibration_factor: float | None,
+    workers: int | None,
+) -> tuple[list[tuple[G7Record, dict[str, object]]], int, str]:
+    """Evaluate cases serially or with a spawn-safe process pool.
+
+    Results are always flattened by ``case_index`` then frozen ``method``
+    order, never by completion time.
+    """
+
+    requested = config.parallel_workers if workers is None else workers
+    if isinstance(requested, bool) or int(requested) != requested or int(requested) < 1:
+        raise ValueError("workers must be a positive integer")
+    actual_workers = min(int(requested), len(cases))
+    if actual_workers < 1:
+        raise ValueError("deployment phase requires at least one case")
+    ordered: list[tuple[int, list[tuple[G7Record, dict[str, object]]]] | None] = [
+        None
+    ] * len(cases)
+    if actual_workers == 1:
+        for case_index, case in enumerate(cases):
+            ordered[case_index] = _evaluate_deployment_case(
+                case_index,
+                case,
+                config,
+                methods,
+                config_hash=config_hash,
+                branch_sha=branch_sha,
+                frozen_sha=frozen_sha,
+                calibration_status=calibration_status,
+                calibration_factor=calibration_factor,
+            )
+        mode = "serial_case_loop"
+    else:
+        spawn_context = multiprocessing.get_context("spawn")
+        with _worker_spawn_environment():
+            with ProcessPoolExecutor(
+                max_workers=actual_workers,
+                mp_context=spawn_context,
+                initializer=_configure_case_worker,
+            ) as executor:
+                future_cases = {
+                    executor.submit(
+                        _evaluate_deployment_case,
+                        case_index,
+                        case,
+                        config,
+                        methods,
+                        config_hash=config_hash,
+                        branch_sha=branch_sha,
+                        frozen_sha=frozen_sha,
+                        calibration_status=calibration_status,
+                        calibration_factor=calibration_factor,
+                    ): (case_index, case)
+                    for case_index, case in enumerate(cases)
+                }
+                for future in as_completed(future_cases):
+                    case_index, case = future_cases[future]
+                    ordered[case_index] = _case_result_or_failure(
+                        future,
+                        case_index=case_index,
+                        case=case,
+                        config=config,
+                        methods=methods,
+                        config_hash=config_hash,
+                        branch_sha=branch_sha,
+                        frozen_sha=frozen_sha,
+                        calibration_status=calibration_status,
+                        calibration_factor=calibration_factor,
+                    )
+        mode = "case_process_pool_spawn"
+
+    flattened: list[tuple[G7Record, dict[str, object]]] = []
+    for expected_index, result in enumerate(ordered):
+        if result is None:
+            raise RuntimeError(f"case {expected_index} produced no result")
+        returned_index, evaluated = result
+        if returned_index != expected_index:
+            raise RuntimeError("case ordering invariant was violated")
+        flattened.extend(evaluated)
+    return flattened, actual_workers, mode
+
+
+def _with_execution_metadata(
+    record: G7Record,
+    *,
+    configured_workers: int,
+    actual_workers: int,
+    execution_mode: str,
+) -> G7Record:
+    metadata = dict(record.metadata)
+    metadata.update(
+        {
+            "execution_mode": execution_mode,
+            "configured_parallel_workers": int(configured_workers),
+            "actual_case_workers": int(actual_workers),
+            "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+            "record_order": "case_index_then_frozen_method_order",
+            "runtime_measurement_semantics": (
+                "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency"
+            ),
+            "gpu_used": False,
+            "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+            "worker_numeric_thread_limit": (
+                1 if execution_mode == "case_process_pool_spawn" else None
+            ),
+            "worker_start_method": (
+                "spawn" if execution_mode == "case_process_pool_spawn" else None
+            ),
+        }
+    )
+    return replace(record, metadata=metadata)
+
+
 def run_deployment_phase(
     repo: str | Path,
     config: G7EvaluationConfig,
@@ -4657,9 +5164,20 @@ def run_deployment_phase(
     calibration_status: str = "UNCALIBRATED_STABILITY",
     calibration_factor: float | None = None,
     verified_manifest: Mapping[str, object] | None = None,
+    workers: int | None = None,
 ) -> dict[str, object]:
     if phase not in {"pilot", "holdout"}:
         raise ValueError("phase must be pilot or holdout")
+    if (
+        phase == "holdout"
+        and not quick
+        and workers is not None
+        and workers != config.parallel_workers
+    ):
+        raise ValueError(
+            "formal holdout --workers must equal the frozen "
+            f"parallel_workers={config.parallel_workers}"
+        )
     cases = evaluation_cases(config, phase)
     methods = evaluation_methods(phase, quick=quick)
     calculated_expected = len(cases) * len(methods)
@@ -4669,133 +5187,34 @@ def run_deployment_phase(
         if int(verified_manifest.get("expected_holdout_record_count", -1)) != calculated_expected:
             raise RuntimeError("holdout matrix does not match frozen expected record count")
     output_dir = Path(output)
-    output_dir.mkdir(parents=True, exist_ok=True)
     records: list[G7Record] = []
     media_by_id: dict[str, Mapping[str, object]] = {}
-    for case in cases:
-        input_generation_start = perf_counter()
-        input_generation_error: Exception | None = None
-        try:
-            input_config = _g6_config(
-                config,
-                str(case["scenario"]),
-                int(case["seed"]),
-                bootstrap=config.boundary_bootstrap_samples,
-            )
-            observation_truth = _observed_case(
-                str(case["scenario"]),
-                int(case["seed"]),
-                input_config,
-            )
-        except Exception as error:
-            input_generation_error = error
-            observation_truth = (np.empty((0, 2), dtype=float), np.empty((0, 2), dtype=float))
-        input_generation_runtime_ms = (perf_counter() - input_generation_start) * 1000.0
-
-        preparation_error: Exception | None = None
-        preparation_runtime_ms = 0.0
-        preparation_peak = 0
-        if input_generation_error is None:
-            preparation_start = perf_counter()
-            tracemalloc.start()
-            try:
-                planning, truth = _prepare_case(
-                    config,
-                    str(case["scenario"]),
-                    int(case["seed"]),
-                    str(case["cohort"]),
-                    forced_layout=None if case["forced_layout"] is None else str(case["forced_layout"]),
-                    calibration_status=calibration_status,
-                    calibration_factor=calibration_factor,
-                    observation_truth=observation_truth,
-                )
-            except Exception as error:
-                preparation_error = error
-            _, preparation_peak = tracemalloc.get_traced_memory()
-            preparation_runtime_ms = (perf_counter() - preparation_start) * 1000.0
-            tracemalloc.stop()
-        else:
-            preparation_error = input_generation_error
-
-        if preparation_error is not None:
-            planning = _emergency_prepared_case(
-                config,
-                case,
-                calibration_status=calibration_status,
-                calibration_factor=calibration_factor,
-            )
-            truth = np.empty((0, 2), dtype=float)
-
-        if preparation_error is not None:
-            for method in methods:
-                spec = _method_spec(method)
-                regime = (
-                    ResourceRegime.SAME_RESOURCE
-                    if spec["resource"] == "fixed"
-                    else ResourceRegime.ADAPTIVE_RESOURCE
-                )
-                active_count = (
-                    min(config.fixed_active_guides, config.available_guides)
-                    if regime == ResourceRegime.SAME_RESOURCE
-                    else 0
-                )
-                record, media = _failure_record(
-                    planning,
-                    method=method,
-                    regime=regime,
-                    active_count=active_count,
-                    status="EVALUATION_ERROR",
-                    reason=f"{type(preparation_error).__name__}: {preparation_error}",
-                    config_hash=config_hash,
-                    branch_sha=branch_sha,
-                    frozen_sha=frozen_sha,
-                    runtime_ms=preparation_runtime_ms,
-                    peak_memory_bytes=preparation_peak,
-                    diagnostics={
-                        "exception_scope": (
-                            "input_generation"
-                            if input_generation_error is not None else "case_preparation"
-                        ),
-                        "exception_type": type(preparation_error).__name__,
-                        "runtime_scope": "case_preparation_failed_before_method_deployment",
-                        "preparation_runtime_ms": preparation_runtime_ms,
-                        "preparation_peak_memory_bytes": preparation_peak,
-                        "adaptive_failure_active_count_semantics": (
-                            "unknown_before_resource_planning_recorded_as_zero"
-                            if regime == ResourceRegime.ADAPTIVE_RESOURCE else None
-                        ),
-                    },
-                )
-                record = _with_input_generation_metadata(
-                    record,
-                    runtime_ms=input_generation_runtime_ms,
-                )
-                records.append(record)
-                media_by_id[_record_id(record)] = media
-            continue
-
-        for method in methods:
-            record, media = evaluate_g7_method(
-                planning,
-                truth,
-                config,
-                method,
-                config_hash=config_hash,
-                branch_sha=branch_sha,
-                frozen_sha=frozen_sha,
-            )
-            if method != "g6_fixed_resource_rerun":
-                record = _with_preparation_cost(
-                    record,
-                    runtime_ms=preparation_runtime_ms,
-                    peak_memory_bytes=preparation_peak,
-                )
-            record = _with_input_generation_metadata(
-                record,
-                runtime_ms=input_generation_runtime_ms,
-            )
-            records.append(record)
-            media_by_id[_record_id(record)] = media
+    deployment_wall_start = perf_counter()
+    evaluated, actual_workers, execution_mode = _execute_deployment_cases(
+        cases,
+        config,
+        methods,
+        config_hash=config_hash,
+        branch_sha=branch_sha,
+        frozen_sha=frozen_sha,
+        calibration_status=calibration_status,
+        calibration_factor=calibration_factor,
+        workers=workers,
+    )
+    deployment_phase_wall_runtime_ms = (perf_counter() - deployment_wall_start) * 1000.0
+    for record, media in evaluated:
+        record = _with_execution_metadata(
+            record,
+            configured_workers=config.parallel_workers,
+            actual_workers=actual_workers,
+            execution_mode=execution_mode,
+        )
+        record_id = _record_id(record)
+        if record_id in media_by_id:
+            raise RuntimeError(f"duplicate case/method record id: {record_id}")
+        records.append(record)
+        media_by_id[record_id] = media
+    output_dir.mkdir(parents=True, exist_ok=True)
 
     if phase == "pilot":
         rows = []
@@ -4818,6 +5237,22 @@ def run_deployment_phase(
             "record_count": len(rows),
             "expected_record_count": len(cases) * len(methods),
             "config_hash": config_hash,
+            "execution": {
+                "execution_mode": execution_mode,
+                "configured_parallel_workers": config.parallel_workers,
+                "actual_case_workers": actual_workers,
+                "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+                "record_order": "case_index_then_frozen_method_order",
+                "deployment_phase_wall_runtime_ms": deployment_phase_wall_runtime_ms,
+                "runtime_measurement_semantics": (
+                    "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency"
+                ),
+                "gpu_used": False,
+                "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+                "worker_numeric_thread_limit": (
+                    1 if execution_mode == "case_process_pool_spawn" else None
+                ),
+            },
             "records_sha256": _canonical_hash(rows),
             "deterministic_records_sha256": _canonical_hash(
                 [_deterministic_record_projection(row) for row in rows]
@@ -4865,6 +5300,22 @@ def run_deployment_phase(
         "frozen_sha": frozen_sha,
         "config_hash": config_hash,
         "record_count": len(compact_rows),
+        "execution": {
+            "execution_mode": execution_mode,
+            "configured_parallel_workers": config.parallel_workers,
+            "actual_case_workers": actual_workers,
+            "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+            "record_order": "case_index_then_frozen_method_order",
+            "deployment_phase_wall_runtime_ms": deployment_phase_wall_runtime_ms,
+            "runtime_measurement_semantics": (
+                "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency"
+            ),
+            "gpu_used": False,
+            "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+            "worker_numeric_thread_limit": (
+                1 if execution_mode == "case_process_pool_spawn" else None
+            ),
+        },
         "deterministic_records_sha256": _canonical_hash(
             [_deterministic_record_projection(row) for row in compact_rows]
         ),
@@ -4930,6 +5381,25 @@ def run_deployment_phase(
         "v2_1_deployment_record_count": len(v2_records),
         "g6_tracking_comparator_record_count": g6_tracking["record_count"],
         "environment": environment_snapshot(),
+        "execution": {
+            "execution_mode": execution_mode,
+            "configured_parallel_workers": config.parallel_workers,
+            "actual_case_workers": actual_workers,
+            "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+            "record_order": "case_index_then_frozen_method_order",
+            "deployment_phase_wall_runtime_ms": deployment_phase_wall_runtime_ms,
+            "runtime_measurement_semantics": (
+                "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency"
+            ),
+            "gpu_used": False,
+            "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+            "worker_numeric_thread_limit": (
+                1 if execution_mode == "case_process_pool_spawn" else None
+            ),
+            "worker_start_method": (
+                "spawn" if execution_mode == "case_process_pool_spawn" else None
+            ),
+        },
         "freeze_verification": verified_manifest.get("holdout_verification"),
         "truth_firewall": {
             "planner_inputs": ["observation", "estimated_boundary", "guide_initial_state"],
@@ -4977,6 +5447,9 @@ def run_deployment_phase(
         "output": str(output_dir),
         "records_sha256": records_file_sha,
         "gate_reasons": gate["reasons"],
+        "execution_mode": execution_mode,
+        "configured_parallel_workers": config.parallel_workers,
+        "actual_case_workers": actual_workers,
     }
 
 
@@ -4990,6 +5463,7 @@ def run_g7_phase(
     pilot_evidence_path: str | Path | None = None,
     calibration_evidence_path: str | Path | None = None,
     freeze_manifest_path: str | Path | None = None,
+    workers: int | None = None,
 ) -> dict[str, object]:
     """Execute exactly one protocol phase."""
     root = Path(repo).resolve()
@@ -5029,6 +5503,7 @@ def run_g7_phase(
             config_hash=config_hash,
             branch_sha=str(snapshot["head"]),
             frozen_sha=str(snapshot["head"]),
+            workers=workers,
         )
     if phase_name == "holdout":
         if freeze_manifest_path is None:
@@ -5054,6 +5529,7 @@ def run_g7_phase(
                 None if manifest.get("calibration_factor") is None else float(manifest["calibration_factor"])
             ),
             verified_manifest=manifest,
+            workers=workers,
         )
     raise ValueError("phase must be pilot, calibration, freeze, or holdout")
 
@@ -5067,6 +5543,14 @@ def build_argument_parser() -> argparse.ArgumentParser:
     parser.add_argument("--pilot-evidence")
     parser.add_argument("--calibration-evidence")
     parser.add_argument("--freeze-manifest")
+    parser.add_argument(
+        "--workers",
+        type=int,
+        help=(
+            "case process count; formal holdout must equal frozen "
+            "execution.parallel_workers"
+        ),
+    )
     parser.add_argument("--quick", action="store_true")
     return parser
 
@@ -5088,6 +5572,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         pilot_evidence_path=args.pilot_evidence,
         calibration_evidence_path=args.calibration_evidence,
         freeze_manifest_path=args.freeze_manifest,
+        workers=args.workers,
     )
     print(json.dumps(_strict_jsonable(result), ensure_ascii=False, allow_nan=False))
     return 0

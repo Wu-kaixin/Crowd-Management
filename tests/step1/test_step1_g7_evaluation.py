@@ -160,6 +160,8 @@ def _failed_planning_case() -> g7._PreparedCase:
 def test_config_freezes_disjoint_nonhistorical_splits_and_expected_matrix() -> None:
     full = g7.load_g7_config(CONFIG)
     quick = g7.load_g7_config(CONFIG, quick=True)
+    assert full.parallel_workers == 24
+    assert quick.parallel_workers == 24
     split_sets = [
         set(full.pilot_seeds),
         set(full.calibration_seeds),
@@ -219,6 +221,10 @@ def test_freeze_and_holdout_hash_verification_and_dirty_rejection(tmp_path: Path
     assert manifest["expected_holdout_record_count"] == 10
     assert manifest["expected_holdout_v2_1_record_count"] == 8
     assert manifest["expected_g6_tracking_comparator_record_count"] == 2
+    assert manifest["execution"]["configured_parallel_workers"] == 24
+    assert manifest["execution"]["expected_actual_case_workers"] == 2
+    assert manifest["execution"]["worker_start_method"] == "spawn"
+    assert manifest["execution"]["worker_numeric_thread_limit"] == 1
     assert manifest["pilot_evidence_summary"]["record_count"] == 2
     assert manifest["calibration_evidence_summary"]["factor_fit_uses_validation_data"] is False
     assert g7.verify_freeze_manifest(repo, CONFIG, manifest_path, quick=True)["holdout_verification"] == "PASS"
@@ -229,6 +235,13 @@ def test_freeze_and_holdout_hash_verification_and_dirty_rejection(tmp_path: Path
     g7.write_strict_json(tampered_path, tampered)
     with pytest.raises(RuntimeError, match="frozen input verification failed"):
         g7.verify_freeze_manifest(repo, CONFIG, tampered_path, quick=True)
+
+    tampered_execution = json.loads(json.dumps(manifest))
+    tampered_execution["execution"]["configured_parallel_workers"] = 1
+    tampered_execution_path = tmp_path / "tampered-execution.json"
+    g7.write_strict_json(tampered_execution_path, tampered_execution)
+    with pytest.raises(RuntimeError, match="frozen input verification failed"):
+        g7.verify_freeze_manifest(repo, CONFIG, tampered_execution_path, quick=True)
 
     (repo / "src" / "crowd_management" / "dummy.py").write_text("VALUE = 2\n", encoding="utf-8")
     with pytest.raises(RuntimeError, match="clean worktree"):
@@ -452,6 +465,174 @@ def test_case_preparation_exception_expands_to_every_frozen_pilot_method(
     assert evidence["record_count"] == evidence["expected_record_count"]
     assert all(record["terminal_status"] == "EVALUATION_ERROR" for record in evidence["records"])
     assert all(record["metadata"]["exception_scope"] == "case_preparation" for record in evidence["records"])
+
+
+def _small_parallel_config() -> g7.G7EvaluationConfig:
+    return replace(
+        g7.load_g7_config(CONFIG, quick=True),
+        blocked_scenarios=("u_shape", "c_shape"),
+        observation_count=24,
+        boundary_bootstrap_samples=1,
+        calibration_bootstrap_replicas=1,
+        phase_grid_size=2,
+        bootstrap_resamples=20,
+        available_guides=2,
+        fixed_active_guides=1,
+        hold_steps=1,
+        max_steps=2,
+        no_progress_window=2,
+        safety_replay_stride=1,
+        parallel_workers=2,
+    )
+
+
+def test_serial_and_process_pool_have_identical_deterministic_projection_and_order(
+    tmp_path: Path,
+) -> None:
+    config = _small_parallel_config()
+    config_hash = g7.resolved_config_hash(config)
+    serial = g7.run_deployment_phase(
+        ROOT,
+        config,
+        tmp_path / "serial",
+        phase="pilot",
+        quick=True,
+        config_hash=config_hash,
+        branch_sha="branch",
+        frozen_sha="frozen",
+        workers=1,
+    )
+    parallel = g7.run_deployment_phase(
+        ROOT,
+        config,
+        tmp_path / "parallel",
+        phase="pilot",
+        quick=True,
+        config_hash=config_hash,
+        branch_sha="branch",
+        frozen_sha="frozen",
+        workers=2,
+    )
+
+    assert serial["deterministic_records_sha256"] == parallel["deterministic_records_sha256"]
+    identity = lambda row: (row["scenario"], row["seed"], row["method"])
+    expected = [
+        (case["scenario"], case["seed"], method)
+        for case in g7.evaluation_cases(config, "pilot")
+        for method in g7.evaluation_methods("pilot", quick=True)
+    ]
+    assert [identity(row) for row in serial["records"]] == expected
+    assert [identity(row) for row in parallel["records"]] == expected
+    assert serial["execution"]["execution_mode"] == "serial_case_loop"
+    assert serial["execution"]["actual_case_workers"] == 1
+    assert parallel["execution"]["execution_mode"] == "case_process_pool_spawn"
+    assert parallel["execution"]["actual_case_workers"] == 2
+    assert all(
+        row["metadata"]["configured_parallel_workers"] == 2
+        and row["metadata"]["actual_case_workers"] == 2
+        and row["metadata"]["worker_numeric_thread_limit"] == 1
+        and row["metadata"]["case_process_thread_environment"]["OMP_NUM_THREADS"] == "1"
+        and row["metadata"]["case_process_thread_environment"]["OPENBLAS_NUM_THREADS"] == "1"
+        and row["metadata"]["case_process_thread_environment"]["MKL_NUM_THREADS"] == "1"
+        for row in parallel["records"]
+    )
+
+
+def test_parallel_case_algorithm_exception_keeps_every_method_denominator() -> None:
+    config = _small_parallel_config()
+    cases = [
+        {
+            "scenario": "unsupported_a",
+            "seed": 12000,
+            "cohort": "pilot",
+            "forced_layout": None,
+        },
+        {
+            "scenario": "unsupported_b",
+            "seed": 12001,
+            "cohort": "pilot",
+            "forced_layout": None,
+        },
+    ]
+    methods = g7.evaluation_methods("pilot", quick=True)
+    evaluated, actual_workers, mode = g7._execute_deployment_cases(
+        cases,
+        config,
+        methods,
+        config_hash="config",
+        branch_sha="branch",
+        frozen_sha="frozen",
+        calibration_status="CALIBRATION_INSUFFICIENT",
+        calibration_factor=None,
+        workers=2,
+    )
+    records = [record for record, _ in evaluated]
+    assert actual_workers == 2
+    assert mode == "case_process_pool_spawn"
+    assert len(records) == len(cases) * len(methods)
+    assert [(record.scenario, record.method) for record in records] == [
+        (case["scenario"], method)
+        for case in cases
+        for method in methods
+    ]
+    assert all(record.outcome.controller_terminal_state == "EVALUATION_ERROR" for record in records)
+    assert all(record.metadata["exception_scope"] == "input_generation" for record in records)
+
+
+def test_process_serialization_failure_aborts_before_evidence_write(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    config = _small_parallel_config()
+    cases = [
+        {
+            "scenario": "unsupported_a",
+            "seed": 12000,
+            "cohort": "pilot",
+            "forced_layout": None,
+            "unpicklable": lambda: None,
+        },
+        {
+            "scenario": "unsupported_b",
+            "seed": 12001,
+            "cohort": "pilot",
+            "forced_layout": None,
+        },
+    ]
+    monkeypatch.setattr(g7, "evaluation_cases", lambda *_args, **_kwargs: cases)
+    output = tmp_path / "must-not-exist"
+    with pytest.raises(RuntimeError, match="process/serialization infrastructure failure"):
+        g7.run_deployment_phase(
+            ROOT,
+            config,
+            output,
+            phase="pilot",
+            quick=True,
+            config_hash="config",
+            branch_sha="branch",
+            frozen_sha="frozen",
+            workers=2,
+        )
+    assert not output.exists()
+
+
+def test_formal_holdout_rejects_worker_override_different_from_frozen_config(
+    tmp_path: Path,
+) -> None:
+    config = g7.load_g7_config(CONFIG)
+    with pytest.raises(ValueError, match="must equal the frozen parallel_workers=24"):
+        g7.run_deployment_phase(
+            ROOT,
+            config,
+            tmp_path / "holdout",
+            phase="holdout",
+            quick=False,
+            config_hash="config",
+            branch_sha="branch",
+            frozen_sha="frozen",
+            verified_manifest={"expected_holdout_record_count": 330},
+            workers=1,
+        )
 
 
 def test_failure_truth_scoring_exception_cannot_erase_original_failure(

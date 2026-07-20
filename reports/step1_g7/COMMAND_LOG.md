@@ -114,3 +114,37 @@ Observed: integrated `92 passed in 30.32s`; full suite
 passed.  Independent S6 audit found no P0/P1 blocker.  The formal G7 gate
 remains `NOT_RUN` until the committed clean-tree Pilot -> Calibration ->
 Freeze -> Holdout protocol is complete.
+
+## S6 parallel execution hardening and refreeze requirement
+
+The initial frozen serial Holdout was intentionally stopped before any formal
+Holdout evidence was published after hardware utilization was reviewed.  Its
+Pilot, Calibration, and Freeze files were preserved only under the ignored
+`runs/step1_g7_serial_attempt_2bbc623/` directory and are not used by the
+formal conclusion.
+
+Hardware audit: Intel Core i9-14900KF (8P+16E, 24 physical cores, 32 logical
+processors); NVIDIA GeForce RTX 5080 (16303 MiB), CUDA available through
+`torch 2.13.0+cu130`.  The formal algorithms remain CPU-only because the
+Shapely/GEOS, Qhull, Hungarian, and SciPy SLSQP paths have no numerically
+equivalent CUDA backend.  The frozen replacement uses 24 independent
+case-level Windows spawn workers and constrains each worker's numeric-library
+thread count to one.
+
+```powershell
+conda run -n abcg python -m py_compile src/crowd_management/evaluation/step1_g7.py scripts/run_step1_g7.py scripts/build_step1_g7_media.py
+conda run -n abcg python -m pytest tests/step1/test_step1_g7_evaluation.py tests/step1/test_step1_g7_media.py tests/step1/test_statistics_v2.py tests/step1/test_g7_semantics.py --basetemp=.tmp/pytest-parallel-integrated-root -o cache_dir=.tmp/pytest-cache-parallel-integrated-root -q
+conda run -n abcg python -m pytest --basetemp=.tmp/pytest-parallel-full-root -o cache_dir=.tmp/pytest-cache-parallel-full-root -q
+conda run -n abcg python -m compileall -q src scripts
+conda run -n abcg python -m pip check
+git diff --check
+```
+
+Observed: integrated `96 passed in 102.87s`; full suite
+`276 passed in 255.05s`; py_compile, compileall, pip check, and diff check
+passed.  Tests include serial/parallel deterministic-projection equivalence,
+stable case/method ordering, complete algorithm-failure denominators,
+infrastructure-failure abort before evidence publication, frozen worker-count
+verification, numeric thread limits, and a real detached local-clone media
+reproduction.  The 24-worker implementation now requires a new commit and a
+fresh Pilot -> Calibration -> Freeze -> Holdout sequence.

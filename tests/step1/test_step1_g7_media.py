@@ -1329,11 +1329,66 @@ def test_nonblocked_scenarios_may_report_blocked_timeout_as_not_applicable(tmp_p
     assert set(result["outputs"]) == set(MEDIA_FILES)
 
 
-def test_clean_checkout_cli_runs_from_another_working_directory(tmp_path: Path) -> None:
+def test_clean_checkout_cli_runs_from_detached_local_clone(tmp_path: Path) -> None:
+    source_root = Path(__file__).resolve().parents[2]
+    source_head = subprocess.run(
+        ["git", "-C", str(source_root), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    ).stdout.strip()
+    clone_root = tmp_path / "clean-checkout"
+    clone_result = subprocess.run(
+        [
+            "git",
+            "-c",
+            f"safe.directory={source_root / '.git'}",
+            "clone",
+            "--no-hardlinks",
+            "--no-checkout",
+            str(source_root),
+            str(clone_root),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    assert clone_result.returncode == 0, clone_result.stderr
+    detach_result = subprocess.run(
+        ["git", "-C", str(clone_root), "checkout", "--detach", source_head],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    assert detach_result.returncode == 0, detach_result.stderr
+    cloned_head = subprocess.run(
+        ["git", "-C", str(clone_root), "rev-parse", "HEAD"],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    ).stdout.strip()
+    assert cloned_head == source_head
+    assert (
+        subprocess.run(
+            ["git", "-C", str(clone_root), "status", "--porcelain"],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        ).stdout
+        == ""
+    )
+
     input_dir = tmp_path / "compact"
     output_dir = tmp_path / "media"
     _write_inputs(input_dir)
-    script = Path(media_builder.__file__).resolve()
+    script = (clone_root / "scripts" / "build_step1_g7_media.py").resolve()
+    assert script.is_file()
+    assert script.is_relative_to(clone_root.resolve())
 
     result = subprocess.run(
         [
@@ -1344,12 +1399,29 @@ def test_clean_checkout_cli_runs_from_another_working_directory(tmp_path: Path) 
             "--output",
             str(output_dir),
         ],
-        cwd=tmp_path,
+        cwd=clone_root,
         check=False,
         capture_output=True,
         text=True,
-        timeout=30,
+        timeout=60,
     )
 
     assert result.returncode == 0, result.stderr
-    assert (output_dir / MANIFEST_FILE).is_file()
+    manifest = _load(output_dir / MANIFEST_FILE)
+    assert set(manifest["outputs"]) == set(MEDIA_FILES)
+    for name in MEDIA_FILES:
+        path = output_dir / name
+        assert path.is_file() and path.stat().st_size > 0
+        assert manifest["outputs"][name]["sha256"] == hashlib.sha256(
+            path.read_bytes()
+        ).hexdigest()
+    assert (
+        subprocess.run(
+            ["git", "-C", str(clone_root), "status", "--porcelain"],
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=30,
+        ).stdout
+        == ""
+    )
