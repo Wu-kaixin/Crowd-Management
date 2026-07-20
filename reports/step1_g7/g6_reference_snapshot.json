@@ -1,0 +1,43 @@
+{
+  "schema": "abcg-v2.1-g6-reference-snapshot-v1",
+  "source": {
+    "base_sha": "1c3642c1adef0f11e0bde7651e2da64afbc45a8b",
+    "implementation_freeze_sha": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+    "ignored_source_path": "reports/step1_g6_compliance/records.json",
+    "ignored_source_sha256": "8936ed1ef3e99a26073d09e9e09621a2900f40c8b3d1ed89d696b9734a8dd277",
+    "derivation": "method == abcg_v2 and initial_layout == one_sided and scenario in {u_shape,c_shape}"
+  },
+  "semantic_warning": "G6 success means controller TRACK CONVERGED only. This snapshot is used only for the same terminal blocked-route TIMEOUT endpoint, never as G7 deployment success.",
+  "summary": {
+    "record_count": 20,
+    "status_counts": {
+      "CONVERGED": 0,
+      "TIMEOUT": 17,
+      "SAFETY_INFEASIBLE": 1,
+      "BOUNDARY_INVALID": 2
+    },
+    "blocked_route_timeout_rate_all_failures_in_denominator": 0.85
+  },
+  "records": [
+    {"scenario": "c_shape", "seed": 1, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 4, "status": "TIMEOUT", "active_count": 10},
+    {"scenario": "c_shape", "seed": 7, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 10, "status": "BOUNDARY_INVALID", "active_count": 0},
+    {"scenario": "c_shape", "seed": 13, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 16, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 19, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 22, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 25, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "c_shape", "seed": 28, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 1, "status": "BOUNDARY_INVALID", "active_count": 0},
+    {"scenario": "u_shape", "seed": 4, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 7, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 10, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 13, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 16, "status": "SAFETY_INFEASIBLE", "active_count": 9},
+    {"scenario": "u_shape", "seed": 19, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 22, "status": "TIMEOUT", "active_count": 9},
+    {"scenario": "u_shape", "seed": 25, "status": "TIMEOUT", "active_count": 10},
+    {"scenario": "u_shape", "seed": 28, "status": "TIMEOUT", "active_count": 9}
+  ]
+}

@@ -1,0 +1,61 @@
+schema: abcg-v2.1-step1-g7-config-v1
+
+# Seeds 0..29 belong exclusively to the historical G6 reference.  G7 split
+# seeds are deliberately disjoint so pilot/calibration cannot leak into the
+# formal holdout.
+splits:
+  pilot_seeds: [1000, 1001]
+  # The tube multiplier is fit only on the first split.  Coverage is judged
+  # only on the untouched validation split.
+  calibration_fit_seeds: [2000, 2001]
+  calibration_validation_seeds: [2002, 2003]
+  holdout_general_seeds: [10000, 10001, 10002, 10003, 10004, 10005]
+  holdout_blocked_seeds: [11000, 11001, 11002]
+  scenarios: [circle, ellipse, u_shape, c_shape]
+  blocked_scenarios: [u_shape, c_shape]
+
+evaluation:
+  observation_count: 120
+  boundary_bootstrap_samples: 12
+  calibration_bootstrap_replicas: 4
+  phase_grid_size: 12
+  bootstrap_resamples: 2000
+  available_guides: 16
+  fixed_active_guides: 8
+  required_arc_gap: 2.2
+  safety_distance: 0.8
+  coverage_radius: 1.25
+  truth_coverage_minimum: 0.95
+  room_size: [10.0, 10.0]
+  room_margin: 0.2
+  sample_spacing: 0.08
+  alpha_scale: 2.5
+  # Margin is stored as a non-negative magnitude.  On the frozen
+  # candidate-minus-baseline scale the decision threshold is -0.10.
+  noninferiority_margin_magnitude: 0.10
+
+motion:
+  dt: 0.1
+  k_p: 1.2
+  v_max: 0.8
+  waypoint_tolerance: 0.06
+  tracking_rmse_tolerance: 0.06
+  speed_tolerance: 0.05
+  hold_steps: 4
+  max_steps: 240
+  no_progress_window: 40
+  min_progress: 0.001
+
+safety:
+  min_guide_distance: 0.45
+  zoh_samples: 21
+  # Pilot scale diagnosis: primal remains strict.  The active-set and iterate
+  # tolerances avoid a false numerical failure on the frozen Dykstra problem;
+  # they are frozen before holdout and shared with the QP comparison.
+  safety_primal_tolerance: 1.0e-8
+  safety_kkt_tolerance: 2.0e-5
+  safety_active_tolerance: 2.0e-4
+  safety_iterate_tolerance: 1.0e-5
+  safety_max_iterations: 1500
+  safety_replay_stride: 20
+  geometry_clearance_tolerance: 1.0e-7

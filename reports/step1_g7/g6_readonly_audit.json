@@ -1,0 +1,12 @@
+{
+  "schema": "abcg-v2.1-g6-readonly-audit-v1",
+  "base_sha": "1c3642c1adef0f11e0bde7651e2da64afbc45a8b",
+  "implementation_freeze_sha": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "git_tree": "1aefb3379d8a05bf6e64115d265140e6b9970d1d",
+  "evidence_directory": "reports/step1_g6_compliance",
+  "tracked_file_count": 12,
+  "all_match": true,
+  "legacy_visual_overview_file_count": 3,
+  "legacy_visual_overview_all_match": true,
+  "note": "Hashes were captured after git pull --ff-only origin main and before branch edits. Ignored raw G6 rows are not copied or modified."
+}

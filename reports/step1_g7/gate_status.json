@@ -1,0 +1,141 @@
+{
+  "schema": "abcg-v2.1-step1-gates-v1",
+  "base_sha": "1c3642c1adef0f11e0bde7651e2da64afbc45a8b",
+  "implementation_freeze_sha": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "branch": "step1-proof-strengthening-v1",
+  "execution_spec": {
+    "file": "ABCG-v2_Step1_优化开发方案_2026-07-19.docx",
+    "sha256": "312d9085272a101f453fd5fc81546ef900fff4b5c37fd17c911214493c31933a",
+    "read_and_render_audit": "PASS: all 15 pages inspected"
+  },
+  "environment": {
+    "conda_environment": "abcg",
+    "python": "3.12.13",
+    "platform": "Windows 11",
+    "numpy": "2.4.6",
+    "scipy": "1.18.0",
+    "shapely": "2.1.2"
+  },
+  "gates": {
+    "BASELINE": {
+      "status": "PASS",
+      "tests": "95 passed in 134.65s",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "g6_readonly_compact_evidence": "PASS: 12/12 SHA-256 matches"
+    },
+    "S0": {
+      "status": "PASS",
+      "tests": "102 passed in 90.59s",
+      "targeted_tests": "7 passed in 0.54s",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "evidence": [
+        "Layered success is evaluator-composed.",
+        "Controller CONVERGED maps only to TRACK_CONVERGED.",
+        "Same-resource records reject unequal active counts.",
+        "Adaptive-resource records remain a separate regime.",
+        "All failures remain in failure-rate composition."
+      ]
+    },
+    "S1": {
+      "status": "PASS",
+      "tests": "111 passed in 122.56s",
+      "targeted_tests": "16 passed in 0.47s (S0+S1); 9 S1 tests",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "evidence": [
+        "Bootstrap replicas use normalized-arclength registration and deterministic cyclic phase alignment.",
+        "Signed-normal displacement and tangential residual are serialized with a stability score.",
+        "CALIBRATED_TUBE requires independent shape IDs and disjoint registered-curve hashes; otherwise the status is UNCALIBRATED_STABILITY.",
+        "Target, forbidden, and safety roles share one canonical polygon buffer and SHA-256.",
+        "MultiPolygon, holes, offset topology change, invalid/empty geometry, and room infeasibility are explicit outcomes."
+      ]
+    },
+    "S2": {
+      "status": "PASS",
+      "tests": "138 passed in 139.65s",
+      "targeted_tests": "45 passed in 0.52s (S2 plus legacy periodic/resource compatibility)",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "evidence": [
+        "Uniform phi=1 plans verify H*=L^3/(12m^2) and G=L/m against the continuous periodic objective.",
+        "Phase optimization searches the fundamental interval [0,L/m), preserves equal-arc spacing, and accepts scalar or pairwise routed costs.",
+        "Periodic Lloyd remains unchanged as a nonuniform-weight or ablation path.",
+        "Nominal and calibrated robust-envelope resource counts are separate fields.",
+        "CAPACITY_SHORTFALL, RESOURCE_UNCERTAIN, and HYSTERESIS_GAP_DEGRADED have fixed precedence and serialize without hiding secondary conditions."
+      ]
+    },
+    "S3": {
+      "status": "PASS",
+      "tests": "156 passed in 134.74s",
+      "targeted_tests": "47 passed in 0.48s (routing, route assignment, legacy controller/safety compatibility)",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "diff_check": "PASS",
+      "evidence": [
+        "Guide free space is the inward room minus the exact shared canonical crowd buffer, with disconnected components retained.",
+        "Straight, boundary-corridor, and deterministic visibility-graph routes return explicit clearance certificates.",
+        "A real one-sided U-shape inner-notch target is straight-line infeasible but visibility-route feasible.",
+        "Hungarian assignment accepts geodesic path-length matrices and reports ROUTE_INFEASIBLE when no finite complete matching exists.",
+        "Cyclic order-preserving assignment supports rotations, reserve guides, capacity shortfall, and deterministic ties.",
+        "Unreachable in-memory costs serialize as JSON null plus an explicit reachability mask."
+      ]
+    },
+    "S4": {
+      "status": "PASS",
+      "tests": "166 passed in 135.48s",
+      "targeted_tests": "28 passed in 0.49s (waypoint plus legacy episode/safety compatibility)",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "diff_check": "PASS",
+      "evidence": [
+        "Fixed waypoint paths use a content-derived path version and immutable flat-points/offsets representation.",
+        "Every interval records nominal control, safety-applied control, Euler integration, post-integration waypoint advance, remaining path, and progress.",
+        "Frame arrays have T+1 entries while control and safety arrays have T entries.",
+        "No-progress detection uses a remaining-path window and terminates with an explicit replan/terminal reason.",
+        "ROUTE_INFEASIBLE returns an initial-only trace and never calls the safety/controller callback.",
+        "CONVERGED remains tracking-only and is not promoted to deployment success by the runner."
+      ]
+    },
+    "S5": {
+      "status": "PASS",
+      "tests": "189 passed in 75.95s",
+      "targeted_tests": "46 passed in 0.55s (S5, waypoint adapter, legacy safety/controller compatibility)",
+      "compileall": "PASS",
+      "pip_check": "PASS: No broken requirements found.",
+      "diff_check": "PASS",
+      "g6_readonly_audit": "PASS: 12 compact evidence and 3 legacy media hashes",
+      "evidence": [
+        "Dykstra and slsqp_convex_qcqp consume one immutable hashed VelocityProjectionProblem with identical half-spaces and speed balls.",
+        "The problem is accurately labelled a strongly convex QCQP/SOCP-representable projection, not a pure linear-constraint QP.",
+        "Certificates report primal, stationarity, complementarity, dual/KKT residuals, runtime, iterations, objective, and control adjustment.",
+        "Guide-pair, crowd, and room initial-state violations fail explicitly before projection.",
+        "Numerical residual failure is distinct from a supported infeasibility certificate.",
+        "ZOH dense checks include interval endpoints, dense samples, and relative-motion critical times.",
+        "Limitations explicitly reject human-safety certification and unconditional continuous-time safety claims."
+      ],
+      "independent_review_fixes_revalidated": [
+        "phase-invariant calibration overlap hash",
+        "honest PHASE_GRID_SELECTED naming",
+        "required-count capacity semantics",
+        "duplicate/incomplete paired-record rejection",
+        "strict JSON handling for nonfinite route costs",
+        "integral resource-count validation"
+      ]
+    },
+    "S6": {
+      "status": "NOT_RUN",
+      "prefreeze_validation": {
+        "status": "PASS",
+        "tests": "272 passed in 105.61s",
+        "targeted_tests": "92 passed in 30.32s",
+        "compileall": "PASS",
+        "pip_check": "PASS: No broken requirements found.",
+        "diff_check": "PASS",
+        "independent_audit": "PASS: no P0/P1 blockers"
+      },
+      "note": "Formal Pilot -> Calibration -> Freeze -> Holdout has not yet run from a committed clean tree."
+    }
+  }
+}
