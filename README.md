@@ -26,7 +26,11 @@ Previous evacuation-guidance experiments are preserved as legacy baselines. They
 
 ## Visual Overview
 
-The active media below shows ABCG static containment on circular, elliptical, irregular, and two-cluster point clouds.
+Step 1 research-complete media for ABCG static unknown-crowd containment. Regenerate with `python scripts/build_readme_media.py`.
+
+### Static containment examples
+
+Illustrative deployments on circular, elliptical, irregular, and two-cluster crowds. Two-cluster cases remain explicitly out of scope for single-component containment.
 
 ![ABCG static containment grid](reports/media/abcg_static_containment_grid.png)
 
@@ -34,7 +38,35 @@ The active media below shows ABCG static containment on circular, elliptical, ir
 
 ![ABCG metrics summary](reports/media/abcg_metrics_summary.png)
 
-Legacy evacuation, DBAct, and density-DBAct media are stored under `legacy/evacuation_guidance/` and are not used as the main README visuals.
+### Formal G6 scenarios
+
+Evaluator-matched generators for the primary matrix: circle, ellipse, and held-out U/C shapes, with alpha-boundary estimates and equal-arc safety targets.
+
+![Step 1 G6 scenarios](reports/media/step1_g6_scenarios.png)
+
+### Baseline comparison
+
+Same elliptical observation compared across random, static-circle, legacy center-radius, and ABCG deployments.
+
+![Step 1 baseline comparison](reports/media/step1_baseline_comparison.png)
+
+### Closed-loop tracking
+
+Fixed-target feedback episode: guides start from a one-sided layout and track equal-arc safety targets under sampled-data velocity safety.
+
+![Step 1 closed-loop tracking](reports/media/step1_closed_loop.gif)
+
+### Formal G6 evidence highlights
+
+Committed primary-matrix success rates (30 paired seeds per cell; failures retained in the denominator) and the actual-failure gallery from the frozen G6 report.
+
+![Step 1 G6 success rates](reports/media/step1_g6_success_rates.png)
+
+![Step 1 failure gallery](reports/media/step1_failure_gallery.png)
+
+Full formal write-up: [reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md).
+
+Legacy evacuation, DBAct, and density-DBAct media remain under `legacy/evacuation_guidance/` and are not used as the main README visuals.
 
 ---
 
@@ -145,7 +177,7 @@ Crowd-Management/
 |   |-- build_readme_media.py         # README media generation
 |   `-- legacy wrappers               # Compatibility wrappers for archived scripts
 |-- reports/
-|   |-- media/                        # Active ABCG media
+|   |-- media/                        # README Visual Overview PNG/GIF media
 |   |-- step1_pr6_evaluation/         # Earlier boundary-only PR6 diagnostic
 |   `-- step1_g6_compliance/          # Formal compact G6 evidence and gallery
 |-- legacy/
@@ -176,7 +208,8 @@ The archive contains old scenario files, reports, figures, GIF media, original s
 - Active method family: ABCG static unknown-crowd containment.
 - Step 1 delivery status: **ABCG-v2 Step 1 research-complete** after clean-checkout G0-G6 reproduction.
 - Frozen implementation validation in Conda `abcg`: `95 passed`; complete G6 `PASS` with all 600 primary records retained.
-- Main committed media: PNG and GIF artifacts under `reports/media/`.
+- Main committed media: static examples, G6 scenario/baseline/closed-loop
+  visuals, success-rate chart, and failure gallery under `reports/media/`.
 
 Research-complete is deliberately narrow: it verifies guide-agent deployment
 around one static unknown crowd in simulation. It does not prove human
