@@ -4,6 +4,11 @@ Status: **ABCG-v2 Step 1 research-complete**. PR0-PR6 and G0-G6 passed from the 
 Authority: `AGENTS.md` and `ABCG-v2 Step 1 Core Development Specification` (2026-07-18).
 Baseline: `main@fe4e7c1dd310c4eaef814c70e9edb34ec02227ae`.
 
+ABCG-v2.1 is a separate proof-strengthening addendum. Its S0-S5 gates and S6
+pre-freeze validation passed, but its frozen formal Holdout returned **G7
+FAIL**. That result does not revoke or rewrite the historical G6 PASS, and the
+G6 specification and evidence below remain preserved as the v2 record.
+
 ## 1. Research scope
 
 Step 1 studies guide-agent deployment around one static crowd under these
@@ -506,3 +511,247 @@ synthetic, static, single-crowd scope after reproduction from the reviewed
 implementation freeze; this does not broaden any claim to human response,
 containment efficacy, dynamic/multiple crowds, path-planning completeness, or
 unconditional safety.
+
+## 10. ABCG-v2.1 S0-S6 proof-strengthening addendum
+
+ABCG-v2.1 starts from repository base
+`1c3642c1adef0f11e0bde7651e2da64afbc45a8b` and retains the historical G6
+implementation freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed` as a
+read-only reference. Its purpose is to strengthen semantics and evidence for
+routed static deployment; it does not broaden Step 1 to dynamic crowds, human
+response, or certified safety.
+
+### 10.1 S0: layered success semantics
+
+S0 removes any implication that a controller terminal state alone establishes
+deployment success. The evaluator composes distinct, serialized layers:
+
+```text
+PLAN_OPTIMAL
+ROUTE_FEASIBLE
+TRACK_CONVERGED
+SAMPLED_SAFE
+ESTIMATED_DEPLOYMENT_SUCCESS =
+    PLAN_OPTIMAL and ROUTE_FEASIBLE and TRACK_CONVERGED and SAMPLED_SAFE
+TRUTH_VALIDATED_SUCCESS =
+    ESTIMATED_DEPLOYMENT_SUCCESS and evaluator-only truth criteria
+```
+
+`CONVERGED` maps only to `TRACK_CONVERGED`. Same-resource paired records must
+have equal active-guide counts; adaptive-resource records are a separate
+regime and cannot be mixed into a fixed-resource comparison. Every terminal
+failure remains in the binary success/failure denominator.
+
+### 10.2 S1: boundary stability, calibration, and canonical buffer
+
+S1 registers bootstrap boundary replicas by normalized arc length and a
+deterministic cyclic phase, then records signed-normal displacement,
+tangential residual, and a stability score. The frozen primary candidate uses
+this score only as an explicitly uncalibrated stability heuristic. A
+`CALIBRATED_TUBE` claim requires independent shape identities and disjoint
+registered-curve hashes; failed calibration must remain explicit and cannot
+be replaced by the heuristic.
+
+Planning targets, routing obstacles, and safety constraints consume one
+canonical polygon buffer with a shared SHA-256 identity. Empty or invalid
+geometry, holes, a `MultiPolygon`, offset topology change, and room
+infeasibility are explicit outcomes. No consumer may silently create its own
+slightly different crowd buffer.
+
+### 10.3 S2: equal-arc planning, phase, and resources
+
+For uniform density `phi=1`, S2 uses analytic equal-arc sites and verifies the
+continuous periodic optimum and gap:
+
+```text
+H* = L^3 / (12 m^2)
+G  = L / m
+```
+
+Phase selection searches the fundamental interval `[0, L/m)`, preserves
+equal-arc spacing, and can consume scalar or pairwise routed costs. Periodic
+Lloyd remains available only for nonuniform weighting and ablations.
+
+Nominal and calibrated robust-envelope resource demands are separate fields.
+`CAPACITY_SHORTFALL`, `RESOURCE_UNCERTAIN`, and
+`HYSTERESIS_GAP_DEGRADED` have deterministic precedence while retaining all
+secondary conditions. A failed independent uncertainty calibration therefore
+cannot produce a robust resource count.
+
+### 10.4 S3: routing and assignment
+
+Guide free space is the room interior minus the exact S1 canonical crowd
+buffer, with disconnected free-space components retained. Straight,
+boundary-corridor, and deterministic visibility-graph routes return explicit
+endpoint, segment, component, and clearance certificates.
+
+Hungarian assignment consumes geodesic path-length matrices and returns
+`ROUTE_INFEASIBLE` when no finite complete matching exists. The cyclic
+order-preserving alternative handles rotations, reserve guides, capacity
+shortfall, and deterministic ties. Unreachable in-memory costs serialize as
+JSON `null` together with an explicit reachability mask; they are never
+silently replaced with a finite penalty and reported as reachable.
+
+### 10.5 S4: fixed-waypoint execution
+
+S4 stores fixed paths in an immutable flat-point/offset representation with a
+content-derived path version. Every interval records nominal control,
+safety-applied control, Euler integration, post-integration waypoint advance,
+remaining path, and progress. State arrays have `T+1` frames while control
+and safety arrays have `T` intervals.
+
+No-progress detection uses a remaining-path window and produces an explicit
+replan or terminal reason. `ROUTE_INFEASIBLE` produces an initial-only trace
+and never invokes the safety callback. A waypoint runner's `CONVERGED` result
+remains tracking-only and must pass the other S0 layers before it can
+contribute a deployment success.
+
+### 10.6 S5: shared sampled-data safety problem
+
+Dykstra and `slsqp_convex_qcqp` consume the same immutable, hashed
+`VelocityProjectionProblem`: identical half-spaces, speed balls, inputs, and
+frozen tolerances. The projection is a strongly convex QCQP that is
+SOCP-representable, not a pure linear-constraint QP.
+
+Certificates retain primal, stationarity, complementarity, dual/KKT
+residuals, runtime, iterations, objective, and control adjustment. Initial
+guide-pair, crowd, or room violations fail before projection; numerical
+residual failure remains distinct from a supported infeasibility certificate.
+The ZOH check includes interval endpoints, dense samples, and relative-motion
+critical times. These sampled-data checks are not human-safety certification
+and do not prove unconditional continuous-time invariance.
+
+### 10.7 S6: protocol, statistics, and media
+
+S6 freezes a `Pilot -> independent Calibration -> Freeze -> Holdout`
+protocol. Pilot seeds, calibration fit/validation seeds, formal Holdout seeds,
+and historical G6 seeds are disjoint. Truth is available only to the
+post-terminal evaluator, never to estimation, planning, routing, assignment,
+waypoint control, or safety.
+
+The statistical contract keeps all failures in binary denominators, requires
+complete pairs for primary continuous inference, uses paired bootstrap
+intervals and exact paired binary tests, applies Holm family-wise adjustment
+to the primary superiority family, and evaluates frozen noninferiority
+margins. Missing continuous pairs are descriptive complete-case evidence only
+and cannot pass a primary or noninferiority gate.
+
+The formal pipeline uses deterministic case/method ordering, 24 independent
+Windows spawn workers, and one numeric-library thread per worker. It is
+CPU-only: no GPU backend is claimed numerically equivalent to the frozen
+NumPy/SciPy/Shapely, Qhull, Hungarian, SLSQP, and GEOS pipeline. Media must be
+hash-linked to compact formal records, select examples deterministically, and
+show actual failure states rather than relabelled successes.
+
+## 11. Formal ABCG-v2.1 G7 frozen Holdout: FAIL
+
+### 11.1 Frozen identities and execution
+
+| Item | Frozen value |
+| --- | --- |
+| Repository base | `1c3642c1adef0f11e0bde7651e2da64afbc45a8b` |
+| Historical G6 implementation freeze | `f2494922b2431bfd9a37a247add8a79acfdc18ed` |
+| G7 evaluator/implementation freeze | `dc73866254136b1e14237483bc4c8a0934e8732f` |
+| Resolved configuration SHA-256 | `6e6a1459bcf845e5db6dd653d682f330cda66d4cef3ecba1df04aca4b7cb48ce` |
+| Compact-record SHA-256 | `b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238` |
+| Execution | 24 case workers, CPU-only, one numeric thread per worker |
+
+The formal matrix contains 330 records: 300 ABCG-v2.1 deployment records and
+30 tracking-only frozen-G6-component adapter records. The adapter is a matched
+G7 rerun, not an exact replay of historical G6, and is excluded from the
+ABCG-v2.1 deployment-success and failure-composition denominator.
+
+### 11.2 Outcome and failure accounting
+
+ABCG-v2.1 produced `0/300` estimated deployment successes and `0/300`
+truth-validated successes. All 300 deployment records are accounted for:
+
+| Terminal status | Count | Rate |
+| --- | ---: | ---: |
+| `ROUTE_INFEASIBLE` | 232 | 77.3% |
+| `RESOURCE_UNCERTAIN` | 60 | 20.0% |
+| `TIMEOUT` | 8 | 2.7% |
+
+The formal G7 gate is `FAIL` for four recorded reasons:
+
+1. Independent uncertainty calibration is insufficient. The validation
+   simultaneous coverage is `0.75` against the frozen `0.95` target, so no
+   calibration factor is admitted for formal use.
+2. The Holm-adjusted primary superiority family does not pass.
+3. All primary `tracking_rmse` pairs are missing (`30/0/30`
+   total/complete/missing), so primary inference is forbidden.
+4. All primary `minimum_intersample_clearance` pairs are missing
+   (`30/0/30`), so primary inference is forbidden.
+
+In the six matched one-sided U/C blocked-route cases, the G6 adapter has
+`TIMEOUT` in `5/6` while visibility routing has `TIMEOUT` in `0/6`. This is
+not a success result: all `6/6` visibility cases instead terminate
+`ROUTE_INFEASIBLE` before controller execution. A reduced TIMEOUT count cannot
+be interpreted as route feasibility, tracking convergence, sampled safety, or
+deployment success.
+
+### 11.3 Formal protocol commands
+
+Run every phase from a clean checkout of the intended freeze using the same
+resolved configuration. These are the auditable four-phase commands; they are
+documented for reproduction, not authorization to replace the completed
+formal result:
+
+```powershell
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase pilot --config configs/step1_g7.yaml `
+  --output runs/step1_g7/pilot --workers 24
+
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase calibration --config configs/step1_g7.yaml `
+  --output runs/step1_g7/calibration
+
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase freeze --config configs/step1_g7.yaml `
+  --output runs/step1_g7/freeze `
+  --pilot-evidence runs/step1_g7/pilot/pilot_evidence.json `
+  --calibration-evidence runs/step1_g7/calibration/calibration_evidence.json
+
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase holdout --config configs/step1_g7.yaml `
+  --output reports/step1_g7 `
+  --freeze-manifest runs/step1_g7/freeze/freeze_manifest.json `
+  --workers 24
+```
+
+### 11.4 Immutable formal evidence and provenance limitation
+
+The formal evidence under `reports/step1_g7/` is a frozen record of the
+`dc738662...` execution. Its records, hashes, denominators, statistics, and
+gate result must not be edited or regenerated in place to reflect later code.
+Primary files are:
+
+- `freeze_manifest.json`, `evaluation_snapshot.json`, and
+  `gate_evidence.json`;
+- `records_compact.json`, `aggregate.json`, `paired_stats.json`, and
+  `noninferiority.json`;
+- `failure_composition.json`, `g6_tracking_comparator.json`,
+  `resource_pareto.json`, and `safety_comparison.json`;
+- `G7_REPORT.md`, `readme_summary.json`, and `media_evidence.json`.
+
+Post-Holdout corrections strengthened the renderer so it validates genuine
+U/C truth concavity while allowing a method's estimated polygon to be convex,
+states the candidate terminal composition beside the blocked-route TIMEOUT
+plot, and marks failure-containing compact resource groups with `X`. Source
+aggregation was also changed from checkout-filtered bytes to canonical Git
+blob bytes so CRLF policy cannot change the hash of one commit.
+
+The frozen `resource_pareto.json` mechanically labels finite,
+failure-inclusive points `COMPARABLE`. All ten grouped points contain failures,
+so that file cannot support a deployment-Pareto claim. Regenerated media may
+display those immutable outcomes as compact failure-inclusive points marked
+`X`, with `0/10` zero-failure deployment-Pareto groups, but it may not relabel
+the formal statistics.
+
+At the user's instruction, work stopped without another freeze or Holdout.
+Therefore the renderer and Git-blob hashing corrections cannot alter, repair,
+or supersede the formal G7 inference. This is a provenance limitation: the
+formal manifest's source aggregate was valid in its original Windows checkout
+but was based on checkout-filtered bytes and is not claimed portable across
+line-ending policies. The only formal conclusion remains
+`dc738662...` **G7 FAIL**.

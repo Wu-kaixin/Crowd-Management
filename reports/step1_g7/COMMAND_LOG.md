@@ -148,3 +148,45 @@ infrastructure-failure abort before evidence publication, frozen worker-count
 verification, numeric thread limits, and a real detached local-clone media
 reproduction.  The 24-worker implementation now requires a new commit and a
 fresh Pilot -> Calibration -> Freeze -> Holdout sequence.
+
+## Formal 24-worker Pilot -> Calibration -> Freeze -> Holdout
+
+```powershell
+conda run -n abcg python scripts/run_step1_g7.py --phase pilot --config configs/step1_g7.yaml --output runs/step1_g7/pilot --workers 24
+conda run -n abcg python scripts/run_step1_g7.py --phase calibration --config configs/step1_g7.yaml --output runs/step1_g7/calibration
+conda run -n abcg python scripts/run_step1_g7.py --phase freeze --config configs/step1_g7.yaml --output runs/step1_g7/freeze --pilot-evidence runs/step1_g7/pilot/pilot_evidence.json --calibration-evidence runs/step1_g7/calibration/calibration_evidence.json
+conda run -n abcg python scripts/run_step1_g7.py --phase holdout --config configs/step1_g7.yaml --output reports/step1_g7 --freeze-manifest runs/step1_g7/freeze/freeze_manifest.json --workers 24
+```
+
+Observed frozen SHA: `dc73866254136b1e14237483bc4c8a0934e8732f`.
+The Holdout completed with 24 case workers in `1739256.23 ms` and wrote all
+330 expected records.  Record SHA-256:
+`b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238`.
+The gate result was **G7 FAIL**: independent calibration was insufficient,
+Holm-adjusted primary superiority did not pass, and missing paired tracking
+RMSE and minimum-clearance values prohibited primary inference.  All 300
+ABCG-v2.1 deployment records failed: 232 `ROUTE_INFEASIBLE`, 60
+`RESOURCE_UNCERTAIN`, and 8 `TIMEOUT`.
+
+## Formal media and post-run audit corrections
+
+```powershell
+conda run -n abcg python scripts/build_step1_g7_media.py --input reports/step1_g7 --output reports/media/step1_g7
+conda run -n abcg python -m pytest tests/step1/test_step1_g7_media.py -q --basetemp=.tmp/pytest-media-fix2 -o cache_dir=.tmp/pytest-cache-media-fix2
+conda run -n abcg python -m pytest tests/step1/test_step1_g7_evaluation.py -q -k "source_hash_uses_git_blobs or freeze_and_holdout_hash_verification" --basetemp=.tmp/pytest-source-hash -o cache_dir=.tmp/pytest-cache-source-hash
+conda run -n abcg python -m pytest tests/step1/test_step1_g7_evaluation.py tests/step1/test_step1_g7_media.py -q --basetemp=.tmp/pytest-presentation-fix -o cache_dir=.tmp/pytest-cache-presentation-fix
+```
+
+The first media build exposed a validator bug: formal U/C truth was concave,
+but both method-estimated source polygons were legitimately convex.  The
+validator was corrected to bind scenario identity to the frozen truth geometry;
+44 media tests passed and all seven assets were generated.  A subsequent
+presentation audit added the compact-record terminal composition to the
+TIMEOUT figure and marked every failure-inclusive adaptive group with an X;
+70 evaluator/media tests passed in 122.65s.  The Git source aggregate was also changed
+to canonical Git-blob bytes, with 2/2 targeted provenance tests passing.
+
+These corrections were made after the frozen FAIL run.  A replacement Pilot
+was started and stopped before evidence publication when the user requested a
+summary instead of another full Holdout.  No replacement formal conclusion is
+claimed; see `POST_RUN_AUDIT.md`.

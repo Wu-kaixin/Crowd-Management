@@ -1,5 +1,9 @@
 # Test Report
 
+Sections through **Gate result** preserve the 2026-07-18 historical G6
+snapshot. The independent ABCG-v2.1 S0-S6 and formal G7 failure audit are
+appended afterward; they do not rewrite the G6 evidence.
+
 ## Snapshot
 
 - Date: 2026-07-18 (Asia/Tokyo)
@@ -194,3 +198,171 @@ checkout consistency run described in the freeze audit.
 The evidence does not establish continuous-time safety, robust nonconvex
 containment, dynamic crowds, local communication, real-sensor performance, or
 human behavioral efficacy.
+
+## ABCG-v2.1 S0-S6 validation history
+
+ABCG-v2.1 proof-strengthening started from
+`1c3642c1adef0f11e0bde7651e2da64afbc45a8b`. Historical G6 evidence at
+implementation freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed` remained
+read-only and hash-audited throughout the work.
+
+| Checkpoint | Full-suite result | Main verified contract |
+| --- | ---: | --- |
+| Baseline | `95 passed` | Clean starting point; compileall and pip check pass |
+| S0 | `102 passed` | Layered evaluator success; controller convergence is tracking-only |
+| S1 | `111 passed` | Registered boundary stability, calibration gates, canonical buffer |
+| S2 | `138 passed` | Analytic equal arc, phase selection, explicit resource uncertainty |
+| S3 | `156 passed` | Certified routing and geodesic/cyclic assignment |
+| S4 | `166 passed` | Immutable waypoint execution and explicit no-progress/route failure |
+| S5 | `189 passed` | Shared hashed QCQP, Dykstra/SLSQP certificates, dense ZOH checks |
+| S6 pre-freeze | `276 passed` | 24-worker determinism, evidence/statistics/media protocol |
+
+All recorded stage checkpoints also passed `compileall` and `pip check`; S3
+and later recorded a clean `git diff --check`. The S6 pre-freeze run is not a
+G7 PASS: it verifies the implementation and protocol before the formal
+Holdout, whose result is reported separately below.
+
+After the Holdout, the focused renderer and source-provenance regression set
+passed:
+
+```text
+70 passed in 122.65s
+```
+
+The final full-suite result for the current post-Holdout working tree is
+**PENDING MAIN-AGENT BACKFILL**. No final count or elapsed time is claimed in
+this report until that run completes.
+
+## Formal G7 protocol and command
+
+The frozen protocol is `Pilot -> independent Calibration -> Freeze ->
+Holdout`. Pilot, calibration, G7 Holdout, and historical G6 seeds are disjoint;
+truth remains evaluator-only. The formal execution used 24 independent
+case-level Windows spawn workers, one numeric-library thread per worker, and
+no GPU. The formal geometry/optimization path is CPU-only NumPy/SciPy/Shapely,
+GEOS/Qhull, Hungarian, Dykstra, and SLSQP.
+
+The reproducible phase commands are:
+
+```powershell
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase pilot --config configs/step1_g7.yaml `
+  --output runs/step1_g7/pilot --workers 24
+
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase calibration --config configs/step1_g7.yaml `
+  --output runs/step1_g7/calibration
+
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase freeze --config configs/step1_g7.yaml `
+  --output runs/step1_g7/freeze `
+  --pilot-evidence runs/step1_g7/pilot/pilot_evidence.json `
+  --calibration-evidence runs/step1_g7/calibration/calibration_evidence.json
+
+conda run --no-capture-output -n abcg python scripts/run_step1_g7.py `
+  --phase holdout --config configs/step1_g7.yaml `
+  --output reports/step1_g7 `
+  --freeze-manifest runs/step1_g7/freeze/freeze_manifest.json `
+  --workers 24
+```
+
+Formal identities:
+
+| Item | Value |
+| --- | --- |
+| Base SHA | `1c3642c1adef0f11e0bde7651e2da64afbc45a8b` |
+| Historical G6 implementation freeze | `f2494922b2431bfd9a37a247add8a79acfdc18ed` |
+| G7 frozen evaluator SHA | `dc73866254136b1e14237483bc4c8a0934e8732f` |
+| Resolved config SHA-256 | `6e6a1459bcf845e5db6dd653d682f330cda66d4cef3ecba1df04aca4b7cb48ce` |
+| Compact records SHA-256 | `b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238` |
+| Formal denominator | `330 = 300 ABCG-v2.1 + 30 G6 adapter` |
+
+The 30 `g6_fixed_resource_rerun` records are a tracking-only adapter assembled
+from frozen G6 components on matched G7 inputs. They are not exact historical
+G6 runs and are excluded from the 300-record ABCG-v2.1 deployment denominator.
+
+## Formal G7 result: FAIL
+
+`reports/step1_g7/gate_evidence.json` records `status = FAIL`. ABCG-v2.1 has
+`0/300` estimated deployment successes and `0/300` truth-validated successes.
+Every deployment record remains in the denominator:
+
+| Terminal status | Count | Rate |
+| --- | ---: | ---: |
+| `ROUTE_INFEASIBLE` | 232 | 77.3% |
+| `RESOURCE_UNCERTAIN` | 60 | 20.0% |
+| `TIMEOUT` | 8 | 2.7% |
+
+The formal gate failed because:
+
+- independent uncertainty calibration returned
+  `CALIBRATION_INSUFFICIENT` (`0.75` simultaneous validation coverage against
+  the frozen `0.95` target);
+- the Holm-adjusted primary superiority family did not pass;
+- `tracking_rmse` has `30/0/30` total/complete/missing primary pairs; and
+- `minimum_intersample_clearance` has `30/0/30` primary pairs.
+
+The continuous missing-data contract permits descriptive complete-case output
+only; either missing primary endpoint forbids primary and noninferiority PASS.
+
+The matched blocked-route comparison must not be read as a success claim. The
+G6 fixed-resource adapter has `TIMEOUT` in `5/6` U/C cases, versus `0/6` for
+visibility routing, but all `6/6` visibility cases terminate
+`ROUTE_INFEASIBLE` before control. Lower TIMEOUT incidence here means the
+candidate failed at an earlier layer; it does not establish route feasibility,
+tracking, sampled safety, or deployment success.
+
+## Formal G7 evidence files
+
+The compact formal evidence is retained under `reports/step1_g7/`:
+
+- `G7_REPORT.md` and `gate_evidence.json`;
+- `freeze_manifest.json` and `evaluation_snapshot.json`;
+- `records_compact.json`, `aggregate.json`, and
+  `failure_composition.json`;
+- `paired_stats.json` and `noninferiority.json`;
+- `g6_tracking_comparator.json`, `safety_comparison.json`, and
+  `resource_pareto.json`;
+- `readme_summary.json` and `media_evidence.json`.
+
+The formal set is immutable evidence for the evaluated `dc738662...` freeze.
+It must not be rewritten to make later code agree with the old manifest or to
+change the gate. Generated media under `reports/media/step1_g7/` and the
+post-run audit are derived interpretation artifacts, not a replacement
+Holdout.
+
+## Post-Holdout audit and provenance limitation
+
+Three interpretation/provenance issues were corrected after the frozen run:
+
+1. The renderer now validates that the hash-linked U/C evaluator truth is
+   genuinely concave while preserving each method's actual estimate, which
+   may validly be convex.
+2. The blocked-route TIMEOUT figure now exposes candidate terminal
+   composition and warns that reduced TIMEOUT alone is not deployment
+   success.
+3. Compact adaptive-resource media now compute failure counts and mark every
+   failure-containing group with `X`.
+
+The frozen `resource_pareto.json` calls finite failure-inclusive points
+`COMPARABLE`. Every one of its ten grouped points contains failures, so none is
+evidence of a deployment Pareto frontier. The regenerated compact media
+honestly shows `0/10` zero-failure deployment-Pareto groups and uses `X` for
+the frozen failure-inclusive outcomes; it does not modify the formal JSON.
+
+The frozen source aggregate was computed from checkout-filtered Windows bytes.
+It verified in that checkout, but the same commit could hash differently under
+another CRLF policy. Post-run code instead hashes canonical Git blobs and has
+a line-ending regression test.
+
+At the user's instruction, the replacement freeze and Holdout were stopped.
+No Holdout was rerun after these renderer and Git-blob changes. Consequently,
+they cannot change, repair, or supersede the formal statistics, and no
+post-Holdout performance claim is allowed. The formal conclusion remains
+`dc738662...` **G7 FAIL**.
+
+The G7 evidence is restricted to guide deployment around one static synthetic
+point cloud under global observation. It does not establish human containment
+or evacuation improvement, behavior change, dynamic or multiple crowds,
+general path-planning completeness, safety certification, or unconditional
+continuous-time safety.

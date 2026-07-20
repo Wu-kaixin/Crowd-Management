@@ -892,6 +892,14 @@ def _validate_blocked_pairs(
             "candidate_timeout_rate": supplied_candidate,
             "paired_difference": supplied_difference,
             "paired_bootstrap_ci95": [ci_low, ci_high],
+            "candidate_terminal_counts": dict(
+                sorted(
+                    {
+                        status: sum(record["terminal_status"] == status for record in candidate_records)
+                        for status in {str(record["terminal_status"]) for record in candidate_records}
+                    }.items()
+                )
+            ),
         }
     return {
         "baseline_label": baseline_label,
@@ -1175,6 +1183,11 @@ def _validate_summary(
                 _observed_median(selected, field),
                 f"adaptive_pareto.{scenario}.{method}.{active_count}.{field}",
             )
+        failure_count = sum(
+            not bool(record["estimated_deployment_success"]) for record in selected
+        )
+        supplied["failure_count"] = failure_count
+        supplied["failure_rate"] = failure_count / len(selected)
 
     failure_value = document["failure_composition"]
     if not isinstance(failure_value, Mapping):
@@ -1713,6 +1726,18 @@ def _plot_blocked_timeout(summary: Mapping[str, Any], path: Path) -> None:
     ax.set_ylabel("One-sided blocked-route TIMEOUT rate")
     ax.set_ylim(0.0, 1.12)
     ax.set_title("Paired U/C holdout: frozen G6 fixed-resource adapter rerun")
+    terminal_lines: list[str] = []
+    for scenario in scenarios:
+        item = paired["scenarios"][scenario]
+        composition = ", ".join(
+            f"{count}/{item['denominator']} {status}"
+            for status, count in item["candidate_terminal_counts"].items()
+        )
+        terminal_lines.append(f"{_pretty(scenario)} candidate: {composition}")
+    ax.set_xlabel(
+        "; ".join(terminal_lines)
+        + "\nA lower TIMEOUT rate does not by itself imply deployment success."
+    )
     ax.grid(axis="y", alpha=0.22)
     ax.legend(loc="upper right", fontsize=8)
     _save_png(fig, path)
@@ -1764,23 +1789,41 @@ def _plot_resource_pareto(summary: Mapping[str, Any], path: Path) -> None:
                 if record["scenario"] == scenario and record["method"] == method
             ]
             selected.sort(key=lambda record: (record["active_guide_count"], record[field]))
-            x = [record["active_guide_count"] for record in selected]
-            y = [record[field] for record in selected]
-            ax.plot(
-                x,
-                y,
-                marker="o",
-                linewidth=1.4,
-                color=COLORS[series_index % len(COLORS)],
-                label=f"{_pretty(scenario)} / {method}",
-            )
+            zero_failure = [record for record in selected if record["failure_count"] == 0]
+            failure_inclusive = [record for record in selected if record["failure_count"] > 0]
+            color = COLORS[series_index % len(COLORS)]
+            series_label = f"{_pretty(scenario)} / {method}"
+            if zero_failure:
+                ax.plot(
+                    [record["active_guide_count"] for record in zero_failure],
+                    [record[field] for record in zero_failure],
+                    marker="o",
+                    linewidth=1.4,
+                    color=color,
+                    label=series_label,
+                )
+            if failure_inclusive:
+                ax.scatter(
+                    [record["active_guide_count"] for record in failure_inclusive],
+                    [record[field] for record in failure_inclusive],
+                    marker="X",
+                    s=48,
+                    color=color,
+                    label=(series_label + " [contains failures]") if not zero_failure else None,
+                )
         ax.set_xlabel("Active guide count")
         ax.set_ylabel(label)
         ax.set_title(f"{label} ({direction})")
         ax.grid(alpha=0.22)
     axes[0, 0].legend(loc="best", fontsize=8)
     aggregations = sorted({record["aggregation"] for record in records})
-    fig.suptitle(f"Adaptive-resource deployment Pareto views ({', '.join(aggregations)})")
+    zero_failure_count = sum(record["failure_count"] == 0 for record in records)
+    fig.suptitle(
+        "Adaptive-resource failure-inclusive outcomes "
+        f"(zero-failure deployment-Pareto groups: {zero_failure_count}/{len(records)}; "
+        "X = group contains failures)\n"
+        f"Aggregation: {', '.join(aggregations)}"
+    )
     _save_png(fig, path)
 
 

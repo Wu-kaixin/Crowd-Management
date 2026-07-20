@@ -1,0 +1,205 @@
+{
+  "schema": "abcg-v2.1-g7-resource-pareto-v1",
+  "points": [
+    {
+      "scenario": "c_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 3,
+      "active_guide_count": 11,
+      "nominal_resource_count": 11.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 3
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 18.875814863197945,
+      "path_length": 0.0,
+      "runtime_ms": 304359.2537000077,
+      "failure_count": 3,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "c_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 12,
+      "nominal_resource_count": 12.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 25.914254303712433,
+      "path_length": 0.0,
+      "runtime_ms": 303126.7079499812,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "c_shape",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 9,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 9
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 30.953137084989848,
+      "path_length": 0.0,
+      "runtime_ms": 34564.58099998417,
+      "failure_count": 9,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "circle",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 8,
+      "nominal_resource_count": 8.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 9.543920728390379,
+      "path_length": 0.0,
+      "runtime_ms": 142817.93204997666,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "circle",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 12.566162292380668,
+      "path_length": 0.0,
+      "runtime_ms": 12243.973699980415,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "ellipse",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 8,
+      "nominal_resource_count": 8.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 10.371539815148473,
+      "path_length": 0.0,
+      "runtime_ms": 140169.1173500003,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "ellipse",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 12.366066702677028,
+      "path_length": 0.0,
+      "runtime_ms": 12026.085799996508,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "u_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 2,
+      "active_guide_count": 11,
+      "nominal_resource_count": 11.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 2
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 26.054146687329936,
+      "path_length": 0.0,
+      "runtime_ms": 248021.5780499857,
+      "failure_count": 2,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "u_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 7,
+      "active_guide_count": 12,
+      "nominal_resource_count": 12.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 7
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 13.506597515824415,
+      "path_length": 0.0,
+      "runtime_ms": 297990.78920000466,
+      "failure_count": 7,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "u_shape",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 9,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 9
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 30.529705627484773,
+      "path_length": 0.0,
+      "runtime_ms": 31516.476000018883,
+      "failure_count": 9,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    }
+  ]
+}

@@ -130,7 +130,7 @@
       ]
     },
     "S6": {
-      "status": "NOT_RUN",
+      "status": "FAIL",
       "prefreeze_validation": {
         "status": "PASS",
         "tests": "276 passed in 255.05s",
@@ -138,11 +138,36 @@
         "compileall": "PASS",
         "pip_check": "PASS: No broken requirements found.",
         "diff_check": "PASS",
-        "independent_audit": "PASS: no P0/P1 blockers",
+        "independent_audit": "PASS before formal execution; post-run presentation and provenance limitations are documented separately",
         "parallel_contract": "PASS: 24 case-level spawn workers, numeric libraries limited to one thread, serial/parallel deterministic projection identical",
         "clean_checkout_test": "PASS: detached local clone runs the formal media CLI and verifies seven assets plus SHA-256 manifest"
       },
-      "note": "The first serial Holdout attempt was stopped before evidence publication at user request. Formal Pilot -> Calibration -> Freeze -> Holdout must be rerun from the committed 24-worker implementation."
+      "formal_holdout": {
+        "frozen_sha": "dc73866254136b1e14237483bc4c8a0934e8732f",
+        "config_sha256": "6e6a1459bcf845e5db6dd653d682f330cda66d4cef3ecba1df04aca4b7cb48ce",
+        "records_sha256": "b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238",
+        "record_count": 330,
+        "v2_1_deployment_records": 300,
+        "g6_tracking_comparator_records": 30,
+        "actual_case_workers": 24,
+        "wall_runtime_ms": 1739256.229599996,
+        "calibration_status": "CALIBRATION_INSUFFICIENT",
+        "estimated_deployment_success": "0/300",
+        "truth_validated_success": "0/300",
+        "failure_composition": {
+          "ROUTE_INFEASIBLE": 232,
+          "RESOURCE_UNCERTAIN": 60,
+          "TIMEOUT": 8
+        },
+        "reasons": [
+          "independent_uncertainty_calibration_not_passed",
+          "holm_adjusted_primary_superiority_not_passed",
+          "continuous_missing_primary_inference_forbidden:tracking_rmse",
+          "continuous_missing_primary_inference_forbidden:minimum_intersample_clearance"
+        ]
+      },
+      "post_run_status": "Renderer semantics and Git-blob provenance hashing were corrected after the frozen FAIL run. At the user's request no replacement Holdout was run, so these corrections do not alter the formal result.",
+      "note": "G7 FAIL. The complete 330-record frozen Holdout is retained; no failure was removed from a binary denominator."
     }
   }
 }

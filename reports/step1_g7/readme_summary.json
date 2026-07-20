@@ -1,0 +1,603 @@
+{
+  "schema": "abcg-v2.1-g7-readme-summary-v1",
+  "split": "holdout",
+  "pilot_data_used": false,
+  "records_sha256": "b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238",
+  "record_count": 330,
+  "config_hash": "6e6a1459bcf845e5db6dd653d682f330cda66d4cef3ecba1df04aca4b7cb48ce",
+  "base_sha": "1c3642c1adef0f11e0bde7651e2da64afbc45a8b",
+  "g6_implementation_freeze_sha": "f2494922b2431bfd9a37a247add8a79acfdc18ed",
+  "frozen_sha": "dc73866254136b1e14237483bc4c8a0934e8732f",
+  "branch_sha": "dc73866254136b1e14237483bc4c8a0934e8732f",
+  "gate_status": "FAIL",
+  "experiment_scale": {
+    "unique_cases": 30,
+    "records": 330,
+    "total_records": 330,
+    "v2_1_deployment_records": 300,
+    "g6_tracking_comparator_records": 30,
+    "v2_1_method_count": 10,
+    "g6_tracking_comparator_method_count": 1,
+    "general_seeds": [
+      10000,
+      10001,
+      10002,
+      10003,
+      10004,
+      10005
+    ],
+    "blocked_supplement_seeds": [
+      11000,
+      11001,
+      11002
+    ]
+  },
+  "scenario_summary": {
+    "circle": {
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "denominator": 6,
+      "record_count": 6,
+      "estimated_deployment_success_rate": 0.0,
+      "truth_validated_success_rate": 0.0,
+      "estimated_success_rate": 0.0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 6.839809855346439,
+      "gap": 6.839809855346439,
+      "active_guide_count": 8,
+      "active_guides": 8.0
+    },
+    "ellipse": {
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "denominator": 6,
+      "record_count": 6,
+      "estimated_deployment_success_rate": 0.0,
+      "truth_validated_success_rate": 0.0,
+      "estimated_success_rate": 0.0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 10.371539815148473,
+      "gap": 10.371539815148473,
+      "active_guide_count": 8,
+      "active_guides": 8.0
+    },
+    "u_shape": {
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "denominator": 9,
+      "record_count": 9,
+      "estimated_deployment_success_rate": 0.0,
+      "truth_validated_success_rate": 0.0,
+      "estimated_success_rate": 0.0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 27.81240198524791,
+      "gap": 27.81240198524791,
+      "active_guide_count": 8,
+      "active_guides": 8.0
+    },
+    "c_shape": {
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "denominator": 9,
+      "record_count": 9,
+      "estimated_deployment_success_rate": 0.0,
+      "truth_validated_success_rate": 0.0,
+      "estimated_success_rate": 0.0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 28.233740028427434,
+      "gap": 28.233740028427434,
+      "active_guide_count": 8,
+      "active_guides": 8.0
+    }
+  },
+  "same_resource": [
+    {
+      "scenario": "c_shape",
+      "method": "straight_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 28.233740028427434,
+      "gap": 28.233740028427434,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "c_shape",
+      "method": "visibility_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 28.233740028427434,
+      "gap": 28.233740028427434,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "circle",
+      "method": "straight_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 9.543920728390379,
+      "gap": 9.543920728390379,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "circle",
+      "method": "visibility_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 6.839809855346439,
+      "gap": 6.839809855346439,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "ellipse",
+      "method": "straight_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 10.371539815148473,
+      "gap": 10.371539815148473,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "ellipse",
+      "method": "visibility_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 10.371539815148473,
+      "gap": 10.371539815148473,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "u_shape",
+      "method": "straight_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 27.81240198524791,
+      "gap": 27.81240198524791,
+      "active_guide_count": 8,
+      "active": 8.0
+    },
+    {
+      "scenario": "u_shape",
+      "method": "visibility_hungarian",
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 27.81240198524791,
+      "gap": 27.81240198524791,
+      "active_guide_count": 8,
+      "active": 8.0
+    }
+  ],
+  "adaptive_pareto": [
+    {
+      "scenario": "c_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 3,
+      "active_guide_count": 11,
+      "nominal_resource_count": 11.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 3
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 18.875814863197945,
+      "path_length": 0.0,
+      "runtime_ms": 304359.2537000077,
+      "failure_count": 3,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "c_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 12,
+      "nominal_resource_count": 12.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 25.914254303712433,
+      "path_length": 0.0,
+      "runtime_ms": 303126.7079499812,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "c_shape",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 9,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 9
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 30.953137084989848,
+      "path_length": 0.0,
+      "runtime_ms": 34564.58099998417,
+      "failure_count": 9,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "circle",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 8,
+      "nominal_resource_count": 8.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 9.543920728390379,
+      "path_length": 0.0,
+      "runtime_ms": 142817.93204997666,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "circle",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 12.566162292380668,
+      "path_length": 0.0,
+      "runtime_ms": 12243.973699980415,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "ellipse",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 8,
+      "nominal_resource_count": 8.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 10.371539815148473,
+      "path_length": 0.0,
+      "runtime_ms": 140169.1173500003,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "ellipse",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 6,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 6
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 12.366066702677028,
+      "path_length": 0.0,
+      "runtime_ms": 12026.085799996508,
+      "failure_count": 6,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "u_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 2,
+      "active_guide_count": 11,
+      "nominal_resource_count": 11.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 2
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 26.054146687329936,
+      "path_length": 0.0,
+      "runtime_ms": 248021.5780499857,
+      "failure_count": 2,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "u_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 7,
+      "active_guide_count": 12,
+      "nominal_resource_count": 12.0,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "VALID": 7
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 13.506597515824415,
+      "path_length": 0.0,
+      "runtime_ms": 297990.78920000466,
+      "failure_count": 7,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    },
+    {
+      "scenario": "u_shape",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "aggregation": "median_by_scenario_method_active_count",
+      "denominator": 9,
+      "active_guide_count": 0,
+      "nominal_resource_count": null,
+      "robust_resource_count": null,
+      "resource_status_counts": {
+        "RESOURCE_UNCERTAIN": 9
+      },
+      "truth_coverage": 0.0,
+      "maximum_consecutive_arc_gap": 30.529705627484773,
+      "path_length": 0.0,
+      "runtime_ms": 31516.476000018883,
+      "failure_count": 9,
+      "pareto_nondominated": true,
+      "pareto_status": "COMPARABLE"
+    }
+  ],
+  "failure_composition": {
+    "denominator": 300,
+    "total": 300,
+    "n_total": 300,
+    "counts": {
+      "RESOURCE_UNCERTAIN": 60,
+      "ROUTE_INFEASIBLE": 232,
+      "TIMEOUT": 8
+    },
+    "rates": {
+      "RESOURCE_UNCERTAIN": 0.2,
+      "ROUTE_INFEASIBLE": 0.7733333333333333,
+      "TIMEOUT": 0.02666666666666667
+    },
+    "estimated_deployment_success_count": 0,
+    "estimated_deployment_success_rate": 0.0,
+    "truth_validated_success_count": 0,
+    "truth_validated_success_rate": 0.0,
+    "all_records_accounted_for": true
+  },
+  "g6_tracking_comparator": {
+    "schema": "abcg-v2.1-g7-g6-tracking-comparator-v1",
+    "label": "Frozen G6 fixed-resource straight-feedback adapter rerun on matched G7 holdout",
+    "scope": "controller_tracking_terminal_comparator_only",
+    "excluded_from_v2_1_deployment_success_and_failure_composition": true,
+    "record_count": 30,
+    "blocked_record_count": 6,
+    "controller_terminal_counts": {
+      "CONVERGED": 2,
+      "SAFETY_INFEASIBLE": 1,
+      "TIMEOUT": 27
+    },
+    "controller_terminal_rates": {
+      "CONVERGED": 0.06666666666666667,
+      "SAFETY_INFEASIBLE": 0.03333333333333333,
+      "TIMEOUT": 0.9
+    },
+    "blocked_controller_terminal_counts": {
+      "SAFETY_INFEASIBLE": 1,
+      "TIMEOUT": 5
+    },
+    "blocked_controller_terminal_rates": {
+      "SAFETY_INFEASIBLE": 0.16666666666666666,
+      "TIMEOUT": 0.8333333333333334
+    },
+    "blocked_timeout_count": 5,
+    "blocked_timeout_rate": 0.8333333333333334,
+    "all_records_accounted_for": true,
+    "all_blocked_records_accounted_for": true,
+    "semantics": "old controller CONVERGED means tracking only; no G6 adapter record is counted as ABCG-v2.1 ESTIMATED_DEPLOYMENT_SUCCESS or TRUTH_VALIDATED_SUCCESS"
+  },
+  "blocked_timeout_paired": {
+    "baseline_label": "Frozen G6 fixed-resource straight-feedback adapter rerun on matched G7 holdout",
+    "candidate_label": "ABCG-v2.1 visibility-graph routing",
+    "scenarios": {
+      "u_shape": {
+        "pair_ids": [
+          "blocked_supplement:u_shape:11000",
+          "blocked_supplement:u_shape:11001",
+          "blocked_supplement:u_shape:11002"
+        ],
+        "pair_id_digest": "7268d35a0498dbf589a8e1346d5aab0311d0c437e964863aacb494c64491172a",
+        "resource_regime": "same_resource",
+        "denominator": 3,
+        "baseline_method": "g6_fixed_resource_rerun",
+        "candidate_method": "visibility_hungarian",
+        "baseline_timeout_rate": 1.0,
+        "candidate_timeout_rate": 0.0,
+        "paired_difference": -1.0,
+        "paired_bootstrap_ci95": [
+          -1.0,
+          -1.0
+        ],
+        "summary": {
+          "schema": "abcg-v2.1-paired-binary-summary-v1",
+          "difference_definition": "candidate_minus_baseline",
+          "direction": "lower_is_better",
+          "event_name": "one_sided_blocked_route_TIMEOUT",
+          "pair_key_sha256": "7268d35a0498dbf589a8e1346d5aab0311d0c437e964863aacb494c64491172a",
+          "n_total": 3,
+          "n_complete_pairs": 3,
+          "all_pairs_accounted_for": true,
+          "all_pairs_complete": true,
+          "inference_status": "OK",
+          "primary_inference_permitted": true,
+          "baseline_event_count": 3,
+          "candidate_event_count": 0,
+          "baseline_event_rate": 1.0,
+          "candidate_event_rate": 0.0,
+          "paired_table": {
+            "both_false": 0,
+            "candidate_only_true": 0,
+            "baseline_only_true": 3,
+            "both_true": 0
+          },
+          "paired_difference": {
+            "n": 3,
+            "mean": -1.0,
+            "median": -1.0,
+            "worst_5_percent_mean": -1.0,
+            "worst_tail": "upper",
+            "ci_low": -1.0,
+            "ci_high": -1.0
+          },
+          "bootstrap": {
+            "method": "paired_percentile_bootstrap_mean",
+            "interval_sidedness": "two_sided_central",
+            "status": "OK",
+            "n": 3,
+            "seed": 307,
+            "resamples": 2000,
+            "confidence": 0.95,
+            "lower_quantile": 0.025000000000000022,
+            "upper_quantile": 0.975,
+            "estimate": -1.0,
+            "ci_low": -1.0,
+            "ci_high": -1.0
+          },
+          "one_sided_test": {
+            "method": "exact_paired_sign_test",
+            "test_estimand": "probability_of_favorable_nonzero_pair",
+            "status": "OK",
+            "alternative": "candidate_less_than_baseline",
+            "n_total": 3,
+            "nonzero_pair_count": 3,
+            "favorable_pair_count": 3,
+            "p_value": 0.125
+          }
+        }
+      },
+      "c_shape": {
+        "pair_ids": [
+          "blocked_supplement:c_shape:11000",
+          "blocked_supplement:c_shape:11001",
+          "blocked_supplement:c_shape:11002"
+        ],
+        "pair_id_digest": "5d698c78e9155d603c6edf3f56d00a07dd037c4ef4799deaeea79cbcf0027bd6",
+        "resource_regime": "same_resource",
+        "denominator": 3,
+        "baseline_method": "g6_fixed_resource_rerun",
+        "candidate_method": "visibility_hungarian",
+        "baseline_timeout_rate": 0.6666666666666666,
+        "candidate_timeout_rate": 0.0,
+        "paired_difference": -0.6666666666666666,
+        "paired_bootstrap_ci95": [
+          -1.0,
+          0.0
+        ],
+        "summary": {
+          "schema": "abcg-v2.1-paired-binary-summary-v1",
+          "difference_definition": "candidate_minus_baseline",
+          "direction": "lower_is_better",
+          "event_name": "one_sided_blocked_route_TIMEOUT",
+          "pair_key_sha256": "5d698c78e9155d603c6edf3f56d00a07dd037c4ef4799deaeea79cbcf0027bd6",
+          "n_total": 3,
+          "n_complete_pairs": 3,
+          "all_pairs_accounted_for": true,
+          "all_pairs_complete": true,
+          "inference_status": "OK",
+          "primary_inference_permitted": true,
+          "baseline_event_count": 2,
+          "candidate_event_count": 0,
+          "baseline_event_rate": 0.6666666666666666,
+          "candidate_event_rate": 0.0,
+          "paired_table": {
+            "both_false": 1,
+            "candidate_only_true": 0,
+            "baseline_only_true": 2,
+            "both_true": 0
+          },
+          "paired_difference": {
+            "n": 3,
+            "mean": -0.6666666666666666,
+            "median": -1.0,
+            "worst_5_percent_mean": 0.0,
+            "worst_tail": "upper",
+            "ci_low": -1.0,
+            "ci_high": 0.0
+          },
+          "bootstrap": {
+            "method": "paired_percentile_bootstrap_mean",
+            "interval_sidedness": "two_sided_central",
+            "status": "OK",
+            "n": 3,
+            "seed": 308,
+            "resamples": 2000,
+            "confidence": 0.95,
+            "lower_quantile": 0.025000000000000022,
+            "upper_quantile": 0.975,
+            "estimate": -0.6666666666666666,
+            "ci_low": -1.0,
+            "ci_high": 0.0
+          },
+          "one_sided_test": {
+            "method": "exact_paired_sign_test",
+            "test_estimand": "probability_of_favorable_nonzero_pair",
+            "status": "OK",
+            "alternative": "candidate_less_than_baseline",
+            "n_total": 3,
+            "nonzero_pair_count": 2,
+            "favorable_pair_count": 2,
+            "p_value": 0.25
+          }
+        }
+      }
+    }
+  },
+  "g6_reference": {
+    "u_shape": 1.0,
+    "c_shape": 0.6666666666666666
+  },
+  "g6_reference_semantics": "Frozen G6 fixed-resource straight-feedback adapter rerun on matched G7 holdout; it preserves the old estimator/planner/controller with fixed m=8 and is not an exact historical adaptive-resource G6 run. Historical G6 seeds 0..29 remain reference-only",
+  "success_semantics": {
+    "PLAN_OPTIMAL": "analytic phi=1 equal-arc plan verified against H*=L^3/(12m^2) and G=L/m",
+    "ROUTE_FEASIBLE": "complete assigned routes exist and every checked route carries a valid canonical-clearance certificate",
+    "TRACK_CONVERGED": "fixed-waypoint controller terminal state is CONVERGED",
+    "SAMPLED_SAFE": "every safety projection is feasible, within residual tolerances, and passes its ZOH dense check",
+    "ESTIMATED_DEPLOYMENT_SUCCESS": "PLAN_OPTIMAL and ROUTE_FEASIBLE and TRACK_CONVERGED and SAMPLED_SAFE",
+    "TRUTH_VALIDATED_SUCCESS": "estimated success plus evaluator-only truth coverage and truth arc-gap criteria",
+    "controller_converged_scope": "tracking_only"
+  },
+  "limitations": [
+    "single_static_synthetic_point_cloud_guide_deployment_only",
+    "does_not_prove_human_containment_or_evacuation_improvement",
+    "does_not_prove_behavior_change_dynamic_multi_group_capability_or_safety_certification"
+  ]
+}

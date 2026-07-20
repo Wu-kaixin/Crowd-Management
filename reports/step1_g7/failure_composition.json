@@ -1,0 +1,20 @@
+{
+  "denominator": 300,
+  "total": 300,
+  "n_total": 300,
+  "counts": {
+    "RESOURCE_UNCERTAIN": 60,
+    "ROUTE_INFEASIBLE": 232,
+    "TIMEOUT": 8
+  },
+  "rates": {
+    "RESOURCE_UNCERTAIN": 0.2,
+    "ROUTE_INFEASIBLE": 0.7733333333333333,
+    "TIMEOUT": 0.02666666666666667
+  },
+  "estimated_deployment_success_count": 0,
+  "estimated_deployment_success_rate": 0.0,
+  "truth_validated_success_count": 0,
+  "truth_validated_success_rate": 0.0,
+  "all_records_accounted_for": true
+}

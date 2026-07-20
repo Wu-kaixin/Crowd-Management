@@ -1,0 +1,26 @@
+{
+  "schema": "abcg-v2.1-g7-gate-evidence-v1",
+  "gate": "G7",
+  "status": "FAIL",
+  "formal": true,
+  "expected_record_count": 330,
+  "actual_record_count": 330,
+  "expected_v2_1_deployment_record_count": 300,
+  "actual_v2_1_deployment_record_count": 300,
+  "expected_g6_tracking_comparator_record_count": 30,
+  "actual_g6_tracking_comparator_record_count": 30,
+  "all_failures_in_binary_denominator": true,
+  "g6_tracking_comparator_separate_from_deployment_failure_denominator": true,
+  "continuous_missing_policy": "complete-case exploratory only; any missing forbids primary/NI PASS",
+  "calibration_status": "CALIBRATION_INSUFFICIENT",
+  "reasons": [
+    "independent_uncertainty_calibration_not_passed",
+    "holm_adjusted_primary_superiority_not_passed",
+    "continuous_missing_primary_inference_forbidden:tracking_rmse",
+    "continuous_missing_primary_inference_forbidden:minimum_intersample_clearance"
+  ],
+  "limitations": [
+    "not_human_safety_certification",
+    "not_unconditional_continuous_time_safety_proof"
+  ]
+}

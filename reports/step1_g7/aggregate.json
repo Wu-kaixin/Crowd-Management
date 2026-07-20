@@ -1,0 +1,5481 @@
+{
+  "schema": "abcg-v2.1-g7-aggregate-v1",
+  "groups": {
+    "c_shape|adaptive_nominal_visibility|adaptive_resource": {
+      "scenario": "c_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 21.897367148267293,
+        "median": 25.914254303712433,
+        "worst_5_percent_mean": 26.474130168298814,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 11.666666666666666,
+        "median": 12.0,
+        "worst_5_percent_mean": 12.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 11.666666666666666,
+        "median": 12.0,
+        "worst_5_percent_mean": 12.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "VALID": 9
+        },
+        "rates": {
+          "VALID": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 304359.2537000077,
+        "p95_ms": 316745.30892000184
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 1321088.2222222222,
+        "median": 1347073.0,
+        "worst_5_percent_mean": 1447115.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|adaptive_robust_visibility|adaptive_resource": {
+      "scenario": "c_shape",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 30.953137084989848,
+        "median": 30.953137084989848,
+        "worst_5_percent_mean": 30.953137084989848,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 34564.58099998417,
+        "p95_ms": 50920.94508000882
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 623876.6666666666,
+        "median": 636764.0,
+        "worst_5_percent_mean": 648289.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|boundary_corridor_hungarian|same_resource": {
+      "scenario": "c_shape",
+      "method": "boundary_corridor_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.222222222222221,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 51072.58029998047,
+        "p95_ms": 66445.34308000002
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 652947.5555555555,
+        "median": 648289.0,
+        "worst_5_percent_mean": 688829.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|straight_hungarian|same_resource": {
+      "scenario": "c_shape",
+      "method": "straight_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.222222222222221,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 34928.38309999206,
+        "p95_ms": 51236.747460003244
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 623876.6666666666,
+        "median": 636764.0,
+        "worst_5_percent_mean": 648289.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|visibility_cyclic|same_resource": {
+      "scenario": "c_shape",
+      "method": "visibility_cyclic",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.222222222222221,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 165260.16219999292,
+        "p95_ms": 190613.45914000995
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 660575.4444444445,
+        "median": 657075.0,
+        "worst_5_percent_mean": 697165.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|visibility_hungarian|same_resource": {
+      "scenario": "c_shape",
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.222222222222221,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 174473.7944000226,
+        "p95_ms": 214784.79844002868
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 661031.4444444445,
+        "median": 656890.0,
+        "worst_5_percent_mean": 697866.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|visibility_phase0|same_resource": {
+      "scenario": "c_shape",
+      "method": "visibility_phase0",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "rates": {
+          "ROUTE_INFEASIBLE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 44871.646200015675,
+        "p95_ms": 64240.9693200083
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 623876.6666666666,
+        "median": 636764.0,
+        "worst_5_percent_mean": 648289.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|visibility_qp|same_resource": {
+      "scenario": "c_shape",
+      "method": "visibility_qp",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.222222222222221,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 159449.31559998076,
+        "p95_ms": 176894.70254000043
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 661026.0,
+        "median": 657308.0,
+        "worst_5_percent_mean": 697419.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|visibility_uncertainty_calibrated|same_resource": {
+      "scenario": "c_shape",
+      "method": "visibility_uncertainty_calibrated",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 34564.579400001094,
+        "p95_ms": 50920.94310000539
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 623876.6666666666,
+        "median": 636764.0,
+        "worst_5_percent_mean": 648289.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "c_shape|visibility_uncertainty_none|same_resource": {
+      "scenario": "c_shape",
+      "method": "visibility_uncertainty_none",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 25.754289770973468,
+        "median": 28.233740028427434,
+        "worst_5_percent_mean": 28.233740028427434,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 11.666666666666666,
+        "median": 12.0,
+        "worst_5_percent_mean": 12.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 192359.26190001192,
+        "p95_ms": 220365.96355999354
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 675704.1111111111,
+        "median": 677902.0,
+        "worst_5_percent_mean": 718381.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|adaptive_nominal_visibility|adaptive_resource": {
+      "scenario": "circle",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.172768255619642,
+        "median": 9.543920728390379,
+        "worst_5_percent_mean": 11.134574183122112,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "VALID": 6
+        },
+        "rates": {
+          "VALID": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 142817.93204997666,
+        "p95_ms": 166831.22047500365
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 637398.3333333334,
+        "median": 630630.0,
+        "worst_5_percent_mean": 661775.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|adaptive_robust_visibility|adaptive_resource": {
+      "scenario": "circle",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 12.566162292380668,
+        "median": 12.566162292380668,
+        "worst_5_percent_mean": 12.566162292380668,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 12243.973699980415,
+        "p95_ms": 14750.822700014396
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 630073.0,
+        "median": 626329.0,
+        "worst_5_percent_mean": 659593.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|boundary_corridor_hungarian|same_resource": {
+      "scenario": "circle",
+      "method": "boundary_corridor_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.19100529100529098,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 6.4421464916635065,
+        "median": 6.839809855346439,
+        "worst_5_percent_mean": 9.543920728390379,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": 0.9359442450804321,
+        "median": 0.9359442450804321,
+        "worst_5_percent_mean": 0.9830754589929134,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": -0.0009681697875377759,
+        "median": -0.0009681697875377759,
+        "worst_5_percent_mean": -0.0011210358882036697,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 14.985558207980091,
+        "median": 0.0,
+        "worst_5_percent_mean": 45.52598552108053,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.826891149526146,
+        "median": 0.0,
+        "worst_5_percent_mean": 26.669535155739194,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 29627.302649998455,
+        "p95_ms": 84920.69495000032
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 1422097.6666666667,
+        "median": 645353.0,
+        "worst_5_percent_mean": 3026973.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 4,
+          "TIMEOUT": 2
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|straight_hungarian|same_resource": {
+      "scenario": "circle",
+      "method": "straight_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.172768255619642,
+        "median": 9.543920728390379,
+        "worst_5_percent_mean": 11.134574183122112,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 12565.93494999106,
+        "p95_ms": 15095.399650002946
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 630073.0,
+        "median": 626329.0,
+        "worst_5_percent_mean": 659593.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|visibility_cyclic|same_resource": {
+      "scenario": "circle",
+      "method": "visibility_cyclic",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.2619047619047619,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 6.283081146190334,
+        "median": 6.839809855346439,
+        "worst_5_percent_mean": 9.543920728390379,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": 0.5780834608101552,
+        "median": 0.5780834608101552,
+        "worst_5_percent_mean": 0.7681940997335834,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": -0.0009097713021595233,
+        "median": -0.0009097713021595233,
+        "worst_5_percent_mean": -0.0011210358881836857,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 14.638971752981812,
+        "median": 0.0,
+        "worst_5_percent_mean": 44.5010692431855,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.949431378302384,
+        "median": 0.0,
+        "worst_5_percent_mean": 27.041833119784044,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 171363.8523000118,
+        "p95_ms": 238812.31559999287
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 1461626.1666666667,
+        "median": 655815.0,
+        "worst_5_percent_mean": 3125157.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 4,
+          "TIMEOUT": 2
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|visibility_hungarian|same_resource": {
+      "scenario": "circle",
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.19100529100529098,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 6.4421464916635065,
+        "median": 6.839809855346439,
+        "worst_5_percent_mean": 9.543920728390379,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": 0.9359442450804321,
+        "median": 0.9359442450804321,
+        "worst_5_percent_mean": 0.9830754589929134,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": -0.0009681697875377759,
+        "median": -0.0009681697875377759,
+        "worst_5_percent_mean": -0.0011210358882036697,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 14.985558207980091,
+        "median": 0.0,
+        "worst_5_percent_mean": 45.52598552108053,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.826891149526146,
+        "median": 0.0,
+        "worst_5_percent_mean": 26.669535155739194,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 163522.08260000043,
+        "p95_ms": 236702.18387499335
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 1431851.6666666667,
+        "median": 660136.0,
+        "worst_5_percent_mean": 3035734.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 4,
+          "TIMEOUT": 2
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|visibility_phase0|same_resource": {
+      "scenario": "circle",
+      "method": "visibility_phase0",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.172768255619642,
+        "median": 9.543920728390379,
+        "worst_5_percent_mean": 11.134574183122112,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "rates": {
+          "ROUTE_INFEASIBLE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 28402.840249997098,
+        "p95_ms": 37601.90334999788
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 630073.0,
+        "median": 626329.0,
+        "worst_5_percent_mean": 659593.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|visibility_qp|same_resource": {
+      "scenario": "circle",
+      "method": "visibility_qp",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.19100529100529098,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 6.4421464916635065,
+        "median": 6.839809855346439,
+        "worst_5_percent_mean": 9.543920728390379,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": 0.9360623422458241,
+        "median": 0.9360623422458241,
+        "worst_5_percent_mean": 0.9833165119296968,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 2,
+        "n_missing": 4,
+        "mean": -0.0009681698069007316,
+        "median": -0.0009681698069007316,
+        "worst_5_percent_mean": -0.001121035888488997,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": false
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 14.98427003222129,
+        "median": 0.0,
+        "worst_5_percent_mean": 45.5259527613429,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.826251287591672,
+        "median": 0.0,
+        "worst_5_percent_mean": 26.669444420183254,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 171660.3490000125,
+        "p95_ms": 218536.99127498112
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 1443577.8333333333,
+        "median": 657680.0,
+        "worst_5_percent_mean": 3073056.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 4,
+          "TIMEOUT": 2
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|visibility_uncertainty_calibrated|same_resource": {
+      "scenario": "circle",
+      "method": "visibility_uncertainty_calibrated",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.172768255619642,
+        "median": 9.543920728390379,
+        "worst_5_percent_mean": 11.134574183122112,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 12243.979250008124,
+        "p95_ms": 14750.827149990073
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 630073.0,
+        "median": 626329.0,
+        "worst_5_percent_mean": 659593.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "circle|visibility_uncertainty_none|same_resource": {
+      "scenario": "circle",
+      "method": "visibility_uncertainty_none",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.172768255619642,
+        "median": 9.543920728390379,
+        "worst_5_percent_mean": 11.134574183122112,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 146376.5477999841,
+        "p95_ms": 193443.15594997897
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 637405.3333333334,
+        "median": 629558.5,
+        "worst_5_percent_mean": 663960.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|adaptive_nominal_visibility|adaptive_resource": {
+      "scenario": "ellipse",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "VALID": 6
+        },
+        "rates": {
+          "VALID": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 140169.1173500003,
+        "p95_ms": 159534.59170001588
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 640876.0,
+        "median": 642512.5,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|adaptive_robust_visibility|adaptive_resource": {
+      "scenario": "ellipse",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 12.36606670267703,
+        "median": 12.366066702677028,
+        "worst_5_percent_mean": 12.366066702677028,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 12026.085799996508,
+        "p95_ms": 15282.366899991757
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 637273.5,
+        "median": 637201.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|boundary_corridor_hungarian|same_resource": {
+      "scenario": "ellipse",
+      "method": "boundary_corridor_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 25154.24855001038,
+        "p95_ms": 27706.410849998065
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 639635.3333333334,
+        "median": 637201.0,
+        "worst_5_percent_mean": 668074.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|straight_hungarian|same_resource": {
+      "scenario": "ellipse",
+      "method": "straight_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 12334.502500016242,
+        "p95_ms": 15593.695775016386
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 637273.5,
+        "median": 637201.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|visibility_cyclic|same_resource": {
+      "scenario": "ellipse",
+      "method": "visibility_cyclic",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 137537.5261500012,
+        "p95_ms": 154605.1319749822
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 643877.1666666666,
+        "median": 638090.5,
+        "worst_5_percent_mean": 676234.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|visibility_hungarian|same_resource": {
+      "scenario": "ellipse",
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 129957.10660000623,
+        "p95_ms": 145742.7885500001
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 644342.8333333334,
+        "median": 638083.5,
+        "worst_5_percent_mean": 677189.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|visibility_phase0|same_resource": {
+      "scenario": "ellipse",
+      "method": "visibility_phase0",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "rates": {
+          "ROUTE_INFEASIBLE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 25303.86269999144,
+        "p95_ms": 31745.73382500239
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 637273.5,
+        "median": 637201.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|visibility_qp|same_resource": {
+      "scenario": "ellipse",
+      "method": "visibility_qp",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.833333333333334,
+        "median": 9.0,
+        "worst_5_percent_mean": 9.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 140391.50915000937,
+        "p95_ms": 156953.0912499904
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 644829.0,
+        "median": 638771.5,
+        "worst_5_percent_mean": 679602.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|visibility_uncertainty_calibrated|same_resource": {
+      "scenario": "ellipse",
+      "method": "visibility_uncertainty_calibrated",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 12026.08955001051,
+        "p95_ms": 15282.37257499859
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 637273.5,
+        "median": 637201.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "ellipse|visibility_uncertainty_none|same_resource": {
+      "scenario": "ellipse",
+      "method": "visibility_uncertainty_none",
+      "resource_regime": "same_resource",
+      "record_count": 6,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 0,
+      "blocked_route_timeout_rate": null,
+      "truth_coverage": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 9.520541676469625,
+        "median": 10.371539815148473,
+        "worst_5_percent_mean": 11.488474872164463,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 6,
+        "n_observed": 0,
+        "n_missing": 6,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 6,
+        "counts": {
+          "FIXED_RESOURCE": 6
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "p50_ms": 142375.00084999192,
+        "p95_ms": 162031.50387502683
+      },
+      "peak_memory": {
+        "n_total": 6,
+        "n_observed": 6,
+        "n_missing": 0,
+        "mean": 640486.8333333334,
+        "median": 641345.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 6,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 6
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|adaptive_nominal_visibility|adaptive_resource": {
+      "scenario": "u_shape",
+      "method": "adaptive_nominal_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 19.704891444848375,
+        "median": 25.414781124450677,
+        "worst_5_percent_mean": 26.054146687329936,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 11.777777777777779,
+        "median": 12.0,
+        "worst_5_percent_mean": 12.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 11.777777777777779,
+        "median": 12.0,
+        "worst_5_percent_mean": 12.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "VALID": 9
+        },
+        "rates": {
+          "VALID": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 281597.22480000346,
+        "p95_ms": 311948.23304002057
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 1359784.7777777778,
+        "median": 1397271.0,
+        "worst_5_percent_mean": 1419912.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|adaptive_robust_visibility|adaptive_resource": {
+      "scenario": "u_shape",
+      "method": "adaptive_robust_visibility",
+      "resource_regime": "adaptive_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 30.529705627484773,
+        "median": 30.529705627484773,
+        "worst_5_percent_mean": 30.529705627484773,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 31516.476000018883,
+        "p95_ms": 56077.51516000135
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 616592.0,
+        "median": 615268.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|boundary_corridor_hungarian|same_resource": {
+      "scenario": "u_shape",
+      "method": "boundary_corridor_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.333333333333334,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 50394.300399988424,
+        "p95_ms": 73609.26042000065
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 657567.8888888889,
+        "median": 649589.0,
+        "worst_5_percent_mean": 701151.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|straight_hungarian|same_resource": {
+      "scenario": "u_shape",
+      "method": "straight_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.333333333333334,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 31834.963800007245,
+        "p95_ms": 56397.07573999767
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 616592.0,
+        "median": 615268.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|visibility_cyclic|same_resource": {
+      "scenario": "u_shape",
+      "method": "visibility_cyclic",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.333333333333334,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 170364.01570000453,
+        "p95_ms": 204548.30902001704
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 664671.7777777778,
+        "median": 659242.0,
+        "worst_5_percent_mean": 707506.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|visibility_hungarian|same_resource": {
+      "scenario": "u_shape",
+      "method": "visibility_hungarian",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.333333333333334,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 181120.4776999948,
+        "p95_ms": 191677.34460002976
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 665484.0,
+        "median": 659242.0,
+        "worst_5_percent_mean": 706710.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|visibility_phase0|same_resource": {
+      "scenario": "u_shape",
+      "method": "visibility_phase0",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "rates": {
+          "ROUTE_INFEASIBLE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 45670.25070003001,
+        "p95_ms": 65910.40484001278
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 616592.0,
+        "median": 615268.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|visibility_qp|same_resource": {
+      "scenario": "u_shape",
+      "method": "visibility_qp",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 13.333333333333334,
+        "median": 13.0,
+        "worst_5_percent_mean": 14.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 169710.20110000973,
+        "p95_ms": 185230.30996001326
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 665325.3333333334,
+        "median": 659708.0,
+        "worst_5_percent_mean": 708610.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|visibility_uncertainty_calibrated|same_resource": {
+      "scenario": "u_shape",
+      "method": "visibility_uncertainty_calibrated",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "rates": {
+          "RESOURCE_UNCERTAIN": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 31516.47729999968,
+        "p95_ms": 56077.51857999829
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 616592.0,
+        "median": 615268.0,
+        "worst_5_percent_mean": 659473.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "RESOURCE_UNCERTAIN": 9
+        },
+        "all_records_accounted_for": true
+      }
+    },
+    "u_shape|visibility_uncertainty_none|same_resource": {
+      "scenario": "u_shape",
+      "method": "visibility_uncertainty_none",
+      "resource_regime": "same_resource",
+      "record_count": 9,
+      "estimated_success_count": 0,
+      "estimated_success_rate": 0.0,
+      "truth_success_count": 0,
+      "truth_success_rate": 0.0,
+      "blocked_route_timeout_count": 0,
+      "blocked_route_timeout_denominator": 3,
+      "blocked_route_timeout_rate": 0.0,
+      "truth_coverage": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "maximum_consecutive_arc_gap": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 23.64764574927049,
+        "median": 27.81240198524791,
+        "worst_5_percent_mean": 27.81240198524791,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "tracking_rmse": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "minimum_intersample_clearance": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "active_guide_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 8.0,
+        "median": 8.0,
+        "worst_5_percent_mean": 8.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "nominal_resource_count": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 11.777777777777779,
+        "median": 12.0,
+        "worst_5_percent_mean": 12.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "robust_resource_count": {
+        "n_total": 9,
+        "n_observed": 0,
+        "n_missing": 9,
+        "median": null,
+        "worst_5_percent_mean": null,
+        "analysis_population": "observed_records_only_descriptive"
+      },
+      "resource_status_composition": {
+        "denominator": 9,
+        "counts": {
+          "FIXED_RESOURCE": 9
+        },
+        "rates": {
+          "FIXED_RESOURCE": 1.0
+        },
+        "tracked_failure_states": [
+          "RESOURCE_UNCERTAIN",
+          "HYSTERESIS_GAP_DEGRADED",
+          "CAPACITY_SHORTFALL"
+        ]
+      },
+      "path_length": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "control_energy": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 0.0,
+        "median": 0.0,
+        "worst_5_percent_mean": 0.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "runtime": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "p50_ms": 191766.9550999999,
+        "p95_ms": 222161.03225999977
+      },
+      "peak_memory": {
+        "n_total": 9,
+        "n_observed": 9,
+        "n_missing": 0,
+        "mean": 668196.7777777778,
+        "median": 680152.0,
+        "worst_5_percent_mean": 697719.0,
+        "analysis_population": "observed_records_only_descriptive",
+        "primary_inference_permitted": true
+      },
+      "failure_composition": {
+        "total": 9,
+        "estimated_successes": 0,
+        "estimated_success_rate": 0.0,
+        "counts": {
+          "ROUTE_INFEASIBLE": 9
+        },
+        "all_records_accounted_for": true
+      }
+    }
+  }
+}

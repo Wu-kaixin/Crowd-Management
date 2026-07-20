@@ -1,0 +1,31 @@
+{
+  "schema": "abcg-v2.1-g7-g6-tracking-comparator-v1",
+  "label": "Frozen G6 fixed-resource straight-feedback adapter rerun on matched G7 holdout",
+  "scope": "controller_tracking_terminal_comparator_only",
+  "excluded_from_v2_1_deployment_success_and_failure_composition": true,
+  "record_count": 30,
+  "blocked_record_count": 6,
+  "controller_terminal_counts": {
+    "CONVERGED": 2,
+    "SAFETY_INFEASIBLE": 1,
+    "TIMEOUT": 27
+  },
+  "controller_terminal_rates": {
+    "CONVERGED": 0.06666666666666667,
+    "SAFETY_INFEASIBLE": 0.03333333333333333,
+    "TIMEOUT": 0.9
+  },
+  "blocked_controller_terminal_counts": {
+    "SAFETY_INFEASIBLE": 1,
+    "TIMEOUT": 5
+  },
+  "blocked_controller_terminal_rates": {
+    "SAFETY_INFEASIBLE": 0.16666666666666666,
+    "TIMEOUT": 0.8333333333333334
+  },
+  "blocked_timeout_count": 5,
+  "blocked_timeout_rate": 0.8333333333333334,
+  "all_records_accounted_for": true,
+  "all_blocked_records_accounted_for": true,
+  "semantics": "old controller CONVERGED means tracking only; no G6 adapter record is counted as ABCG-v2.1 ESTIMATED_DEPLOYMENT_SUCCESS or TRUTH_VALIDATED_SUCCESS"
+}
