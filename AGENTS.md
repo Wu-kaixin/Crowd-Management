@@ -58,9 +58,8 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The historical G6 baseline had `95 passed`. The current ABCG-v2.1 suite has
-279 tests, but its final full-suite health result is pending the final
-verification run. Never report `279 passed` until that run succeeds.
+The historical G6 baseline had `95 passed`. The final post-Holdout
+ABCG-v2.1 code/report tree has `279 passed in 154.16s`.
 
 Dependency health command:
 

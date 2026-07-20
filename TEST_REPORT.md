@@ -229,9 +229,15 @@ passed:
 70 passed in 122.65s
 ```
 
-The final full-suite result for the current post-Holdout working tree is
-**PENDING MAIN-AGENT BACKFILL**. No final count or elapsed time is claimed in
-this report until that run completes.
+The final full-suite result for the committed post-Holdout code/report tree is:
+
+```text
+279 passed in 154.16s
+```
+
+This validates the implementation, serializers, statistics, formal-media
+reader, and detached clean-checkout media CLI. It does not change the frozen
+G7 performance result from `FAIL` to `PASS`.
 
 ## Formal G7 protocol and command
 

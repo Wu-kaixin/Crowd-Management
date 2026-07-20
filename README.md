@@ -8,7 +8,7 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)
-![Tests](https://img.shields.io/badge/Tests-279%20tests%3B%20final%20run%20pending-yellow.svg)
+![Tests](https://img.shields.io/badge/Tests-279%20passed-brightgreen.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
 
@@ -241,7 +241,7 @@ The archive contains old scenario files, reports, figures, GIF media, original s
 - Active method family: ABCG static unknown-crowd containment.
 - Historical status: ABCG-v2 reproduced G0-G6 from a clean checkout; the G6 freeze passed with all 600 primary records retained and its then-current suite reported `95 passed`.
 - Current proof status: **ABCG-v2.1 G7 `FAIL`** on the frozen 330-record holdout; estimated and truth-validated deployment success were both `0/300`.
-- Current suite size: **279 tests**; the final full-suite health result is pending verification and must not be reported as `279 passed` until that run succeeds.
+- Final post-Holdout code/report validation: **279 passed in 154.16s**, plus compileall, dependency, diff, clean-checkout media, and frozen-G6 hash checks.
 - Main committed media: PNG and GIF artifacts under `reports/media/`.
 
 The historical G6 milestone was deliberately narrow, and the stronger G7 gate

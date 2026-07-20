@@ -167,6 +167,14 @@
         ]
       },
       "post_run_status": "Renderer semantics and Git-blob provenance hashing were corrected after the frozen FAIL run. At the user's request no replacement Holdout was run, so these corrections do not alter the formal result.",
+      "final_post_run_validation": {
+        "tests": "279 passed in 154.16s",
+        "targeted_evaluator_media": "70 passed in 122.65s",
+        "compileall": "PASS",
+        "pip_check": "PASS: No broken requirements found.",
+        "diff_check": "PASS",
+        "g6_readonly_audit": "PASS: 12 compact evidence and 3 legacy media hashes"
+      },
       "note": "G7 FAIL. The complete 330-record frozen Holdout is retained; no failure was removed from a binary denominator."
     }
   }
