@@ -7,6 +7,20 @@ from .arclength import (
     resample_closed_curve_by_arclength,
     signed_area,
 )
+from .buffer import (
+    BufferedPolygonGeometry,
+    PolygonBufferConfig,
+    PolygonBufferFailure,
+    PolygonBufferResult,
+    build_polygon_buffer,
+)
+from .free_space import (
+    FreeSpaceConfig,
+    FreeSpaceFailure,
+    FreeSpaceResult,
+    GuideFreeSpace,
+    build_guide_free_space,
+)
 
 __all__ = [
     "has_self_intersections",
@@ -14,4 +28,14 @@ __all__ = [
     "periodic_arclength_distance",
     "resample_closed_curve_by_arclength",
     "signed_area",
+    "BufferedPolygonGeometry",
+    "PolygonBufferConfig",
+    "PolygonBufferFailure",
+    "PolygonBufferResult",
+    "build_polygon_buffer",
+    "FreeSpaceConfig",
+    "FreeSpaceFailure",
+    "FreeSpaceResult",
+    "GuideFreeSpace",
+    "build_guide_free_space",
 ]
