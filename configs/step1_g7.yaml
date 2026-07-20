@@ -1,5 +1,14 @@
 schema: abcg-v2.1-step1-g7-config-v1
 
+# Case-level process parallelism is part of the frozen protocol.  The formal
+# holdout caps the pool at the i9-14900KF host's 24 physical-core count
+# (8P + 16E); Windows remains responsible for topology-aware scheduling.
+# Each worker constrains BLAS/OpenMP libraries to one thread to avoid nested
+# oversubscription.  Runtime metadata records both this configured cap and the
+# actual min(case_count, parallel_workers) process count.
+execution:
+  parallel_workers: 24
+
 # Seeds 0..29 belong exclusively to the historical G6 reference.  G7 split
 # seeds are deliberately disjoint so pilot/calibration cannot leak into the
 # formal holdout.

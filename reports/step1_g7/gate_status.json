@@ -12,6 +12,11 @@
     "conda_environment": "abcg",
     "python": "3.12.13",
     "platform": "Windows 11",
+    "cpu": "Intel Core i9-14900KF (8P+16E, 24 physical cores, 32 logical processors)",
+    "formal_case_workers": 24,
+    "numeric_threads_per_worker": 1,
+    "gpu": "NVIDIA GeForce RTX 5080 16303 MiB; CUDA available via torch 2.13.0+cu130",
+    "formal_gpu_usage": "NOT_USED: formal Shapely/NumPy/SciPy geometry and optimization pipeline is CPU-only",
     "numpy": "2.4.6",
     "scipy": "1.18.0",
     "shapely": "2.1.2"
@@ -128,14 +133,16 @@
       "status": "NOT_RUN",
       "prefreeze_validation": {
         "status": "PASS",
-        "tests": "272 passed in 105.61s",
-        "targeted_tests": "92 passed in 30.32s",
+        "tests": "276 passed in 255.05s",
+        "targeted_tests": "96 passed in 102.87s",
         "compileall": "PASS",
         "pip_check": "PASS: No broken requirements found.",
         "diff_check": "PASS",
-        "independent_audit": "PASS: no P0/P1 blockers"
+        "independent_audit": "PASS: no P0/P1 blockers",
+        "parallel_contract": "PASS: 24 case-level spawn workers, numeric libraries limited to one thread, serial/parallel deterministic projection identical",
+        "clean_checkout_test": "PASS: detached local clone runs the formal media CLI and verifies seven assets plus SHA-256 manifest"
       },
-      "note": "Formal Pilot -> Calibration -> Freeze -> Holdout has not yet run from a committed clean tree."
+      "note": "The first serial Holdout attempt was stopped before evidence publication at user request. Formal Pilot -> Calibration -> Freeze -> Holdout must be rerun from the committed 24-worker implementation."
     }
   }
 }
