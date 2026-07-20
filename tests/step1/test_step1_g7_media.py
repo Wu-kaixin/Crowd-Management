@@ -1155,7 +1155,7 @@ def test_paired_timeout_denominator_cannot_omit_a_blocked_pair(tmp_path: Path) -
         build_media(input_dir, tmp_path / "media")
 
 
-def test_rejects_rectangle_disguised_as_u_shape(tmp_path: Path) -> None:
+def test_accepts_convex_method_estimates_for_concave_truth(tmp_path: Path) -> None:
     input_dir = tmp_path / "compact"
     _write_inputs(input_dir)
     evidence = _load(input_dir / EVIDENCE_FILE)
@@ -1164,6 +1164,22 @@ def test_rejects_rectangle_disguised_as_u_shape(tmp_path: Path) -> None:
     after = evidence["u_shape_comparison"]["after"]  # type: ignore[index]
     before["source_polygon"] = rectangle
     after["source_polygon"] = rectangle
+    _rebind_cases(input_dir, evidence, [before, after])
+
+    manifest = build_media(input_dir, tmp_path / "media")
+
+    assert len(manifest["outputs"]["u_c_route_comparison.png"]["sha256"]) == 64
+
+
+def test_rejects_rectangle_truth_disguised_as_u_shape(tmp_path: Path) -> None:
+    input_dir = tmp_path / "compact"
+    _write_inputs(input_dir)
+    evidence = _load(input_dir / EVIDENCE_FILE)
+    rectangle = [[-3.0, -3.0], [3.0, -3.0], [3.0, 3.0], [-3.0, 3.0]]
+    before = evidence["u_shape_comparison"]["before"]  # type: ignore[index]
+    after = evidence["u_shape_comparison"]["after"]  # type: ignore[index]
+    before["truth_boundary"] = rectangle
+    after["truth_boundary"] = rectangle
     _rebind_cases(input_dir, evidence, [before, after])
 
     with pytest.raises(EvidenceValidationError, match="concave"):

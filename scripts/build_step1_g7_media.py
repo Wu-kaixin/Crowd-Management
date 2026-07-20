@@ -1547,9 +1547,14 @@ def _validate_comparison(
     for field in ("truth_boundary", "initial_positions"):
         if not np.array_equal(before[field], after[field]):
             raise EvidenceValidationError(f"{context} before/after {field} differs.")
-    if not _is_concave(before["source_polygon"]) or not _is_concave(after["source_polygon"]):
+    # The scenario identity is carried by the held-out truth boundary.  A
+    # method is allowed to estimate a convex source polygon for a genuinely
+    # concave U/C crowd (and that loss of concavity is itself important failure
+    # evidence).  Requiring the method output to remain concave would censor
+    # exactly those formal failures from the comparison figure.
+    if not _is_concave(before["truth_boundary"]) or not _is_concave(after["truth_boundary"]):
         raise EvidenceValidationError(
-            f"{context} must preserve genuinely concave U/C source polygons in both panels."
+            f"{context} must preserve genuinely concave U/C truth boundaries in both panels."
         )
     frozen_pairs = blocked_pairs["scenarios"][expected_scenario]["pair_ids"]
     if before["pair_id"] != min(frozen_pairs):
