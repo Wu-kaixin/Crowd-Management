@@ -880,6 +880,24 @@ def test_builds_seven_media_from_four_linked_holdout_inputs(tmp_path: Path) -> N
     assert (output_dir / "success_case.gif").read_bytes().startswith(b"GIF")
 
 
+def test_blocked_timeout_validation_retains_candidate_terminal_composition(
+    tmp_path: Path,
+) -> None:
+    input_dir = tmp_path / "compact"
+    written = _write_inputs(input_dir)
+    records_document = written["records"]
+    records = records_document["records"]
+    assert isinstance(records, list)
+
+    validated = media_builder._validate_blocked_pairs(
+        written["summary"]["blocked_timeout_paired"], records
+    )
+
+    for scenario in ("u_shape", "c_shape"):
+        item = validated["scenarios"][scenario]
+        assert sum(item["candidate_terminal_counts"].values()) == item["denominator"]
+
+
 @pytest.mark.parametrize("all_truth_success", [False, True])
 def test_missing_success_or_failure_uses_honest_placeholder_media(
     tmp_path: Path, all_truth_success: bool

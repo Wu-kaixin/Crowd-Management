@@ -1,0 +1,51 @@
+{
+  "schema": "abcg-v2.1-g7-evaluation-snapshot-v1",
+  "split": "holdout",
+  "formal": true,
+  "quick": false,
+  "pilot_data_used": false,
+  "base_sha": "1c3642c1adef0f11e0bde7651e2da64afbc45a8b",
+  "frozen_sha": "dc73866254136b1e14237483bc4c8a0934e8732f",
+  "branch_sha": "dc73866254136b1e14237483bc4c8a0934e8732f",
+  "config_hash": "6e6a1459bcf845e5db6dd653d682f330cda66d4cef3ecba1df04aca4b7cb48ce",
+  "records_sha256": "b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238",
+  "total_record_count": 330,
+  "v2_1_deployment_record_count": 300,
+  "g6_tracking_comparator_record_count": 30,
+  "environment": {
+    "python": "3.12.13",
+    "implementation": "CPython",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "logical_cpu_count": 32,
+    "processor_identifier": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "packages": {
+      "numpy": "2.4.6",
+      "scipy": "1.18.0",
+      "shapely": "2.1.2",
+      "PyYAML": "6.0.3",
+      "matplotlib": "3.11.0"
+    }
+  },
+  "execution": {
+    "execution_mode": "case_process_pool_spawn",
+    "configured_parallel_workers": 24,
+    "actual_case_workers": 24,
+    "case_parallelism_unit": "independent_scenario_seed_cohort_case",
+    "record_order": "case_index_then_frozen_method_order",
+    "deployment_phase_wall_runtime_ms": 1739256.229599996,
+    "runtime_measurement_semantics": "per_episode_wall_latency_inside_case_process_under_frozen_case_concurrency",
+    "gpu_used": false,
+    "gpu_policy": "CPU-only NumPy/SciPy/Shapely geometry and solver pipeline",
+    "worker_numeric_thread_limit": 1,
+    "worker_start_method": "spawn"
+  },
+  "freeze_verification": "PASS",
+  "truth_firewall": {
+    "planner_inputs": [
+      "observation",
+      "estimated_boundary",
+      "guide_initial_state"
+    ],
+    "truth_usage": "post-terminal evaluator scoring only"
+  }
+}

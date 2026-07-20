@@ -1,0 +1,94 @@
+{
+  "config_hash": "6e6a1459bcf845e5db6dd653d682f330cda66d4cef3ecba1df04aca4b7cb48ce",
+  "environment": {
+    "byteorder": "little",
+    "matplotlib": "3.11.0",
+    "numpy": "2.4.6",
+    "pillow": "12.2.0",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13"
+  },
+  "filter": {
+    "best_case_selection_performed": false,
+    "compact_record_count": 330,
+    "exemplar_selection": {
+      "failure_case": "first_v2_1_truth_failure_by_frozen_record_id",
+      "route_comparisons": "first_complete_blocked_pair_by_frozen_pair_id",
+      "success_case": "first_v2_1_truth_success_by_frozen_record_id"
+    },
+    "failed_episodes_retained": true,
+    "failure_exemplar_status": "AVAILABLE",
+    "failure_media_is_placeholder": false,
+    "g6_tracking_comparator_denominator": 30,
+    "pilot_data_used": false,
+    "rendered_frame_count": 1,
+    "selected_source_record_ids": {
+      "c_shape_after": "blocked_supplement:c_shape:11000:02:same_resource:visibility_hungarian",
+      "c_shape_before": "blocked_supplement:c_shape:11000:00:same_resource:g6_fixed_resource_rerun",
+      "failure_case": "blocked_supplement:c_shape:11000:01:same_resource:straight_hungarian",
+      "success_case": null,
+      "u_shape_after": "blocked_supplement:u_shape:11000:02:same_resource:visibility_hungarian",
+      "u_shape_before": "blocked_supplement:u_shape:11000:00:same_resource:g6_fixed_resource_rerun"
+    },
+    "source_frame_count": 0,
+    "split": "holdout",
+    "success_exemplar_status": "UNAVAILABLE_NO_V2_1_TRUTH_VALIDATED_SUCCESS",
+    "success_media_is_placeholder": true,
+    "trajectory_frame_cap": 60,
+    "v2_1_failure_denominator": 300
+  },
+  "frozen_sha": "dc73866254136b1e14237483bc4c8a0934e8732f",
+  "inputs": {
+    "freeze_manifest.json": {
+      "schema": "abcg-v2.1-g7-freeze-manifest-v1",
+      "sha256": "375db57ca09a4a7b7f6bb49be63a1bf9c975060db07043caabe1475b79b4a2c7"
+    },
+    "media_evidence.json": {
+      "schema": "abcg-v2.1-g7-media-evidence-v1",
+      "sha256": "413155352020af98b9917170fd0fce6bc079c9875b2f4a714eee74a87d34342a"
+    },
+    "readme_summary.json": {
+      "schema": "abcg-v2.1-g7-readme-summary-v1",
+      "sha256": "ec2c17bb8d54691e8b81055a18caec4c24133735013f693cea0e3e42d25b6d4f"
+    },
+    "records_compact.json": {
+      "schema": "abcg-v2.1-g7-records-compact-v1",
+      "sha256": "b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238"
+    }
+  },
+  "outputs": {
+    "blocked_route_timeout.png": {
+      "bytes": 68117,
+      "sha256": "aac4065091547e9cc759f1ff0ff49bf2a2ccbdf3383d2e6b6e783f43cdc6739b"
+    },
+    "failure_case.png": {
+      "bytes": 53742,
+      "sha256": "00c22d9787155fcc1bd863bfa3fe96ede0066c4b02b363a8355067cbce97aa4b"
+    },
+    "failure_composition.png": {
+      "bytes": 33984,
+      "sha256": "7073b996e90715bc9a9809b0ba21ceb82434cb6422ae56e2aa4d6b404b79430d"
+    },
+    "resource_pareto.png": {
+      "bytes": 184791,
+      "sha256": "0e1baa86bf25fd97aa2361297962db65fb5e33460a0381086c87d0a90a0e70cd"
+    },
+    "same_resource_coverage_gap.png": {
+      "bytes": 60821,
+      "sha256": "7aededcac32a69bd3192934d20d71ded1912ceff0501bc42bbd8c44c8d017b14"
+    },
+    "success_case.gif": {
+      "bytes": 8896,
+      "sha256": "9018c878988dd513552e2c2f33b43dca98a16548080a7a466b68e6d55c25e3e9"
+    },
+    "u_c_route_comparison.png": {
+      "bytes": 227102,
+      "sha256": "713c7931672c3465241ee7b7d8f95cc79536005232f6dd42a1cce29a83609e68"
+    }
+  },
+  "pilot_data_used": false,
+  "record_count": 330,
+  "records_sha256": "b8b5ddb9879c268e62447b89572b8dd8b9167f0096fdaa0b32099f1b88b91238",
+  "schema": "abcg-v2.1-g7-media-manifest-v1",
+  "split": "holdout"
+}
