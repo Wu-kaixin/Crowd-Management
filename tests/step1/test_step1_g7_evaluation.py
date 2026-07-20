@@ -255,6 +255,18 @@ def test_freeze_and_holdout_hash_verification_and_dirty_rejection(tmp_path: Path
         )
 
 
+def test_source_hash_uses_git_blobs_not_checkout_line_endings(tmp_path: Path) -> None:
+    repo = _clean_fixture_repo(tmp_path)
+    original_hash, original_files = g7._source_hash(repo)
+    source = repo / "src" / "crowd_management" / "dummy.py"
+
+    source.write_bytes(source.read_bytes().replace(b"\n", b"\r\n"))
+    checkout_hash, checkout_files = g7._source_hash(repo)
+
+    assert checkout_hash == original_hash
+    assert checkout_files == original_files
+
+
 def test_freeze_recalculates_calibration_instead_of_trusting_summary(tmp_path: Path) -> None:
     repo = _clean_fixture_repo(tmp_path)
     config = g7.load_g7_config(CONFIG, quick=True)
