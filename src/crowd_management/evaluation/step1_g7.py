@@ -592,6 +592,17 @@ def _git(repo: Path, *args: str) -> str:
     return completed.stdout.strip()
 
 
+def _git_bytes(repo: Path, *args: str) -> bytes:
+    """Return exact Git object bytes without platform text conversion."""
+    completed = subprocess.run(
+        ["git", *args],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+    )
+    return completed.stdout
+
+
 def _git_snapshot(repo: Path) -> dict[str, object]:
     head = _git(repo, "rev-parse", "HEAD")
     branch = _git(repo, "branch", "--show-current")
@@ -622,7 +633,10 @@ def _source_hash(repo: Path) -> tuple[str, list[str]]:
         raise RuntimeError("no tracked G7 source files found")
     digest = hashlib.sha256()
     for relative in selected:
-        data = (repo / relative).read_bytes()
+        # Freeze the bytes addressed by HEAD, not checkout-filtered worktree
+        # bytes.  The latter vary with core.autocrlf and would make the same
+        # commit hash differently across clean Windows/Linux checkouts.
+        data = _git_bytes(repo, "cat-file", "blob", f"HEAD:{relative}")
         digest.update(relative.encode("utf-8"))
         digest.update(b"\0")
         digest.update(hashlib.sha256(data).digest())
