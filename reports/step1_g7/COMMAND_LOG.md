@@ -190,3 +190,18 @@ These corrections were made after the frozen FAIL run.  A replacement Pilot
 was started and stopped before evidence publication when the user requested a
 summary instead of another full Holdout.  No replacement formal conclusion is
 claimed; see `POST_RUN_AUDIT.md`.
+
+## Final committed-tree validation
+
+```powershell
+conda run -n abcg python -m pytest --basetemp=.tmp/pytest-final-full -o cache_dir=.tmp/pytest-cache-final-full -q
+conda run -n abcg python -m compileall -q src scripts
+conda run -n abcg python -m pip check
+git diff --check
+```
+
+Observed: `279 passed in 154.16s`; compileall and diff check exited zero;
+`pip check` reported `No broken requirements found.`  The full suite includes
+the detached clean-checkout media CLI test.  The frozen G6 read-only audit also
+reported `12` compact evidence hashes and `3` Visual Overview media hashes
+matching.  These are code/report health checks, not a G7 performance PASS.
