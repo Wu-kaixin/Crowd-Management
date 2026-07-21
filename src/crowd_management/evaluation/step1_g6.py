@@ -15,7 +15,6 @@ import platform
 import subprocess
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
@@ -41,6 +40,7 @@ from ..controllers import (
 )
 from ..estimation import BoundaryEstimateFailure, BoundaryEstimateV2, BoundaryV2Config, estimate_boundary_v2
 from ..geometry import max_consecutive_arc_gap, resample_closed_curve_by_arclength
+from ..runtime import run_tasks
 from ..types import Array
 
 
@@ -929,13 +929,18 @@ def _run_ablations(config: G6EvaluationConfig, primary: list[dict[str, Any]]) ->
         if scenario in config.scenarios
         for seed in config.seeds
     ]
-    with ThreadPoolExecutor(max_workers=min(config.workers, max(1, len(cases)))) as executor:
-        groups = list(
-            executor.map(
-                lambda case: _run_ablation_case(case[0], case[1], config, primary_by_key),
-                cases,
-            )
+    # Ship only the case's own primary records to each worker instead of
+    # pickling the full primary map once per task.
+    tasks = [
+        (
+            scenario,
+            seed,
+            config,
+            {key: value for key, value in primary_by_key.items() if key[0] == scenario and key[1] == seed},
         )
+        for scenario, seed in cases
+    ]
+    groups = run_tasks(_run_ablation_case, tasks, config.workers)
     records = [record for group in groups for record in group]
     records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["variant"])))
     return records
@@ -1027,8 +1032,7 @@ def _run_robustness(config: G6EvaluationConfig) -> list[dict[str, Any]]:
         for dimension, levels in dimensions
         for level_index, level in enumerate(levels)
     ]
-    with ThreadPoolExecutor(max_workers=min(config.workers, max(1, len(tasks)))) as executor:
-        records = list(executor.map(lambda task: _run_robustness_case(task, config), tasks))
+    records = run_tasks(_run_robustness_case, [(task, config) for task in tasks], config.workers)
     records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["dimension"]), float(record["level"])))
     return records
 
@@ -1412,10 +1416,11 @@ def run_g6_evaluation(
 
     started = time.perf_counter()
     cases = [(scenario, seed) for scenario in config.scenarios for seed in config.seeds]
-    with ThreadPoolExecutor(max_workers=min(config.workers, len(cases))) as executor:
-        case_records = list(
-            executor.map(lambda case: _run_primary_case(case[0], case[1], config, runs, snapshot), cases)
-        )
+    case_records = run_tasks(
+        _run_primary_case,
+        [(scenario, seed, config, runs, snapshot) for scenario, seed in cases],
+        config.workers,
+    )
     records = [record for group in case_records for record in group]
     records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["method"])))
     aggregate = _aggregate(records, config)

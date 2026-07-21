@@ -65,10 +65,11 @@ def test_manual_mode_respects_request_but_clamps_to_cases() -> None:
     assert plan.workers == 4
 
 
-def test_single_worker_gets_full_blas_threads() -> None:
+def test_single_worker_also_gets_single_blas_thread() -> None:
+    """Tiny-array workload: multi-threaded BLAS is measured slower even serially."""
     plan = select_parallel_plan(case_count=1, mode="balanced", hardware=_hardware())
     assert plan.workers == 1
-    assert plan.blas_threads_per_worker == 16
+    assert plan.blas_threads_per_worker == 1
 
 
 def test_degraded_detection_still_returns_valid_plan() -> None:

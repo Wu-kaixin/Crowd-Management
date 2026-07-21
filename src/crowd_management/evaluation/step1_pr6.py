@@ -6,7 +6,6 @@ import hashlib
 import json
 import os
 import subprocess
-from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
@@ -16,6 +15,7 @@ import numpy as np
 from ..controllers import PeriodicArcCVTConfig, equal_arc_target_s, plan_periodic_arc_coverage
 from ..estimation import BoundaryEstimateFailure, BoundaryEstimateV2, BoundaryV2Config, estimate_boundary_v2
 from ..geometry import resample_closed_curve_by_arclength
+from ..runtime import run_tasks
 from ..types import Array
 
 
@@ -492,13 +492,11 @@ def run_pr6_evaluation(output_dir: str | Path, config: PR6EvaluationConfig) -> d
     visuals: dict[tuple[str, int, str], tuple[Array, Array, Array | None]] = {}
 
     cases = [(shape, seed) for shape in config.shapes for seed in config.seeds]
-    with ThreadPoolExecutor(max_workers=min(config.workers, len(cases))) as executor:
-        case_results = list(
-            executor.map(
-                lambda case: _run_paired_case(case[0], case[1], config, estimator_configs),
-                cases,
-            )
-        )
+    case_results = run_tasks(
+        _run_paired_case,
+        [(shape, seed, config, estimator_configs) for shape, seed in cases],
+        config.workers,
+    )
     for case_records, case_visuals in case_results:
         records.extend(case_records)
         visuals.update(case_visuals)

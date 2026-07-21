@@ -109,14 +109,12 @@ def select_parallel_plan(
         )
 
     workers = max(1, workers)
-    # Case-level parallelism keeps numerical libraries single-threaded per
-    # worker to avoid oversubscription; a single worker may use the machine.
-    blas_threads = 1 if workers > 1 else max(1, physical)
-    reasons.append(
-        "blas_threads_per_worker=1 to avoid oversubscription"
-        if workers > 1
-        else f"single worker may use up to {blas_threads} BLAS threads"
-    )
+    # BLAS threads stay at 1 in every mode: the simulator operates on tiny
+    # arrays (2-vectors, K-by-2 curves) where multi-threaded OpenBLAS pools
+    # only add synchronization cost. Phase 1 measured a 1.57x serial speedup
+    # from capping BLAS at 1 thread (docs/performance/profile_report.md).
+    blas_threads = 1
+    reasons.append("blas_threads_per_worker=1 (tiny-array workload; measured faster and avoids oversubscription)")
 
     return ParallelPlan(
         workers=workers,
