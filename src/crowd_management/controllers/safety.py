@@ -141,14 +141,23 @@ def _build_velocity_halfspaces(
     if config.min_guide_distance > 0.0 and guide_count >= 2:
         i_ids, j_ids = np.triu_indices(guide_count, k=1)
         deltas = positions[i_ids] - positions[j_ids]
-        distances = np.linalg.norm(deltas, axis=1)
+        # Per-row float(norm) matches the original scalar loop bitwise (vectorized
+        # np.linalg.norm(..., axis=1) can differ by 1 ULP on Linux BLAS).
+        distances = np.array([float(np.linalg.norm(delta)) for delta in deltas], dtype=float)
         bound = (config.min_guide_distance + numerical_distance_buffer - distances) / dt
         reachable = bound > (-2.0 * v_max) - tol
         if np.any(reachable):
             i_kept, j_kept = i_ids[reachable], j_ids[reachable]
-            normals = _safe_unit_rows(
-                deltas[reachable], distances[reachable], i_kept, j_kept, tol
-            )
+            deltas_kept = deltas[reachable]
+            distances_kept = distances[reachable]
+            normals = np.empty((len(i_kept), 2), dtype=float)
+            for index in range(len(i_kept)):
+                distance = float(distances_kept[index])
+                normals[index] = (
+                    deltas_kept[index] / distance
+                    if distance > tol
+                    else _fallback_normal(int(i_kept[index]), int(j_kept[index]))
+                )
             rows = np.zeros((len(i_kept), dimension), dtype=float)
             row_ids = np.arange(len(i_kept))
             rows[row_ids, 2 * i_kept] = normals[:, 0]
@@ -161,20 +170,24 @@ def _build_velocity_halfspaces(
     if config.min_crowd_distance > 0.0 and crowd_count and guide_count:
         # Row-major (guide_id, crowd_id) matches the original nested loop order.
         deltas = (positions[:, None, :] - crowd_points[None, :, :]).reshape(-1, 2)
-        distances = np.linalg.norm(deltas, axis=1)
+        distances = np.array([float(np.linalg.norm(delta)) for delta in deltas], dtype=float)
         guide_ids = np.repeat(np.arange(guide_count), crowd_count)
         crowd_ids = np.tile(np.arange(crowd_count), guide_count)
         bound = (config.min_crowd_distance + numerical_distance_buffer - distances) / dt
         reachable = bound > -v_max - tol
         if np.any(reachable):
             guides_kept = guide_ids[reachable]
-            normals = _safe_unit_rows(
-                deltas[reachable],
-                distances[reachable],
-                guides_kept,
-                guide_count + crowd_ids[reachable],
-                tol,
-            )
+            crowd_kept = crowd_ids[reachable]
+            deltas_kept = deltas[reachable]
+            distances_kept = distances[reachable]
+            normals = np.empty((len(guides_kept), 2), dtype=float)
+            for index in range(len(guides_kept)):
+                distance = float(distances_kept[index])
+                normals[index] = (
+                    deltas_kept[index] / distance
+                    if distance > tol
+                    else _fallback_normal(int(guides_kept[index]), guide_count + int(crowd_kept[index]))
+                )
             rows = np.zeros((len(guides_kept), dimension), dtype=float)
             row_ids = np.arange(len(guides_kept))
             rows[row_ids, 2 * guides_kept] = normals[:, 0]
