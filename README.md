@@ -8,7 +8,7 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)
-![Tests](https://img.shields.io/badge/Tests-77%20passed-brightgreen.svg)
+![CI](https://github.com/Wu-kaixin/Crowd-Management/actions/workflows/ci.yml/badge.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
 
@@ -165,6 +165,8 @@ Crowd-Management/
 |   |-- geometry/                     # Closed-curve arc length and validity
 |   |-- estimation/                   # Boundary and state estimation
 |   |-- controllers/                  # ABCG, periodic CVT, resources, assignment, kinematics, and baselines
+|   |-- runtime/                      # Hardware-aware workers, executor, BLAS limits
+|   |-- reporting/                    # Shared JSON/manifest snapshot helpers
 |   |-- experiments/                  # Experiment runners
 |   |-- evaluation/                   # PR6 compatibility and formal G6 evaluation
 |   |-- containment_metrics.py        # Static containment metrics
@@ -173,12 +175,17 @@ Crowd-Management/
 |   |-- run_static_containment.py     # Main experiment CLI
 |   |-- run_step1_pr6_evaluation.py   # Paired robust-evaluation CLI
 |   |-- run_step1_g6_compliance.py    # Formal G6 closed-loop evaluation CLI
+|   |-- run_ci_smoke.py               # Deterministic CI smoke workload
+|   |-- check_readme_consistency.py   # README / docs consistency gate
+|   |-- compare_results.py            # Scientific-field result comparator
 |   `-- build_readme_media.py         # README media generation
+|-- .github/workflows/ci.yml          # Linux/Windows CI
 |-- reports/
 |   |-- media/                        # README Visual Overview PNG/GIF media
 |   |-- step1_pr6_evaluation/         # Earlier boundary-only PR6 diagnostic
 |   `-- step1_g6_compliance/          # Formal compact G6 evidence and gallery
 |-- tests/
+|-- docs/architecture/                # Refactor baseline/plan/result
 |-- pyproject.toml
 `-- README.md
 ```
@@ -203,18 +210,15 @@ To inspect it, run `git switch local-main-backup`. New development should start 
 - Active branch: `main`.
 - Active method family: ABCG static unknown-crowd containment.
 - Step 1 delivery status: **ABCG-v2 Step 1 research-complete** after clean-checkout G0-G6 reproduction.
-- Frozen implementation validation in Conda `abcg`: `95 passed`; complete G6 `PASS` with all 600 primary records retained.
-- Main committed media: static examples, G6 scenario/baseline/closed-loop
-  visuals, success-rate chart, and failure gallery under `reports/media/`.
+- Authoritative unit/regression suite size (from `pytest --collect-only`, kept in sync by `scripts/check_readme_consistency.py`):
+  <!-- TEST_COUNT_START -->
+  179
+  <!-- TEST_COUNT_END -->
+- Formal G6 evidence (frozen report): complete G6 `PASS` with all 600 primary records retained; see [reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md).
+- Hardware-aware parallelism and local performance evidence: [docs/performance/final_report.md](docs/performance/final_report.md). CI runners are not used as formal timing evidence.
+- Main committed media: static examples, G6 scenario/baseline/closed-loop visuals, success-rate chart, and failure gallery under `reports/media/`.
 
-Research-complete is deliberately narrow: it verifies guide-agent deployment
-around one static unknown crowd in simulation. It does not prove human
-compliance, containment effectiveness, evacuation improvement, behavioral
-change, dynamic/multiple-crowd applicability, or continuous-time safety. U/C
-nonconvex convergence remains limited because fixed-target straight-line
-feedback has no obstacle-routing planner. The sequential sampled-data safety
-projection is an auditable engineering filter, not an unconditional formal
-safety certificate, and all failure states remain research results.
+Research-complete is deliberately narrow: it verifies guide-agent deployment around one static unknown crowd in simulation. It does not prove human compliance, containment effectiveness, evacuation improvement, behavioral change, dynamic/multiple-crowd applicability, or continuous-time safety. U/C nonconvex convergence remains limited because fixed-target straight-line feedback has no obstacle-routing planner. The sequential sampled-data safety projection is an auditable engineering filter, not an unconditional formal safety certificate, and all failure states remain research results.
 
 ## License
 

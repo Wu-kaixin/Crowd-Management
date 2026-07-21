@@ -1,4 +1,5 @@
 """Repository and environment snapshot helpers for auditable manifests."""
+
 from __future__ import annotations
 
 import hashlib
@@ -68,9 +69,7 @@ def repository_snapshot(
     if include_environment:
         snapshot["python"] = platform.python_version()
         snapshot["platform"] = platform.platform()
-        snapshot["packages"] = {
-            name: importlib.metadata.version(name) for name in package_names
-        }
+        snapshot["packages"] = {name: importlib.metadata.version(name) for name in package_names}
     return snapshot
 
 

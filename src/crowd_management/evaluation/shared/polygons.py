@@ -1,4 +1,5 @@
 """Shared polygon point-in-polygon and rejection sampling primitives."""
+
 from __future__ import annotations
 
 import numpy as np

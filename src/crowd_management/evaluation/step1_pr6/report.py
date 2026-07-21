@@ -78,7 +78,7 @@ def _write_markdown_report(
         "",
         f"- Paired seeds: {len(config.seeds)} (`{min(config.seeds)}` through `{max(config.seeds)}`)",
         f"- Held-out shapes: {', '.join(config.shapes)}",
-        f"- Variants: radial neutral, alpha neutral, alpha bootstrap gain, alpha bootstrap gain ablated",
+        "- Variants: radial neutral, alpha neutral, alpha bootstrap gain, alpha bootstrap gain ablated",
         f"- Repository freeze status: `{snapshot['freeze_status']}`",
         f"- Source SHA-256: `{snapshot['source_sha256']}`",
         "",

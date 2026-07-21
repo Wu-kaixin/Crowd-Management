@@ -22,6 +22,8 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
+  "ruff>=0.9",
+  "mypy>=1.14",
 ]
 
 [tool.setuptools.packages.find]
@@ -30,3 +32,68 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = [
+  ".tmp",
+  "runs",
+  "outputs",
+  "reports",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+# Temporary exclusions for untouched math cores and moved-but-not-restyled
+# orchestration packages. Tracked in docs/architecture/refactor_result.md.
+"src/crowd_management/controllers/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/estimation/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/geometry/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/crowd/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/evaluation/step1_g6/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/evaluation/step1_g6/__init__.py" = ["E", "I", "B", "UP", "F401"]
+"src/crowd_management/evaluation/step1_pr6/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/evaluation/step1_pr6/__init__.py" = ["E", "I", "B", "UP", "F401"]
+"src/crowd_management/experiments/static_containment/**" = ["E", "I", "B", "UP"]
+"src/crowd_management/experiments/static_containment/__init__.py" = ["E", "I", "B", "UP", "F401"]
+"src/crowd_management/runtime/**" = ["E", "I", "B", "UP"]
+"scripts/build_readme_media.py" = ["E", "I", "B", "UP"]
+"scripts/profile_step1.py" = ["E", "I", "B", "UP"]
+"scripts/benchmark_baseline.py" = ["E", "I", "B", "UP"]
+"scripts/run_static_containment.py" = ["E", "I", "B", "UP"]
+"scripts/run_step1_g6_compliance.py" = ["E", "I", "B", "UP"]
+"scripts/run_step1_pr6_evaluation.py" = ["E", "I", "B", "UP"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.12"
+warn_unused_configs = true
+ignore_missing_imports = true
+check_untyped_defs = true
+files = [
+  "src/crowd_management/reporting",
+  "src/crowd_management/runtime",
+  "src/crowd_management/evaluation/schemas.py",
+  "src/crowd_management/evaluation/schema_validation.py",
+  "src/crowd_management/evaluation/shared",
+  "scripts/run_ci_smoke.py",
+  "scripts/check_readme_consistency.py",
+  "scripts/compare_results.py",
+]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = [
+  "crowd_management.controllers.*",
+  "crowd_management.estimation.*",
+  "crowd_management.geometry.*",
+]
+ignore_errors = true

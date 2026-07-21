@@ -7,9 +7,10 @@ from ...estimation import BoundaryEstimateV2, BoundaryV2Config
 from ...geometry import resample_closed_curve_by_arclength
 from ...types import Array
 from ..shared import neutralize_confidence as _shared_neutralize_confidence
-from ..shared import points_inside_polygon as _inside_polygon
+from ..shared import points_inside_polygon as _inside_polygon  # noqa: F401
 from ..shared import sample_polygon as _sample_polygon
 from .config import G6EvaluationConfig, PRIMARY_SCENARIOS
+
 
 
 def _polygon_for_shape(shape: str) -> Array:

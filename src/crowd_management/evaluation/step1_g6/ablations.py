@@ -9,7 +9,6 @@ from ...controllers import PeriodicArcCVTConfig, ResourcePolicyConfig, allocate_
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, BoundaryV2Config, estimate_boundary_v2
 from ...geometry import resample_closed_curve_by_arclength
 from ...runtime import run_tasks
-from ...types import Array
 from ..shared import bootstrap_metric_summary as _summary
 from ..shared import curve_errors_with_p95 as _curve_errors
 from ..shared import sample_polygon as _sample_polygon

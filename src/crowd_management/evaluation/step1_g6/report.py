@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 
 from ...reporting import write_json as _write_json
-from ...reporting import write_records_csv as _write_records_csv
+from ...reporting import write_records_csv as _write_records_csv  # noqa: F401
 from .config import G6EvaluationConfig
 
 
@@ -58,7 +58,7 @@ def _write_report(
         "",
         f"- Primary matrix: {len(config.scenarios)} scenarios × {len(config.methods)} methods × {len(config.seeds)} paired seeds",
         f"- Bootstrap boundary samples: {config.bootstrap_samples}",
-        f"- Initial layouts: balanced perimeter, one-sided, opposed sides",
+        "- Initial layouts: balanced perimeter, one-sided, opposed sides",
         f"- Freeze status: `{snapshot['freeze_status']}`",
         f"- Overall status: `{gate['overall_status']}`",
         f"- G6 status: `{gate['g6_status']}`",

@@ -49,7 +49,9 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The current suite has 168 tests. Legacy evacuation tests live on the
+The authoritative suite size is whatever `pytest --collect-only` reports on
+the current branch (see the `TEST_COUNT` marker in `README.md`, checked by
+`scripts/check_readme_consistency.py`). Legacy evacuation tests live on the
 `local-main-backup` branch.
 
 Dependency health command:

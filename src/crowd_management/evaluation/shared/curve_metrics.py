@@ -1,4 +1,5 @@
 """Curve-to-truth distance metrics shared by formal evaluators."""
+
 from __future__ import annotations
 
 import numpy as np
@@ -23,7 +24,5 @@ def curve_errors_with_p95(estimate: Array, truth: Array) -> tuple[float, float, 
     truth_to_estimate = np.min(distances, axis=0)
     chamfer = 0.5 * (float(np.mean(estimate_to_truth)) + float(np.mean(truth_to_estimate)))
     hausdorff = max(float(np.max(estimate_to_truth)), float(np.max(truth_to_estimate)))
-    hausdorff95 = float(
-        max(np.percentile(estimate_to_truth, 95.0), np.percentile(truth_to_estimate, 95.0))
-    )
+    hausdorff95 = float(max(np.percentile(estimate_to_truth, 95.0), np.percentile(truth_to_estimate, 95.0)))
     return chamfer, hausdorff, hausdorff95

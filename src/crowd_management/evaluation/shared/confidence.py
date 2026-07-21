@@ -1,4 +1,5 @@
 """Confidence-ablation helpers shared by G6 and PR6 evaluators."""
+
 from __future__ import annotations
 
 from dataclasses import replace
