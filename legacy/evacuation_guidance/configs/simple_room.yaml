@@ -1,0 +1,43 @@
+seed: 7
+
+room:
+  width: 20.0
+  height: 12.0
+  exit:
+    center: [19.5, 6.0]
+    width: 2.0
+    radius: 0.6
+
+simulation:
+  dt: 0.05
+  steps: 400
+  pedestrian_count: 160
+  pedestrian_radius: 0.12
+  desired_speed_mean: 1.25
+  desired_speed_std: 0.15
+  max_speed: 2.0
+
+crowd:
+  initial_center: [4.0, 6.0]
+  initial_spread: [1.0, 2.0]
+  compliance_mean: 0.65
+  compliance_std: 0.15
+
+forces:
+  goal_gain: 1.2
+  repulsion_gain: 0.08
+  repulsion_range: 0.45
+  wall_gain: 0.15
+  wall_range: 0.4
+  damping: 0.15
+
+guiders:
+  count: 5
+  max_speed: 1.5
+  influence_radius: 2.2
+  influence_strength: 0.8
+  rear_distance_scale: 1.25
+  side_spacing: 1.4
+
+outputs:
+  save_every: 5
