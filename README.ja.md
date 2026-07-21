@@ -56,7 +56,7 @@ Step 1 research-complete の可視化素材です。再生成は `python scripts
 
 正式報告：[reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)。
 
-以前の DBAct 関連の画像、GIF、動画素材は `legacy/evacuation_guidance/` に移動しました。
+以前の DBAct 関連の画像、GIF、動画素材は `main` から削除され、[`local-main-backup`](https://github.com/Wu-kaixin/Crowd-Management/tree/local-main-backup) ブランチの `legacy/evacuation_guidance/` に完全な形で保存されています。
 
 ## Usage
 
@@ -84,10 +84,13 @@ python scripts/build_readme_media.py
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-以前の evacuation / DBACT / density-DBACT 実験は、以下に移動しました。
+以前の evacuation / DBACT / density-DBACT 実験は `main` から削除され、`local-main-backup` ブランチに保存されています。
 
 ```text
-legacy/evacuation_guidance/
+local-main-backup:legacy/evacuation_guidance/
+local-main-backup:src/crowd_management/legacy/
 ```
+
+閲覧するには `git switch local-main-backup` を実行してください。
 
 詳細は [README.md](README.md) を参照してください。

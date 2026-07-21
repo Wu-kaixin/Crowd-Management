@@ -8,7 +8,7 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue.svg)
-![Tests](https://img.shields.io/badge/Tests-95%20passed-brightgreen.svg)
+![Tests](https://img.shields.io/badge/Tests-77%20passed-brightgreen.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
 
@@ -18,7 +18,7 @@ Crowd Management is a Python research prototype for studying how multiple guide 
 
 The current method family is **ABCG: Adaptive Boundary-Coverage Guidance**. It combines radial or alpha-shape boundary estimation, bootstrap uncertainty, periodic coverage planning, adaptive guide allocation, SciPy identity-preserving assignment, a measured-feedback `reset/step` velocity controller, and sampled-data velocity safety projection. PR0-PR6 and every G0-G6 gate were reproduced from the clean implementation freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`. **ABCG-v2 Step 1 is research-complete.**
 
-Previous evacuation-guidance experiments are preserved as legacy baselines. They are available for reproducibility, but they are not the main project direction.
+Previous evacuation-guidance experiments (DBAct, density-DBAct, and the old evacuation simulator) have been moved out of `main`. They are preserved in full on the [`local-main-backup`](https://github.com/Wu-kaixin/Crowd-Management/tree/local-main-backup) branch for reproducibility, but they are not the main project direction.
 
 > This repository is a research prototype. It is not a calibrated crowd-safety product, deployment planner, or safety-certified control system.
 
@@ -66,7 +66,7 @@ Committed primary-matrix success rates (30 paired seeds per cell; failures retai
 
 Full formal write-up: [reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md).
 
-Legacy evacuation, DBAct, and density-DBAct media remain under `legacy/evacuation_guidance/` and are not used as the main README visuals.
+Legacy evacuation, DBAct, and density-DBAct media live on the `local-main-backup` branch (under `legacy/evacuation_guidance/`) and are not used as the main README visuals.
 
 ---
 
@@ -167,21 +167,17 @@ Crowd-Management/
 |   |-- controllers/                  # ABCG, periodic CVT, resources, assignment, kinematics, and baselines
 |   |-- experiments/                  # Experiment runners
 |   |-- evaluation/                   # PR6 compatibility and formal G6 evaluation
-|   |-- legacy/evacuation/            # Archived evacuation implementation
 |   |-- containment_metrics.py        # Static containment metrics
 |   `-- containment_visualization.py  # Static containment plotting
 |-- scripts/
 |   |-- run_static_containment.py     # Main experiment CLI
 |   |-- run_step1_pr6_evaluation.py   # Paired robust-evaluation CLI
 |   |-- run_step1_g6_compliance.py    # Formal G6 closed-loop evaluation CLI
-|   |-- build_readme_media.py         # README media generation
-|   `-- legacy wrappers               # Compatibility wrappers for archived scripts
+|   `-- build_readme_media.py         # README media generation
 |-- reports/
 |   |-- media/                        # README Visual Overview PNG/GIF media
 |   |-- step1_pr6_evaluation/         # Earlier boundary-only PR6 diagnostic
 |   `-- step1_g6_compliance/          # Formal compact G6 evidence and gallery
-|-- legacy/
-|   `-- evacuation_guidance/           # Archived old configs, reports, media, and scripts
 |-- tests/
 |-- pyproject.toml
 `-- README.md
@@ -191,14 +187,14 @@ Crowd-Management/
 
 ## Legacy Archive
 
-The earlier evacuation-guidance line is stored in:
+The earlier evacuation-guidance line (DBAct, density-DBAct, and the old evacuation simulator) has been removed from `main` and is preserved on the [`local-main-backup`](https://github.com/Wu-kaixin/Crowd-Management/tree/local-main-backup) branch. That branch contains both the original pre-refactor project state and a snapshot of the later `legacy/` archive:
 
 ```text
-legacy/evacuation_guidance/
-src/crowd_management/legacy/evacuation/
+local-main-backup:legacy/evacuation_guidance/          # Old configs, reports, figures, GIF media, and scripts
+local-main-backup:src/crowd_management/legacy/         # Archived evacuation implementation
 ```
 
-The archive contains old scenario files, reports, figures, GIF media, original script implementations, replay utilities, metrics, and evacuation controllers. Root-level compatibility wrappers remain for older commands, but new development should start from `scripts/run_static_containment.py`.
+To inspect it, run `git switch local-main-backup`. New development should start from `scripts/run_static_containment.py` on `main`.
 
 ---
 

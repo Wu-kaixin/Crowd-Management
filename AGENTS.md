@@ -4,11 +4,12 @@
 
 This repository is now centered on **ABCG static unknown-crowd containment**.
 The active workflow is not DBAct evacuation optimization. DBAct, density-DBAct,
-and old evacuation-guidance material are archived under:
+and old evacuation-guidance material have been removed from `main` and are
+preserved on the `local-main-backup` branch:
 
 ```text
-legacy/evacuation_guidance/
-src/crowd_management/legacy/evacuation/
+local-main-backup:legacy/evacuation_guidance/
+local-main-backup:src/crowd_management/legacy/
 ```
 
 New work should start from:
@@ -48,7 +49,8 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The current suite has 95 tests.
+The current suite has 77 tests. Legacy evacuation tests live on the
+`local-main-backup` branch.
 
 Dependency health command:
 
@@ -79,6 +81,5 @@ Regenerate README media:
 python scripts/build_readme_media.py
 ```
 
-Legacy evacuation scripts remain as compatibility wrappers in `scripts/`, but
-their original implementations and media are stored under
-`legacy/evacuation_guidance/`.
+Legacy evacuation scripts, their compatibility wrappers, and old media no
+longer live on `main`. Use the `local-main-backup` branch to access them.
