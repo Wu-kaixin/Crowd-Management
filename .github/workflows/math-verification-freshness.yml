@@ -1,0 +1,33 @@
+# Integrity check for the committed Wolfram math-verification evidence.
+#
+# GitHub runners have no Mathematica license, so this workflow NEVER executes
+# Wolfram Language and never re-labels old results as current. It only checks
+# that the committed artifacts, hashes, figures, and report are internally
+# consistent and still match the base main SHA; anything stale fails the job.
+name: math-verification-freshness
+
+on:
+  pull_request:
+    paths:
+      - "artifacts/math_verification/**"
+      - "reports/media/math_verification/**"
+      - "docs/math/**"
+      - "wolfram/**"
+      - "scripts/check_math_verification_freshness.py"
+      - ".github/workflows/math-verification-freshness.yml"
+  workflow_dispatch:
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check verification artifact freshness and integrity
+        run: python scripts/check_math_verification_freshness.py
