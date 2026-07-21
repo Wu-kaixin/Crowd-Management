@@ -1,0 +1,545 @@
+{
+  "cprofile": {
+    "cases": 16,
+    "total_profiled_time_s": 184.60644809999994,
+    "native_builtin_self_time_s": 22.0029122,
+    "native_builtin_fraction": 0.11918821052275047,
+    "top_self": [
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:37(_cross)",
+        "ncalls": 99951488,
+        "tottime": 79.022109,
+        "cumtime": 79.022109
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:98(_build_velocity_halfspaces)",
+        "ncalls": 7207,
+        "tottime": 26.2907483,
+        "cumtime": 55.719397
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:50(_segments_intersect)",
+        "ncalls": 24987872,
+        "tottime": 25.256234600000003,
+        "cumtime": 110.51081860000001
+      },
+      {
+        "func": "E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:2598(norm)",
+        "ncalls": 14506645,
+        "tottime": 12.9364693,
+        "cumtime": 26.449650600000002
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:71(has_self_intersections)",
+        "ncalls": 2002,
+        "tottime": 8.5192823,
+        "cumtime": 119.1020045
+      },
+      {
+        "func": "{method 'dot' of 'numpy.ndarray' objects}",
+        "ncalls": 14423029,
+        "tottime": 6.3638612000000006,
+        "cumtime": 6.3638612000000006
+      },
+      {
+        "func": "{built-in method builtins.abs}",
+        "ncalls": 100196077,
+        "tottime": 5.180168800000001,
+        "cumtime": 5.180168800000001
+      },
+      {
+        "func": "{built-in method numpy.zeros}",
+        "ncalls": 14519121,
+        "tottime": 2.5330922,
+        "cumtime": 2.5330922
+      },
+      {
+        "func": "{method 'ravel' of 'numpy.ndarray' objects}",
+        "ncalls": 14444126,
+        "tottime": 2.0629726,
+        "cumtime": 2.0629726
+      },
+      {
+        "func": "{built-in method builtins.issubclass}",
+        "ncalls": 28980540,
+        "tottime": 1.7843035,
+        "cumtime": 1.7843035
+      },
+      {
+        "func": "E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:168(isComplexType)",
+        "ncalls": 14423029,
+        "tottime": 1.6660253,
+        "cumtime": 2.5157414
+      },
+      {
+        "func": "{built-in method numpy.asarray}",
+        "ncalls": 14628314,
+        "tottime": 1.2942481000000001,
+        "cumtime": 1.2942481000000001
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:217(project_velocity_safety)",
+        "ncalls": 7207,
+        "tottime": 1.2496838000000001,
+        "cumtime": 58.6649959
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:81(_append_reachable_constraint)",
+        "ncalls": 14511096,
+        "tottime": 1.0774460000000001,
+        "cumtime": 1.0871721
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:217(_observation_coverage_ratio)",
+        "ncalls": 2443,
+        "tottime": 1.0448813000000001,
+        "cumtime": 1.10399
+      },
+      {
+        "func": "E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:2594(_norm_dispatcher)",
+        "ncalls": 14506645,
+        "tottime": 0.8299197,
+        "cumtime": 0.8299197
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:43(_on_segment)",
+        "ncalls": 1560296,
+        "tottime": 0.7232992,
+        "cumtime": 1.0671059
+      },
+      {
+        "func": "{method 'reduce' of 'numpy.ufunc' objects}",
+        "ncalls": 332198,
+        "tottime": 0.5730349,
+        "cumtime": 0.5730349
+      },
+      {
+        "func": "{built-in method _io.open}",
+        "ncalls": 640,
+        "tottime": 0.5145853,
+        "cumtime": 0.5181445
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:249(_delaunay_triangles)",
+        "ncalls": 930,
+        "tottime": 0.45865500000000003,
+        "cumtime": 0.7546782000000001
+      }
+    ],
+    "top_cumulative": [
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:708(_run_primary_case)",
+        "ncalls": 16,
+        "tottime": 0.0020002,
+        "cumtime": 184.6499972
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:71(has_self_intersections)",
+        "ncalls": 2002,
+        "tottime": 8.5192823,
+        "cumtime": 119.1020045
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:794(estimate_boundary_v2)",
+        "ncalls": 16,
+        "tottime": 0.0007072000000000001,
+        "cumtime": 118.2233018
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:689(_estimate_geometry)",
+        "ncalls": 465,
+        "tottime": 0.0011167,
+        "cumtime": 117.7387539
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:628(_estimate_alpha_geometry)",
+        "ncalls": 465,
+        "tottime": 0.010701500000000001,
+        "cumtime": 117.73763720000001
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:440(boundary_v2_from_curve)",
+        "ncalls": 995,
+        "tottime": 0.042849000000000005,
+        "cumtime": 114.8447371
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:50(_segments_intersect)",
+        "ncalls": 24987872,
+        "tottime": 25.256234600000003,
+        "cumtime": 110.51081860000001
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:697(_bootstrap_boundary_confidence)",
+        "ncalls": 15,
+        "tottime": 0.1862887,
+        "cumtime": 110.17372490000001
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:37(_cross)",
+        "ncalls": 99951488,
+        "tottime": 79.022109,
+        "cumtime": 79.022109
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:390(_adaptive_alpha_curve)",
+        "ncalls": 465,
+        "tottime": 0.040269400000000004,
+        "cumtime": 62.39930820000001
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:561(_run_method)",
+        "ncalls": 80,
+        "tottime": 0.0104939,
+        "cumtime": 61.452178800000006
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:399(_run_feedback_episode)",
+        "ncalls": 75,
+        "tottime": 0.051591500000000005,
+        "cumtime": 59.970048600000005
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\controllers\\abcg_v2.py:292(step)",
+        "ncalls": 7207,
+        "tottime": 0.20332450000000002,
+        "cumtime": 59.482463700000004
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:217(project_velocity_safety)",
+        "ncalls": 7207,
+        "tottime": 1.2496838000000001,
+        "cumtime": 58.6649959
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:98(_build_velocity_halfspaces)",
+        "ncalls": 7207,
+        "tottime": 26.2907483,
+        "cumtime": 55.719397
+      },
+      {
+        "func": "E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:2598(norm)",
+        "ncalls": 14506645,
+        "tottime": 12.9364693,
+        "cumtime": 26.449650600000002
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:95(resample_closed_curve_by_arclength)",
+        "ncalls": 1007,
+        "tottime": 0.0490898,
+        "cumtime": 7.6860331
+      },
+      {
+        "func": "{method 'dot' of 'numpy.ndarray' objects}",
+        "ncalls": 14423029,
+        "tottime": 6.3638612000000006,
+        "cumtime": 6.3638612000000006
+      },
+      {
+        "func": "{built-in method builtins.abs}",
+        "ncalls": 100196077,
+        "tottime": 5.180168800000001,
+        "cumtime": 5.180168800000001
+      },
+      {
+        "func": "D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:216(_observed_case)",
+        "ncalls": 16,
+        "tottime": 0.0009962,
+        "cumtime": 4.9704495
+      }
+    ],
+    "text_cumulative": "         380786431 function calls (380711408 primitive calls) in 184.606 seconds\n\n   Ordered by: cumulative time\n   List reduced from 505 to 25 due to restriction <25>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n       16    0.002    0.000  184.650   11.541 D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:708(_run_primary_case)\n     2002    8.519    0.004  119.102    0.059 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:71(has_self_intersections)\n       16    0.001    0.000  118.223    7.389 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:794(estimate_boundary_v2)\n      465    0.001    0.000  117.739    0.253 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:689(_estimate_geometry)\n      465    0.011    0.000  117.738    0.253 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:628(_estimate_alpha_geometry)\n      995    0.043    0.000  114.845    0.115 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:440(boundary_v2_from_curve)\n 24987872   25.256    0.000  110.511    0.000 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:50(_segments_intersect)\n       15    0.186    0.012  110.174    7.345 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:697(_bootstrap_boundary_confidence)\n 99951488   79.022    0.000   79.022    0.000 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:37(_cross)\n      465    0.040    0.000   62.399    0.134 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:390(_adaptive_alpha_curve)\n       80    0.010    0.000   61.452    0.768 D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:561(_run_method)\n       75    0.052    0.001   59.970    0.800 D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:399(_run_feedback_episode)\n     7207    0.203    0.000   59.482    0.008 D:\\Crowd-Management\\src\\crowd_management\\controllers\\abcg_v2.py:292(step)\n     7207    1.250    0.000   58.665    0.008 D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:217(project_velocity_safety)\n     7207   26.291    0.004   55.719    0.008 D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:98(_build_velocity_halfspaces)\n 14506645   12.936    0.000   26.450    0.000 E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:2598(norm)\n     1007    0.049    0.000    7.686    0.008 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:95(resample_closed_curve_by_arclength)\n 14423029    6.364    0.000    6.364    0.000 {method 'dot' of 'numpy.ndarray' objects}\n100196077    5.180    0.000    5.180    0.000 {built-in method builtins.abs}\n       16    0.001    0.000    4.970    0.311 D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:216(_observed_case)\n       16    0.001    0.000    4.969    0.311 D:\\Crowd-Management\\src\\crowd_management\\evaluation\\step1_g6.py:194(_base_case)\n 14519121    2.533    0.000    2.533    0.000 {built-in method numpy.zeros}\n 14423029    1.666    0.000    2.516    0.000 E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:168(isComplexType)\n 14444126    2.063    0.000    2.063    0.000 {method 'ravel' of 'numpy.ndarray' objects}\n 28980540    1.784    0.000    1.784    0.000 {built-in method builtins.issubclass}\n\n\n",
+    "text_self": "         380786431 function calls (380711408 primitive calls) in 184.606 seconds\n\n   Ordered by: internal time\n   List reduced from 505 to 25 due to restriction <25>\n\n   ncalls  tottime  percall  cumtime  percall filename:lineno(function)\n 99951488   79.022    0.000   79.022    0.000 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:37(_cross)\n     7207   26.291    0.004   55.719    0.008 D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:98(_build_velocity_halfspaces)\n 24987872   25.256    0.000  110.511    0.000 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:50(_segments_intersect)\n 14506645   12.936    0.000   26.450    0.000 E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:2598(norm)\n     2002    8.519    0.004  119.102    0.059 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:71(has_self_intersections)\n 14423029    6.364    0.000    6.364    0.000 {method 'dot' of 'numpy.ndarray' objects}\n100196077    5.180    0.000    5.180    0.000 {built-in method builtins.abs}\n 14519121    2.533    0.000    2.533    0.000 {built-in method numpy.zeros}\n 14444126    2.063    0.000    2.063    0.000 {method 'ravel' of 'numpy.ndarray' objects}\n 28980540    1.784    0.000    1.784    0.000 {built-in method builtins.issubclass}\n 14423029    1.666    0.000    2.516    0.000 E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:168(isComplexType)\n 14628314    1.294    0.000    1.294    0.000 {built-in method numpy.asarray}\n     7207    1.250    0.000   58.665    0.008 D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:217(project_velocity_safety)\n 14511096    1.077    0.000    1.087    0.000 D:\\Crowd-Management\\src\\crowd_management\\controllers\\safety.py:81(_append_reachable_constraint)\n     2443    1.045    0.000    1.104    0.000 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:217(_observation_coverage_ratio)\n 14506645    0.830    0.000    0.830    0.000 E:\\miniconda3\\envs\\abcg\\Lib\\site-packages\\numpy\\linalg\\_linalg.py:2594(_norm_dispatcher)\n  1560296    0.723    0.000    1.067    0.000 D:\\Crowd-Management\\src\\crowd_management\\geometry\\arclength.py:43(_on_segment)\n   332198    0.573    0.000    0.573    0.000 {method 'reduce' of 'numpy.ufunc' objects}\n      640    0.515    0.001    0.518    0.001 {built-in method _io.open}\n      930    0.459    0.000    0.755    0.001 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:249(_delaunay_triangles)\n      930    0.269    0.000    1.608    0.002 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:288(_alpha_shape_candidate)\n  1561731    0.237    0.000    0.510    0.000 {built-in method builtins.min}\n      930    0.234    0.000    0.234    0.000 {built-in method nt.open}\n     7207    0.203    0.000   59.482    0.008 D:\\Crowd-Management\\src\\crowd_management\\controllers\\abcg_v2.py:292(step)\n       15    0.186    0.012  110.174    7.345 D:\\Crowd-Management\\src\\crowd_management\\estimation\\boundary_v2.py:697(_bootstrap_boundary_confidence)\n\n\n"
+  },
+  "stages": {
+    "cases": 16,
+    "stage_totals_s": {
+      "boundary_estimation_bootstrap": 86.35181729999567,
+      "feedback_episode_with_safety": 7.667545000002065,
+      "boundary_estimation_single": 5.933281399995394,
+      "case_generation": 3.6248223000020516,
+      "artifact_serialization": 0.19477859999824432,
+      "metrics_curve_and_crossings": 0.04191529999843624,
+      "periodic_arc_cvt_planning": 0.0048793000023579225,
+      "hungarian_assignment": 0.001416299997799797
+    },
+    "stage_fractions": {
+      "boundary_estimation_bootstrap": 0.8317418459024417,
+      "feedback_episode_with_safety": 0.07385389481365408,
+      "boundary_estimation_single": 0.05714944488945967,
+      "case_generation": 0.034914336317878415,
+      "artifact_serialization": 0.0018761100503769152,
+      "metrics_curve_and_crossings": 0.0004037287237527046,
+      "periodic_arc_cvt_planning": 4.699748213258704e-05,
+      "hungarian_assignment": 1.3641820303898645e-05
+    },
+    "detail": [
+      {
+        "scenario": "circle",
+        "seed": 0,
+        "timings_s": {
+          "case_generation": 0.00031149999995250255,
+          "boundary_estimation_bootstrap": 2.162587499999063,
+          "boundary_estimation_single": 0.15308159999949567,
+          "periodic_arc_cvt_planning": 0.00026679999973566737,
+          "hungarian_assignment": 8.860000161803328e-05,
+          "feedback_episode_with_safety": 0.21904519999952754,
+          "metrics_curve_and_crossings": 0.0011082000000897096,
+          "artifact_serialization": 0.0104762999999366
+        }
+      },
+      {
+        "scenario": "circle",
+        "seed": 1,
+        "timings_s": {
+          "case_generation": 0.00019280000014987309,
+          "boundary_estimation_bootstrap": 2.0280746999997064,
+          "boundary_estimation_single": 0.07239160000062839,
+          "periodic_arc_cvt_planning": 0.0002908000005845679,
+          "hungarian_assignment": 8.600000001024455e-05,
+          "feedback_episode_with_safety": 0.7865263000003324,
+          "metrics_curve_and_crossings": 0.0011515000005601905,
+          "artifact_serialization": 0.0069084000006114366
+        }
+      },
+      {
+        "scenario": "circle",
+        "seed": 2,
+        "timings_s": {
+          "case_generation": 0.00020419999964360613,
+          "boundary_estimation_bootstrap": 2.0121060000001307,
+          "boundary_estimation_single": 0.1486616000001959,
+          "periodic_arc_cvt_planning": 0.0002644000014697667,
+          "hungarian_assignment": 8.8099999629776e-05,
+          "feedback_episode_with_safety": 0.28578509999897506,
+          "metrics_curve_and_crossings": 0.001145800000813324,
+          "artifact_serialization": 0.01276539999889792
+        }
+      },
+      {
+        "scenario": "circle",
+        "seed": 3,
+        "timings_s": {
+          "case_generation": 0.0002015999998548068,
+          "boundary_estimation_bootstrap": 2.2208403999993607,
+          "boundary_estimation_single": 0.07181539999874076,
+          "periodic_arc_cvt_planning": 0.00027260000024398323,
+          "hungarian_assignment": 8.439999874099158e-05,
+          "feedback_episode_with_safety": 0.22793900000033318,
+          "metrics_curve_and_crossings": 0.0008729999990464421,
+          "artifact_serialization": 0.00707949999923585
+        }
+      },
+      {
+        "scenario": "ellipse",
+        "seed": 0,
+        "timings_s": {
+          "case_generation": 0.8995009999998729,
+          "boundary_estimation_bootstrap": 2.396243199998935,
+          "boundary_estimation_single": 0.07282149999991816,
+          "periodic_arc_cvt_planning": 0.0002523000002838671,
+          "hungarian_assignment": 7.980000009411015e-05,
+          "feedback_episode_with_safety": 0.2486033999994106,
+          "metrics_curve_and_crossings": 0.0008549999984097667,
+          "artifact_serialization": 0.014364900000146008
+        }
+      },
+      {
+        "scenario": "ellipse",
+        "seed": 1,
+        "timings_s": {
+          "case_generation": 0.9108505000003788,
+          "boundary_estimation_bootstrap": 2.356660599998577,
+          "boundary_estimation_single": 0.08262990000002901,
+          "periodic_arc_cvt_planning": 0.00025739999910001643,
+          "hungarian_assignment": 0.00010169999950448982,
+          "feedback_episode_with_safety": 0.7557675000007293,
+          "metrics_curve_and_crossings": 0.0014115000012679957,
+          "artifact_serialization": 0.012589599999046186
+        }
+      },
+      {
+        "scenario": "ellipse",
+        "seed": 2,
+        "timings_s": {
+          "case_generation": 0.89299580000079,
+          "boundary_estimation_bootstrap": 2.0762002000010398,
+          "boundary_estimation_single": 0.13413190000028408,
+          "periodic_arc_cvt_planning": 0.00034109999978682026,
+          "hungarian_assignment": 8.580000030633528e-05,
+          "feedback_episode_with_safety": 0.33333760000095936,
+          "metrics_curve_and_crossings": 0.0009324999991804361,
+          "artifact_serialization": 0.013811200000418467
+        }
+      },
+      {
+        "scenario": "ellipse",
+        "seed": 3,
+        "timings_s": {
+          "case_generation": 0.9152536999990843,
+          "boundary_estimation_bootstrap": 2.0646675000007235,
+          "boundary_estimation_single": 0.06548429999929795,
+          "periodic_arc_cvt_planning": 0.0002555999999458436,
+          "hungarian_assignment": 8.259999958681874e-05,
+          "feedback_episode_with_safety": 0.7087350000001607,
+          "metrics_curve_and_crossings": 0.0009323999984189868,
+          "artifact_serialization": 0.016518599999471917
+        }
+      },
+      {
+        "scenario": "u_shape",
+        "seed": 0,
+        "timings_s": {
+          "case_generation": 0.0012796999999409309,
+          "boundary_estimation_bootstrap": 11.266625399999612,
+          "boundary_estimation_single": 0.5929464999990159,
+          "periodic_arc_cvt_planning": 0.0002934000003733672,
+          "hungarian_assignment": 8.379999962926377e-05,
+          "feedback_episode_with_safety": 0.17028060000120604,
+          "metrics_curve_and_crossings": 0.0041930999996111495,
+          "artifact_serialization": 0.014718700000230456
+        }
+      },
+      {
+        "scenario": "u_shape",
+        "seed": 1,
+        "timings_s": {
+          "case_generation": 0.000587100001212093,
+          "boundary_estimation_bootstrap": 0.0004243000003043562,
+          "boundary_estimation_single": 0.00036109999928157777
+        }
+      },
+      {
+        "scenario": "u_shape",
+        "seed": 2,
+        "timings_s": {
+          "case_generation": 0.0003749999996216502,
+          "boundary_estimation_bootstrap": 9.615702499999315,
+          "boundary_estimation_single": 1.0580086999998457,
+          "periodic_arc_cvt_planning": 0.00047559999984514434,
+          "hungarian_assignment": 8.960000013757963e-05,
+          "feedback_episode_with_safety": 0.6980228000011266,
+          "metrics_curve_and_crossings": 0.008026200001040706,
+          "artifact_serialization": 0.015120099998966907
+        }
+      },
+      {
+        "scenario": "u_shape",
+        "seed": 3,
+        "timings_s": {
+          "case_generation": 0.0005839999994350364,
+          "boundary_estimation_bootstrap": 8.205822500000068,
+          "boundary_estimation_single": 0.3477762000002258,
+          "periodic_arc_cvt_planning": 0.00031260000105248764,
+          "hungarian_assignment": 8.53000001370674e-05,
+          "feedback_episode_with_safety": 0.19407390000014857,
+          "metrics_curve_and_crossings": 0.003820199999609031,
+          "artifact_serialization": 0.012292499999603024
+        }
+      },
+      {
+        "scenario": "c_shape",
+        "seed": 0,
+        "timings_s": {
+          "case_generation": 0.0005841000001964858,
+          "boundary_estimation_bootstrap": 10.564917399999104,
+          "boundary_estimation_single": 0.9239994999988994,
+          "periodic_arc_cvt_planning": 0.0004963999999745283,
+          "hungarian_assignment": 0.00011719999929482583,
+          "feedback_episode_with_safety": 0.7187400000002526,
+          "metrics_curve_and_crossings": 0.004829100000279141,
+          "artifact_serialization": 0.01798840000083146
+        }
+      },
+      {
+        "scenario": "c_shape",
+        "seed": 1,
+        "timings_s": {
+          "case_generation": 0.000587100001212093,
+          "boundary_estimation_bootstrap": 9.55311360000087,
+          "boundary_estimation_single": 0.761035699999411,
+          "periodic_arc_cvt_planning": 0.0004879000007349532,
+          "hungarian_assignment": 0.00014419999934034422,
+          "feedback_episode_with_safety": 0.8373159999991913,
+          "metrics_curve_and_crossings": 0.004206499999781954,
+          "artifact_serialization": 0.015742000001409906
+        }
+      },
+      {
+        "scenario": "c_shape",
+        "seed": 2,
+        "timings_s": {
+          "case_generation": 0.0005846000003657537,
+          "boundary_estimation_bootstrap": 9.80238189999909,
+          "boundary_estimation_single": 0.5409944000002724,
+          "periodic_arc_cvt_planning": 0.00034749999940686394,
+          "hungarian_assignment": 0.00011439999980211724,
+          "feedback_episode_with_safety": 0.7409202999988338,
+          "metrics_curve_and_crossings": 0.0041930999996111495,
+          "artifact_serialization": 0.01707219999843801
+        }
+      },
+      {
+        "scenario": "c_shape",
+        "seed": 3,
+        "timings_s": {
+          "case_generation": 0.0007296000003407244,
+          "boundary_estimation_bootstrap": 10.025449599999774,
+          "boundary_estimation_single": 0.9071414999998524,
+          "periodic_arc_cvt_planning": 0.0002648999998200452,
+          "hungarian_assignment": 8.479999996779952e-05,
+          "feedback_episode_with_safety": 0.7424523000008776,
+          "metrics_curve_and_crossings": 0.004237200000716257,
+          "artifact_serialization": 0.007330800001000171
+        }
+      }
+    ]
+  },
+  "scaling": {
+    "cases": 12,
+    "results": [
+      {
+        "workers": 1,
+        "blas_threads": "default",
+        "cases": 12,
+        "wall_time_s": 94.00997629999983,
+        "speedup_vs_1_worker": 1.0
+      },
+      {
+        "workers": 4,
+        "blas_threads": "default",
+        "cases": 12,
+        "wall_time_s": 115.73881410000104,
+        "speedup_vs_1_worker": 0.8122597162501857
+      },
+      {
+        "workers": 16,
+        "blas_threads": "default",
+        "cases": 12,
+        "wall_time_s": 122.03302700000131,
+        "speedup_vs_1_worker": 0.7703650283131863
+      },
+      {
+        "workers": 1,
+        "blas_threads": 1,
+        "cases": 12,
+        "wall_time_s": 93.84462969999913,
+        "speedup_vs_1_worker": 1.0017619186151545
+      },
+      {
+        "workers": 4,
+        "blas_threads": 1,
+        "cases": 12,
+        "wall_time_s": 4689.163101100001,
+        "speedup_vs_1_worker": 0.020048348558817805
+      },
+      {
+        "workers": 16,
+        "blas_threads": 1,
+        "cases": 12,
+        "wall_time_s": 131.58195990000058,
+        "speedup_vs_1_worker": 0.7144594621591391
+      }
+    ]
+  }
+}

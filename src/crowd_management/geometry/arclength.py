@@ -68,20 +68,65 @@ def _segments_intersect(a: Array, b: Array, c: Array, d: Array, atol: float) -> 
     return False
 
 
+def _cross_rows(a: Array, b: Array, c: Array) -> Array:
+    """Vectorized ``_cross`` over row-aligned point arrays."""
+    ab = b - a
+    ac = c - a
+    return ab[:, 0] * ac[:, 1] - ab[:, 1] * ac[:, 0]
+
+
+def _on_segment_rows(a: Array, b: Array, points: Array, atol: float) -> Array:
+    """Vectorized ``_on_segment`` over row-aligned point arrays."""
+    low = np.minimum(a, b) - atol
+    high = np.maximum(a, b) + atol
+    return np.all((points >= low) & (points <= high), axis=1)
+
+
+def _segments_intersect_rows(a: Array, b: Array, c: Array, d: Array, atol: float) -> Array:
+    """Vectorized ``_segments_intersect`` over row-aligned segment pairs."""
+    abc = _cross_rows(a, b, c)
+    abd = _cross_rows(a, b, d)
+    cda = _cross_rows(c, d, a)
+    cdb = _cross_rows(c, d, b)
+
+    proper = (((abc > atol) & (abd < -atol)) | ((abc < -atol) & (abd > atol))) & (
+        ((cda > atol) & (cdb < -atol)) | ((cda < -atol) & (cdb > atol))
+    )
+    touching = (
+        ((np.abs(abc) <= atol) & _on_segment_rows(a, b, c, atol))
+        | ((np.abs(abd) <= atol) & _on_segment_rows(a, b, d, atol))
+        | ((np.abs(cda) <= atol) & _on_segment_rows(c, d, a, atol))
+        | ((np.abs(cdb) <= atol) & _on_segment_rows(c, d, b, atol))
+    )
+    return proper | touching
+
+
+_PAIR_CHUNK = 262_144
+
+
 def has_self_intersections(points: Array, atol: float = 1.0e-9) -> bool:
-    """Return whether non-adjacent segments of an implicit closed curve meet."""
+    """Return whether non-adjacent segments of an implicit closed curve meet.
+
+    Evaluates the exact same orientation/on-segment predicate as the original
+    per-pair loop, vectorized over all non-adjacent segment pairs.  Pairs are
+    processed in bounded chunks to cap memory and allow early exit.
+    """
     curve = _as_closed_curve(points, atol=atol)
     count = len(curve)
-    for first in range(count):
-        a = curve[first]
-        b = curve[(first + 1) % count]
-        for second in range(first + 1, count):
-            if second == first + 1 or (first == 0 and second == count - 1):
-                continue
-            c = curve[second]
-            d = curve[(second + 1) % count]
-            if _segments_intersect(a, b, c, d, atol):
-                return True
+    starts = curve
+    ends = np.roll(curve, -1, axis=0)
+
+    first, second = np.triu_indices(count, k=2)
+    if count >= 3:
+        keep = ~((first == 0) & (second == count - 1))
+        first, second = first[keep], second[keep]
+
+    for offset in range(0, len(first), _PAIR_CHUNK):
+        i = first[offset : offset + _PAIR_CHUNK]
+        j = second[offset : offset + _PAIR_CHUNK]
+        hits = _segments_intersect_rows(starts[i], ends[i], starts[j], ends[j], atol)
+        if bool(np.any(hits)):
+            return True
     return False
 
 

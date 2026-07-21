@@ -1,0 +1,370 @@
+{
+  "hardware": {
+    "cpu_model": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "physical_cores": 24,
+    "logical_cpus": 32,
+    "affinity_cpus": 32,
+    "memory_total_bytes": 68463685632,
+    "memory_available_bytes": 50171801600,
+    "os_name": "Windows",
+    "os_version": "10.0.26200",
+    "python_version": "3.12.13",
+    "numpy_version": "2.4.6",
+    "scipy_version": "1.18.0",
+    "blas_backend": "scipy-openblas",
+    "blas_thread_env": {
+      "OMP_NUM_THREADS": null,
+      "MKL_NUM_THREADS": null,
+      "OPENBLAS_NUM_THREADS": null,
+      "NUMEXPR_NUM_THREADS": null,
+      "VECLIB_MAXIMUM_THREADS": null
+    },
+    "threadpools": [
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 24,
+        "version": "0.3.31.188.0"
+      },
+      {
+        "user_api": "blas",
+        "internal_api": "openblas",
+        "num_threads": 24,
+        "version": "0.3.31.dev"
+      }
+    ],
+    "multiprocessing_start_method": "spawn",
+    "cuda_gpu_detected": true,
+    "detection_warnings": []
+  },
+  "entries": [
+    {
+      "workload": "formal",
+      "label": "opt-auto-balanced",
+      "timestamp_utc": "2026-07-21T12:07:48.952416+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_g6_compliance.py",
+        "--output",
+        "formal",
+        "--run-root",
+        "run_artifacts",
+        "--performance-mode",
+        "balanced"
+      ],
+      "workers_argument": null,
+      "measurement": {
+        "wall_time_s": 27.134928999992553,
+        "cpu_time_s": 184.28125,
+        "peak_rss_bytes": 2114551808,
+        "mean_cpu_utilization_fraction_of_machine": 0.21222790236530858,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": {
+        "record_count": 600,
+        "p50_ms": 407.6346500078216,
+        "p90_ms": 1633.7206899537705,
+        "p95_ms": 1820.9515700378686,
+        "max_ms": 2196.0773000027984,
+        "slowest_record": {
+          "scenario": "c_shape",
+          "seed": 13,
+          "method": "uniform_arc",
+          "total_runtime_ms": 2196.0773000027984
+        }
+      },
+      "result_sha256": {
+        "records.json": "b3111b65a9acc5ae7e2e257cb0ba780fda61bc7ad0f20a66af462136c15ef4b5",
+        "records.csv": "26b5fe4e4d8ca574afdee05f10cd82fe2b99283fbbb39ef9d6601ba0bc918e45",
+        "aggregate.json": "89c8b6c00e76bb1611a9d7427c209152cbc19713d13b4abcb7f8f10d5efa3669",
+        "paired_comparisons.json": "8e5d78c28651ea4dae067325b6f68ccd11bc583ad9e1b4ae6c05479e0c433c77",
+        "ablation_records.json": "c5396c5e3ef36e920bb368534276cfdd799893dcbb736cbce7fa485f27cdfd13",
+        "ablation_aggregate.json": "5d7231d1f7d827a5619f21b409c6927b5e2cad1608379d8b814be44f8c14ec48",
+        "robustness_records.json": "a80e2995c40dba79d636614bf0694523a775234ce6f59f0d3451d58502111fdd",
+        "robustness_aggregate.json": "74bc7c219bac5c9dc0d41cb7aeb65542735491f655bcff5d676dab89861b51d4",
+        "gate_evidence.json": "9436cd1e05b146cad84c90702feb84ba8a978d6545be055b757d9c32efef50ca"
+      }
+    },
+    {
+      "workload": "formal",
+      "label": "opt-auto-maximum",
+      "timestamp_utc": "2026-07-21T12:08:17.461637+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_g6_compliance.py",
+        "--output",
+        "formal",
+        "--run-root",
+        "run_artifacts",
+        "--performance-mode",
+        "maximum"
+      ],
+      "workers_argument": null,
+      "measurement": {
+        "wall_time_s": 27.9003023999976,
+        "cpu_time_s": 218.328125,
+        "peak_rss_bytes": 2882826240,
+        "mean_cpu_utilization_fraction_of_machine": 0.2445405002581831,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": {
+        "record_count": 600,
+        "p50_ms": 577.1566500188783,
+        "p90_ms": 2173.521540028742,
+        "p95_ms": 2398.6075249296846,
+        "max_ms": 2847.0223999465816,
+        "slowest_record": {
+          "scenario": "u_shape",
+          "seed": 19,
+          "method": "abcg_v2",
+          "total_runtime_ms": 2847.0223999465816
+        }
+      },
+      "result_sha256": {
+        "records.json": "3bf2ae755966dab6e00ce43b73ed61dd660b13dad38b1d2baf2e5323c68cede3",
+        "records.csv": "69bf2927176970dcb49a6ed1860b0770e181a94a24736d1e2aff9eba81770ec2",
+        "aggregate.json": "81b298405b64d31d0aaed34de8e4d31c102010dd227446e480e891ff0a1447dd",
+        "paired_comparisons.json": "12cd5c5bd547ccf0beb2014f28bdca29eee33313a47eb17b8dceac3620fbb5ec",
+        "ablation_records.json": "c5396c5e3ef36e920bb368534276cfdd799893dcbb736cbce7fa485f27cdfd13",
+        "ablation_aggregate.json": "5d7231d1f7d827a5619f21b409c6927b5e2cad1608379d8b814be44f8c14ec48",
+        "robustness_records.json": "a80e2995c40dba79d636614bf0694523a775234ce6f59f0d3451d58502111fdd",
+        "robustness_aggregate.json": "74bc7c219bac5c9dc0d41cb7aeb65542735491f655bcff5d676dab89861b51d4",
+        "gate_evidence.json": "9436cd1e05b146cad84c90702feb84ba8a978d6545be055b757d9c32efef50ca"
+      }
+    },
+    {
+      "workload": "formal",
+      "label": "opt-w4",
+      "timestamp_utc": "2026-07-21T12:09:03.600144+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_g6_compliance.py",
+        "--output",
+        "formal",
+        "--run-root",
+        "run_artifacts",
+        "--workers",
+        "4"
+      ],
+      "workers_argument": 4,
+      "measurement": {
+        "wall_time_s": 45.50841259997105,
+        "cpu_time_s": 92.515625,
+        "peak_rss_bytes": 461656064,
+        "mean_cpu_utilization_fraction_of_machine": 0.0635292051749535,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": {
+        "record_count": 600,
+        "p50_ms": 211.13214999786578,
+        "p90_ms": 753.4185799595434,
+        "p95_ms": 841.3896349258721,
+        "max_ms": 1655.0680000218563,
+        "slowest_record": {
+          "scenario": "c_shape",
+          "seed": 25,
+          "method": "uniform_arc",
+          "total_runtime_ms": 1655.0680000218563
+        }
+      },
+      "result_sha256": {
+        "records.json": "b2a59d3f224d763ba8da20fe0a66a290c31256ae92d110e4be75275c7e9af3d3",
+        "records.csv": "548a322b47d16405ac977091d2cd642ed55da98a333dfc93e969a875d72b5e7c",
+        "aggregate.json": "e812c057017d81e7e054ea01808160c41af9b0588d88ce96bbbafd2c5ed18eb7",
+        "paired_comparisons.json": "738d01891825c0df9b943d3ea7cae6a02365b7115a7263a9457ece0001ed3dff",
+        "ablation_records.json": "c5396c5e3ef36e920bb368534276cfdd799893dcbb736cbce7fa485f27cdfd13",
+        "ablation_aggregate.json": "5d7231d1f7d827a5619f21b409c6927b5e2cad1608379d8b814be44f8c14ec48",
+        "robustness_records.json": "a80e2995c40dba79d636614bf0694523a775234ce6f59f0d3451d58502111fdd",
+        "robustness_aggregate.json": "74bc7c219bac5c9dc0d41cb7aeb65542735491f655bcff5d676dab89861b51d4",
+        "gate_evidence.json": "9436cd1e05b146cad84c90702feb84ba8a978d6545be055b757d9c32efef50ca"
+      }
+    },
+    {
+      "workload": "formal",
+      "label": "opt-w1",
+      "timestamp_utc": "2026-07-21T12:11:45.685482+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_g6_compliance.py",
+        "--output",
+        "formal",
+        "--run-root",
+        "run_artifacts",
+        "--workers",
+        "1"
+      ],
+      "workers_argument": 1,
+      "measurement": {
+        "wall_time_s": 161.45861949998653,
+        "cpu_time_s": 147.625,
+        "peak_rss_bytes": 324907008,
+        "mean_cpu_utilization_fraction_of_machine": 0.028572530003580173,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": {
+        "record_count": 600,
+        "p50_ms": 222.3459499364253,
+        "p90_ms": 850.3442699846346,
+        "p95_ms": 1286.6172300244214,
+        "max_ms": 2224.8087999760173,
+        "slowest_record": {
+          "scenario": "u_shape",
+          "seed": 19,
+          "method": "abcg_v2",
+          "total_runtime_ms": 2224.8087999760173
+        }
+      },
+      "result_sha256": {
+        "records.json": "cc57da5782f42585fcb1a4c2ced8386d8142935485abc88d3bd84ddd250a3d43",
+        "records.csv": "c4081d748b33201dd0cf24b6f6a02d3569db531bd6a95e93fa4072d28db6ca1f",
+        "aggregate.json": "bc3f1ba970c4eb04b048332c6e7e03e94e0ed35582ba490e11da17a7f2be478b",
+        "paired_comparisons.json": "a69098595cd2c6327f0ae419f73b75eb227fc093d8f0e20b1b701d9d3a23431f",
+        "ablation_records.json": "c5396c5e3ef36e920bb368534276cfdd799893dcbb736cbce7fa485f27cdfd13",
+        "ablation_aggregate.json": "5d7231d1f7d827a5619f21b409c6927b5e2cad1608379d8b814be44f8c14ec48",
+        "robustness_records.json": "a80e2995c40dba79d636614bf0694523a775234ce6f59f0d3451d58502111fdd",
+        "robustness_aggregate.json": "74bc7c219bac5c9dc0d41cb7aeb65542735491f655bcff5d676dab89861b51d4",
+        "gate_evidence.json": "9436cd1e05b146cad84c90702feb84ba8a978d6545be055b757d9c32efef50ca"
+      }
+    },
+    {
+      "workload": "standard",
+      "label": "opt-auto-balanced",
+      "timestamp_utc": "2026-07-21T12:12:48.249088+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_pr6_evaluation.py",
+        "--output",
+        "standard",
+        "--seed-count",
+        "30",
+        "--performance-mode",
+        "balanced"
+      ],
+      "workers_argument": null,
+      "measurement": {
+        "wall_time_s": 5.615102799958549,
+        "cpu_time_s": 64.015625,
+        "peak_rss_bytes": 2052239360,
+        "mean_cpu_utilization_fraction_of_machine": 0.35626921759380215,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": null,
+      "result_sha256": {
+        "records.json": "d063b3383cdc9084d4ae9fa8d17d1c65ec35d5222ac081008e6e861e82f22b50",
+        "records.csv": "028fdd1407ca2f050b9c9bf1fd112b038da79e0329e32d180e8660817d5920a3",
+        "aggregate.json": "e446e15a4d01e6fe34c1d08178c6b04c7146f565466c51f60313ee224bf32a3e",
+        "paired_comparisons.json": "752cd2b33fd02d15494c2d46fdf4bbea4208bf3ffec1455c87e2f6c14977e662",
+        "gate_evidence.json": "6d11388202dbd1c128a6ab7491519e2ad87836ddb13c58063667e18cca5fe338"
+      }
+    },
+    {
+      "workload": "standard",
+      "label": "opt-auto-maximum",
+      "timestamp_utc": "2026-07-21T12:12:54.548114+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_pr6_evaluation.py",
+        "--output",
+        "standard",
+        "--seed-count",
+        "30",
+        "--performance-mode",
+        "maximum"
+      ],
+      "workers_argument": null,
+      "measurement": {
+        "wall_time_s": 5.679629000020213,
+        "cpu_time_s": 91.9375,
+        "peak_rss_bytes": 2783789056,
+        "mean_cpu_utilization_fraction_of_machine": 0.5058511524238247,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": null,
+      "result_sha256": {
+        "records.json": "d063b3383cdc9084d4ae9fa8d17d1c65ec35d5222ac081008e6e861e82f22b50",
+        "records.csv": "028fdd1407ca2f050b9c9bf1fd112b038da79e0329e32d180e8660817d5920a3",
+        "aggregate.json": "e446e15a4d01e6fe34c1d08178c6b04c7146f565466c51f60313ee224bf32a3e",
+        "paired_comparisons.json": "752cd2b33fd02d15494c2d46fdf4bbea4208bf3ffec1455c87e2f6c14977e662",
+        "gate_evidence.json": "6d11388202dbd1c128a6ab7491519e2ad87836ddb13c58063667e18cca5fe338"
+      }
+    },
+    {
+      "workload": "standard",
+      "label": "opt-w4",
+      "timestamp_utc": "2026-07-21T12:13:03.779944+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_pr6_evaluation.py",
+        "--output",
+        "standard",
+        "--seed-count",
+        "30",
+        "--workers",
+        "4"
+      ],
+      "workers_argument": 4,
+      "measurement": {
+        "wall_time_s": 8.614786099991761,
+        "cpu_time_s": 25.703125,
+        "peak_rss_bytes": 428789760,
+        "mean_cpu_utilization_fraction_of_machine": 0.09323767844343439,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": null,
+      "result_sha256": {
+        "records.json": "d063b3383cdc9084d4ae9fa8d17d1c65ec35d5222ac081008e6e861e82f22b50",
+        "records.csv": "028fdd1407ca2f050b9c9bf1fd112b038da79e0329e32d180e8660817d5920a3",
+        "aggregate.json": "e446e15a4d01e6fe34c1d08178c6b04c7146f565466c51f60313ee224bf32a3e",
+        "paired_comparisons.json": "752cd2b33fd02d15494c2d46fdf4bbea4208bf3ffec1455c87e2f6c14977e662",
+        "gate_evidence.json": "6d11388202dbd1c128a6ab7491519e2ad87836ddb13c58063667e18cca5fe338"
+      }
+    },
+    {
+      "workload": "standard",
+      "label": "opt-w1",
+      "timestamp_utc": "2026-07-21T12:13:30.675635+00:00",
+      "git_sha": "b5695503cb10192fff7729baa2bb2d881c07ae70",
+      "command": [
+        "python.exe",
+        "run_step1_pr6_evaluation.py",
+        "--output",
+        "standard",
+        "--seed-count",
+        "30",
+        "--workers",
+        "1"
+      ],
+      "workers_argument": 1,
+      "measurement": {
+        "wall_time_s": 26.29262900003232,
+        "cpu_time_s": 24.6875,
+        "peak_rss_bytes": 131731456,
+        "mean_cpu_utilization_fraction_of_machine": 0.029342230288156107,
+        "exit_code": 0,
+        "samples": 0
+      },
+      "case_latencies": null,
+      "result_sha256": {
+        "records.json": "d063b3383cdc9084d4ae9fa8d17d1c65ec35d5222ac081008e6e861e82f22b50",
+        "records.csv": "028fdd1407ca2f050b9c9bf1fd112b038da79e0329e32d180e8660817d5920a3",
+        "aggregate.json": "e446e15a4d01e6fe34c1d08178c6b04c7146f565466c51f60313ee224bf32a3e",
+        "paired_comparisons.json": "752cd2b33fd02d15494c2d46fdf4bbea4208bf3ffec1455c87e2f6c14977e662",
+        "gate_evidence.json": "6d11388202dbd1c128a6ab7491519e2ad87836ddb13c58063667e18cca5fe338"
+      }
+    }
+  ]
+}

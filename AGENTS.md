@@ -49,7 +49,7 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The current suite has 77 tests. Legacy evacuation tests live on the
+The current suite has 168 tests. Legacy evacuation tests live on the
 `local-main-backup` branch.
 
 Dependency health command:
@@ -74,6 +74,12 @@ Run the PR6 held-out paired evaluation:
 ```bash
 python scripts/run_step1_pr6_evaluation.py --output reports/step1_pr6_evaluation --seed-count 30
 ```
+
+Evaluation scripts select worker processes hardware-adaptively by default
+(`--workers auto`, balanced mode). Override with `--workers N` or
+`--performance-mode conservative|balanced|maximum`. Worker count never
+changes scientific results (verified by `scripts/compare_results.py`);
+see `docs/performance/final_report.md`.
 
 Regenerate README media:
 
