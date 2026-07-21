@@ -70,6 +70,20 @@ Legacy evacuation, DBAct, and density-DBAct media live on the `local-main-backup
 
 ---
 
+## Mathematical Verification
+
+Core mathematical identities and selected implementation properties were independently checked with Wolfram Language under explicitly stated assumptions. This does not validate crowd-behavior assumptions, human compliance, real-world effectiveness, or deployment safety.
+
+- Audit basis: `main` @ `93745582d849`, Mathematica 15.0.0 (local kernel via `wolframscript`; nothing is executed in public CI).
+- 74 Wolfram `VerificationTest`s, 74 passed; 73 catalogued claims: 20 symbolically proved, 27 exactly verified, 6 numerically verified within domain, 8 property-tested, and 12 explicitly documented as gaps, doc mismatches, not CAS-verifiable, or not applicable — never presented as proven.
+- Max Python-vs-Wolfram relative deviation over 38 paired recomputations: 5.6e-16 (frozen tolerance 1e-9); safety-projection KKT residuals ≤ 3e-17 at 50-digit certified reference solutions.
+
+![Mathematical verification status by module](reports/media/math_verification/mathematical_verification_summary.png)
+
+Full report: [docs/math/MATHEMATICAL_VERIFICATION_REPORT.md](docs/math/MATHEMATICAL_VERIFICATION_REPORT.md). Claim-by-claim evidence: [docs/math/MATHEMATICAL_CLAIM_MATRIX.md](docs/math/MATHEMATICAL_CLAIM_MATRIX.md). Machine-readable artifacts live under `artifacts/math_verification/`, and CI only re-checks artifact hashes and SHA freshness (`scripts/check_math_verification_freshness.py`); it never claims to re-run Mathematica.
+
+---
+
 ## Active Research Scope
 
 The current stage evaluates static unknown-crowd containment.
