@@ -95,6 +95,25 @@ def _append_reachable_constraint(
         kinds.append(kind)
 
 
+def _fallback_normal_rows(first_ids: Array, second_ids: Array) -> Array:
+    """Vectorized ``_fallback_normal`` over id arrays."""
+    angle = (first_ids * 0.754877666 + second_ids * 0.569840291) * 2.0 * np.pi
+    return np.column_stack((np.cos(angle), np.sin(angle)))
+
+
+def _safe_unit_rows(deltas: Array, distances: Array, first_ids: Array, second_ids: Array, tol: float) -> Array:
+    """Row-normalize ``deltas``; coincident points get the deterministic fallback."""
+    degenerate = distances <= tol
+    safe = np.where(degenerate, 1.0, distances)
+    normals = deltas / safe[:, None]
+    if np.any(degenerate):
+        normals[degenerate] = _fallback_normal_rows(
+            np.asarray(first_ids, dtype=float)[degenerate],
+            np.asarray(second_ids, dtype=float)[degenerate],
+        )
+    return normals
+
+
 def _build_velocity_halfspaces(
     positions: Array,
     crowd_points: Array,
@@ -103,97 +122,95 @@ def _build_velocity_halfspaces(
     v_max: float,
     config: VelocitySafetyConfig,
 ) -> tuple[Array, Array, Array, dict[str, int]]:
+    """Build ordered reachable half-space constraints.
+
+    Vectorized over guide pairs, guide-crowd pairs, and room bounds while
+    producing the exact rows, bounds, kinds, and ordering of the original
+    per-pair loops (guide_pair block, then crowd block, then room block).
+    """
     guide_count = len(positions)
     dimension = 2 * guide_count
-    rows: list[Array] = []
-    bounds: list[float] = []
-    kinds: list[str] = []
     tol = config.residual_tolerance
     numerical_distance_buffer = max(
         10.0 * dt * tol,
         64.0 * np.finfo(float).eps * max(1.0, float(np.max(room_size))),
     )
 
-    if config.min_guide_distance > 0.0:
-        for i in range(guide_count):
-            for j in range(i + 1, guide_count):
-                delta = positions[i] - positions[j]
-                distance = float(np.linalg.norm(delta))
-                normal = delta / distance if distance > tol else _fallback_normal(i, j)
-                row = np.zeros(dimension, dtype=float)
-                row[2 * i : 2 * i + 2] = normal
-                row[2 * j : 2 * j + 2] = -normal
-                bound = (config.min_guide_distance + numerical_distance_buffer - distance) / dt
-                _append_reachable_constraint(
-                    rows,
-                    bounds,
-                    kinds,
-                    row,
-                    bound,
-                    -2.0 * v_max,
-                    "guide_pair",
-                    tol,
-                )
+    blocks: list[tuple[Array, Array, str]] = []
 
-    if config.min_crowd_distance > 0.0 and len(crowd_points):
-        for guide_id, position in enumerate(positions):
-            for crowd_id, crowd_point in enumerate(crowd_points):
-                delta = position - crowd_point
-                distance = float(np.linalg.norm(delta))
-                normal = (
-                    delta / distance
-                    if distance > tol
-                    else _fallback_normal(guide_id, guide_count + crowd_id)
-                )
-                row = np.zeros(dimension, dtype=float)
-                row[2 * guide_id : 2 * guide_id + 2] = normal
-                bound = (config.min_crowd_distance + numerical_distance_buffer - distance) / dt
-                _append_reachable_constraint(
-                    rows,
-                    bounds,
-                    kinds,
-                    row,
-                    bound,
-                    -v_max,
-                    "crowd",
-                    tol,
-                )
+    if config.min_guide_distance > 0.0 and guide_count >= 2:
+        i_ids, j_ids = np.triu_indices(guide_count, k=1)
+        deltas = positions[i_ids] - positions[j_ids]
+        distances = np.linalg.norm(deltas, axis=1)
+        bound = (config.min_guide_distance + numerical_distance_buffer - distances) / dt
+        reachable = bound > (-2.0 * v_max) - tol
+        if np.any(reachable):
+            i_kept, j_kept = i_ids[reachable], j_ids[reachable]
+            normals = _safe_unit_rows(
+                deltas[reachable], distances[reachable], i_kept, j_kept, tol
+            )
+            rows = np.zeros((len(i_kept), dimension), dtype=float)
+            row_ids = np.arange(len(i_kept))
+            rows[row_ids, 2 * i_kept] = normals[:, 0]
+            rows[row_ids, 2 * i_kept + 1] = normals[:, 1]
+            rows[row_ids, 2 * j_kept] = -normals[:, 0]
+            rows[row_ids, 2 * j_kept + 1] = -normals[:, 1]
+            blocks.append((rows, bound[reachable], "guide_pair"))
 
-    lower = np.full(2, config.room_margin + numerical_distance_buffer, dtype=float)
-    upper = room_size - config.room_margin - numerical_distance_buffer
-    for guide_id, position in enumerate(positions):
-        for axis in range(2):
-            row_lower = np.zeros(dimension, dtype=float)
-            row_lower[2 * guide_id + axis] = 1.0
-            lower_bound = (lower[axis] - position[axis]) / dt
-            _append_reachable_constraint(
-                rows,
-                bounds,
-                kinds,
-                row_lower,
-                lower_bound,
-                -v_max,
-                "room",
+    crowd_count = len(crowd_points)
+    if config.min_crowd_distance > 0.0 and crowd_count and guide_count:
+        # Row-major (guide_id, crowd_id) matches the original nested loop order.
+        deltas = (positions[:, None, :] - crowd_points[None, :, :]).reshape(-1, 2)
+        distances = np.linalg.norm(deltas, axis=1)
+        guide_ids = np.repeat(np.arange(guide_count), crowd_count)
+        crowd_ids = np.tile(np.arange(crowd_count), guide_count)
+        bound = (config.min_crowd_distance + numerical_distance_buffer - distances) / dt
+        reachable = bound > -v_max - tol
+        if np.any(reachable):
+            guides_kept = guide_ids[reachable]
+            normals = _safe_unit_rows(
+                deltas[reachable],
+                distances[reachable],
+                guides_kept,
+                guide_count + crowd_ids[reachable],
                 tol,
             )
+            rows = np.zeros((len(guides_kept), dimension), dtype=float)
+            row_ids = np.arange(len(guides_kept))
+            rows[row_ids, 2 * guides_kept] = normals[:, 0]
+            rows[row_ids, 2 * guides_kept + 1] = normals[:, 1]
+            blocks.append((rows, bound[reachable], "crowd"))
 
-            row_upper = np.zeros(dimension, dtype=float)
-            row_upper[2 * guide_id + axis] = -1.0
-            upper_bound = (position[axis] - upper[axis]) / dt
-            _append_reachable_constraint(
-                rows,
-                bounds,
-                kinds,
-                row_upper,
-                upper_bound,
-                -v_max,
-                "room",
-                tol,
-            )
+    if guide_count:
+        lower = np.full(2, config.room_margin + numerical_distance_buffer, dtype=float)
+        upper = room_size - config.room_margin - numerical_distance_buffer
+        # Original order per guide: (axis0 lower, axis0 upper, axis1 lower, axis1 upper).
+        guide_ids = np.repeat(np.arange(guide_count), 4)
+        axes = np.tile(np.array([0, 0, 1, 1]), guide_count)
+        signs = np.tile(np.array([1.0, -1.0, 1.0, -1.0]), guide_count)
+        coordinates = positions[guide_ids, axes]
+        bound = np.where(
+            signs > 0.0,
+            (lower[axes] - coordinates) / dt,
+            (coordinates - upper[axes]) / dt,
+        )
+        reachable = bound > -v_max - tol
+        if np.any(reachable):
+            guides_kept = guide_ids[reachable]
+            rows = np.zeros((int(np.count_nonzero(reachable)), dimension), dtype=float)
+            rows[np.arange(len(guides_kept)), 2 * guides_kept + axes[reachable]] = signs[reachable]
+            blocks.append((rows, bound[reachable], "room"))
 
-    matrix = np.asarray(rows, dtype=float).reshape((-1, dimension))
-    vector = np.asarray(bounds, dtype=float)
-    kind_array = np.asarray(kinds, dtype="U16")
+    if blocks:
+        matrix = np.concatenate([rows for rows, _, _ in blocks], axis=0)
+        vector = np.concatenate([bounds for _, bounds, _ in blocks])
+        kind_array = np.concatenate(
+            [np.full(len(bounds), kind, dtype="U16") for _, bounds, kind in blocks]
+        )
+    else:
+        matrix = np.empty((0, dimension), dtype=float)
+        vector = np.empty(0, dtype=float)
+        kind_array = np.empty(0, dtype="U16")
     counts = {
         kind: int(np.count_nonzero(kind_array == kind))
         for kind in ("guide_pair", "crowd", "room")
