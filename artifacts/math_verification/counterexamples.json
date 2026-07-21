@@ -1,0 +1,42 @@
+[
+	{
+		"claim_id":"GEOM-003",
+		"classification":"ASSUMPTION_GAP",
+		"description":"The 1e-12 ceiling guard admits a realized spacing marginally above the requested spacing.",
+		"minimal_input":"L = 10, spacing = 10\/7 (1 - 10^-14)",
+		"wolfram_command":"count = Max[3, Ceiling[10\/(10\/7 (1 - 10^-14)) - 10^-12]]; {count, 10\/count > 10\/7 (1 - 10^-14)}",
+		"wolfram_output":"{7, True}",
+		"impact":"Docstring 'Maximum requested sample spacing' is violated by at most ~1e-12 relative; harmless numerically, but the guarantee should be stated as approximate.",
+		"affected":"src\/crowd_management\/geometry\/arclength.py:151-153,187"
+	},
+	{
+		"claim_id":"ASG-003",
+		"classification":"ASSUMPTION_GAP",
+		"description":"Exact cost ties admit multiple optimal assignments; no documented tie rule exists beyond SciPy determinism.",
+		"minimal_input":"guides {{0,0},{2,0}}, targets {{1,1},{1,-1}}: both assignments cost 4",
+		"wolfram_command":"brute-force enumeration in ASSIGNMENT-TIE-001",
+		"wolfram_output":"two optimal permutations with equal cost 4",
+		"impact":"Determinism relies on solver internals; document or freeze a tie rule.",
+		"affected":"src\/crowd_management\/controllers\/assignment.py:19 (tie_tolerance unused)"
+	},
+	{
+		"claim_id":"ASG-004",
+		"classification":"NUMERICALLY_VERIFIED_WITHIN_DOMAIN",
+		"description":"unmet_target_cost = 1e6 dominates real costs only inside the intended room domain; outside, real costs can exceed it.",
+		"minimal_input":"p = (0,0), z = (1001,0): ||p-z||^2 = 1002001 > 1e6",
+		"wolfram_command":"FindInstance[(px-zx)^2+(py-zy)^2 > 10^6, ...]",
+		"wolfram_output":"instance exists (outside 20 x 14 room)",
+		"impact":"Domination guarantee is domain-limited; fine for current configs (max 596.25 m^2).",
+		"affected":"src\/crowd_management\/controllers\/assignment.py:18,169"
+	},
+	{
+		"claim_id":"DOC-001",
+		"classification":"IMPLEMENTATION_MISMATCH",
+		"description":"RESEARCH_SPEC.md 4.7 says Hungarian is implemented 'without adding SciPy'; the code imports scipy.optimize.linear_sum_assignment.",
+		"minimal_input":"n\/a (documentation inspection)",
+		"wolfram_command":"n\/a",
+		"wolfram_output":"n\/a",
+		"impact":"Documentation error only; the SciPy solver itself was verified optimal on all tested instances.",
+		"affected":"docs\/RESEARCH_SPEC.md:219-221 vs src\/crowd_management\/controllers\/assignment.py:7"
+	}
+]

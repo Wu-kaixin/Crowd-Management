@@ -1,0 +1,9 @@
+{
+ "audited_main_sha": "93745582d849dafaa6251e9b2e12141be2117fe8",
+ "export_seed_base": 20260721,
+ "numpy_version": "2.4.6",
+ "os": "Windows 11",
+ "python_version": "3.12.13",
+ "repo_head_sha": "2b7c1c1c6817667b69a11a65e8124455b9b3e174",
+ "scipy_version": "1.18.0"
+}

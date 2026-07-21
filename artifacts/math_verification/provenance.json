@@ -1,0 +1,64 @@
+{
+	"repository":"https:\/\/github.com\/Wu-kaixin\/Crowd-Management",
+	"main_sha":"93745582d849dafaa6251e9b2e12141be2117fe8",
+	"verification_head_sha":"2b7c1c1c6817667b69a11a65e8124455b9b3e174",
+	"verification_branch":"math-verification-main-v1",
+	"mathematica_version":"15.0.0 for Microsoft Windows (64-bit) (May 19, 2026)",
+	"mathematica_release_number":0,
+	"system_id":"Windows-x86-64",
+	"kernel_invocation":"wolframscript -file wolfram\/verify_main.wls (local Wolfram kernel)",
+	"wolframscript_version":"1.14.0",
+	"mcp_server":{
+		"name":"user-Wolfram",
+		"source":"Wolfram MCP server configured in Cursor (local stdio transport)",
+		"transport":"stdio",
+		"role":"interactive health check and symbolic prototyping only; formal results produced by wolframscript"
+	},
+	"execution_status":"MATHEMATICA_EXECUTED",
+	"operating_system":"Windows 11",
+	"python_version":"3.12.13",
+	"numpy_version":"2.4.6",
+	"scipy_version":"1.18.0",
+	"verification_time_utc":"2026-07-21T14:25:58",
+	"precision":{
+		"machine_precision_used":true,
+		"arbitrary_precision_used":true,
+		"working_precision":50,
+		"accuracy_goal":40,
+		"precision_goal":40
+	},
+	"random_seed":20260721,
+	"case_export_seed_base":20260721,
+	"wolfram_script_sha256":{
+		"wolfram\/common.wl":"b5fc810c85c06eef3ad0bcf43bc1f5961444b4fa0fe092789d0aa589f77ab9b5",
+		"wolfram\/tests\/assignment.wlt":"85edeec69aca2f2db3ffc2a3fa45d8240a235b12c3a3f5314e8b6c649e57ceef",
+		"wolfram\/tests\/controller.wlt":"05397a745e083b763cc4ac05972112cd2eefd43449df80fd84148d2ad888d9d7",
+		"wolfram\/tests\/geometry.wlt":"002ad0d6ca20b5e95d17c311b9709a48c4b5b6ac9673531f2383e203cdb964b7",
+		"wolfram\/tests\/metrics.wlt":"1031e777822796a97e1e3da3435131bcbc15de73926d1b94acb3b88b731bb3ac",
+		"wolfram\/tests\/periodic_coverage.wlt":"ce82eb13de224a9c29ba10e63b03f1ecc1e978cc3beb4598f8e38e97b71a63c4",
+		"wolfram\/tests\/resources.wlt":"2b6ef9248bd5b4ad4472a2df766f4b3b39b2d349e885348fbefa86265502f11f",
+		"wolfram\/tests\/safety_projection.wlt":"f66d89e470be894634da89b04677878a123aa555c4c08969ab469f82b2ff0b22",
+		"wolfram\/tests\/statistics.wlt":"49c84785f3e99ada226b6007b027048c55688904165eebf7ce6fbba4dbf6ba12",
+		"wolfram\/verify_main.wls":"21dab4bb33cd1f7f36995e8aa22c80d05f18d60e8164d28b92e318d1a2c30ada"
+	},
+	"input_case_sha256":{
+		"artifacts\/math_verification\/cases\/assignment_cases.json":"8e8faab040b72f0511e747c9d35eb6e1a31d21683242e719c284b008e5841402",
+		"artifacts\/math_verification\/cases\/case_hashes.json":"f3bcb4f577d86e7c09cef6af2cdf1e9053fe45de5fd7002a8a9af845ec47e879",
+		"artifacts\/math_verification\/cases\/controller_cases.json":"97fd986f3bb1eb19de99c5e3c8a998d60eb70bc93cc73816bc6d4f1fbaf8dba1",
+		"artifacts\/math_verification\/cases\/coverage_cases.json":"5d8e4c050bfc1f3ef8f291ca15d9eeb9bd4f4191ab3915b09a29fae308a0236d",
+		"artifacts\/math_verification\/cases\/environment.json":"3df99cefce54ff2339eca00a7b13e33bdc8cb206284fe5dfdfcca73d6be441ec",
+		"artifacts\/math_verification\/cases\/geometry_cases.json":"fb79c4c7d292e2301c41b8075d9fc1a0089bbbc4601464f1f140dd9afa83abc0",
+		"artifacts\/math_verification\/cases\/metrics_cases.json":"14d5a322a407c9a05952c68ca6a671b7e434d3784dad69bb132872c0ed3860bc",
+		"artifacts\/math_verification\/cases\/resources_cases.json":"30b3cb1b42dde39467e21a65813596ef6016d57ef4dd14edda401884f5df2196",
+		"artifacts\/math_verification\/cases\/safety_cases.json":"5adc7c6542be819d25b1ffabc711869b48e962b4939ae4617127b4180b83d7b1",
+		"artifacts\/math_verification\/cases\/statistics_cases.json":"0ff6604337a8643c1af8f27b801f1918c286310cc69454e2d2914fecdaddb176"
+	},
+	"result_sha256":{
+		"artifacts\/math_verification\/counterexamples.json":"448c5d546dc8edbeae0858b60bcf5a010385865a5448e839dba43d48fad58390",
+		"artifacts\/math_verification\/implementation_comparison.json":"95732a86a15ffc63b1daba6621526ace8e740cb545d17911f8d1626cc1b69921",
+		"artifacts\/math_verification\/numerical_results.json":"02f320013b973c32cce9224943c59f27a89495ebcca12009fc8522913517b3b2",
+		"artifacts\/math_verification\/summary.json":"4c49e125295329b83beaca6f2e142aea71ed98813b1d84e9c72fbf41043a1462",
+		"artifacts\/math_verification\/symbolic_results.json":"cbf093a576afaaa2930095d4f70a23ec31cf6d8c52ba9ea76ae81545b7e9587d",
+		"artifacts\/math_verification\/test_report.json":"c1af966577d67e0d02bbfd34f37100f886096aa5e38247162fce2e04584de554"
+	}
+}
