@@ -51,9 +51,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
       - name: Prepare temp directories
-        run: mkdir -p .tmp artifacts/ci
+        run: mkdir -p artifacts/ci
       - name: Unit and regression tests
-        run: python -m pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache --junitxml=artifacts/ci/pytest-linux.xml
+        run: python -m pytest --basetemp=artifacts/ci/pytest-temp -o cache_dir=artifacts/ci/pytest-cache --junitxml=artifacts/ci/pytest-linux.xml
       - name: Upload pytest report on failure
         if: failure()
         uses: actions/upload-artifact@v4
@@ -73,11 +73,16 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install package
+        shell: bash
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
+      - name: Prepare temp directories
+        shell: bash
+        run: mkdir -p artifacts/ci
       - name: Unit and regression tests
-        run: python -m pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache --junitxml=artifacts/ci/pytest-windows.xml
+        shell: bash
+        run: python -m pytest --basetemp=artifacts/ci/pytest-temp -o cache_dir=artifacts/ci/pytest-cache --junitxml=artifacts/ci/pytest-windows.xml
       - name: Upload pytest report on failure
         if: failure()
         uses: actions/upload-artifact@v4
@@ -100,12 +105,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e ".[dev]"
+      - name: Prepare temp directories
+        run: mkdir -p artifacts/ci
       - name: Deterministic smoke
         run: |
-          mkdir -p artifacts/ci
           python scripts/run_ci_smoke.py --output artifacts/ci/smoke --expected tests/golden/ci_smoke_expected.json | tee artifacts/ci/smoke-stdout.json
       - name: Schema regression tests
-        run: python -m pytest tests/regression/test_result_schema.py tests/smoke/test_deterministic_smoke.py --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache -q
+        run: python -m pytest tests/regression/test_result_schema.py tests/smoke/test_deterministic_smoke.py --basetemp=artifacts/ci/pytest-temp -o cache_dir=artifacts/ci/pytest-cache -q
       - name: Upload smoke diagnostics on failure
         if: failure()
         uses: actions/upload-artifact@v4
