@@ -1,0 +1,157 @@
+[
+	{
+		"wolfram":8.333333333333334e1,
+		"python":8.333333333333333e1,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":2.083333333333333e1,
+		"python":2.083333333333333e1,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":9.259259259259256,
+		"python":9.259259259259258,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":3.333333333333333,
+		"python":3.3333333333333326,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":1.3020833333333333,
+		"python":1.302083333333333,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":2.0670851120199877e1,
+		"python":2.0670851120199877e1,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":5.167712780049969,
+		"python":5.167712780049969,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":2.296761235577765,
+		"python":2.296761235577765,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":0.8268340448079952,
+		"python":0.8268340448079953,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":0.32298204875312314,
+		"python":0.32298204875312314,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":8.930989583333334e3,
+		"python":8.930989583333334e3,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":2.232747395833333e3,
+		"python":2.232747395833333e3,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":9.923321759259259e2,
+		"python":9.923321759259259e2,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":3.572395833333333e2,
+		"python":3.572395833333333e2,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":1.3954671223958331e2,
+		"python":1.3954671223958331e2,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":2.2775947153597446e2,
+		"python":2.2775947153597446e2,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":9.650213835135187,
+		"python":9.650213835135187,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":4.317028750104599e1,
+		"python":4.317028750104599e1,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":8.061076818209007e1,
+		"python":8.061076818209007e1,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":4.44678742844117e2,
+		"python":4.44678742844117e2,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":1.5306530096881875e2,
+		"python":1.5306530096881875e2,
+		"family":"coverage H (m^3)"
+	},
+	{
+		"wolfram":1.2557400812187467e1,
+		"python":1.255740081218747e1,
+		"family":"curve length (m)"
+	},
+	{
+		"wolfram":1.4273679124468888e1,
+		"python":1.427367912446889e1,
+		"family":"curve length (m)"
+	},
+	{
+		"wolfram":2.0557900792370617e1,
+		"python":2.0557900792370614e1,
+		"family":"curve length (m)"
+	},
+	{
+		"wolfram":2.1810249675906654e1,
+		"python":2.1810249675906654e1,
+		"family":"curve length (m)"
+	},
+	{
+		"wolfram":1.4000000000000004e1,
+		"python":1.4000000000000004e1,
+		"family":"curve length (m)"
+	},
+	{
+		"wolfram":6.588116988503781,
+		"python":6.588116988503781,
+		"family":"max boundary distance (m)"
+	},
+	{
+		"wolfram":5.754638571932608,
+		"python":5.754638571932609,
+		"family":"max boundary distance (m)"
+	},
+	{
+		"wolfram":5.911955460623951,
+		"python":5.911955460623951,
+		"family":"max boundary distance (m)"
+	},
+	{
+		"wolfram":5.453363668499053,
+		"python":5.453363668499053,
+		"family":"max boundary distance (m)"
+	},
+	{
+		"wolfram":4.503692722747295,
+		"python":4.503692722747295,
+		"family":"max boundary distance (m)"
+	}
+]
