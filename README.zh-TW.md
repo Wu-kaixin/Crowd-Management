@@ -55,7 +55,7 @@ Step 1 research-complete 素材。可用 `python scripts/build_readme_media.py` 
 
 正式報告：[reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)。
 
-舊的 DBAct 圖片、GIF、影片素材已集中放入 `legacy/evacuation_guidance/`。
+舊的 DBAct 圖片、GIF、影片素材已從 `main` 移除，完整保存在 [`local-main-backup`](https://github.com/Wu-kaixin/Crowd-Management/tree/local-main-backup) 分支的 `legacy/evacuation_guidance/` 中。
 
 ## 使用方式
 
@@ -83,10 +83,13 @@ python scripts/build_readme_media.py
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-舊的疏散、DBACT、density-DBACT 實驗已移至：
+舊的疏散、DBACT、density-DBACT 實驗已從 `main` 移除，完整保存在 `local-main-backup` 分支：
 
 ```text
-legacy/evacuation_guidance/
+local-main-backup:legacy/evacuation_guidance/
+local-main-backup:src/crowd_management/legacy/
 ```
+
+可用 `git switch local-main-backup` 查看。
 
 詳細英文說明見 [README.md](README.md)。
