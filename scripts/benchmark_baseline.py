@@ -49,7 +49,9 @@ HASHED_RESULT_FILES = {
 }
 
 
-def _workload_command(name: str, out_dir: Path, workers: int | None) -> list[str]:
+def _workload_command(
+    name: str, out_dir: Path, workers: int | None, performance_mode: str | None = None
+) -> list[str]:
     if name == "small":
         return [
             sys.executable,
@@ -75,7 +77,7 @@ def _workload_command(name: str, out_dir: Path, workers: int | None) -> list[str
         ]
         if workers is not None:
             cmd += ["--workers", str(workers)]
-        return cmd
+        return _append_mode(cmd, performance_mode)
     if name == "formal":
         cmd = [
             sys.executable,
@@ -87,8 +89,14 @@ def _workload_command(name: str, out_dir: Path, workers: int | None) -> list[str
         ]
         if workers is not None:
             cmd += ["--workers", str(workers)]
-        return cmd
+        return _append_mode(cmd, performance_mode)
     raise ValueError(f"unknown workload: {name}")
+
+
+def _append_mode(cmd: list[str], performance_mode: str | None) -> list[str]:
+    if performance_mode is not None:
+        cmd += ["--performance-mode", performance_mode]
+    return cmd
 
 
 def _sha256(path: Path) -> str:
@@ -192,10 +200,16 @@ def _result_hashes(workload: str, out_dir: Path) -> dict[str, str]:
     return hashes
 
 
-def run_workload(workload: str, label: str, scratch: Path, workers: int | None) -> dict[str, Any]:
+def run_workload(
+    workload: str,
+    label: str,
+    scratch: Path,
+    workers: int | None,
+    performance_mode: str | None = None,
+) -> dict[str, Any]:
     out_dir = scratch / label / workload
     out_dir.mkdir(parents=True, exist_ok=True)
-    command = _workload_command(workload, out_dir, workers)
+    command = _workload_command(workload, out_dir, workers, performance_mode)
     print(f"[{workload}] running: {' '.join(command[1:3])} ...", flush=True)
     measurement = _monitor_process(command, out_dir / "benchmark_stdout.log")
     entry = {
@@ -224,6 +238,11 @@ def main() -> None:
     parser.add_argument("--workload", nargs="+", choices=("small", "standard", "formal"), required=True)
     parser.add_argument("--label", default="baseline")
     parser.add_argument("--workers", type=int, default=None, help="Override --workers for evaluation workloads.")
+    parser.add_argument(
+        "--performance-mode",
+        default=None,
+        help="Forward --performance-mode to evaluation scripts (auto worker selection).",
+    )
     parser.add_argument("--repeats", type=int, default=1)
     parser.add_argument("--scratch", default=str(REPO / ".tmp" / "benchmarks"))
     parser.add_argument("--json", default=str(REPO / "artifacts" / "performance" / "baseline.json"))
@@ -240,7 +259,7 @@ def main() -> None:
     for repeat in range(args.repeats):
         for workload in args.workload:
             label = args.label if args.repeats == 1 else f"{args.label}-r{repeat}"
-            entry = run_workload(workload, label, Path(args.scratch), args.workers)
+            entry = run_workload(workload, label, Path(args.scratch), args.workers, args.performance_mode)
             document["entries"].append(entry)
             json_path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {json_path}")
