@@ -83,3 +83,15 @@ python scripts/build_readme_media.py
 
 Legacy evacuation scripts, their compatibility wrappers, and old media no
 longer live on `main`. Use the `local-main-backup` branch to access them.
+
+## Cursor Cloud specific instructions
+
+- The `abcg` conda env is the preferred environment here. Conda lives at
+  `~/miniconda3` but is not on `PATH` by default; activate it first with
+  `source ~/miniconda3/etc/profile.d/conda.sh`, then use `conda activate abcg`
+  or `conda run -n abcg ...`. `environment.yml` already installs `-e .[dev]`,
+  so `conda env update -n abcg -f environment.yml` fully provisions the env.
+- The standard pytest command uses `--basetemp=.tmp/pytest-temp`, but pytest
+  will not create the missing `.tmp` parent and errors with
+  `FileNotFoundError: .../.tmp/pytest-temp`. Run `mkdir -p .tmp` once before
+  invoking pytest (`.tmp/` is gitignored).
