@@ -4,12 +4,11 @@
 
 This repository is now centered on **ABCG static unknown-crowd containment**.
 The active workflow is not DBAct evacuation optimization. DBAct, density-DBAct,
-and old evacuation-guidance material have been removed from `main` and are
-preserved on the `local-main-backup` branch:
+and old evacuation-guidance material are archived under:
 
 ```text
-local-main-backup:legacy/evacuation_guidance/
-local-main-backup:src/crowd_management/legacy/
+legacy/evacuation_guidance/
+src/crowd_management/legacy/evacuation/
 ```
 
 New work should start from:
@@ -49,10 +48,7 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The authoritative suite size is whatever `pytest --collect-only` reports on
-the current branch (see the `TEST_COUNT` marker in `README.md`, checked by
-`scripts/check_readme_consistency.py`). Legacy evacuation tests live on the
-`local-main-backup` branch.
+The current suite has 95 tests.
 
 Dependency health command:
 
@@ -77,17 +73,12 @@ Run the PR6 held-out paired evaluation:
 python scripts/run_step1_pr6_evaluation.py --output reports/step1_pr6_evaluation --seed-count 30
 ```
 
-Evaluation scripts select worker processes hardware-adaptively by default
-(`--workers auto`, balanced mode). Override with `--workers N` or
-`--performance-mode conservative|balanced|maximum`. Worker count never
-changes scientific results (verified by `scripts/compare_results.py`);
-see `docs/performance/final_report.md`.
-
 Regenerate README media:
 
 ```bash
 python scripts/build_readme_media.py
 ```
 
-Legacy evacuation scripts, their compatibility wrappers, and old media no
-longer live on `main`. Use the `local-main-backup` branch to access them.
+Legacy evacuation scripts remain as compatibility wrappers in `scripts/`, but
+their original implementations and media are stored under
+`legacy/evacuation_guidance/`.
