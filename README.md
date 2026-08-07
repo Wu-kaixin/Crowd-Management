@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Crowd Management
 
@@ -16,11 +16,11 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 Crowd Management is a Python research prototype for **static unknown-crowd containment**. A crowd is a 2D point cloud; the simulator estimates its boundary and places guide agents around an offset safety curve.
 
-The active method family is **ABCG: Adaptive Boundary-Coverage Guidance** (boundary estimation, periodic coverage planning, adaptive resources, identity-preserving assignment, measured-feedback velocity control, and sampled-data safety projection). From freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`, PR0鈥揚R6 and G0鈥揋6 all pass. **ABCG-v2 Step 1 is research-complete** for that narrow static scope.
+The active method family is **ABCG: Adaptive Boundary-Coverage Guidance** (boundary estimation, periodic coverage planning, adaptive resources, identity-preserving assignment, measured-feedback velocity control, and sampled-data safety projection). From freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`, PR0–PR6 and G0–G6 all pass. **ABCG-v2 Step 1 is research-complete** for that narrow static scope.
 
 Evacuation / DBAct / density-DBAct code is **not** on `main`. It lives on [`local-main-backup`](https://github.com/Wu-kaixin/Crowd-Management/tree/local-main-backup) for reproducibility only.
 
-> Research prototype only 鈥?not a calibrated safety product or certified controller.
+> Research prototype only — not a calibrated safety product or certified controller.
 
 ---
 
@@ -128,7 +128,8 @@ python scripts/check_readme_consistency.py
 
 ## Repository Layout
 
-杩疯矾鏃跺厛鐪嬩腑鏂囪鑹插湴鍥撅細[docs/CODEMAP.zh.md](docs/CODEMAP.zh.md)锛堟牳蹇?/ 杈撳叆 / 杈撳嚭锛夈€?
+迷路时先看中文角色地图：[docs/CODEMAP.zh.md](docs/CODEMAP.zh.md)（核心 / 输入 / 输出）。
+
 ```text
 Crowd-Management/
 |-- configs/                    # INPUT: scenarios + configs/ci_smoke.yaml
@@ -171,13 +172,13 @@ Inspect with `git switch local-main-backup`. New work starts from `scripts/run_s
 
 - Branch: **`main`**
 - Method family: ABCG static unknown-crowd containment
-- Step 1: **research-complete** (G0鈥揋6 from the freeze above)
+- Step 1: **research-complete** (G0–G6 from the freeze above)
 - Suite size (authoritative; synced by `scripts/check_readme_consistency.py`):
   <!-- TEST_COUNT_START -->
   180
   <!-- TEST_COUNT_END -->
 - CI: Linux + Windows via [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (unit tests, scoped lint/type-check, README consistency, deterministic smoke, schema regression)
-- Formal G6: 600 primary records retained 鈥?[G6 report](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)
+- Formal G6: 600 primary records retained — [G6 report](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)
 - Local performance notes: [docs/performance/final_report.md](docs/performance/final_report.md) (CI wall times are **not** formal evidence)
 - Architecture maintenance notes: [docs/architecture/refactor_result.md](docs/architecture/refactor_result.md)
 
