@@ -1,4 +1,8 @@
-"""G6 scenario generation and boundary setup."""
+"""G6 scenario generation and boundary setup.
+
+ROLE: ORCHESTRATION — generate primary G6 scenario polygons and crowd point clouds.
+"""
+
 from __future__ import annotations
 
 import numpy as np
@@ -9,8 +13,7 @@ from ...types import Array
 from ..shared import neutralize_confidence as _shared_neutralize_confidence
 from ..shared import points_inside_polygon as _inside_polygon  # noqa: F401
 from ..shared import sample_polygon as _sample_polygon
-from .config import G6EvaluationConfig, PRIMARY_SCENARIOS
-
+from .config import PRIMARY_SCENARIOS, G6EvaluationConfig
 
 
 def _polygon_for_shape(shape: str) -> Array:

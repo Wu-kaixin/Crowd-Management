@@ -1,5 +1,8 @@
-# Deterministic CI smoke workload: fixed seed, tiny episode budget.
+# INPUT config for CI smoke (not an algorithm file).
+# Consumed by: scripts/run_ci_smoke.py → experiments.static_containment
 # Derived from static_crowd_circle.yaml with shorter motion horizon.
+# See docs/CODEMAP.zh.md
+# Deterministic CI smoke workload: fixed seed, tiny episode budget.
 # Not a formal performance benchmark.
 seed: 0
 room:

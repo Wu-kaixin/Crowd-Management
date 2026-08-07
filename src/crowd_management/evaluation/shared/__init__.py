@@ -1,4 +1,7 @@
-"""Shared evaluation helpers (geometry sampling, confidence, metrics, stats)."""
+"""Shared evaluation helpers (geometry sampling, confidence, metrics, stats).
+
+ROLE: ORCHESTRATION helper — reusable stats/geometry primitives for G6 and PR6.
+"""
 
 from .confidence import neutralize_confidence
 from .curve_metrics import curve_errors_with_p95, symmetric_curve_errors

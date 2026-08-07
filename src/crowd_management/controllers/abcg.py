@@ -1,4 +1,7 @@
-"""ABCG: Adaptive Boundary-Coverage Guidance for static containment."""
+"""ABCG: Adaptive Boundary-Coverage Guidance for static containment.
+
+ROLE: CORE MATH — v1 endpoint planner (radial boundary + CVT deploy). Not the closed-loop v2 controller.
+"""
 from __future__ import annotations
 
 import numpy as np

@@ -1,4 +1,7 @@
-"""Boundary CVT-style deployment for static containment."""
+"""Boundary CVT-style deployment for static containment.
+
+ROLE: CORE MATH — weighted 1D CVT over boundary samples. No closed-loop control or estimation.
+"""
 from __future__ import annotations
 
 import numpy as np

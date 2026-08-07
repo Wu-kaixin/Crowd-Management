@@ -1,4 +1,8 @@
-"""PR6 held-out case generation and estimator setup."""
+"""PR6 held-out case generation and estimator setup.
+
+ROLE: ORCHESTRATION — generate held-out PR6 polygons and estimator configurations.
+"""
+
 from __future__ import annotations
 
 import numpy as np

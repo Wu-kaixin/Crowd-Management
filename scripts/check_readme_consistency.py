@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check README / docs consistency against the live repository.
 
+ROLE: ENTRY ONLY — docs consistency checker; no scientific logic.
 Fails when README still hard-codes obsolete test counts, points at missing
 files, or disagrees with the authoritative pytest collection count.
 """

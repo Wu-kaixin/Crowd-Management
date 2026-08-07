@@ -1,3 +1,12 @@
+"""CLI entry for static unknown-crowd containment.
+
+ROLE: ENTRY ONLY — parses args; logic is in
+crowd_management.experiments.static_containment.run_static_containment.
+
+INPUT:  --config configs/static_crowd_*.yaml
+OUTPUT: --output runs/<run_name>/  (summary.json, manifest.json, per-method/)
+"""
+
 from __future__ import annotations
 
 import argparse

@@ -1,4 +1,8 @@
-"""G6 report and gallery writers."""
+"""G6 report and gallery writers.
+
+ROLE: ORCHESTRATION — write G6 summary JSON, CSV, and failure-gallery figures.
+"""
+
 from __future__ import annotations
 
 import os
@@ -39,7 +43,12 @@ def _save_failure_gallery(output: Path, fixtures: list[dict[str, Any]]) -> list[
     figure.savefig(output / "failure_gallery.png", dpi=150)
     plt.close(figure)
     serializable = [
-        {"fixture": fixture["fixture"], "status": fixture["status"], "reason": fixture["reason"], "selection_role": "actual_failure"}
+        {
+            "fixture": fixture["fixture"],
+            "status": fixture["status"],
+            "reason": fixture["reason"],
+            "selection_role": "actual_failure",
+        }
         for fixture in actual
     ]
     _write_json(output / "failure_gallery.json", serializable)
@@ -56,7 +65,10 @@ def _write_report(
     lines = [
         "# ABCG-v2 Step 1 G6 formal compliance report",
         "",
-        f"- Primary matrix: {len(config.scenarios)} scenarios × {len(config.methods)} methods × {len(config.seeds)} paired seeds",
+        (
+            f"- Primary matrix: {len(config.scenarios)} scenarios × "
+            f"{len(config.methods)} methods × {len(config.seeds)} paired seeds"
+        ),
         f"- Bootstrap boundary samples: {config.bootstrap_samples}",
         "- Initial layouts: balanced perimeter, one-sided, opposed sides",
         f"- Freeze status: `{snapshot['freeze_status']}`",
@@ -83,9 +95,15 @@ def _write_report(
             "",
             "## Evidence boundary",
             "",
-            "Analytic truth is used only by the evaluator. Each method receives the same paired observation and initial guide state.",
+            (
+                "Analytic truth is used only by the evaluator. "
+                "Each method receives the same paired observation and initial guide state."
+            ),
             "Invalid boundary, capacity, assignment, safety, degraded, and timeout states remain in the denominator.",
-            "The report is synthetic Step 1 evidence; it does not claim human-crowd interaction or decentralized Step 2/3 performance.",
+            (
+                "The report is synthetic Step 1 evidence; it does not claim "
+                "human-crowd interaction or decentralized Step 2/3 performance."
+            ),
             (
                 "The evaluator recorded a clean frozen commit."
                 if snapshot["frozen_commit"]

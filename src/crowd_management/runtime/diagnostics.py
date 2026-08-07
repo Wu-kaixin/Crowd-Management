@@ -1,4 +1,8 @@
-"""Human-readable runtime configuration report."""
+"""Human-readable runtime configuration report.
+
+ROLE: ORCHESTRATION INFRA — format resolved hardware and parallel plan for logging.
+"""
+
 from __future__ import annotations
 
 from .hardware import HardwareInfo, detect_hardware

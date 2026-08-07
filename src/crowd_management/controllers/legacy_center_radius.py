@@ -1,5 +1,7 @@
 """Legacy center-radius deployment baseline.
 
+ROLE: CORE MATH — center-radius ring baseline (legacy DBAct-style). Not a primary method; no motion control.
+
 This preserves the useful part of the previous DBACT-style prototype as a
 baseline: estimate a crowd center and spread radius, then deploy a ring around
 that simplified geometry. It is no longer treated as the main method.

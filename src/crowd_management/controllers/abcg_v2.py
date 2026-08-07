@@ -1,5 +1,7 @@
 """PR4 kinematics plus PR5 velocity safety and auditable episode states.
 
+ROLE: CORE MATH — closed-loop ABCG v2 (kinematics, convergence, velocity safety). No estimation or orchestration.
+
 The nominal fixed-target controller is separated from the applied control.  An
 optional PR5 filter projects the latter onto sampled-data safety constraints
 and records every projection or finite emergency stop.

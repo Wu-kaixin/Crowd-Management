@@ -1,9 +1,13 @@
 """Hardware-aware worker selection for case-level parallelism.
 
+ROLE: ORCHESTRATION INFRA — select worker count from hardware and performance mode.
+Wall-clock only; does not change scientific numerics.
+
 Selection never changes scientific semantics: seeds, case ordering of the
 official outputs, and statistical inputs are independent of worker count.
 Only wall-clock scheduling is affected.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

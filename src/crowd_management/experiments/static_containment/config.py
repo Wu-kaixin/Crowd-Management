@@ -1,4 +1,8 @@
-"""Static containment experiment configuration."""
+"""Static containment experiment configuration.
+
+ROLE: INPUT BINDING — load configs/*.yaml into typed StaticContainmentConfig.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -30,8 +34,8 @@ class StaticContainmentConfig:
     boundary_v2: BoundaryV2Config
 
     @classmethod
-    def from_yaml(cls, path: str | Path) -> "StaticContainmentConfig":
-        with open(path, "r", encoding="utf-8") as f:
+    def from_yaml(cls, path: str | Path) -> StaticContainmentConfig:
+        with open(path, encoding="utf-8") as f:
             raw = yaml.safe_load(f)
         seed = int(raw.get("seed", 0))
         room_size = as_vec2(raw.get("room", {}).get("size", [20.0, 14.0]), "room.size")
@@ -77,9 +81,7 @@ class StaticContainmentConfig:
                 min_guide_distance=float(
                     safety.get("min_guide_distance", containment.get("min_guider_distance", 0.55))
                 ),
-                min_crowd_distance=float(
-                    safety.get("min_crowd_distance", containment.get("safety_distance", 0.8))
-                ),
+                min_crowd_distance=float(safety.get("min_crowd_distance", containment.get("safety_distance", 0.8))),
                 room_margin=float(safety.get("room_margin", 0.25)),
                 residual_tolerance=float(safety.get("residual_tolerance", 1.0e-9)),
                 max_projection_sweeps=int(safety.get("max_projection_sweeps", 200)),
@@ -93,30 +95,21 @@ class StaticContainmentConfig:
                 radial_smoothing_passes=int(boundary.get("radial_smoothing_passes", 6)),
                 min_observation_points=int(boundary.get("min_observation_points", 8)),
                 connectivity_radius=(
-                    float(boundary["connectivity_radius"])
-                    if boundary.get("connectivity_radius") is not None
-                    else None
+                    float(boundary["connectivity_radius"]) if boundary.get("connectivity_radius") is not None else None
                 ),
                 connectivity_scale=float(boundary.get("connectivity_scale", 5.0)),
                 min_component_fraction=float(boundary.get("min_component_fraction", 0.1)),
                 min_observation_coverage=float(boundary.get("min_observation_coverage", 0.8)),
-                room_size=tuple(float(value) for value in room_size),
+                room_size=(float(room_size[0]), float(room_size[1])),
                 room_margin=float(boundary.get("room_margin", 0.0)),
-                alpha_radius=(
-                    float(boundary["alpha_radius"])
-                    if boundary.get("alpha_radius") is not None
-                    else None
-                ),
+                alpha_radius=(float(boundary["alpha_radius"]) if boundary.get("alpha_radius") is not None else None),
                 alpha_scale=float(boundary.get("alpha_scale", 2.5)),
                 alpha_growth_factors=tuple(
-                    float(value)
-                    for value in boundary.get("alpha_growth_factors", [1.0, 1.25, 1.5, 2.0, 3.0, 4.0])
+                    float(value) for value in boundary.get("alpha_growth_factors", [1.0, 1.25, 1.5, 2.0, 3.0, 4.0])
                 ),
                 alpha_smoothing_passes=int(boundary.get("alpha_smoothing_passes", 5)),
                 bootstrap_samples=int(boundary.get("bootstrap_samples", 0)),
-                bootstrap_min_success_fraction=float(
-                    boundary.get("bootstrap_min_success_fraction", 0.7)
-                ),
+                bootstrap_min_success_fraction=float(boundary.get("bootstrap_min_success_fraction", 0.7)),
                 bootstrap_confidence_floor=float(boundary.get("bootstrap_confidence_floor", 0.15)),
                 bootstrap_confidence_scale=(
                     float(boundary["bootstrap_confidence_scale"])

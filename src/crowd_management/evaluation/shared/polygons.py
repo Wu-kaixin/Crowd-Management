@@ -1,4 +1,7 @@
-"""Shared polygon point-in-polygon and rejection sampling primitives."""
+"""Shared polygon point-in-polygon and rejection sampling primitives.
+
+ROLE: ORCHESTRATION helper — polygon containment and sampling for scenario generation.
+"""
 
 from __future__ import annotations
 

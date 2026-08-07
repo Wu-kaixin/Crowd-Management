@@ -1,7 +1,7 @@
-from pathlib import Path
 import os
 import subprocess
 import sys
+from pathlib import Path
 
 import numpy as np
 
@@ -25,7 +25,12 @@ def test_static_crowd_generators_are_reproducible():
 
 
 def test_boundary_estimation_returns_closed_samples():
-    points = generate_static_crowd(StaticCrowdConfig.from_dict({"shape": "circle", "count": 80, "center": [0, 0], "radius": 2.0}, seed=4))
+    points = generate_static_crowd(
+        StaticCrowdConfig.from_dict(
+            {"shape": "circle", "count": 80, "center": [0, 0], "radius": 2.0},
+            seed=4,
+        )
+    )
     boundary = estimate_radial_boundary(points, num_bins=36, safety_distance=0.75)
     assert boundary.boundary_points.shape == (36, 2)
     assert boundary.safety_points.shape == (36, 2)
@@ -49,7 +54,12 @@ def test_abcg_improves_boundary_gap_over_center_radius_on_ellipse():
 
 def test_static_containment_runner_outputs_metrics(tmp_path):
     repo = Path(__file__).resolve().parents[1]
-    result = run_static_containment(repo / "configs" / "static_crowd_circle.yaml", tmp_path, methods=["legacy_center_radius", "abcg"], save_plots=False)
+    result = run_static_containment(
+        repo / "configs" / "static_crowd_circle.yaml",
+        tmp_path,
+        methods=["legacy_center_radius", "abcg"],
+        save_plots=False,
+    )
     assert "abcg" in result
     assert (tmp_path / "summary.json").is_file()
     assert (tmp_path / "summary.csv").is_file()

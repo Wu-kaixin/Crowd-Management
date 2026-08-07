@@ -1,4 +1,7 @@
-"""Schema names and required-key contracts for formal evaluation outputs."""
+"""Schema names and required-key contracts for formal evaluation outputs.
+
+ROLE: ORCHESTRATION — schema constants and required-key contracts for G6/PR6 outputs.
+"""
 
 from __future__ import annotations
 
@@ -45,6 +48,23 @@ RUNTIME_METADATA_REQUIRED_KEYS: Final = (
     "schema",
     "hardware",
     "parallel_plan",
+)
+
+STATIC_MANIFEST_REQUIRED_KEYS: Final = (
+    "schema_version",
+    "repository",
+    "config",
+    "methods",
+    "run_status",
+    "stop_reason",
+    "closed_loop",
+    "converged",
+    "truth_boundary",
+    "boundary_v2",
+    "resource_decision",
+    "periodic_plan",
+    "assignments",
+    "episodes",
 )
 
 STATIC_SUMMARY_REQUIRED_KEYS: Final = (

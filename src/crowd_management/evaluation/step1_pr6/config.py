@@ -1,4 +1,8 @@
-"""PR6 paired held-out evaluation configuration."""
+"""PR6 paired held-out evaluation configuration.
+
+ROLE: ORCHESTRATION — PR6EvaluationConfig dataclass and held-out shape/seed constants.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -21,6 +25,7 @@ class PR6EvaluationConfig:
     required_arc_gap: float = 1.5
     max_guides: int = 12
     workers: int = 4
+    blas_threads_per_worker: int = 1
 
     def __post_init__(self) -> None:
         if len(self.seeds) == 0 or len(set(self.seeds)) != len(self.seeds):
@@ -30,7 +35,13 @@ class PR6EvaluationConfig:
         allowed = {"u_shape", "c_shape"}
         if len(self.shapes) == 0 or not set(self.shapes).issubset(allowed):
             raise ValueError("shapes must select u_shape and/or c_shape.")
-        for name in ("observation_count", "confidence_interval_resamples", "max_guides", "workers"):
+        for name in (
+            "observation_count",
+            "confidence_interval_resamples",
+            "max_guides",
+            "workers",
+            "blas_threads_per_worker",
+        ):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, (int, np.integer)) or value < 1:
                 raise ValueError(f"{name} must be a positive integer.")

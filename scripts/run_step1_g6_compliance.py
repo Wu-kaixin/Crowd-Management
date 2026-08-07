@@ -1,3 +1,10 @@
+"""CLI entry for formal Step 1 G6 compliance evaluation.
+
+ROLE: ENTRY ONLY — logic in crowd_management.evaluation.step1_g6.
+OUTPUT: --output reports/step1_g6_compliance (summary)
+        --run-root runs/step1_g6_compliance (raw case artifacts)
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -69,6 +76,7 @@ def main() -> None:
                 confidence_interval_resamples=args.ci_resamples,
                 max_steps=args.max_steps,
                 workers=plan.workers,
+                blas_threads_per_worker=plan.blas_threads_per_worker,
             ),
             run_root=args.run_root,
             preflight_evidence=preflight,

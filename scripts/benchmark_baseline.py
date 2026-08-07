@@ -1,5 +1,8 @@
 """Phase 0 baseline benchmark harness.
 
+ROLE: ENTRY ONLY — subprocess benchmark harness; logic in crowd_management.runtime.
+OUTPUT: --json artifacts/performance/<label>.json (scratch workloads; not official reports/).
+
 Runs representative workloads as subprocesses, samples CPU/RSS via psutil,
 and records wall time, CPU time, peak memory, per-case latencies, and
 SHA256 hashes of result files. Workload outputs go to a scratch directory
@@ -9,6 +12,7 @@ Usage:
     python scripts/benchmark_baseline.py --workload small standard formal \
         --label baseline --json artifacts/performance/baseline.json
 """
+
 from __future__ import annotations
 
 import argparse
@@ -17,7 +21,7 @@ import json
 import subprocess
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -49,9 +53,7 @@ HASHED_RESULT_FILES = {
 }
 
 
-def _workload_command(
-    name: str, out_dir: Path, workers: int | None, performance_mode: str | None = None
-) -> list[str]:
+def _workload_command(name: str, out_dir: Path, workers: int | None, performance_mode: str | None = None) -> list[str]:
     if name == "small":
         return [
             sys.executable,
@@ -108,9 +110,7 @@ def _sha256(path: Path) -> str:
 
 
 def _git_sha() -> str:
-    result = subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True, check=False
-    )
+    result = subprocess.run(["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True, check=False)
     return result.stdout.strip() if result.returncode == 0 else "unknown"
 
 
@@ -163,9 +163,7 @@ def _case_latencies(workload: str, out_dir: Path) -> dict[str, Any] | None:
         return None
     records = json.loads(records_path.read_text(encoding="utf-8"))
     latencies = sorted(
-        float(record["total_runtime_ms"])
-        for record in records
-        if record.get("total_runtime_ms") is not None
+        float(record["total_runtime_ms"]) for record in records if record.get("total_runtime_ms") is not None
     )
     if not latencies:
         return None
@@ -215,7 +213,7 @@ def run_workload(
     entry = {
         "workload": workload,
         "label": label,
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": datetime.now(UTC).isoformat(),
         "git_sha": _git_sha(),
         "command": [Path(part).name if Path(part).exists() else part for part in command],
         "workers_argument": workers,

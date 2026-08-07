@@ -1,21 +1,25 @@
-"""Static containment experiment package."""
+"""Static containment experiment package.
 
-from .artifacts import (
-    _assignment_record,
-    _build_manifest,
-    _episode_record,
-    _resource_record,
-    _save_assignment_artifacts,
-    _save_boundary_v2_artifacts,
-    _save_episode_artifacts,
-    _save_periodic_plan_artifacts,
-    _save_resource_decision,
-)
+ROLE: ORCHESTRATION for one static-containment run.
+  config.py     — INPUT: YAML → typed config
+  methods.py    — baseline target placement
+  runner.py     — pipeline glue (_run_method / summary assembly)
+  artifacts.py  — OUTPUT writers (public names)
+  manifest.py   — run_status state machine + manifest assembly
+  records.py    — TypedDict contracts (summary / manifest)
+Entry CLI: scripts/run_static_containment.py
+"""
+
 from .config import StaticContainmentConfig
-from .methods import _controller_targets
+from .manifest import build_manifest, resolve_run_status
+from .records import MethodSummary, StaticManifest
 from .runner import run_static_containment
 
 __all__ = [
+    "MethodSummary",
     "StaticContainmentConfig",
+    "StaticManifest",
+    "build_manifest",
+    "resolve_run_status",
     "run_static_containment",
 ]

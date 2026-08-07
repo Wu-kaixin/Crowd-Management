@@ -1,4 +1,7 @@
-"""Random guide-agent deployment baseline."""
+"""Random guide-agent deployment baseline.
+
+ROLE: CORE MATH — random guide placement baseline. Ignores crowd geometry beyond reproducible seeding.
+"""
 from __future__ import annotations
 
 import numpy as np

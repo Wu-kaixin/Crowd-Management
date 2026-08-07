@@ -1,4 +1,9 @@
-"""Guide-agent deployment controllers."""
+"""Guide-agent deployment controllers.
+
+ROLE: CORE MATH — ABCG planning, resources, assignment, motion, safety.
+Prefer abcg_v2.py for the closed-loop controller; abcg.py is the v1 endpoint baseline.
+Baselines: random_deployment, static_circle, legacy_center_radius, coverage_cvt.
+"""
 
 from .abcg import ABCGController
 from .abcg_v2 import (

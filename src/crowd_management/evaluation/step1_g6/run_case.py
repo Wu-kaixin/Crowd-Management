@@ -1,7 +1,13 @@
-"""Primary G6 case execution and per-run artifact writing."""
+"""Primary G6 case execution and per-run artifact writing.
+
+ROLE: ORCHESTRATION — run one G6 case (estimate → plan → assign → episode → metrics).
+"""
+
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import time
 from dataclasses import asdict, replace
 from pathlib import Path
@@ -22,9 +28,9 @@ from ...controllers import (
     allocate_guide_resources,
     assign_guides_to_targets,
     integrate_guide_positions,
+    periodic_uniform_coverage_cost,
     plan_equal_arc_coverage,
     plan_periodic_arc_coverage,
-    periodic_uniform_coverage_cost,
 )
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, estimate_boundary_v2
 from ...geometry import max_consecutive_arc_gap
@@ -33,7 +39,7 @@ from ...reporting import write_json as _write_json
 from ...types import Array
 from ..shared import curve_errors_with_p95 as _curve_errors
 from .cases import _boundary_config, _initial_guides, _neutralize_confidence, _observed_case
-from .config import G6EvaluationConfig, PRIMARY_SCENARIOS
+from .config import PRIMARY_SCENARIOS, G6EvaluationConfig
 
 
 def _nearest_arc_coordinates(targets: Array, boundary: BoundaryEstimateV2) -> Array:
@@ -98,9 +104,7 @@ def _make_targets(
         )
         if resource.status != "VALID":
             raise RuntimeError(f"{resource.status}: {resource.diagnostics['reason']}")
-        plan = plan_periodic_arc_coverage(
-            boundary, resource.active_count, PeriodicArcCVTConfig(max_iterations=200)
-        )
+        plan = plan_periodic_arc_coverage(boundary, resource.active_count, PeriodicArcCVTConfig(max_iterations=200))
         targets, target_s, h_history, gap = plan.target_xy, plan.target_s, plan.h_history, plan.max_arc_gap
         details = {
             "planner": "abcg_v2_periodic_confidence_gated",
@@ -114,7 +118,16 @@ def _make_targets(
         raise ValueError(f"unsupported method: {method}")
     if len(targets) == 0 or not np.all(np.isfinite(targets)):
         raise RuntimeError("PLAN_INVALID: no finite targets")
-    return targets, target_s, h_history, {**details, "plan_h_final": float(h_history[-1]), "plan_max_arc_gap": float(gap)}
+    return (
+        targets,
+        target_s,
+        h_history,
+        {
+            **details,
+            "plan_h_final": float(h_history[-1]),
+            "plan_max_arc_gap": float(gap),
+        },
+    )
 
 
 def _minimum_pair_distance(points: Array) -> float:
@@ -205,7 +218,11 @@ def _run_feedback_episode(
         "safety_status": np.asarray(safety_status),
     }
     active_ids = np.flatnonzero(np.asarray(assignment.guide_to_target) >= 0)
-    step_distance = np.linalg.norm(np.diff(position_array, axis=0), axis=2) if len(position_array) > 1 else np.empty((0, len(initial)))
+    step_distance = (
+        np.linalg.norm(np.diff(position_array, axis=0), axis=2)
+        if len(position_array) > 1
+        else np.empty((0, len(initial)))
+    )
     control_energy = float(config.dt * np.sum(np.sum(applied_array**2, axis=2))) if len(applied_array) else 0.0
     trace_memory = int(sum(array.nbytes for array in trace.values() if isinstance(array, np.ndarray)))
     final_tracking = float(tracking[-1]) if tracking else None
@@ -258,13 +275,27 @@ def _save_run_artifacts(
     events: list[dict[str, Any]],
     metrics: dict[str, Any],
     manifest: dict[str, Any],
-) -> None:
+    *,
+    shared_observations: Path | None = None,
+) -> Path:
+    """Write per-run artifacts. Returns the observations.npz path used."""
     run_dir.mkdir(parents=True, exist_ok=True)
-    _write_json(run_dir / "config_resolved.json", resolved)
-    _write_json(run_dir / "manifest.json", manifest)
-    np.savez_compressed(run_dir / "observations.npz", observation=observation, truth_boundary=truth)
+    # Compact JSON in the hot path (same parsed content as indent=2).
+    _write_json(run_dir / "config_resolved.json", resolved, indent=None)
+    _write_json(run_dir / "manifest.json", manifest, indent=None)
+    observations_path = run_dir / "observations.npz"
+    if shared_observations is not None and shared_observations.is_file():
+        if observations_path.exists():
+            observations_path.unlink()
+        try:
+            os.link(shared_observations, observations_path)
+        except OSError:
+            shutil.copy2(shared_observations, observations_path)
+    else:
+        # Uncompressed savez is usually cheaper than savez_compressed for small arrays.
+        np.savez(observations_path, observation=observation, truth_boundary=truth)
     if isinstance(boundary, BoundaryEstimateV2):
-        np.savez_compressed(
+        np.savez(
             run_dir / "boundary_versions.npz",
             curve_points=boundary.curve_points,
             offset_points=boundary.offset_points,
@@ -273,7 +304,7 @@ def _save_run_artifacts(
             uncertainty=boundary.uncertainty,
         )
     else:
-        np.savez_compressed(
+        np.savez(
             run_dir / "boundary_versions.npz",
             curve_points=np.empty((0, 2)),
             offset_points=np.empty((0, 2)),
@@ -282,18 +313,19 @@ def _save_run_artifacts(
             uncertainty=np.empty(0),
         )
     mapping = np.asarray(assignment.guide_to_target, dtype=int) if assignment is not None else np.empty(0, dtype=int)
-    np.savez_compressed(
+    np.savez(
         run_dir / "plan_trace.npz",
         targets=targets,
         target_s=target_s,
         h_history=h_history,
         guide_to_target=mapping,
     )
-    np.savez_compressed(run_dir / "trajectory.npz", **trace)
+    np.savez(run_dir / "trajectory.npz", **trace)
     with open(run_dir / "events.jsonl", "w", encoding="utf-8") as file:
         for event in events:
             file.write(json.dumps(_jsonable(event), ensure_ascii=False) + "\n")
-    _write_json(run_dir / "metrics.json", metrics)
+    _write_json(run_dir / "metrics.json", metrics, indent=None)
+    return observations_path
 
 
 def _run_method(
@@ -308,7 +340,9 @@ def _run_method(
     config: G6EvaluationConfig,
     run_root: Path,
     snapshot: dict[str, Any],
-) -> dict[str, Any]:
+    *,
+    shared_observations: Path | None = None,
+) -> tuple[dict[str, Any], Path]:
     started = time.perf_counter()
     targets = np.empty((0, 2))
     target_s = np.empty(0)
@@ -318,8 +352,14 @@ def _run_method(
     events: list[dict[str, Any]] = []
     planning_details: dict[str, Any] = {}
     status = "BOUNDARY_INVALID" if isinstance(boundary, BoundaryEstimateFailure) else "VALID"
-    failure_reason = str(boundary.diagnostics.get("reason", "boundary_invalid")) if isinstance(boundary, BoundaryEstimateFailure) else ""
-    boundary_runtime_ms = float(boundary.diagnostics.get("runtime_ms", 0.0)) if isinstance(boundary, BoundaryEstimateV2) else 0.0
+    failure_reason = (
+        str(boundary.diagnostics.get("reason", "boundary_invalid"))
+        if isinstance(boundary, BoundaryEstimateFailure)
+        else ""
+    )
+    boundary_runtime_ms = (
+        float(boundary.diagnostics.get("runtime_ms", 0.0)) if isinstance(boundary, BoundaryEstimateV2) else 0.0
+    )
     planning_started = time.perf_counter()
     planning_runtime_ms = 0.0
     if isinstance(boundary, BoundaryEstimateV2):
@@ -331,7 +371,9 @@ def _run_method(
                 status = assignment.status
                 failure_reason = str(assignment.diagnostics.get("reason", "assignment_failed"))
             else:
-                trace, events, episode_metrics = _run_feedback_episode(observation, initial, targets, assignment, config)
+                trace, events, episode_metrics = _run_feedback_episode(
+                    observation, initial, targets, assignment, config
+                )
                 status = str(episode_metrics["episode_status"])
         except (RuntimeError, ValueError) as error:
             message = str(error)
@@ -359,7 +401,9 @@ def _run_method(
             "control_energy_m2_per_s": 0.0,
             "trajectory_crossing_count": 0,
             "min_guide_guide_clearance_m": _minimum_pair_distance(initial),
-            "min_guide_crowd_clearance_m": float(np.min(np.linalg.norm(initial[:, None, :] - observation[None, :, :], axis=2))),
+            "min_guide_crowd_clearance_m": float(
+                np.min(np.linalg.norm(initial[:, None, :] - observation[None, :, :], axis=2))
+            ),
             "safety_projection_count": 0,
             "safety_infeasible_count": int(status == "SAFETY_INFEASIBLE"),
             "control_runtime_ms": 0.0,
@@ -388,11 +432,17 @@ def _run_method(
             "uncertainty_mean": None,
         }
     final = trace["positions"][-1]
-    active_mapping = np.asarray(assignment.guide_to_target) >= 0 if assignment is not None else np.zeros(len(initial), dtype=bool)
+    active_mapping = (
+        np.asarray(assignment.guide_to_target) >= 0 if assignment is not None else np.zeros(len(initial), dtype=bool)
+    )
     active_final = final[active_mapping]
     containment = {
-        "coverage_ratio": coverage_ratio_to_points(active_final, truth, config.coverage_radius) if len(active_final) else 0.0,
-        "max_truth_boundary_distance_m": max_euclidean_boundary_distance_to_points(active_final, truth) if len(active_final) else None,
+        "coverage_ratio": (
+            coverage_ratio_to_points(active_final, truth, config.coverage_radius) if len(active_final) else 0.0
+        ),
+        "max_truth_boundary_distance_m": (
+            max_euclidean_boundary_distance_to_points(active_final, truth) if len(active_final) else None
+        ),
     }
     method_runtime_ms = 1000.0 * (time.perf_counter() - started)
     estimator_runtime_ms = boundary_runtime_ms if method in {"uniform_arc", "fixed_m_periodic", "abcg_v2"} else 0.0
@@ -405,11 +455,14 @@ def _run_method(
         "status": status,
         "success": status == "CONVERGED",
         "failure_reason": failure_reason,
+        "truth_access": "evaluator_only",
         "active_count": int(np.count_nonzero(active_mapping)),
         "reserve_count": int(len(initial) - np.count_nonzero(active_mapping)),
         "assignment_switch_count": int(assignment.switch_count) if assignment is not None else 0,
         "plan_h_final": float(h_history[-1]) if len(h_history) else None,
-        "plan_max_arc_gap_m": float(planning_details.get("plan_max_arc_gap")) if "plan_max_arc_gap" in planning_details else None,
+        "plan_max_arc_gap_m": (
+            float(planning_details.get("plan_max_arc_gap")) if "plan_max_arc_gap" in planning_details else None
+        ),
         "boundary_runtime_ms": boundary_runtime_ms,
         "planning_runtime_ms": planning_runtime_ms,
         "method_runtime_excluding_shared_estimator_ms": method_runtime_ms,
@@ -437,10 +490,23 @@ def _run_method(
             "metrics.json",
         ],
     }
-    _save_run_artifacts(
-        run_dir, resolved, observation, truth, boundary, targets, target_s, h_history, assignment, trace, events, record, manifest
+    observations_path = _save_run_artifacts(
+        run_dir,
+        resolved,
+        observation,
+        truth,
+        boundary,
+        targets,
+        target_s,
+        h_history,
+        assignment,
+        trace,
+        events,
+        record,
+        manifest,
+        shared_observations=shared_observations,
     )
-    return record
+    return record, observations_path
 
 
 def _run_primary_case(
@@ -461,7 +527,24 @@ def _run_primary_case(
     if isinstance(boundary, BoundaryEstimateV2):
         boundary = replace(boundary, diagnostics={**boundary.diagnostics, "runtime_ms": elapsed})
     initial, layout = _initial_guides(seed, config.available_guides)
-    return [
-        _run_method(scenario, seed, method, observation, truth, boundary, initial, layout, config, run_root, snapshot)
-        for method in config.methods
-    ]
+    shared_observations: Path | None = None
+    records: list[dict[str, Any]] = []
+    for method in config.methods:
+        record, observations_path = _run_method(
+            scenario,
+            seed,
+            method,
+            observation,
+            truth,
+            boundary,
+            initial,
+            layout,
+            config,
+            run_root,
+            snapshot,
+            shared_observations=shared_observations,
+        )
+        records.append(record)
+        if shared_observations is None:
+            shared_observations = observations_path
+    return records

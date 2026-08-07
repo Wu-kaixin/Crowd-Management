@@ -1,4 +1,8 @@
-"""G6 preflight checks and process memory helpers."""
+"""G6 preflight checks and process memory helpers.
+
+ROLE: ORCHESTRATION — pre-run environment/memory checks before formal G6 evaluation.
+"""
+
 from __future__ import annotations
 
 import ctypes
@@ -94,6 +98,7 @@ def _preflight_is_valid(preflight: dict[str, Any] | None, snapshot: dict[str, An
 def _process_peak_memory_bytes() -> int:
     """Return process peak resident memory without tracing every allocation."""
     if platform.system() == "Windows":
+
         class ProcessMemoryCounters(ctypes.Structure):
             _fields_ = [
                 ("cb", ctypes.c_ulong),

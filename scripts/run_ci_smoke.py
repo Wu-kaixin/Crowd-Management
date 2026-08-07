@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Deterministic CI smoke runner for static containment.
 
+ROLE: ENTRY ONLY — calls crowd_management.experiments.static_containment.run_static_containment.
+INPUT:  --config configs/ci_smoke.yaml (default)
+OUTPUT: --output runs/ci_smoke/ (default)
+
 Fixed config + method. Verifies completion, required artifacts, and schema.
 Does not assert wall-clock performance (shared CI runners are noisy).
 """

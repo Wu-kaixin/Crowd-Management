@@ -1,4 +1,9 @@
-"""Target generation for static containment methods."""
+"""Target generation for static containment methods.
+
+ROLE: ORCHESTRATION helper — map method name → baseline endpoint targets.
+Uses controllers/* baselines; not the ABCG-v2 closed loop itself.
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -23,20 +28,20 @@ def _controller_targets(method: str, cfg: StaticContainmentConfig, crowd_points:
         return targets, boundary
     if method == "static_circle":
         radius = cfg.crowd.radius + cfg.safety_distance
-        controller = StaticCircleController(radius=radius, center=cfg.crowd.center)
-        targets = controller.deploy(cfg.guide_count, crowd_points)
+        circle = StaticCircleController(radius=radius, center=cfg.crowd.center)
+        targets = circle.deploy(cfg.guide_count, crowd_points)
         boundary = estimate_radial_boundary(crowd_points, cfg.boundary_bins, cfg.safety_distance)
         return targets, boundary
     if method == "legacy_center_radius":
-        controller = LegacyCenterRadiusController(safety_distance=cfg.safety_distance)
-        targets = controller.deploy(cfg.guide_count, crowd_points)
+        legacy = LegacyCenterRadiusController(safety_distance=cfg.safety_distance)
+        targets = legacy.deploy(cfg.guide_count, crowd_points)
         boundary = estimate_radial_boundary(crowd_points, cfg.boundary_bins, cfg.safety_distance)
         return targets, boundary
     if method == "abcg":
-        controller = ABCGController(
+        abcg = ABCGController(
             num_bins=cfg.boundary_bins,
             safety_distance=cfg.safety_distance,
             min_guider_distance=cfg.min_guider_distance,
         )
-        return controller.deploy(cfg.guide_count, crowd_points, room_size=cfg.room_size)
+        return abcg.deploy(cfg.guide_count, crowd_points, room_size=cfg.room_size)
     raise ValueError(f"Unsupported containment method: {method}")

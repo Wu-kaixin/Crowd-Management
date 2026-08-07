@@ -1,4 +1,7 @@
-"""Endpoint helpers and PR5 auditable velocity-safety projection."""
+"""Endpoint helpers and PR5 auditable velocity-safety projection.
+
+ROLE: CORE MATH — geometric clipping and auditable velocity-safety projection. Not ORCA/CBF or planning.
+"""
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field

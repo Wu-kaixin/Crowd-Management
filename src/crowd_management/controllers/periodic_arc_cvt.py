@@ -1,5 +1,7 @@
 """PR2 periodic arc-length coverage planning for one valid closed boundary.
 
+ROLE: CORE MATH — periodic arc-length Lloyd targets on a closed boundary. No assignment, velocity, or confidence risk weights.
+
 The optimizer uses uniform density ``phi(s) = 1``.  Boundary confidence gates
 the relaxed Lloyd update only; it is deliberately not used as a risk or
 coverage-density weight.  Resource allocation, persistent guide identities,

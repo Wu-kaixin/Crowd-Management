@@ -24,7 +24,7 @@ def test_frozen_g6_gate_evidence_schema() -> None:
 def test_frozen_pr6_gate_directory_schema() -> None:
     # records.json is gitignored for the formal tree; validate available committed artifacts.
     gate = json.loads(Path("reports/step1_pr6_evaluation/gate_evidence.json").read_text(encoding="utf-8"))
-    from crowd_management.evaluation.schema_validation import validate_pr6_gate_evidence, validate_paired_comparisons
+    from crowd_management.evaluation.schema_validation import validate_paired_comparisons, validate_pr6_gate_evidence
 
     validate_pr6_gate_evidence(gate)
     paired = json.loads(Path("reports/step1_pr6_evaluation/paired_comparisons.json").read_text(encoding="utf-8"))

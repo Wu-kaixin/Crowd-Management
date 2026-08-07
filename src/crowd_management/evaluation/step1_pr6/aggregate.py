@@ -1,4 +1,8 @@
-"""PR6 aggregate summaries and paired comparisons."""
+"""PR6 aggregate summaries and paired comparisons.
+
+ROLE: ORCHESTRATION — bootstrap aggregate summaries and paired PR6 comparisons.
+"""
+
 from __future__ import annotations
 
 from typing import Any

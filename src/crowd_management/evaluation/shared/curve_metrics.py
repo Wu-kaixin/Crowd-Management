@@ -1,4 +1,7 @@
-"""Curve-to-truth distance metrics shared by formal evaluators."""
+"""Curve-to-truth distance metrics shared by formal evaluators.
+
+ROLE: ORCHESTRATION helper — Chamfer/Hausdorff curve error metrics for G6/PR6.
+"""
 
 from __future__ import annotations
 

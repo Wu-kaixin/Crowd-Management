@@ -1,4 +1,7 @@
-"""Bootstrap summary helpers for formal evaluation aggregates."""
+"""Bootstrap summary helpers for formal evaluation aggregates.
+
+ROLE: ORCHESTRATION helper — bootstrap percentile summaries for aggregate reports.
+"""
 
 from __future__ import annotations
 

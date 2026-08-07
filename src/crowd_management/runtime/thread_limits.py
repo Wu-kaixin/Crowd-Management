@@ -1,5 +1,8 @@
 """BLAS/OpenMP thread governance.
 
+ROLE: ORCHESTRATION INFRA — cap BLAS/OpenMP threads to prevent oversubscription.
+Wall-clock only; does not change scientific numerics.
+
 Two mechanisms, both no-ops when unavailable:
 
 - ``limit_blas_threads``: runtime limiting via threadpoolctl for pools that
@@ -8,12 +11,14 @@ Two mechanisms, both no-ops when unavailable:
   *before* NumPy/SciPy initialise their thread pools; use for subprocesses
   (pass into the child environment) or at interpreter startup.
 """
+
 from __future__ import annotations
 
 import contextlib
 import os
 import sys
-from typing import Any, Iterator
+from collections.abc import Iterator
+from typing import Any
 
 from .hardware import BLAS_ENV_VARS
 

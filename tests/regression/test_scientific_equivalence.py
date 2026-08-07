@@ -4,13 +4,11 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-from pathlib import Path
-
 from dataclasses import replace
+from pathlib import Path
 
 from crowd_management.evaluation import G6EvaluationConfig, run_g6_evaluation
 from crowd_management.experiments.static_containment import run_static_containment
-
 
 STABLE_SUMMARY_KEYS = (
     "coverage_ratio",

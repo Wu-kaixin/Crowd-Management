@@ -1,4 +1,8 @@
-"""Reporting helpers for auditable research outputs."""
+"""Reporting helpers for auditable research outputs.
+
+ROLE: OUTPUT HELPERS — JSON/CSV writers and git/environment snapshots.
+No algorithms; used by experiments/ and evaluation/.
+"""
 
 from .jsonio import jsonable, write_json, write_records_csv
 from .snapshot import (

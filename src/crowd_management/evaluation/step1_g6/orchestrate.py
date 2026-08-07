@@ -1,7 +1,10 @@
-"""Top-level G6 formal evaluation orchestration."""
+"""Top-level G6 formal evaluation orchestration.
+
+ROLE: ORCHESTRATION — orchestrate full G6 pipeline (cases, ablations, aggregate, report).
+"""
+
 from __future__ import annotations
 
-import json
 import time
 from dataclasses import asdict
 from pathlib import Path
@@ -12,7 +15,7 @@ import numpy as np
 from ...controllers import ABCGv2Controller
 from ...reporting import repository_snapshot as _repository_snapshot
 from ...reporting import write_json as _write_json
-from ...runtime import run_tasks
+from ...runtime import TaskPool, run_tasks
 from .ablations import (
     _ablation_summary,
     _failure_fixtures,
@@ -21,7 +24,7 @@ from .ablations import (
     _run_robustness,
 )
 from .aggregate import _aggregate, _paired_comparisons
-from .config import ABLATION_VARIANTS, G6EvaluationConfig, PRIMARY_METHODS, PRIMARY_SCENARIOS
+from .config import ABLATION_VARIANTS, PRIMARY_METHODS, PRIMARY_SCENARIOS, G6EvaluationConfig
 from .preflight import _preflight_is_valid, _process_peak_memory_bytes
 from .report import _save_failure_gallery, _write_records_csv, _write_report
 from .run_case import _run_primary_case
@@ -74,19 +77,22 @@ def run_g6_evaluation(
 
     started = time.perf_counter()
     cases = [(scenario, seed) for scenario in config.scenarios for seed in config.seeds]
-    case_records = run_tasks(
-        _run_primary_case,
-        [(scenario, seed, config, runs, snapshot) for scenario, seed in cases],
-        config.workers,
-    )
-    records = [record for group in case_records for record in group]
-    records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["method"])))
-    aggregate = _aggregate(records, config)
-    paired = _paired_comparisons(records, config)
-    ablations = _run_ablations(config, records)
-    ablation_aggregate = _ablation_summary(ablations, config)
-    robustness = _run_robustness(config)
-    robustness_aggregate = _robustness_summary(robustness, config)
+    with TaskPool(config.workers, blas_threads_per_worker=config.blas_threads_per_worker) as pool:
+        case_records = run_tasks(
+            _run_primary_case,
+            [(scenario, seed, config, runs, snapshot) for scenario, seed in cases],
+            config.workers,
+            blas_threads_per_worker=config.blas_threads_per_worker,
+            pool=pool,
+        )
+        records = [record for group in case_records for record in group]
+        records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["method"])))
+        aggregate = _aggregate(records, config)
+        paired = _paired_comparisons(records, config)
+        ablations = _run_ablations(config, records, pool=pool)
+        ablation_aggregate = _ablation_summary(ablations, config)
+        robustness = _run_robustness(config, pool=pool)
+        robustness_aggregate = _robustness_summary(robustness, config)
     stress_fixtures = _failure_fixtures(config)
     _write_json(
         output / "stress_cases.json",
@@ -133,10 +139,15 @@ def run_g6_evaluation(
         "paired_seed_count_at_least_30": len(config.seeds) >= 30,
         "bootstrap_samples_at_least_30": config.bootstrap_samples >= 30,
         "all_primary_records_accounted_for": len(records) == expected,
-        "all_failures_in_denominator": sum(item["run_count"] for scenario in aggregate.values() for item in scenario.values()) == expected,
-        "ablations_present": {record["variant"] for record in ablations} == set(ABLATION_VARIANTS),
-        "robustness_noise_dropout_scale": {record["dimension"] for record in robustness} == {"noise", "dropout", "scale"},
-        "statistics_mean_median_ci_effect_worst5_failure": bool(paired) and all(
+        "all_failures_in_denominator": (
+            sum(item["run_count"] for scenario in aggregate.values() for item in scenario.values()) == expected
+        ),
+        "ablations_present": ({record["variant"] for record in ablations} == set(ABLATION_VARIANTS)),
+        "robustness_noise_dropout_scale": (
+            {record["dimension"] for record in robustness} == {"noise", "dropout", "scale"}
+        ),
+        "statistics_mean_median_ci_effect_worst5_failure": bool(paired)
+        and all(
             {"mean", "median", "ci95_low", "ci95_high", "worst_5_percent_mean"}.issubset(summary)
             for scenario in aggregate.values()
             for method in scenario.values()
@@ -161,15 +172,7 @@ def run_g6_evaluation(
                 "metrics.json",
             )
         ),
-        "independent_truth_evidence": all(
-            json.loads(
-                (runs / record["scenario"] / record["method"] / f"seed_{record['seed']:03d}" / "manifest.json").read_text(
-                    encoding="utf-8"
-                )
-            ).get("truth_access")
-            == "evaluator_only"
-            for record in records
-        ),
+        "independent_truth_evidence": all(record.get("truth_access") == "evaluator_only" for record in records),
         "frozen_commit": snapshot["frozen_commit"],
     }
     compliance_without_freeze = all(

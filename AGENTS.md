@@ -1,14 +1,28 @@
-# AGENTS.md
+﻿# AGENTS.md
 
+## Code map (start here if lost)
+
+Chinese role map (core vs input vs output): [`docs/CODEMAP.zh.md`](docs/CODEMAP.zh.md).
+
+Quick labels:
+
+- **Core math:** `src/crowd_management/controllers/`, `estimation/`, `geometry/`, `crowd/`
+- **Orchestration:** `experiments/`, `evaluation/`, `runtime/`, `reporting/`
+- **CLI entry:** `scripts/` (thin wrappers only)
+- **Inputs:** `configs/*.yaml`
+- **Local outputs:** `runs/`, `outputs/`, `artifacts/`, `.tmp/` (mostly gitignored)
+- **Frozen evidence / media:** `reports/`
+- **Local stash / pytest work:** `_stash/` (gitignored; preferred pytest basetemp when `.tmp` is locked)
 ## Project Direction
 
 This repository is now centered on **ABCG static unknown-crowd containment**.
 The active workflow is not DBAct evacuation optimization. DBAct, density-DBAct,
-and old evacuation-guidance material are archived under:
+and old evacuation-guidance material have been removed from `main` and are
+preserved on the `local-main-backup` branch:
 
 ```text
-legacy/evacuation_guidance/
-src/crowd_management/legacy/evacuation/
+local-main-backup:legacy/evacuation_guidance/
+local-main-backup:src/crowd_management/legacy/
 ```
 
 New work should start from:
@@ -48,7 +62,23 @@ Standard command:
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 ```
 
-The current suite has 95 tests.
+If `.tmp` is locked on Windows (PermissionError), use the stash work dir instead:
+
+```bash
+pytest --basetemp=_stash/pytest_work/temp -o cache_dir=_stash/pytest_work/cache
+```
+
+Lint / type (after `pip install -e ".[dev]"`):
+
+```bash
+python -m ruff check src scripts
+python -m mypy
+```
+
+The authoritative suite size is whatever `pytest --collect-only` reports on
+the current branch (see the `TEST_COUNT` marker in `README.md`, checked by
+`scripts/check_readme_consistency.py`). Legacy evacuation tests live on the
+`local-main-backup` branch.
 
 Dependency health command:
 
@@ -73,12 +103,17 @@ Run the PR6 held-out paired evaluation:
 python scripts/run_step1_pr6_evaluation.py --output reports/step1_pr6_evaluation --seed-count 30
 ```
 
+Evaluation scripts select worker processes hardware-adaptively by default
+(`--workers auto`, balanced mode). Override with `--workers N` or
+`--performance-mode conservative|balanced|maximum`. Worker count never
+changes scientific results (verified by `scripts/compare_results.py`);
+see `docs/performance/final_report.md`.
+
 Regenerate README media:
 
 ```bash
 python scripts/build_readme_media.py
 ```
 
-Legacy evacuation scripts remain as compatibility wrappers in `scripts/`, but
-their original implementations and media are stored under
-`legacy/evacuation_guidance/`.
+Legacy evacuation scripts, their compatibility wrappers, and old media no
+longer live on `main`. Use the `local-main-backup` branch to access them.

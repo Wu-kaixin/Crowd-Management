@@ -1,4 +1,8 @@
-"""Configuration constants for formal G6 evaluation."""
+"""Configuration constants for formal G6 evaluation.
+
+ROLE: ORCHESTRATION — G6EvaluationConfig dataclass and primary scenario/method constants.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -39,6 +43,7 @@ class G6EvaluationConfig:
     dt: float = 0.1
     max_steps: int = 160
     workers: int = 4
+    blas_threads_per_worker: int = 1
     alpha_scale: float = 2.5
     sample_spacing: float = 0.08
 
@@ -59,6 +64,7 @@ class G6EvaluationConfig:
             "fixed_guide_count",
             "max_steps",
             "workers",
+            "blas_threads_per_worker",
         ):
             value = getattr(self, name)
             if isinstance(value, bool) or not isinstance(value, (int, np.integer)) or value < 1:

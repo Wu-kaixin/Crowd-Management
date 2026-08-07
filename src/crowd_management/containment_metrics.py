@@ -1,4 +1,9 @@
-"""Metrics for static unknown-crowd containment experiments."""
+"""Metrics for static unknown-crowd containment experiments.
+
+ROLE: CORE — static containment metric definitions and serialization.
+Truth allowed for evaluation only; not for estimators or controllers.
+"""
+
 from __future__ import annotations
 
 import json
@@ -7,8 +12,8 @@ from pathlib import Path
 
 import numpy as np
 
-from .estimation.boundary import BoundaryEstimate
 from .crowd.truth import StaticCrowdTruth
+from .estimation.boundary import BoundaryEstimate
 from .geometry import max_consecutive_arc_gap as _max_consecutive_arc_gap
 from .types import Array
 
@@ -55,8 +60,7 @@ def max_euclidean_boundary_distance(guide_points: Array, boundary: BoundaryEstim
 def max_boundary_gap(guide_points: Array, boundary: BoundaryEstimate) -> float:
     """Deprecated name retained for direct-call compatibility."""
     warnings.warn(
-        "max_boundary_gap is an Euclidean nearest-point distance; use "
-        "max_euclidean_boundary_distance instead.",
+        "max_boundary_gap is an Euclidean nearest-point distance; use max_euclidean_boundary_distance instead.",
         DeprecationWarning,
         stacklevel=2,
     )
@@ -78,7 +82,9 @@ def radial_deployment_error(guide_points: Array, boundary: BoundaryEstimate) -> 
 def angular_uniformity_error(guide_points: Array, center: Array) -> float:
     if len(guide_points) <= 1:
         return 0.0
-    theta = np.sort((np.arctan2(guide_points[:, 1] - center[1], guide_points[:, 0] - center[0]) + 2.0 * np.pi) % (2.0 * np.pi))
+    theta = np.sort(
+        (np.arctan2(guide_points[:, 1] - center[1], guide_points[:, 0] - center[0]) + 2.0 * np.pi) % (2.0 * np.pi)
+    )
     gaps = np.diff(np.r_[theta, theta[0] + 2.0 * np.pi])
     target = 2.0 * np.pi / len(guide_points)
     return float(np.mean(np.abs(gaps - target)) / target)

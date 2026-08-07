@@ -1,4 +1,7 @@
-"""JSON serialization helpers shared by evaluation and experiment runners."""
+"""JSON serialization helpers shared by evaluation and experiment runners.
+
+ROLE: OUTPUT HELPERS — JSON/CSV writers with numpy-safe serialization.
+"""
 
 from __future__ import annotations
 
@@ -30,12 +33,16 @@ def jsonable(value: Any) -> Any:
     return value
 
 
-def write_json(path: Path | str, value: Any) -> None:
-    """Write ``value`` as pretty-printed UTF-8 JSON with a trailing newline."""
+def write_json(path: Path | str, value: Any, *, indent: int | None = 2) -> None:
+    """Write ``value`` as UTF-8 JSON with a trailing newline.
+
+    Top-level reports keep ``indent=2``; hot-loop per-run artifacts may pass
+    ``indent=None`` for cheaper serialization (same parsed content).
+    """
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(
-        json.dumps(jsonable(value), indent=2, ensure_ascii=False) + "\n",
+        json.dumps(jsonable(value), indent=indent, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
 

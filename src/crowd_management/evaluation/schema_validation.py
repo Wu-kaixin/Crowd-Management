@@ -1,4 +1,7 @@
-"""Structural validation for formal evaluation and experiment outputs."""
+"""Structural validation for formal evaluation and experiment outputs.
+
+ROLE: ORCHESTRATION — validate evaluation directories against schemas.py contracts.
+"""
 
 from __future__ import annotations
 
@@ -14,6 +17,7 @@ from .schemas import (
     PRIVACY_FORBIDDEN_RUNTIME_KEYS,
     RUNTIME_METADATA_REQUIRED_KEYS,
     RUNTIME_METADATA_SCHEMA,
+    STATIC_MANIFEST_REQUIRED_KEYS,
     STATIC_MANIFEST_SCHEMA,
     STATIC_SUMMARY_REQUIRED_KEYS,
 )
@@ -157,9 +161,7 @@ def validate_static_summary(payload: dict[str, Any]) -> None:
 def validate_static_manifest(payload: dict[str, Any]) -> None:
     """Validate static containment manifest.json top-level contract."""
     data = _require_mapping(payload, "manifest")
-    for key in ("schema_version", "repository", "config", "methods", "run_status"):
-        if key not in data:
-            raise SchemaValidationError(f"manifest missing {key}")
+    _require_keys(data, STATIC_MANIFEST_REQUIRED_KEYS, "manifest")
     if data.get("schema_version") != STATIC_MANIFEST_SCHEMA:
         raise SchemaValidationError(f"unexpected manifest schema_version: {data.get('schema_version')!r}")
     _assert_no_nonfinite_leaves(data)

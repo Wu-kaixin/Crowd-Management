@@ -6,12 +6,12 @@ import numpy as np
 import pytest
 
 from crowd_management.controllers import (
-    PeriodicArcCVTConfig,
     PeriodicArcCVT,
+    PeriodicArcCVTConfig,
     equal_arc_target_s,
+    periodic_uniform_coverage_cost,
     plan_equal_arc_coverage,
     plan_periodic_arc_coverage,
-    periodic_uniform_coverage_cost,
 )
 from crowd_management.estimation import BoundaryEstimateV2
 

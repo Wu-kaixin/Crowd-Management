@@ -1,4 +1,7 @@
-"""Repository and environment snapshot helpers for auditable manifests."""
+"""Repository and environment snapshot helpers for auditable manifests.
+
+ROLE: OUTPUT HELPERS — git state, Python environment, and package version snapshots.
+"""
 
 from __future__ import annotations
 

@@ -1,4 +1,7 @@
-"""PR3 adaptive guide-resource policy with explicit hysteresis and capacity state."""
+"""PR3 adaptive guide-resource policy with explicit hysteresis and capacity state.
+
+ROLE: CORE MATH — adaptive guide count from boundary length with hysteresis. No assignment or motion.
+"""
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field

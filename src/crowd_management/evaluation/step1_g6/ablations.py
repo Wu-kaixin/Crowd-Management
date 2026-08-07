@@ -1,19 +1,28 @@
-"""G6 ablation, robustness, and stress-fixture runners."""
+"""G6 ablation, robustness, and stress-fixture runners.
+
+ROLE: ORCHESTRATION — ablation and robustness sweeps for formal G6 evidence.
+"""
+
 from __future__ import annotations
 
 from typing import Any
 
 import numpy as np
 
-from ...controllers import PeriodicArcCVTConfig, ResourcePolicyConfig, allocate_guide_resources, plan_periodic_arc_coverage
+from ...controllers import (
+    PeriodicArcCVTConfig,
+    ResourcePolicyConfig,
+    allocate_guide_resources,
+    plan_periodic_arc_coverage,
+)
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, BoundaryV2Config, estimate_boundary_v2
 from ...geometry import resample_closed_curve_by_arclength
-from ...runtime import run_tasks
+from ...runtime import TaskPool, run_tasks
 from ..shared import bootstrap_metric_summary as _summary
 from ..shared import curve_errors_with_p95 as _curve_errors
 from ..shared import sample_polygon as _sample_polygon
 from .cases import _boundary_config, _observed_case
-from .config import ABLATION_VARIANTS, G6EvaluationConfig, NONCONVEX_SCENARIOS
+from .config import ABLATION_VARIANTS, NONCONVEX_SCENARIOS, G6EvaluationConfig
 
 
 def _run_ablation_case(
@@ -43,7 +52,9 @@ def _run_ablation_case(
     }
     for variant, boundary in estimates.items():
         if isinstance(boundary, BoundaryEstimateFailure):
-            records.append({"scenario": scenario, "seed": seed, "variant": variant, "valid": False, "status": boundary.status})
+            records.append(
+                {"scenario": scenario, "seed": seed, "variant": variant, "valid": False, "status": boundary.status}
+            )
             continue
         plan = plan_periodic_arc_coverage(
             boundary,
@@ -91,16 +102,17 @@ def _run_ablation_case(
     return records
 
 
-def _run_ablations(config: G6EvaluationConfig, primary: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _run_ablations(
+    config: G6EvaluationConfig,
+    primary: list[dict[str, Any]],
+    *,
+    pool: TaskPool | None = None,
+) -> list[dict[str, Any]]:
     primary_by_key = {
-        (str(record["scenario"]), int(record["seed"]), str(record["method"])): record
-        for record in primary
+        (str(record["scenario"]), int(record["seed"]), str(record["method"])): record for record in primary
     }
     cases = [
-        (scenario, seed)
-        for scenario in NONCONVEX_SCENARIOS
-        if scenario in config.scenarios
-        for seed in config.seeds
+        (scenario, seed) for scenario in NONCONVEX_SCENARIOS if scenario in config.scenarios for seed in config.seeds
     ]
     tasks = [
         (
@@ -111,7 +123,7 @@ def _run_ablations(config: G6EvaluationConfig, primary: list[dict[str, Any]]) ->
         )
         for scenario, seed in cases
     ]
-    groups = run_tasks(_run_ablation_case, tasks, config.workers)
+    groups = run_tasks(_run_ablation_case, tasks, config.workers, pool=pool)
     records = [record for group in groups for record in group]
     records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["variant"])))
     return records
@@ -123,9 +135,7 @@ def _ablation_summary(records: list[dict[str, Any]], config: G6EvaluationConfig)
     for scenario in (item for item in NONCONVEX_SCENARIOS if item in config.scenarios):
         summary[scenario] = {}
         for variant in ABLATION_VARIANTS:
-            subset = [
-                record for record in records if record["scenario"] == scenario and record["variant"] == variant
-            ]
+            subset = [record for record in records if record["scenario"] == scenario and record["variant"] == variant]
             summary[scenario][variant] = {
                 "run_count": len(subset),
                 "valid_count": int(sum(bool(record["valid"]) for record in subset)),
@@ -189,7 +199,7 @@ def _run_robustness_case(
     }
 
 
-def _run_robustness(config: G6EvaluationConfig) -> list[dict[str, Any]]:
+def _run_robustness(config: G6EvaluationConfig, *, pool: TaskPool | None = None) -> list[dict[str, Any]]:
     dimensions = (
         ("noise", config.robustness_noise_levels),
         ("dropout", config.robustness_dropout_levels),
@@ -203,8 +213,20 @@ def _run_robustness(config: G6EvaluationConfig) -> list[dict[str, Any]]:
         for dimension, levels in dimensions
         for level_index, level in enumerate(levels)
     ]
-    records = run_tasks(_run_robustness_case, [(task, config) for task in tasks], config.workers)
-    records.sort(key=lambda record: (str(record["scenario"]), int(record["seed"]), str(record["dimension"]), float(record["level"])))
+    records = run_tasks(
+        _run_robustness_case,
+        [(task, config) for task in tasks],
+        config.workers,
+        pool=pool,
+    )
+    records.sort(
+        key=lambda record: (
+            str(record["scenario"]),
+            int(record["seed"]),
+            str(record["dimension"]),
+            float(record["level"]),
+        )
+    )
     return records
 
 
@@ -215,20 +237,38 @@ def _robustness_summary(records: list[dict[str, Any]], config: G6EvaluationConfi
         summary[scenario] = {}
         for dimension in ("noise", "dropout", "scale"):
             summary[scenario][dimension] = {}
-            levels = sorted({float(record["level"]) for record in records if record["scenario"] == scenario and record["dimension"] == dimension})
+            levels = sorted(
+                {
+                    float(record["level"])
+                    for record in records
+                    if record["scenario"] == scenario and record["dimension"] == dimension
+                }
+            )
             for level in levels:
-                subset = [record for record in records if record["scenario"] == scenario and record["dimension"] == dimension and record["level"] == level]
+                subset = [
+                    record
+                    for record in records
+                    if record["scenario"] == scenario and record["dimension"] == dimension and record["level"] == level
+                ]
                 summary[scenario][dimension][str(level)] = {
                     "run_count": len(subset),
                     "failure_rate": float(np.mean([not record["valid"] for record in subset])),
                     "curve_chamfer_m": _summary(
-                        [float(record["curve_chamfer_m"]) for record in subset if record["curve_chamfer_m"] is not None],
+                        [
+                            float(record["curve_chamfer_m"])
+                            for record in subset
+                            if record["curve_chamfer_m"] is not None
+                        ],
                         rng,
                         config.confidence_interval_resamples,
                         "lower",
                     ),
                     "curve_hausdorff95_m": _summary(
-                        [float(record["curve_hausdorff95_m"]) for record in subset if record["curve_hausdorff95_m"] is not None],
+                        [
+                            float(record["curve_hausdorff95_m"])
+                            for record in subset
+                            if record["curve_hausdorff95_m"] is not None
+                        ],
                         rng,
                         config.confidence_interval_resamples,
                         "lower",
@@ -257,7 +297,9 @@ def _failure_fixtures(config: G6EvaluationConfig) -> list[dict[str, Any]]:
     observation, truth = _observed_case("u_shape", 0, config, noise_std=0.0, dropout_rate=0.0)
     valid = estimate_boundary_v2(observation, _boundary_config(config, bootstrap_samples=0), rng)
     if isinstance(valid, BoundaryEstimateV2):
-        decision = allocate_guide_resources(valid.length, 2, ResourcePolicyConfig(g_req=config.required_arc_gap, m_min=4))
+        decision = allocate_guide_resources(
+            valid.length, 2, ResourcePolicyConfig(g_req=config.required_arc_gap, m_min=4)
+        )
         fixtures.append(
             {
                 "fixture": "capacity_shortfall",

@@ -1,4 +1,8 @@
-"""Top-level PR6 paired evaluation orchestration."""
+"""Top-level PR6 paired evaluation orchestration.
+
+ROLE: ORCHESTRATION — orchestrate full PR6 pipeline (held-out cases, aggregate, report).
+"""
+
 from __future__ import annotations
 
 import csv
@@ -9,7 +13,6 @@ from typing import Any
 
 from ...reporting import repository_snapshot as _repository_snapshot
 from ...runtime import run_tasks
-from ...types import Array
 from .aggregate import _aggregate_records, _paired_comparisons
 from .cases import _estimator_configs
 from .config import PR6EvaluationConfig
@@ -25,17 +28,19 @@ def run_pr6_evaluation(output_dir: str | Path, config: PR6EvaluationConfig) -> d
     output.mkdir(parents=True, exist_ok=True)
     estimator_configs = _estimator_configs(config)
     records: list[dict[str, Any]] = []
-    visuals: dict[tuple[str, int, str], tuple[Array, Array, Array | None]] = {}
+    # Compact visual index: (shape, seed) -> shared obs/truth + curves by variant
+    visuals: dict[tuple[str, int], dict[str, Any]] = {}
 
     cases = [(shape, seed) for shape in config.shapes for seed in config.seeds]
     case_results = run_tasks(
         _run_paired_case,
         [(shape, seed, config, estimator_configs) for shape, seed in cases],
         config.workers,
+        blas_threads_per_worker=config.blas_threads_per_worker,
     )
     for case_records, case_visuals in case_results:
         records.extend(case_records)
-        visuals.update(case_visuals)
+        visuals[(str(case_visuals["shape"]), int(case_visuals["seed"]))] = case_visuals
     records.sort(key=lambda record: (str(record["shape"]), int(record["seed"]), str(record["variant"])))
 
     aggregate = _aggregate_records(records, config)

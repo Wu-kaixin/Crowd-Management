@@ -1,5 +1,7 @@
 """Independent analytic truth boundaries for Step 1 synthetic scenarios.
 
+ROLE: CORE DATA GENERATORS — evaluation-only analytic boundaries. Controllers must never import or receive this.
+
 The controller must never receive these objects.  They exist only for
 evaluation and reproducibility, so estimator output cannot be used as its own
 ground truth.

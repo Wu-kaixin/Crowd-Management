@@ -1,4 +1,8 @@
-"""PR6 per-case boundary and planner evaluation."""
+"""PR6 per-case boundary and planner evaluation.
+
+ROLE: ORCHESTRATION — run one PR6 case (estimate → plan → curve-error metrics).
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -87,7 +91,8 @@ def _run_paired_case(
     seed: int,
     config: PR6EvaluationConfig,
     estimator_configs: dict[str, BoundaryV2Config],
-) -> tuple[list[dict[str, Any]], dict[tuple[str, int, str], tuple[Array, Array, Array | None]]]:
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Return records plus a compact visual payload (shared obs/truth + per-variant curves)."""
     observation, truth = _heldout_case(shape, seed, config.observation_count, config.sample_spacing / 2.0)
     estimates = {
         name: estimate_boundary_v2(
@@ -104,7 +109,7 @@ def _run_paired_case(
         "alpha_bootstrap_no_gain": (estimates["alpha_bootstrap_gain"], False),
     }
     case_records: list[dict[str, Any]] = []
-    case_visuals: dict[tuple[str, int, str], tuple[Array, Array, Array | None]] = {}
+    curves: dict[str, Array | None] = {}
     for variant, (boundary, planner_confidence) in variants.items():
         values, curve = _evaluate_boundary(boundary, truth, planner_confidence, config)
         estimator_key = (
@@ -122,5 +127,12 @@ def _run_paired_case(
             **values,
         }
         case_records.append(record)
-        case_visuals[(shape, int(seed), variant)] = (observation, truth, curve)
-    return case_records, case_visuals
+        curves[variant] = curve
+    visuals = {
+        "shape": shape,
+        "seed": int(seed),
+        "observation": observation,
+        "truth": truth,
+        "curves": curves,
+    }
+    return case_records, visuals

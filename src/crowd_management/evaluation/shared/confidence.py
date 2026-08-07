@@ -1,4 +1,7 @@
-"""Confidence-ablation helpers shared by G6 and PR6 evaluators."""
+"""Confidence-ablation helpers shared by G6 and PR6 evaluators.
+
+ROLE: ORCHESTRATION helper — neutralize boundary confidence for ablation cases.
+"""
 
 from __future__ import annotations
 

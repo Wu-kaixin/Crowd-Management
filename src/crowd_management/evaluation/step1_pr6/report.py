@@ -1,4 +1,8 @@
-"""PR6 report and failure-gallery writers."""
+"""PR6 report and failure-gallery writers.
+
+ROLE: ORCHESTRATION — write PR6 summary JSON and diagnostic failure-gallery figures.
+"""
+
 from __future__ import annotations
 
 import os
@@ -7,14 +11,13 @@ from typing import Any
 
 import numpy as np
 
-from ...types import Array
 from .config import PR6EvaluationConfig
 
 
 def _save_failure_gallery(
     output: Path,
     records: list[dict[str, Any]],
-    visuals: dict[tuple[str, int, str], tuple[Array, Array, Array | None]],
+    visuals: dict[tuple[str, int], dict[str, Any]],
 ) -> list[dict[str, Any]]:
     selected = [record for record in records if not record["valid"]]
     selected.sort(key=lambda record: (str(record["shape"]), int(record["seed"]), str(record["variant"])))
@@ -46,14 +49,15 @@ def _save_failure_gallery(
 
     figure, axes = plt.subplots(2, 3, figsize=(13, 8))
     for axis, record in zip(axes.ravel(), selected, strict=False):
-        observation, truth, estimate = visuals[(record["shape"], record["seed"], record["variant"])]
+        case = visuals[(record["shape"], record["seed"])]
+        observation = case["observation"]
+        truth = case["truth"]
+        estimate = case["curves"].get(record["variant"])
         axis.scatter(observation[:, 0], observation[:, 1], s=5, alpha=0.25, label="observation")
         axis.plot(*np.vstack((truth, truth[0])).T, color="black", linewidth=1.5, label="truth")
         if estimate is not None:
             axis.plot(*np.vstack((estimate, estimate[0])).T, color="tab:red", linewidth=1.2, label="estimate")
-        axis.set_title(
-            f"{record['shape']} seed={record['seed']}\n{record['variant']} {record['boundary_status']}"
-        )
+        axis.set_title(f"{record['shape']} seed={record['seed']}\n{record['variant']} {record['boundary_status']}")
         axis.set_aspect("equal")
     for axis in axes.ravel()[len(selected) :]:
         axis.axis("off")
@@ -105,7 +109,10 @@ def _write_markdown_report(
             "human containment efficacy, or performance on real sensor data. Invalid runs remain in the denominator.",
             "Confidence gates Lloyd step size only; it is not treated as risk density.",
             "The radial geometry baseline uses a relaxed 0.60 observation-coverage validity threshold versus 0.80",
-            "for alpha variants so its non-star reconstruction error remains measurable; failure rates are not compared",
+            (
+                "for alpha variants so its non-star reconstruction error remains measurable; "
+                "failure rates are not compared"
+            ),
             "as though those thresholds were identical.",
             "",
             f"Failure gallery entries: {len(gallery)}.",

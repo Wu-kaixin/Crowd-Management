@@ -1,5 +1,8 @@
 """Compare two evaluation output directories on scientific fields only.
 
+ROLE: ENTRY ONLY — scientific field diff utility; no package import required.
+Compares --reference vs --candidate directories; exit 0 = scientifically identical.
+
 Machine- and run-dependent fields (runtimes, memory, commits, hashes,
 timestamps) are pruned before comparison; every remaining field must match
 exactly. Exit code 0 means scientifically identical.

@@ -1,4 +1,8 @@
-"""G6 aggregate summaries and paired comparisons."""
+"""G6 aggregate summaries and paired comparisons.
+
+ROLE: ORCHESTRATION — bootstrap aggregate summaries and paired method comparisons.
+"""
+
 from __future__ import annotations
 
 from typing import Any
@@ -6,7 +10,7 @@ from typing import Any
 import numpy as np
 
 from ..shared import bootstrap_metric_summary as _summary
-from .config import G6EvaluationConfig, METRIC_DIRECTIONS
+from .config import METRIC_DIRECTIONS, G6EvaluationConfig
 
 
 def _aggregate(records: list[dict[str, Any]], config: G6EvaluationConfig) -> dict[str, Any]:
@@ -48,7 +52,13 @@ def _paired_comparisons(records: list[dict[str, Any]], config: G6EvaluationConfi
             if baseline == "abcg_v2" or "abcg_v2" not in config.methods:
                 continue
             comparison: dict[str, Any] = {}
-            for metric in ("plan_max_arc_gap_m", "tracking_rmse_final", "path_length_m", "coverage_ratio", "total_runtime_ms"):
+            for metric in (
+                "plan_max_arc_gap_m",
+                "tracking_rmse_final",
+                "path_length_m",
+                "coverage_ratio",
+                "total_runtime_ms",
+            ):
                 differences = []
                 paired_count = 0
                 for seed in config.seeds:
