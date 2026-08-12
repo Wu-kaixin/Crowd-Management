@@ -2,17 +2,17 @@
 
 Independent verification of the mathematical formulas, derivations, and
 numerical properties present on the audited `main` branch, performed with a
-local Wolfram Language kernel (Mathematica 15.0.0). All formal results were
-produced by `wolframscript` executing the scripts under `wolfram/`; nothing in
+local Wolfram Language kernel (Mathematica 15.0.1). All formal results were
+produced by `WolframKernel -script` executing the scripts under `wolfram/`; nothing in
 this report is based on unexecuted reasoning.
 
 | Field | Value |
 | --- | --- |
-| Audited `main` SHA | `93745582d849dafaa6251e9b2e12141be2117fe8` |
+| Audited `main` SHA | `491759761e441e83ee2f81ab5044b5b4f02a9347` |
 | Verification branch | `math-verification-main-v1` |
 | Wolfram tests | 74 total, **74 passed, 0 failed** |
 | Claims audited | 73 (see `MATHEMATICAL_CLAIM_MATRIX.csv`) |
-| Execution status | `MATHEMATICA_EXECUTED` (local kernel via `wolframscript` 1.14.0) |
+| Execution status | `MATHEMATICA_EXECUTED` (local Linux kernel via `WolframKernel -script`) |
 | Overall decision | **QUALIFIED_WITHIN_STATED_SCOPE** (layers A–D; see Section 21) |
 
 ---
@@ -64,7 +64,7 @@ Headline findings:
 **In scope.** Formula correctness, symbolic derivations, convexity and KKT
 conditions, exact finite enumeration, high-precision numerical residuals,
 counterexample search, and Python-vs-Wolfram implementation consistency for
-the code on `main` at SHA `9374558`. Only `main` was audited; the branches
+the code on `main` at SHA `4917597`. Only `main` was audited; the branches
 `step1-proof-strengthening-v1`, `local-main-backup`, and legacy DBAct /
 evacuation material were not used as sources of current definitions.
 
@@ -82,13 +82,13 @@ fields:
 | Item | Value |
 | --- | --- |
 | Repository | `https://github.com/Wu-kaixin/Crowd-Management` |
-| Audited `main` SHA | `93745582d849dafaa6251e9b2e12141be2117fe8` |
-| Verification branch / run head | `math-verification-main-v1` @ `2b7c1c1` |
-| Mathematica | 15.0.0 for Microsoft Windows (64-bit) (May 19, 2026) |
-| Kernel invocation | `wolframscript -file wolfram/verify_main.wls` (local kernel) |
-| wolframscript | 1.14.0 |
-| MCP server | `user-Wolfram` (local stdio); used for interactive health checks only — all formal results come from `wolframscript` runs |
-| OS / Python / NumPy / SciPy | Windows 11 / 3.12.13 / 2.4.6 / 1.18.0 |
+| Audited `main` SHA | `491759761e441e83ee2f81ab5044b5b4f02a9347` |
+| Verification branch / run head | `math-verification-main-v1` @ `15dfd9a` |
+| Mathematica | 15.0.1 for Linux x86 (64-bit) (July 2, 2026) |
+| Kernel invocation | `WolframKernel -script wolfram/verify_main.wls` (local kernel) |
+| wolframscript | 1.14.0 installed; wrapper not used for this run |
+| MCP server | Not used; all formal results came directly from the local Wolfram kernel |
+| OS / Python / NumPy / SciPy | Linux 6.17.0-1028-oem / 3.12.13 / 2.4.6 / 1.18.0 |
 | Precision | WorkingPrecision 50, AccuracyGoal 40, PrecisionGoal 40; exact rational arithmetic wherever inputs permit |
 | Random seeds | Wolfram `SeedRandom[20260721]`; Python case export seeds derived from base 20260721 (recorded per module in `cases/environment.json`) |
 
@@ -514,23 +514,23 @@ and layers F–G remain outside what a computer algebra system can certify.
 ## 22. Reproduction Commands
 
 From the repository root on `math-verification-main-v1` (requires a local
-Wolfram kernel; results were produced with Mathematica 15.0.0 and
-wolframscript 1.14.0):
+Wolfram kernel; results were produced with Mathematica 15.0.1 using the
+local kernel's script mode):
 
 ```bash
 # 1. Regenerate the deterministic input cases from Python (seed base 20260721)
 python scripts/export_math_verification_cases.py
 
 # 2. Run the full Wolfram verification suite (74 VerificationTests + residuals)
-wolframscript -file wolfram/verify_main.wls
+WolframKernel -script wolfram/verify_main.wls
 
 # 3. Summarize and gate on frozen tolerances (exits nonzero on any breach)
 python scripts/compare_wolfram_results.py
 
 # 4. Regenerate all verification figures (PNG 300dpi + PDF + data files)
-wolframscript -file wolfram/figures.wls
+WolframKernel -script wolfram/figures.wls
 
-# 5. Python baseline must remain green (168 tests)
+# 5. Python baseline must remain green (180 tests)
 pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 
 # 6. Check verification freshness against the current base SHA

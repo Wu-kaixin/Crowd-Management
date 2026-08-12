@@ -62,7 +62,7 @@ Write-up: [G6_COMPLIANCE_REPORT.md](reports/step1_g6_compliance/G6_COMPLIANCE_RE
 
 Core mathematical identities and selected implementation properties were independently checked with Wolfram Language under explicitly stated assumptions. This does not validate crowd-behavior assumptions, human compliance, real-world effectiveness, or deployment safety.
 
-- Audit basis: `main` @ `93745582d849`, Mathematica 15.0.0 (local kernel via `wolframscript`; nothing is executed in public CI).
+- Audit basis: `main` @ `491759761e44`, Mathematica 15.0.1 (local Linux kernel; nothing is executed in public CI).
 - 74 Wolfram `VerificationTest`s, 74 passed; 73 catalogued claims: 20 symbolically proved, 27 exactly verified, 6 numerically verified within domain, 8 property-tested, and 12 explicitly documented as gaps, doc mismatches, not CAS-verifiable, or not applicable — never presented as proven.
 - Max Python-vs-Wolfram relative deviation over 38 paired recomputations: 5.6e-16 (frozen tolerance 1e-9); safety-projection KKT residuals ≤ 3e-17 at 50-digit certified reference solutions.
 

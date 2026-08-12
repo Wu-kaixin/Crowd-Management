@@ -734,12 +734,8 @@ def export_statistics() -> None:
     }
 
     # Synthetic-record aggregation: failure denominator and missing pairs.
-    from crowd_management.evaluation.step1_g6 import (
-        G6EvaluationConfig,
-        METRIC_DIRECTIONS,
-        _aggregate,
-        _paired_comparisons,
-    )
+    from crowd_management.evaluation.step1_g6 import G6EvaluationConfig, METRIC_DIRECTIONS
+    from crowd_management.evaluation.step1_g6.aggregate import _aggregate, _paired_comparisons
 
     config = G6EvaluationConfig(seeds=tuple(range(6)), scenarios=("circle",), methods=("uniform_arc", "abcg_v2"))
     records = []

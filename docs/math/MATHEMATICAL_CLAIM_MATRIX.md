@@ -1,6 +1,6 @@
 # Mathematical Claim Matrix — ABCG Static Containment (main)
 
-Audited base: `origin/main` @ `93745582d849dafaa6251e9b2e12141be2117fe8`.
+Audited base: `origin/main` @ `491759761e441e83ee2f81ab5044b5b4f02a9347`.
 Verification branch: `math-verification-main-v1`.
 Machine-readable version: `MATHEMATICAL_CLAIM_MATRIX.csv` (same claim IDs).
 

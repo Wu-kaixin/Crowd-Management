@@ -4,49 +4,49 @@
 			"suite":"geometry",
 			"tests_succeeded":15,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":713
+			"time_elapsed_milliseconds":552
 		},
 		{
 			"suite":"periodic_coverage",
 			"tests_succeeded":11,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":183
+			"time_elapsed_milliseconds":134
 		},
 		{
 			"suite":"resources",
 			"tests_succeeded":6,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":8
+			"time_elapsed_milliseconds":9
 		},
 		{
 			"suite":"assignment",
 			"tests_succeeded":4,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":146
+			"time_elapsed_milliseconds":106
 		},
 		{
 			"suite":"controller",
 			"tests_succeeded":12,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":17
+			"time_elapsed_milliseconds":12
 		},
 		{
 			"suite":"safety_projection",
 			"tests_succeeded":9,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":145
+			"time_elapsed_milliseconds":113
 		},
 		{
 			"suite":"metrics",
 			"tests_succeeded":8,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":8
+			"time_elapsed_milliseconds":4
 		},
 		{
 			"suite":"statistics",
 			"tests_succeeded":9,
 			"tests_failed":0,
-			"time_elapsed_milliseconds":25
+			"time_elapsed_milliseconds":22
 		}
 	],
 	"results":[
@@ -54,445 +54,445 @@
 			"suite":"geometry",
 			"test_id":"GEOMETRY-AREA-001",
 			"outcome":"Success",
-			"microseconds":4218
+			"microseconds":3234
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-AREA-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":75
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-AREA-003",
 			"outcome":"Success",
-			"microseconds":4110
+			"microseconds":167
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-ARC-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":192
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-ARCS-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":280
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-ARCS-002",
 			"outcome":"Success",
-			"microseconds":70850
+			"microseconds":48686
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-PDIST-001",
 			"outcome":"Success",
-			"microseconds":567053
+			"microseconds":450224
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-PDIST-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":81
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-GAP-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":117
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-NORMAL-001",
 			"outcome":"Success",
-			"microseconds":4123
+			"microseconds":668
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-TANGENT-001",
 			"outcome":"Success",
-			"microseconds":23286
+			"microseconds":17254
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-SELFX-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":84
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-SPACING-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":41
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-CIRCUM-001",
 			"outcome":"Success",
-			"microseconds":39633
+			"microseconds":30511
 		},
 		{
 			"suite":"geometry",
 			"test_id":"GEOMETRY-INVAR-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":735
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-CELL-001",
 			"outcome":"Success",
-			"microseconds":33267
+			"microseconds":19302
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-HSTAR-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":170
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-HSTAR-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":182
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-OPT-001",
 			"outcome":"Success",
-			"microseconds":41720
+			"microseconds":32228
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-OPT-002",
 			"outcome":"Success",
-			"microseconds":99999
+			"microseconds":77736
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-OPT-003",
 			"outcome":"Success",
-			"microseconds":3404
+			"microseconds":2647
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-GAP-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":84
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-HSTAR-003",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":69
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-CROSS-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":1320
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-CROSS-002",
 			"outcome":"Success",
-			"microseconds":4419
+			"microseconds":135
 		},
 		{
 			"suite":"periodic_coverage",
 			"test_id":"PERIODIC-MONO-001",
 			"outcome":"Success",
-			"microseconds":481
+			"microseconds":140
 		},
 		{
 			"suite":"resources",
 			"test_id":"RESOURCE-CEILING-001",
 			"outcome":"Success",
-			"microseconds":4245
+			"microseconds":2936
 		},
 		{
 			"suite":"resources",
 			"test_id":"RESOURCE-CEILING-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":761
 		},
 		{
 			"suite":"resources",
 			"test_id":"RESOURCE-CLIP-001",
 			"outcome":"Success",
-			"microseconds":4134
+			"microseconds":1168
 		},
 		{
 			"suite":"resources",
 			"test_id":"RESOURCE-HYST-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":2881
 		},
 		{
 			"suite":"resources",
 			"test_id":"RESOURCE-HYST-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":1554
 		},
 		{
 			"suite":"resources",
 			"test_id":"RESOURCE-EDGE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":29
 		},
 		{
 			"suite":"assignment",
 			"test_id":"ASSIGNMENT-COST-001",
 			"outcome":"Success",
-			"microseconds":4174
+			"microseconds":2177
 		},
 		{
 			"suite":"assignment",
 			"test_id":"ASSIGNMENT-BRUTEFORCE-001",
 			"outcome":"Success",
-			"microseconds":91626
+			"microseconds":66248
 		},
 		{
 			"suite":"assignment",
 			"test_id":"ASSIGNMENT-TIE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":118
 		},
 		{
 			"suite":"assignment",
 			"test_id":"ASSIGNMENT-DOMINATE-001",
 			"outcome":"Success",
-			"microseconds":50013
+			"microseconds":37596
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-RECURSION-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":138
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-STABILITY-001",
 			"outcome":"Success",
-			"microseconds":8274
+			"microseconds":599
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-MONOTONE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":463
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-LYAPUNOV-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":235
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-SATURATED-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":1806
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-SATBOUND-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":113
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-SATBOUND-002",
 			"outcome":"Success",
-			"microseconds":8401
+			"microseconds":4035
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-TRACE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":3481
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-TRACE-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":877
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-RESERVE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":67
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-MONOTONE-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":32
 		},
 		{
 			"suite":"controller",
 			"test_id":"CONTROL-GUARD-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":26
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-HESSIAN-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":844
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-CONVEX-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":154
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-SUFFICIENT-001",
 			"outcome":"Success",
-			"microseconds":8339
+			"microseconds":8707
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-ROOM-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":89
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-ROWS-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":447
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-PRIMAL-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":98
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-DYKSTRA-001",
 			"outcome":"Success",
-			"microseconds":120871
+			"microseconds":90123
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-KKT-001",
 			"outcome":"Success",
-			"microseconds":15638
+			"microseconds":12766
 		},
 		{
 			"suite":"safety_projection",
 			"test_id":"SAFETY-EMERGENCY-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":74
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-COVERAGE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":97
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-COVERAGE-002",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":362
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-MAXDIST-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":405
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-INVAR-001",
 			"outcome":"Success",
-			"microseconds":8287
+			"microseconds":2243
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-GAP-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":429
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-RMSE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":65
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-PATH-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":64
 		},
 		{
 			"suite":"metrics",
 			"test_id":"METRIC-ANGULAR-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":83
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-SUMMARY-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":114
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-BOOT-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":340
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-DZ-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":64
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-WINRATE-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":297
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-DENOM-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":58
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-MISSING-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":72
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-BOOTRMS-001",
 			"outcome":"Success",
-			"microseconds":8391
+			"microseconds":6912
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-CONF-001",
 			"outcome":"Success",
-			"microseconds":0
+			"microseconds":1307
 		},
 		{
 			"suite":"statistics",
 			"test_id":"STAT-BOOTINV-001",
 			"outcome":"Success",
-			"microseconds":16673
+			"microseconds":13313
 		}
 	]
 }
