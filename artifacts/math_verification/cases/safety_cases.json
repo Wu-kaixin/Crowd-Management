@@ -1,0 +1,359 @@
+{
+ "dt": 0.1,
+ "instances": [
+  {
+   "config": {
+    "max_projection_sweeps": 200,
+    "min_crowd_distance": 0.8,
+    "min_guide_distance": 0.6,
+    "residual_tolerance": 1e-09,
+    "room_margin": 0.25
+   },
+   "crowd": [
+    [
+     4.0,
+     5.9
+    ],
+    [
+     6.0,
+     5.0
+    ]
+   ],
+   "dt": 0.1,
+   "name": "guide_pair_and_crowd_projected",
+   "nominal": [
+    [
+     1.0,
+     0.0
+    ],
+    [
+     -1.0,
+     0.0
+    ]
+   ],
+   "positions": [
+    [
+     4.0,
+     5.0
+    ],
+    [
+     4.65,
+     5.0
+    ]
+   ],
+   "python_applied": [
+    [
+     0.24999999500000203,
+     0.0
+    ],
+    [
+     -0.24999999500000203,
+     0.0
+    ]
+   ],
+   "python_bounds": [
+    -0.49999999000000406,
+    -0.9999999900000034
+   ],
+   "python_emergency_stop": false,
+   "python_kinds": [
+    "guide_pair",
+    "crowd"
+   ],
+   "python_matrix": [
+    [
+     -1.0,
+     0.0,
+     1.0,
+     -0.0
+    ],
+    [
+     0.0,
+     -1.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "python_max_residual_after": 0.0,
+   "python_projected": [
+    [
+     0.24999999500000203,
+     0.0
+    ],
+    [
+     -0.24999999500000203,
+     0.0
+    ]
+   ],
+   "python_status": "PROJECTED",
+   "python_sweeps": 1,
+   "python_type_counts": {
+    "crowd": 1,
+    "guide_pair": 1,
+    "room": 0
+   },
+   "room": [
+    20.0,
+    14.0
+   ],
+   "v_max": 1.0
+  },
+  {
+   "config": {
+    "max_projection_sweeps": 200,
+    "min_crowd_distance": 0.8,
+    "min_guide_distance": 0.6,
+    "residual_tolerance": 1e-09,
+    "room_margin": 0.25
+   },
+   "crowd": [],
+   "dt": 0.1,
+   "name": "room_wall_and_speed_ball",
+   "nominal": [
+    [
+     -3.0,
+     0.5
+    ]
+   ],
+   "positions": [
+    [
+     0.3,
+     7.0
+    ]
+   ],
+   "python_applied": [
+    [
+     -0.4999999899999996,
+     0.5
+    ]
+   ],
+   "python_bounds": [
+    -0.4999999899999996
+   ],
+   "python_emergency_stop": false,
+   "python_kinds": [
+    "room"
+   ],
+   "python_matrix": [
+    [
+     1.0,
+     0.0
+    ]
+   ],
+   "python_max_residual_after": 0.0,
+   "python_projected": [
+    [
+     -0.4999999899999996,
+     0.5
+    ]
+   ],
+   "python_status": "PROJECTED",
+   "python_sweeps": 1,
+   "python_type_counts": {
+    "crowd": 0,
+    "guide_pair": 0,
+    "room": 1
+   },
+   "room": [
+    20.0,
+    14.0
+   ],
+   "v_max": 1.0
+  },
+  {
+   "config": {
+    "max_projection_sweeps": 200,
+    "min_crowd_distance": 0.8,
+    "min_guide_distance": 0.6,
+    "residual_tolerance": 1e-09,
+    "room_margin": 0.25
+   },
+   "crowd": [
+    [
+     5.35,
+     5.95
+    ],
+    [
+     4.15,
+     4.6
+    ]
+   ],
+   "dt": 0.1,
+   "name": "three_guides_mixed",
+   "nominal": [
+    [
+     0.9,
+     0.3
+    ],
+    [
+     -0.9,
+     -0.2
+    ],
+    [
+     0.2,
+     0.9
+    ]
+   ],
+   "positions": [
+    [
+     5.0,
+     5.0
+    ],
+    [
+     5.7,
+     5.15
+    ],
+    [
+     5.3,
+     4.35
+    ]
+   ],
+   "python_applied": [
+    [
+     0.5548854358055905,
+     0.22604687910119778
+    ],
+    [
+     -0.5548854358055905,
+     -0.1260468791011978
+    ],
+    [
+     0.2,
+     0.9
+    ]
+   ],
+   "python_bounds": [
+    -1.15891052163818,
+    -1.15891052163818,
+    -0.7321245882864902
+   ],
+   "python_emergency_stop": false,
+   "python_kinds": [
+    "guide_pair",
+    "guide_pair",
+    "crowd"
+   ],
+   "python_matrix": [
+    [
+     -0.9778024140774093,
+     -0.20952908873087386,
+     0.9778024140774093,
+     0.20952908873087386,
+     0.0,
+     0.0
+    ],
+    [
+     -0.4190581774617465,
+     0.9079593845004518,
+     0.0,
+     0.0,
+     0.4190581774617465,
+     -0.9079593845004518
+    ],
+    [
+     0.0,
+     0.0,
+     0.40081883401970836,
+     -0.916157334902189,
+     0.0,
+     0.0
+    ]
+   ],
+   "python_max_residual_after": 0.0,
+   "python_projected": [
+    [
+     0.5548854358055905,
+     0.22604687910119778
+    ],
+    [
+     -0.5548854358055905,
+     -0.1260468791011978
+    ],
+    [
+     0.2,
+     0.9
+    ]
+   ],
+   "python_status": "PROJECTED",
+   "python_sweeps": 1,
+   "python_type_counts": {
+    "crowd": 1,
+    "guide_pair": 2,
+    "room": 0
+   },
+   "room": [
+    20.0,
+    14.0
+   ],
+   "v_max": 1.0
+  },
+  {
+   "config": {
+    "max_projection_sweeps": 60,
+    "min_crowd_distance": 5.0,
+    "min_guide_distance": 0.6,
+    "residual_tolerance": 1e-09,
+    "room_margin": 0.25
+   },
+   "crowd": [
+    [
+     5.2,
+     5.0
+    ]
+   ],
+   "dt": 0.1,
+   "name": "infeasible_emergency_stop",
+   "nominal": [
+    [
+     0.5,
+     0.0
+    ]
+   ],
+   "positions": [
+    [
+     5.0,
+     5.0
+    ]
+   ],
+   "python_applied": [
+    [
+     0.0,
+     0.0
+    ]
+   ],
+   "python_bounds": [
+    48.000000009999994
+   ],
+   "python_emergency_stop": true,
+   "python_kinds": [
+    "crowd"
+   ],
+   "python_matrix": [
+    [
+     -1.0,
+     0.0
+    ]
+   ],
+   "python_max_residual_after": 48.000000009999994,
+   "python_projected": [
+    [
+     -0.9999999999999999,
+     0.0
+    ]
+   ],
+   "python_status": "SAFETY_INFEASIBLE",
+   "python_sweeps": 60,
+   "python_type_counts": {
+    "crowd": 1,
+    "guide_pair": 0,
+    "room": 0
+   },
+   "room": [
+    20.0,
+    14.0
+   ],
+   "v_max": 1.0
+  }
+ ],
+ "v_max": 1.0
+}

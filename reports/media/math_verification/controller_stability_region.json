@@ -1,0 +1,9 @@
+{
+	"monotone":"0 < kp*dt <= 1",
+	"oscillatory":"1 < kp*dt < 2",
+	"divergent":"kp*dt >= 2",
+	"production_point":[
+		1.5,
+		0.1
+	]
+}

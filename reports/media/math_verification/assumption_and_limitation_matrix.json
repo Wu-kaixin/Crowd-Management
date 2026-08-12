@@ -1,0 +1,367 @@
+[
+	{
+		"claim_id":"GEOM-001",
+		"module":"geometry",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"GEOM-002",
+		"module":"geometry",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"GEOM-003",
+		"module":"geometry",
+		"class":"Documented gap"
+	},
+	{
+		"claim_id":"GEOM-004",
+		"module":"geometry",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"GEOM-005",
+		"module":"geometry",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"GEOM-006",
+		"module":"geometry",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"GEOM-007",
+		"module":"geometry",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"GEOM-008",
+		"module":"geometry",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"GEOM-009",
+		"module":"geometry",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"GEOM-010",
+		"module":"geometry",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"COV-001",
+		"module":"periodic_coverage",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"COV-002",
+		"module":"periodic_coverage",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"COV-003",
+		"module":"periodic_coverage",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"COV-004",
+		"module":"periodic_coverage",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"COV-005",
+		"module":"periodic_coverage",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"COV-006",
+		"module":"periodic_coverage",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"COV-007",
+		"module":"periodic_coverage",
+		"class":"Not applicable"
+	},
+	{
+		"claim_id":"RES-001",
+		"module":"resources",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"RES-002",
+		"module":"resources",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"RES-003",
+		"module":"resources",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"RES-004",
+		"module":"resources",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"RES-005",
+		"module":"resources",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"RES-006",
+		"module":"resources",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"ASG-001",
+		"module":"assignment",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"ASG-002",
+		"module":"assignment",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"ASG-003",
+		"module":"assignment",
+		"class":"Documented gap"
+	},
+	{
+		"claim_id":"ASG-004",
+		"module":"assignment",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"ASG-005",
+		"module":"assignment",
+		"class":"Documented gap"
+	},
+	{
+		"claim_id":"CTRL-001",
+		"module":"controller",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"CTRL-002",
+		"module":"controller",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"CTRL-003",
+		"module":"controller",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"CTRL-004",
+		"module":"controller",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"CTRL-005",
+		"module":"controller",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"CTRL-006",
+		"module":"controller",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"CTRL-007",
+		"module":"controller",
+		"class":"Documented gap"
+	},
+	{
+		"claim_id":"CTRL-008",
+		"module":"controller",
+		"class":"Not verifiable by CAS"
+	},
+	{
+		"claim_id":"CTRL-009",
+		"module":"controller",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"CTRL-010",
+		"module":"controller",
+		"class":"Not applicable"
+	},
+	{
+		"claim_id":"SAF-001",
+		"module":"safety",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"SAF-002",
+		"module":"safety",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"SAF-003",
+		"module":"safety",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"SAF-004",
+		"module":"safety",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"SAF-005",
+		"module":"safety",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"SAF-006",
+		"module":"safety",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"SAF-007",
+		"module":"safety",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"SAF-008",
+		"module":"safety",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"SAF-009",
+		"module":"safety",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"SAF-010",
+		"module":"safety",
+		"class":"Not verifiable by CAS"
+	},
+	{
+		"claim_id":"SAF-011",
+		"module":"safety",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"BND-001",
+		"module":"boundary",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"BND-002",
+		"module":"boundary",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"BND-003",
+		"module":"boundary",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"BND-004",
+		"module":"boundary",
+		"class":"Not verifiable by CAS"
+	},
+	{
+		"claim_id":"BND-005",
+		"module":"boundary",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"BND-006",
+		"module":"boundary",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-001",
+		"module":"metrics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-002",
+		"module":"metrics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-003",
+		"module":"metrics",
+		"class":"Symbolic proof"
+	},
+	{
+		"claim_id":"MET-004",
+		"module":"metrics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-005",
+		"module":"metrics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-006",
+		"module":"metrics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-007",
+		"module":"metrics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"MET-008",
+		"module":"metrics",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"STAT-001",
+		"module":"statistics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"STAT-002",
+		"module":"statistics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"STAT-003",
+		"module":"statistics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"STAT-004",
+		"module":"statistics",
+		"class":"Exact verification"
+	},
+	{
+		"claim_id":"STAT-005",
+		"module":"statistics",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"STAT-006",
+		"module":"statistics",
+		"class":"Numerical \/ property only"
+	},
+	{
+		"claim_id":"STAT-007",
+		"module":"statistics",
+		"class":"Not applicable"
+	},
+	{
+		"claim_id":"STAT-008",
+		"module":"statistics",
+		"class":"Documented gap"
+	},
+	{
+		"claim_id":"DOC-001",
+		"module":"documentation",
+		"class":"Documented gap"
+	},
+	{
+		"claim_id":"DOC-002",
+		"module":"documentation",
+		"class":"Exact verification"
+	}
+]

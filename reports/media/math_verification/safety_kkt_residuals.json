@@ -1,0 +1,26 @@
+[
+	{
+		"name":"guide_pair_and_crowd_projected",
+		"dykstra_vs_reference_distance":3.925231146709438e-17,
+		"kkt_primal":0.0,
+		"kkt_stationarity":0.0,
+		"kkt_complementarity":0.0,
+		"python_max_residual_after":0.0
+	},
+	{
+		"name":"room_wall_and_speed_ball",
+		"dykstra_vs_reference_distance":0.0,
+		"kkt_primal":0.0,
+		"kkt_stationarity":0.0,
+		"kkt_complementarity":0.0,
+		"python_max_residual_after":0.0
+	},
+	{
+		"name":"three_guides_mixed",
+		"dykstra_vs_reference_distance":2.7755575615628914e-17,
+		"kkt_primal":0.0,
+		"kkt_stationarity":2.981800031023134e-17,
+		"kkt_complementarity":0.0,
+		"python_max_residual_after":0.0
+	}
+]

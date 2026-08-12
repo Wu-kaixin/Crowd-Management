@@ -1,0 +1,67 @@
+{
+	"geometry":{
+		"cases":5,
+		"max_relative_residual":2.829179168472864e-16,
+		"verdict":"match"
+	},
+	"periodic_coverage":{
+		"cases":21,
+		"max_relative_residual":1.9184653865522707e-16,
+		"verdict":"match"
+	},
+	"resources":{
+		"cases":240,
+		"max_relative_residual":0,
+		"verdict":"exact match (integer arithmetic)"
+	},
+	"assignment":{
+		"cases":24,
+		"max_relative_residual":0,
+		"verdict":"exact optimal-cost match (rational arithmetic)"
+	},
+	"controller":{
+		"cases":3,
+		"max_relative_residual":5.555988215398128e-16,
+		"verdict":"match"
+	},
+	"safety_projection":{
+		"cases":3,
+		"measures":[
+			{
+				"name":"guide_pair_and_crowd_projected",
+				"dykstra_vs_reference_distance":3.925231146709438e-17,
+				"kkt_primal":0.0,
+				"kkt_stationarity":0.0,
+				"kkt_complementarity":0.0,
+				"python_max_residual_after":0.0
+			},
+			{
+				"name":"room_wall_and_speed_ball",
+				"dykstra_vs_reference_distance":0.0,
+				"kkt_primal":0.0,
+				"kkt_stationarity":0.0,
+				"kkt_complementarity":0.0,
+				"python_max_residual_after":0.0
+			},
+			{
+				"name":"three_guides_mixed",
+				"dykstra_vs_reference_distance":2.7755575615628914e-17,
+				"kkt_primal":0.0,
+				"kkt_stationarity":2.981800031023134e-17,
+				"kkt_complementarity":0.0,
+				"python_max_residual_after":0.0
+			}
+		],
+		"verdict":"see measures"
+	},
+	"metrics":{
+		"cases":5,
+		"max_relative_residual":1.543413037322766e-16,
+		"verdict":"match"
+	},
+	"statistics":{
+		"cases":4,
+		"max_relative_residual":3.847531664716588e-16,
+		"verdict":"match"
+	}
+}
