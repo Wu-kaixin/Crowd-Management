@@ -18,6 +18,7 @@ env/
 outputs/*
 !outputs/.gitkeep
 runs/
+artifacts/
 reports/stage4_density_eval_v1/
 reports/step1_g6_compliance/records.csv
 reports/step1_g6_compliance/records.json
@@ -36,3 +37,7 @@ Crowd-Management-tested.zip
 .DS_Store
 .vscode/
 .idea/
+
+# Local temporary stash (frozen evidence, etc.)
+_stash/
+

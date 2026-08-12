@@ -1,5 +1,7 @@
 """Static unknown-crowd point-cloud generators.
 
+ROLE: CORE DATA GENERATORS — synthetic static point clouds from config. No truth leakage to estimators.
+
 Step 1 of the refocused project treats a crowd as an observed point cloud.
 The points do not move and do not react to guide agents. This isolates the
 boundary-estimation and guide-agent deployment problem before dynamic behavior

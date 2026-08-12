@@ -1,4 +1,7 @@
-"""Boundary estimation for static unknown-crowd point clouds."""
+"""Boundary estimation for static unknown-crowd point clouds.
+
+ROLE: CORE MATH — v1 radial boundary from observed points only. No ground-truth or alpha-shape logic.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

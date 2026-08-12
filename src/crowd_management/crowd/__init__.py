@@ -1,4 +1,8 @@
-"""Crowd representations for the adaptive guide-agent deployment line."""
+"""Crowd representations for the adaptive guide-agent deployment line.
+
+ROLE: CORE DATA GENERATORS — synthetic static point clouds + independent analytic truth.
+Truth is for evaluation only; controllers must not depend on it at runtime.
+"""
 
 from .static_crowd import (
     StaticCrowdConfig,

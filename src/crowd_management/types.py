@@ -1,4 +1,8 @@
-"""Shared dataclasses and numerical helpers for the crowd-management sprint."""
+"""Shared dataclasses and numerical helpers for the crowd-management sprint.
+
+ROLE: CORE — shared Array alias, vector helpers, and config dataclasses. No domain algorithms.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -168,8 +172,8 @@ class SimulationConfig:
     metrics: MetricsConfig = field(default_factory=MetricsConfig)
 
     @classmethod
-    def from_yaml(cls, path: str | Path) -> "SimulationConfig":
-        with open(path, "r", encoding="utf-8") as f:
+    def from_yaml(cls, path: str | Path) -> SimulationConfig:
+        with open(path, encoding="utf-8") as f:
             raw = yaml.safe_load(f)
 
         if "simulation" in raw:
@@ -177,7 +181,7 @@ class SimulationConfig:
         return cls._from_reference_yaml(raw)
 
     @classmethod
-    def _from_reference_yaml(cls, raw: dict[str, Any]) -> "SimulationConfig":
+    def _from_reference_yaml(cls, raw: dict[str, Any]) -> SimulationConfig:
         room_raw = dict(raw["room"])
         exits = _parse_exits(room_raw)
         if exits:
@@ -204,7 +208,7 @@ class SimulationConfig:
         )
 
     @classmethod
-    def _from_sprint_yaml(cls, raw: dict[str, Any]) -> "SimulationConfig":
+    def _from_sprint_yaml(cls, raw: dict[str, Any]) -> SimulationConfig:
         room_raw = raw["room"]
         exit_raw = room_raw["exit"]
         sim_raw = raw["simulation"]

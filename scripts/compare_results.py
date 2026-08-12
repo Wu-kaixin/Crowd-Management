@@ -1,5 +1,8 @@
 """Compare two evaluation output directories on scientific fields only.
 
+ROLE: ENTRY ONLY — scientific field diff utility; no package import required.
+Compares --reference vs --candidate directories; exit 0 = scientifically identical.
+
 Machine- and run-dependent fields (runtimes, memory, commits, hashes,
 timestamps) are pruned before comparison; every remaining field must match
 exactly. Exit code 0 means scientifically identical.
@@ -8,6 +11,7 @@ Usage:
     python scripts/compare_results.py --reference DIR_A --candidate DIR_B \
         [--files records.json aggregate.json ...]
 """
+
 from __future__ import annotations
 
 import argparse
@@ -40,11 +44,7 @@ DEFAULT_FILES = (
 
 def _prune(value: Any) -> Any:
     if isinstance(value, dict):
-        return {
-            key: _prune(item)
-            for key, item in value.items()
-            if not _PRUNE_KEY_PATTERN.search(str(key))
-        }
+        return {key: _prune(item) for key, item in value.items() if not _PRUNE_KEY_PATTERN.search(str(key))}
     if isinstance(value, list):
         return [_prune(item) for item in value]
     return value
@@ -69,7 +69,7 @@ def _diff(reference: Any, candidate: Any, path: str, out: list[str]) -> None:
         if len(reference) != len(candidate):
             out.append(f"{path}: length {len(reference)} != {len(candidate)}")
             return
-        for index, (ref_item, cand_item) in enumerate(zip(reference, candidate)):
+        for index, (ref_item, cand_item) in enumerate(zip(reference, candidate, strict=True)):
             _diff(ref_item, cand_item, f"{path}[{index}]", out)
         return
     if isinstance(reference, float) and isinstance(candidate, float):
@@ -92,9 +92,7 @@ def main() -> int:
 
     reference_dir = Path(args.reference)
     candidate_dir = Path(args.candidate)
-    names = args.files if args.files else [
-        name for name in DEFAULT_FILES if (reference_dir / name).is_file()
-    ]
+    names = args.files if args.files else [name for name in DEFAULT_FILES if (reference_dir / name).is_file()]
     if not names:
         print(f"no comparable files found in {reference_dir}")
         return 2

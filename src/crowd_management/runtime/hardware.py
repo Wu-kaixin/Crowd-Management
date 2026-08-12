@@ -1,10 +1,14 @@
 """Read-only hardware and numerical-backend detection.
 
+ROLE: ORCHESTRATION INFRA — detect CPU/RAM/BLAS backend for parallel planning.
+Must not change scientific numerics (read-only probes only).
+
 All probes degrade gracefully when optional dependencies (psutil,
 threadpoolctl) are missing; detection must never fail a simulation.
 The exported metadata intentionally excludes privacy-sensitive fields
 (username, hostname, IP/MAC addresses, filesystem paths, serial numbers).
 """
+
 from __future__ import annotations
 
 import multiprocessing

@@ -1,5 +1,8 @@
 """Phase 1 profiling harness for the Step 1 evaluation pipeline.
 
+ROLE: ENTRY ONLY — profiling harness; calls evaluation/runtime modules directly.
+OUTPUT: artifacts/performance/ (cProfile, stage timers, scaling probes; not evidence).
+
 Three probes, all read-only with respect to the measured code:
 
 1. cProfile over a reduced-but-representative PR6/G6 workload (workers=1)
@@ -17,6 +20,7 @@ official results and are not used as scientific evidence.
 Usage:
     python scripts/profile_step1.py --probe cprofile stages scaling
 """
+
 from __future__ import annotations
 
 import argparse
@@ -27,9 +31,10 @@ import pstats
 import sys
 import tempfile
 import time
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
@@ -69,7 +74,7 @@ def _profile_cprofile(seed_count: int) -> dict[str, Any]:
 
     total_time = stats.total_tt
     entries = []
-    for func, (cc, nc, tt, ct, _callers) in stats.stats.items():
+    for func, (_cc, nc, tt, ct, _callers) in stats.stats.items():
         entries.append({"func": pstats.func_std_string(func), "ncalls": nc, "tottime": tt, "cumtime": ct})
     entries_self = sorted(entries, key=lambda item: -item["tottime"])[:20]
     entries_cum = sorted(entries, key=lambda item: -item["cumtime"])[:20]
@@ -136,7 +141,11 @@ def _profile_stages(seed_count: int) -> dict[str, Any]:
 
             if isinstance(boundary, BoundaryEstimateV2):
                 started = time.perf_counter()
-                plan = plan_periodic_arc_coverage(boundary, config.fixed_guide_count, PeriodicArcCVTConfig(max_iterations=200))
+                plan = plan_periodic_arc_coverage(
+                    boundary,
+                    config.fixed_guide_count,
+                    PeriodicArcCVTConfig(max_iterations=200),
+                )
                 timings["periodic_arc_cvt_planning"] = time.perf_counter() - started
 
                 initial, _layout = step1_g6._initial_guides(seed, config.available_guides)
@@ -146,12 +155,17 @@ def _profile_stages(seed_count: int) -> dict[str, Any]:
 
                 if assignment.status == "VALID":
                     started = time.perf_counter()
-                    trace, events, metrics = step1_g6._run_feedback_episode(observation, initial, plan.target_xy, assignment, config)
+                    trace, events, metrics = step1_g6._run_feedback_episode(
+                        observation, initial, plan.target_xy, assignment, config
+                    )
                     timings["feedback_episode_with_safety"] = time.perf_counter() - started
 
                     started = time.perf_counter()
                     step1_g6._curve_errors(boundary.curve_points, truth)
-                    step1_g6._trajectory_crossings(trace["positions"], np.flatnonzero(np.asarray(assignment.guide_to_target) >= 0))
+                    step1_g6._trajectory_crossings(
+                        trace["positions"],
+                        np.flatnonzero(np.asarray(assignment.guide_to_target) >= 0),
+                    )
                     timings["metrics_curve_and_crossings"] = time.perf_counter() - started
 
                     with tempfile.TemporaryDirectory() as scratch:

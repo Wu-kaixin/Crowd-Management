@@ -1,5 +1,7 @@
 """Deterministic geometry for ordered simple closed planar curves.
 
+ROLE: CORE MATH — arc-length, resampling, orientation, self-intersection on closed curves. No control semantics.
+
 Curves are represented by finite ``(K, 2)`` arrays in metres.  Closure is
 implicit between the final and first point; a duplicated final endpoint is
 accepted on input and removed on output.

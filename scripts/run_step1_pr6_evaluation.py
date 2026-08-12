@@ -1,3 +1,9 @@
+"""CLI entry for paired Step 1 PR6 (boundary/confidence) evaluation.
+
+ROLE: ENTRY ONLY — logic in crowd_management.evaluation.step1_pr6.
+OUTPUT: --output reports/step1_pr6_evaluation (diagnostic; not a G6 substitute)
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -64,6 +70,7 @@ def main() -> None:
                 bootstrap_samples=args.bootstrap_samples,
                 observation_count=args.observation_count,
                 workers=plan.workers,
+                blas_threads_per_worker=plan.blas_threads_per_worker,
             ),
         )
     runtime_metadata = {

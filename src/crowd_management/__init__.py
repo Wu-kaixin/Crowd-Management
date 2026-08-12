@@ -1,4 +1,11 @@
-"""Adaptive guide-agent deployment around unknown crowds."""
+"""Adaptive guide-agent deployment around unknown crowds.
+
+Package roles (see docs/CODEMAP.zh.md):
+  CORE:        crowd/, estimation/, geometry/, controllers/
+  ORCHESTRATE: experiments/, evaluation/, runtime/, reporting/
+  METRICS/IO:  containment_metrics.py, containment_visualization.py
+  DO NOT USE:  legacy/ on this branch (archive lives on local-main-backup)
+"""
 
 from .containment_metrics import containment_summary
 from .controllers import ABCGController, BoundaryCVTController, LegacyCenterRadiusController

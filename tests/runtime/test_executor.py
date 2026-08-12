@@ -4,7 +4,7 @@ import os
 
 import pytest
 
-from crowd_management.runtime import run_tasks
+from crowd_management.runtime import TaskPool, run_tasks
 from crowd_management.runtime.hardware import BLAS_ENV_VARS
 
 
@@ -47,3 +47,11 @@ def test_children_inherit_blas_env_and_parent_env_is_restored() -> None:
     results = run_tasks(_report_env, [("OMP_NUM_THREADS",), ("OPENBLAS_NUM_THREADS",)], workers=2)
     assert results == ["1", "1"]
     assert {name: os.environ.get(name) for name in BLAS_ENV_VARS} == saved
+
+
+def test_task_pool_reuses_across_batches() -> None:
+    with TaskPool(2) as pool:
+        first = run_tasks(_square, [(1,), (2,), (3,)], workers=2, pool=pool)
+        second = run_tasks(_square, [(4,), (5,)], workers=2, pool=pool)
+    assert first == [1, 4, 9]
+    assert second == [16, 25]

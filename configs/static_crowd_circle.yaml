@@ -1,3 +1,7 @@
+# INPUT config for static containment (not an algorithm file).
+# Consumed by: scripts/run_static_containment.py → experiments.static_containment
+# Scenario: circle crowd shape (primary demo).
+# See docs/CODEMAP.zh.md
 seed: 0
 room:
   size: [20.0, 14.0]

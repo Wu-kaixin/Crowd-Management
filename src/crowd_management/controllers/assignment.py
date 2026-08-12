@@ -1,4 +1,7 @@
-"""PR3 deterministic identity-preserving guide-to-target assignment."""
+"""PR3 deterministic identity-preserving guide-to-target assignment.
+
+ROLE: CORE MATH — Hungarian guide-to-target assignment with switch costs. No motion integration or resource policy.
+"""
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field

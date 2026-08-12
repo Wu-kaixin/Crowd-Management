@@ -1,0 +1,124 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-analysis:
+    name: static-analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Dependency check
+        run: python -m pip check
+      - name: Compile check
+        run: python -m compileall -q src scripts
+      - name: Ruff lint
+        run: python -m ruff check src/crowd_management/reporting src/crowd_management/evaluation/shared src/crowd_management/evaluation/schemas.py src/crowd_management/evaluation/schema_validation.py src/crowd_management/evaluation/step1_g6 src/crowd_management/evaluation/step1_pr6 src/crowd_management/experiments/static_containment src/crowd_management/runtime scripts/run_ci_smoke.py scripts/check_readme_consistency.py scripts/compare_results.py
+      - name: Ruff format check
+        run: python -m ruff format --check src/crowd_management/reporting src/crowd_management/evaluation/shared src/crowd_management/evaluation/schemas.py src/crowd_management/evaluation/schema_validation.py scripts/run_ci_smoke.py scripts/check_readme_consistency.py scripts/compare_results.py
+      - name: Scoped mypy
+        run: python -m mypy
+      - name: README consistency
+        run: python scripts/check_readme_consistency.py
+
+  tests-linux:
+    name: tests-linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Prepare temp directories
+        run: mkdir -p artifacts/ci
+      - name: Unit and regression tests
+        run: python -m pytest --basetemp=artifacts/ci/pytest-temp -o cache_dir=artifacts/ci/pytest-cache --junitxml=artifacts/ci/pytest-linux.xml
+      - name: Upload pytest report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-linux
+          path: artifacts/ci/pytest-linux.xml
+          if-no-files-found: ignore
+
+  tests-windows:
+    name: tests-windows
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package
+        shell: bash
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Prepare temp directories
+        shell: bash
+        run: mkdir -p artifacts/ci
+      - name: Unit and regression tests
+        shell: bash
+        run: python -m pytest --basetemp=artifacts/ci/pytest-temp -o cache_dir=artifacts/ci/pytest-cache --junitxml=artifacts/ci/pytest-windows.xml
+      - name: Upload pytest report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-windows
+          path: artifacts/ci/pytest-windows.xml
+          if-no-files-found: ignore
+
+  deterministic-smoke:
+    name: deterministic-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Prepare temp directories
+        run: mkdir -p artifacts/ci
+      - name: Deterministic smoke
+        run: |
+          python scripts/run_ci_smoke.py --output artifacts/ci/smoke --expected tests/golden/ci_smoke_expected.json | tee artifacts/ci/smoke-stdout.json
+      - name: Schema regression tests
+        run: python -m pytest tests/regression/test_result_schema.py tests/smoke/test_deterministic_smoke.py --basetemp=artifacts/ci/pytest-temp -o cache_dir=artifacts/ci/pytest-cache -q
+      - name: Upload smoke diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-diagnostics
+          path: |
+            artifacts/ci/smoke-stdout.json
+            artifacts/ci/smoke/summary.json
+            artifacts/ci/smoke/manifest.json
+          if-no-files-found: ignore

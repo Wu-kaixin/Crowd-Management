@@ -1,5 +1,7 @@
 """ABCG-v2 Step 1 radial/alpha boundary and bootstrap confidence contract.
 
+ROLE: CORE MATH — alpha-shape boundary + bootstrap confidence from observed points. Must not use synthetic truth.
+
 PR1 established the radial adapter and explicit validity states. PR6 adds a
 single-component alpha-shape estimator plus aligned bootstrap uncertainty; it
 does not expose synthetic truth to the estimator.

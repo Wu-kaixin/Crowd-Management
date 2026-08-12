@@ -1,4 +1,8 @@
-"""Visualization helpers for static containment experiments."""
+"""Visualization helpers for static containment experiments.
+
+ROLE: CORE — matplotlib figure helpers for static containment. No metric computation or orchestration.
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -24,8 +28,23 @@ def plot_static_containment(
     closed_boundary = np.vstack((boundary.boundary_points, boundary.boundary_points[0]))
     closed_safety = np.vstack((boundary.safety_points, boundary.safety_points[0]))
     ax.plot(closed_boundary[:, 0], closed_boundary[:, 1], color="#2f4b7c", linewidth=1.6, label="estimated boundary")
-    ax.plot(closed_safety[:, 0], closed_safety[:, 1], color="#f58518", linewidth=1.6, linestyle="--", label="safety boundary")
-    ax.scatter(guide_points[:, 0], guide_points[:, 1], s=90, c="#e45756", edgecolors="white", linewidths=0.9, label="guide agents")
+    ax.plot(
+        closed_safety[:, 0],
+        closed_safety[:, 1],
+        color="#f58518",
+        linewidth=1.6,
+        linestyle="--",
+        label="safety boundary",
+    )
+    ax.scatter(
+        guide_points[:, 0],
+        guide_points[:, 1],
+        s=90,
+        c="#e45756",
+        edgecolors="white",
+        linewidths=0.9,
+        label="guide agents",
+    )
     ax.scatter([boundary.center[0]], [boundary.center[1]], marker="x", s=80, c="#333333", label="estimated center")
     ax.set_title(title)
     ax.set_aspect("equal", adjustable="box")

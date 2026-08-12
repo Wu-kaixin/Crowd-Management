@@ -1,0 +1,21 @@
+{
+  "schema": "abcg-ci-smoke-golden-v1",
+  "config": "configs/ci_smoke.yaml",
+  "method": "abcg",
+  "stable_fields": {
+    "coverage_ratio": 0.8527777777777777,
+    "max_euclidean_boundary_distance": 1.6210218118627666,
+    "evaluation_status": "valid",
+    "boundary_v2_status": "VALID",
+    "periodic_plan_status": "VALID",
+    "resource_status": "VALID",
+    "assignment_status": "VALID",
+    "episode_status": "TIMEOUT",
+    "safety_filter_status": "ENABLED_PR5",
+    "safety_projected_steps": 60,
+    "method_status": "diagnostic_only",
+    "active_guide_count": 6,
+    "reserve_guide_count": 2,
+    "truth_component_count": 1
+  }
+}

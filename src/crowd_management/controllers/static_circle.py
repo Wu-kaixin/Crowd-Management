@@ -1,4 +1,7 @@
-"""Static circular deployment baseline."""
+"""Static circular deployment baseline.
+
+ROLE: CORE MATH — fixed-radius circular ring baseline. No boundary estimation or motion.
+"""
 from __future__ import annotations
 
 import numpy as np
