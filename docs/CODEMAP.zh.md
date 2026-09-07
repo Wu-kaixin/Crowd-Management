@@ -2,7 +2,7 @@
 
 一眼分清：**核心算法**、**实验编排**、**输入配置**、**运行输出**、**冻结证据**、**文档/测试**。
 
-权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。
+权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
 
 ---
 
@@ -34,7 +34,7 @@ configs/*.yaml          ──输入──►  scripts/*.py（薄 CLI）
 | **本地输出** | `runs/`, `outputs/`, `.tmp/` | gitignore，可删可重跑 |
 | **冻结证据** | `reports/`（部分入库） | 论文/README 用的固定结果与图 |
 | **暂存 / 测临时** | `_stash/`（gitignore） | 证据备份 + pytest 工作目录（`.tmp` 被锁时用 `_stash/pytest_work`） |
-| **勿碰（本分支）** | `src/.../legacy/` | 源码在 `local-main-backup`；本分支勿复活 |
+| **勿碰（本分支）** | `src/.../legacy/` | 旧源码在 `archive/legacy-evacuation-2026-07-21`；`main` 勿复活 |
 
 ---
 
@@ -46,7 +46,7 @@ Crowd-Management/
 ├── scripts/          【入口】薄 CLI，几乎不含算法
 ├── src/crowd_management/   【包】核心 + 编排
 ├── tests/            【测试】step1 / regression / smoke / runtime
-├── docs/             【文档】本文件、RESEARCH_SPEC、架构与性能笔记
+├── docs/             【文档】本文件、RESEARCH_SPEC、ARCHIVE_INDEX、架构与性能笔记
 ├── reports/          【证据/媒体】G6/PR6 报告、README 图（部分入库）
 ├── runs/             【输出·本地】正式实验原始产物（gitignore）
 ├── artifacts/        【输出·本地】CI/性能临时产物
@@ -121,7 +121,7 @@ crowd 生成点云
 
 ### 2.3 【遗留】
 
-`legacy/`：本分支无活跃 `.py`（可能仅有 `__pycache__`）。旧疏散/DBAct 在分支 `local-main-backup`。
+`main` 不保留旧疏散/DBAct 活跃源码。历史代码与旧测试位于只读归档分支 `archive/legacy-evacuation-2026-07-21`。未来若 Step 2/3 需要复用，只选择性迁移并重新验证，不整体 merge 回 `main`。
 
 ---
 
@@ -206,6 +206,7 @@ runs/foo/
 | `tests/smoke/` | 确定性小跑 |
 | `tests/runtime/` | 并行与线程限制 |
 | `docs/RESEARCH_SPEC.md` | 研究范围与声称纪律 |
+| `docs/ARCHIVE_INDEX.md` | 历史分支快照与复用规则 |
 | `docs/architecture/` | 重构基线/计划/结果 |
 | `docs/performance/` | 性能报告（非正式科学证据） |
 

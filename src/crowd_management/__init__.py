@@ -4,7 +4,7 @@ Package roles (see docs/CODEMAP.zh.md):
   CORE:        crowd/, estimation/, geometry/, controllers/
   ORCHESTRATE: experiments/, evaluation/, runtime/, reporting/
   METRICS/IO:  containment_metrics.py, containment_visualization.py
-  DO NOT USE:  legacy/ on this branch (archive lives on local-main-backup)
+  DO NOT USE:  legacy/ on this branch (archive: archive/legacy-evacuation-2026-07-21)
 """
 
 from .containment_metrics import containment_summary

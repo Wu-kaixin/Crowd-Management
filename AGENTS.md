@@ -18,12 +18,16 @@ Quick labels:
 This repository is now centered on **ABCG static unknown-crowd containment**.
 The active workflow is not DBAct evacuation optimization. DBAct, density-DBAct,
 and old evacuation-guidance material have been removed from `main` and are
-preserved on the `local-main-backup` branch:
+preserved on the read-only archive branch `archive/legacy-evacuation-2026-07-21`:
 
 ```text
-local-main-backup:legacy/evacuation_guidance/
-local-main-backup:src/crowd_management/legacy/
+archive/legacy-evacuation-2026-07-21:legacy/evacuation_guidance/
+archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
 ```
+
+The former proof-strengthening branch tip is preserved separately as
+`archive/g7-proof-strengthening-failed-2026-07-20`. See
+[`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
 
 New work should start from:
 
@@ -78,7 +82,7 @@ python -m mypy
 The authoritative suite size is whatever `pytest --collect-only` reports on
 the current branch (see the `TEST_COUNT` marker in `README.md`, checked by
 `scripts/check_readme_consistency.py`). Legacy evacuation tests live on the
-`local-main-backup` branch.
+`archive/legacy-evacuation-2026-07-21` branch.
 
 Dependency health command:
 
@@ -116,4 +120,5 @@ python scripts/build_readme_media.py
 ```
 
 Legacy evacuation scripts, their compatibility wrappers, and old media no
-longer live on `main`. Use the `local-main-backup` branch to access them.
+longer live on `main`. Use `archive/legacy-evacuation-2026-07-21` to inspect
+them; do not merge the archive wholesale back into `main`.

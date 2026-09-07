@@ -18,7 +18,7 @@ Crowd Management is a Python research prototype for **static unknown-crowd conta
 
 The active method family is **ABCG: Adaptive Boundary-Coverage Guidance** (boundary estimation, periodic coverage planning, adaptive resources, identity-preserving assignment, measured-feedback velocity control, and sampled-data safety projection). From freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`, PR0–PR6 and G0–G6 all pass. **ABCG-v2 Step 1 is research-complete** for that narrow static scope.
 
-Evacuation / DBAct / density-DBAct code is **not** on `main`. It lives on [`local-main-backup`](https://github.com/Wu-kaixin/Crowd-Management/tree/local-main-backup) for reproducibility only.
+Evacuation / DBAct / density-DBAct code is **not** on `main`. It is preserved on [`archive/legacy-evacuation-2026-07-21`](https://github.com/Wu-kaixin/Crowd-Management/tree/archive/legacy-evacuation-2026-07-21) for reproducibility only.
 
 > Research prototype only — not a calibrated safety product or certified controller.
 
@@ -171,14 +171,17 @@ Crowd-Management/
 
 ---
 
-## Legacy Archive
+## Research Archives
+
+Historical branch snapshots are indexed in [docs/ARCHIVE_INDEX.md](docs/ARCHIVE_INDEX.md).
 
 ```text
-local-main-backup:legacy/evacuation_guidance/
-local-main-backup:src/crowd_management/legacy/
+archive/legacy-evacuation-2026-07-21:legacy/evacuation_guidance/
+archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
+archive/g7-proof-strengthening-failed-2026-07-20
 ```
 
-Inspect with `git switch local-main-backup`. New work starts from `scripts/run_static_containment.py` on `main`.
+Inspect with `git switch archive/legacy-evacuation-2026-07-21` or `git switch archive/g7-proof-strengthening-failed-2026-07-20`. These are historical/read-only snapshots; new work starts from `main`.
 
 ---
 
