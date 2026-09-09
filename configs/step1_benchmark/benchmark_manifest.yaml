@@ -1,0 +1,14 @@
+paired_cases:
+  circle:
+    synthetic: synthetic_circle.yaml
+    jupedsim: jupedsim_circle.yaml
+  ellipse:
+    synthetic: synthetic_ellipse.yaml
+    jupedsim: jupedsim_ellipse.yaml
+  irregular:
+    synthetic: synthetic_irregular.yaml
+    jupedsim: jupedsim_irregular.yaml
+pressure_cases:
+  concave: jupedsim_concave.yaml
+pairing_note: Pairs match nominal geometry, crowd count, room, controller and evaluation
+  settings. They do not claim identical point-process distributions.

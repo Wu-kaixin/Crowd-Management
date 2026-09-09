@@ -17,6 +17,7 @@ dependencies = [
   "imageio-ffmpeg>=0.5",
   "psutil>=5.9",
   "threadpoolctl>=3.3",
+  "jupedsim==1.4.2",
 ]
 
 [project.optional-dependencies]

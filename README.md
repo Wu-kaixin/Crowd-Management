@@ -11,22 +11,106 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 ![CI](https://github.com/Wu-kaixin/Crowd-Management/actions/workflows/ci.yml/badge.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
+![Branch](https://img.shields.io/badge/branch-feature%2Fjupedsim--step1-orange.svg)
 
 </div>
 
-Crowd Management is a Python research prototype for **static unknown-crowd containment**. A crowd is a 2D point cloud; the simulator estimates its boundary and places guide agents around an offset safety curve.
+This document describes branch **`feature/jupedsim-step1`**, not a frozen `main` release note.
 
-The active method family is **ABCG: Adaptive Boundary-Coverage Guidance** (boundary estimation, periodic coverage planning, adaptive resources, identity-preserving assignment, measured-feedback velocity control, and sampled-data safety projection). From freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`, PR0–PR6 and G0–G6 all pass. **ABCG-v2 Step 1 is research-complete** for that narrow static scope.
-
-Evacuation / DBAct / density-DBAct code is **not** on `main`. It is preserved on [`archive/legacy-evacuation-2026-07-21`](https://github.com/Wu-kaixin/Crowd-Management/tree/archive/legacy-evacuation-2026-07-21) for reproducibility only.
+Crowd Management remains a Python research prototype for **static unknown-crowd containment** (ABCG). On this branch the new work is a **JuPedSim-backed static crowd source** and a **paired synthetic↔JuPedSim Step-1 source-robustness evaluation**. JuPedSim is used only to place physically spaced pedestrian centres; **no pedestrian dynamics are advanced** in Step 1.
 
 > Research prototype only — not a calibrated safety product or certified controller.
+> Local pairing evidence below is exploratory; it does **not** replace the frozen G6 research-complete claim on `main` @ `f2494922…`.
 
 ---
 
-## Visual Overview
+## What this branch changes
 
-Regenerate media with `python scripts/build_readme_media.py`.
+| Area | Status on this branch |
+| --- | --- |
+| Crowd source | `crowd.source: synthetic \| jupedsim` (static point clouds) |
+| JuPedSim role | Spawn centres inside a polygon with spacing constraints; evaluator-only truth from centre-support geometry |
+| Benchmarks | `configs/step1_benchmark/` (circle / ellipse / irregular pairs + concave pressure case) |
+| Evaluation | `scripts/run_step1_source_pairing.py` + `scripts/analyze_step1_source_pairing.py` |
+| Frozen G6 / PR6 on `main` | Still the Step-1 research-complete baseline; **not re-run / not re-frozen here** |
+
+Entry points:
+
+```bash
+# JuPedSim static smoke
+python scripts/jupedsim_static_smoke.py
+
+# Paired source evaluation (synthetic vs JuPedSim)
+python scripts/run_step1_source_pairing.py \
+  --output reports/step1_source_pairing
+
+python scripts/analyze_step1_source_pairing.py \
+  --records reports/step1_source_pairing/records.csv \
+  --output reports/step1_source_pairing
+```
+
+---
+
+## Local paired results (this worktree)
+
+Frozen local evidence under [`reports/step1_source_pairing/`](reports/step1_source_pairing/):
+
+- Matrix: **3 shapes × 2 sources × 20 seeds = 120** ABCG runs
+- Shapes: `circle`, `ellipse`, `irregular`
+- Sources: `synthetic` vs `jupedsim` (nominally matched geometry / count / room / controller; **not** identical point-process distributions)
+- Failure policy: invalid / timeout / skipped stages **remain in the denominator**
+- Pipeline launch success: **120/120** (`run_success=True`) — every case produced artifacts
+- Closed-loop episode outcomes are **not** all successes (see below)
+
+### Episode and boundary outcomes
+
+| Source | `BOUNDARY_INVALID` | `VALID` boundary | `CONVERGED` | `TIMEOUT` |
+| --- | ---: | ---: | ---: | ---: |
+| synthetic (n=60) | 39 | 21 | 11 | 10 |
+| jupedsim (n=60) | 23 | 37 | 32 | 5 |
+| **all (n=120)** | **62** | **58** | **43** | **15** |
+
+By shape / source (boundary validity):
+
+| Pair | synthetic VALID | jupedsim VALID |
+| --- | ---: | ---: |
+| circle | 7/20 | 16/20 |
+| ellipse | 7/20 | 13/20 |
+| irregular | 7/20 | 8/20 |
+
+Interpretation in one line: under these benchmark configs, JuPedSim static placements yield a **higher alpha-boundary acceptance rate** than the matched synthetic generator, and more `CONVERGED` episodes — but irregular geometry remains hard for both sources, and many “successful launches” still end as `BOUNDARY_INVALID` or `TIMEOUT`.
+
+### `BOUNDARY_INVALID` — what actually failed
+
+Of the **62** invalid boundaries (from `boundary_v2_status.json` diagnostics):
+
+| Reason | Count | Meaning |
+| --- | ---: | --- |
+| `alpha_insufficient_observation_coverage` | 61 | Alpha-shape candidate existed, but observation coverage stayed below the acceptance gate (`min_observation_coverage=0.8`, with a slightly higher selection threshold during radius search) |
+| `multiple_significant_components` | 1 | Observation connectivity split into more than one significant component (out-of-scope for single-component Step 1) |
+
+When boundary is invalid the runner **does not invent a boundary**: periodic planning is skipped (`PLAN_SKIPPED_BOUNDARY_INVALID` / resource `RESOURCE_SKIPPED_BOUNDARY_INVALID`), and the episode status stays `BOUNDARY_INVALID`. That is intentional research accounting, not a silent repair.
+
+Example diagnostic (irregular / synthetic / seed 0): `observation_coverage_ratio=0.90` on a raw candidate while the **resampled / acceptance** path still failed the gate → status `BOUNDARY_INVALID` with reason `alpha_insufficient_observation_coverage`.
+
+### Metric deltas (paired, where both sides have numbers)
+
+From [`analysis.json`](reports/step1_source_pairing/analysis.json) (JuPedSim − synthetic):
+
+- **circle coverage**: mean Δ ≈ −0.028 (95% bootstrap CI ≈ [−0.048, −0.008]); JuPedSim slightly lower coverage when both run.
+- **circle angular uniformity error**: mean Δ ≈ +0.117 (CI ≈ [0.056, 0.175]); JuPedSim worse uniformity on average.
+- **circle / ellipse active guide count**: JuPedSim tends to activate **more** guides (circle mean Δ ≈ +3.7).
+- Safety violation counts stayed **0** on both sources in this matrix; no `safety_infeasible` steps were recorded.
+
+These are source-robustness diagnostics only. They do **not** prove JuPedSim dynamics, human compliance, or deployment safety.
+
+Machine-readable tables: [`records.csv`](reports/step1_source_pairing/records.csv), [`aggregate.json`](reports/step1_source_pairing/aggregate.json), [`paired_deltas.csv`](reports/step1_source_pairing/paired_deltas.csv).
+
+---
+
+## Visual Overview (inherited from `main`)
+
+Regenerate media with `python scripts/build_readme_media.py`. Figures below are the frozen Step-1 media from `main`; they are **not** regenerated from the JuPedSim pairing matrix above.
 
 ### Static containment examples
 
@@ -74,13 +158,13 @@ Full report: [docs/math/MATHEMATICAL_VERIFICATION_REPORT.md](docs/math/MATHEMATI
 
 ## Active Research Scope
 
-- **Input:** static 2D crowd point cloud.
-- **Estimator:** v1 radial + PR6 alpha-shape with bootstrap confidence and explicit invalid states.
-- **Planner:** equal-arc / confidence-gated periodic Lloyd (PR2).
+- **Input:** static 2D crowd point cloud (`synthetic` or `jupedsim` source on this branch).
+- **Estimator:** v1 radial + PR6 alpha-shape with bootstrap confidence and explicit invalid states (`BOUNDARY_INVALID` / `OFFSET_INVALID`).
+- **Planner:** equal-arc / confidence-gated periodic Lloyd (PR2); skipped when boundary is invalid.
 - **Resources & assignment:** `ceil(L/g_req)`, hysteresis, reserves, switch-penalty assignment (PR3).
 - **Motion & safety:** `u_nom = sat(k_p(z-p))` with sampled-data half-space projection (PR4/PR5).
 - **Baselines:** random, static circle, legacy center-radius, endpoint ABCG.
-- **Evaluation:** independent analytic truth; formal G6 paired seeds; failures stay in the denominator.
+- **Evaluation:** independent analytic truth; formal G6 paired seeds on `main`; source pairing on this branch; failures stay in the denominator.
 
 Authoritative contract: [docs/RESEARCH_SPEC.md](docs/RESEARCH_SPEC.md).
 
@@ -91,9 +175,10 @@ Authoritative contract: [docs/RESEARCH_SPEC.md](docs/RESEARCH_SPEC.md).
 ```bash
 conda env update -n abcg -f environment.yml
 conda activate abcg
+python -m pip install -e ".[dev]"
 ```
 
-Static containment:
+Static containment (synthetic default configs):
 
 ```bash
 python scripts/run_static_containment.py \
@@ -102,7 +187,7 @@ python scripts/run_static_containment.py \
   --methods random static_circle legacy_center_radius abcg
 ```
 
-Typical outputs under the run directory: `summary.json`, `manifest.json`, `crowd_truth.npz`, boundary/plan/resource artifacts, and per-method assignment/episode files.
+JuPedSim static config example: `configs/jupedsim/static_polygon.yaml` or `configs/step1_benchmark/jupedsim_*.yaml`.
 
 Tests and dependency check:
 
@@ -112,7 +197,7 @@ pytest --basetemp=.tmp/pytest-temp -o cache_dir=.tmp/pytest-cache
 python -m pip check
 ```
 
-Formal G6:
+Formal G6 (frozen `main` evidence path):
 
 ```bash
 python scripts/run_step1_g6_compliance.py \
@@ -146,26 +231,26 @@ python scripts/check_readme_consistency.py
 
 ```text
 Crowd-Management/
-|-- configs/                    # INPUT: scenarios + configs/ci_smoke.yaml
+|-- configs/                    # INPUT: scenarios + step1_benchmark/ + jupedsim/
 |-- docs/                       # RESEARCH_SPEC, CODEMAP.zh, architecture, performance
 |-- src/crowd_management/
-|   |-- crowd/                  # CORE: generators + truth
+|   |-- crowd/                  # CORE: synthetic + jupedsim static sources + truth
 |   |-- geometry/               # CORE: arc-length / validity
-|   |-- estimation/             # CORE: boundary estimators
-|   |-- controllers/            # CORE: ABCG math (start here for algorithms)
+|   |-- estimation/             # CORE: boundary estimators (explicit BOUNDARY_INVALID)
+|   |-- controllers/            # CORE: ABCG math
 |   |-- runtime/                # ORCHESTRATE: hardware-aware workers
-|   |-- reporting/              # OUTPUT helpers: JSON + snapshot I/O
+|   |-- reporting/              # OUTPUT helpers
 |   |-- experiments/            # ORCHESTRATE: static containment runner
 |   |-- evaluation/             # ORCHESTRATE: G6 / PR6 + schema validation
 |   |-- containment_metrics.py
 |   `-- containment_visualization.py
-|-- scripts/                    # ENTRY: thin CLIs only
+|-- scripts/                    # ENTRY: thin CLIs (incl. source pairing / JuPedSim smoke)
 |-- runs/                       # LOCAL OUTPUT (gitignored): raw experiment dumps
-|-- reports/                    # EVIDENCE / media (partly committed)
+|-- reports/                    # EVIDENCE / media (pairing summaries committed)
 |-- artifacts/, outputs/, .tmp/ # LOCAL OUTPUT scratch
 |-- tests/                      # Unit, regression, smoke
 |-- .github/workflows/ci.yml
-|-- pyproject.toml
+|-- pyproject.toml              # includes jupedsim==1.4.2 on this branch
 `-- README.md
 ```
 
@@ -181,25 +266,26 @@ archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
 archive/g7-proof-strengthening-failed-2026-07-20
 ```
 
-Inspect with `git switch archive/legacy-evacuation-2026-07-21` or `git switch archive/g7-proof-strengthening-failed-2026-07-20`. These are historical/read-only snapshots; new work starts from `main`.
+Inspect with `git switch archive/legacy-evacuation-2026-07-21` or `git switch archive/g7-proof-strengthening-failed-2026-07-20`. These are historical/read-only snapshots; merge JuPedSim work through review, do not treat this feature branch as `main`.
 
 ---
 
 ## Development Status
 
-- Branch: **`main`**
+- Branch: **`feature/jupedsim-step1`** (JuPedSim static source + paired source evaluation)
 - Method family: ABCG static unknown-crowd containment
-- Step 1: **research-complete** (G0–G6 from the freeze above)
+- Step 1 on `main`: **research-complete** (G0–G6 @ `f2494922…`); **this branch is experimental source-robustness work**
+- Local pairing snapshot: 120 runs; **62 `BOUNDARY_INVALID`** (mostly `alpha_insufficient_observation_coverage`); **43 `CONVERGED`**; **15 `TIMEOUT`**
 - Suite size (authoritative; synced by `scripts/check_readme_consistency.py`):
   <!-- TEST_COUNT_START -->
-  180
+  189
   <!-- TEST_COUNT_END -->
 - CI: Linux + Windows via [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (unit tests, scoped lint/type-check, README consistency, deterministic smoke, schema regression)
-- Formal G6: 600 primary records retained — [G6 report](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)
+- Formal G6 (inherited evidence): 600 primary records — [G6 report](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)
 - Local performance notes: [docs/performance/final_report.md](docs/performance/final_report.md) (CI wall times are **not** formal evidence)
 - Architecture maintenance notes: [docs/architecture/refactor_result.md](docs/architecture/refactor_result.md)
 
-Research-complete means simulated guide deployment around one static unknown crowd. It does **not** prove human compliance, real-world containment, evacuation gain, multi-crowd dynamics, or continuous-time safety certificates.
+Research-complete on `main` means simulated guide deployment around one static unknown crowd. This branch’s JuPedSim pairing does **not** prove human compliance, real-world containment, evacuation gain, multi-crowd dynamics, or continuous-time safety certificates. Explicit `BOUNDARY_INVALID` remains part of the result, not a bug to hide.
 
 ## License
 

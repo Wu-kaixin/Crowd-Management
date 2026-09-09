@@ -27,7 +27,11 @@ from ...controllers import (
     assign_guides_to_targets,
     plan_periodic_arc_coverage,
 )
-from ...crowd import StaticCrowdTruth, generate_static_crowd, generate_static_crowd_truth
+from ...crowd import (
+    StaticCrowdTruth,
+    build_crowd_source,
+    generate_static_agent_attributes,
+)
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, estimate_boundary_v2
 from ...types import Array
 from .artifacts import (
@@ -227,8 +231,13 @@ def run_static_containment(
 ) -> dict[str, MethodSummary]:
     config_path = Path(config_path)
     cfg = StaticContainmentConfig.from_yaml(config_path)
-    crowd_points = generate_static_crowd(cfg.crowd)
-    truth = generate_static_crowd_truth(cfg.crowd, safety_distance=cfg.safety_distance)
+    crowd_source = build_crowd_source(cfg.crowd)
+    crowd_points = crowd_source.observe()
+    truth = crowd_source.truth(
+        safety_distance=(
+            cfg.safety_distance
+        )
+    )
     boundary_v2 = estimate_boundary_v2(crowd_points, cfg.boundary_v2, np.random.default_rng(cfg.seed))
     resource_decision = (
         ResourcePolicy(cfg.resource_policy).decide(boundary_v2.length, cfg.guide_count)
@@ -244,6 +253,14 @@ def run_static_containment(
     )
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
+
+    if cfg.heterogeneity.enabled:
+        crowd_attributes = generate_static_agent_attributes(
+            count=len(crowd_points),
+            config=cfg.heterogeneity,
+            seed=cfg.seed + 100003,
+        )
+        np.savez_compressed(output / "crowd_attributes.npz", **crowd_attributes)
     np.savez_compressed(output / "crowd_points.npz", positions=crowd_points)
     np.savez_compressed(
         output / "crowd_truth.npz",

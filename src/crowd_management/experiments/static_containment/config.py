@@ -11,7 +11,10 @@ from pathlib import Path
 import yaml
 
 from ...controllers import ABCGv2Config, AssignmentConfig, ResourcePolicyConfig, VelocitySafetyConfig
-from ...crowd import StaticCrowdConfig
+from ...crowd import (
+    StaticCrowdConfig,
+    StaticHeterogeneityConfig,
+)
 from ...estimation import BoundaryV2Config
 from ...types import Array, as_vec2
 
@@ -21,6 +24,7 @@ class StaticContainmentConfig:
     seed: int
     room_size: Array
     crowd: StaticCrowdConfig
+    heterogeneity: StaticHeterogeneityConfig
     guide_count: int
     safety_distance: float
     coverage_radius: float
@@ -50,6 +54,7 @@ class StaticContainmentConfig:
             seed=seed,
             room_size=room_size,
             crowd=StaticCrowdConfig.from_dict(raw["crowd"], seed=seed),
+            heterogeneity=StaticHeterogeneityConfig.from_dict(raw.get("heterogeneity", {})),
             guide_count=int(raw.get("guiders", {}).get("count", 8)),
             safety_distance=float(containment.get("safety_distance", 0.8)),
             coverage_radius=coverage_radius,

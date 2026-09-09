@@ -1,0 +1,164 @@
+seed: 9
+room:
+  size:
+  - 20.0
+  - 14.0
+guiders:
+  count: 12
+heterogeneity:
+  enabled: true
+  radius_mean: 0.2
+  radius_std: 0.015
+  radius_min: 0.17
+  radius_max: 0.23
+  desired_speed_mean: 1.25
+  desired_speed_std: 0.1
+  desired_speed_min: 0.95
+  desired_speed_max: 1.55
+  time_gap_mean: 1.0
+  time_gap_std: 0.08
+  time_gap_min: 0.8
+  time_gap_max: 1.2
+containment:
+  safety_distance: 0.85
+  coverage_radius: 1.25
+  min_guider_distance: 0.6
+  boundary_bins: 72
+  boundary_sample_spacing: 0.08
+boundary:
+  estimator: alpha
+  alpha_scale: 2.5
+  alpha_growth_factors:
+  - 1.0
+  - 1.25
+  - 1.5
+  - 2.0
+  - 3.0
+  - 4.0
+  alpha_smoothing_passes: 5
+  min_observation_points: 8
+  min_observation_coverage: 0.8
+  bootstrap_samples: 8
+  bootstrap_min_success_fraction: 0.5
+  bootstrap_confidence_floor: 0.15
+resources:
+  required_arc_gap: 2.5
+  min_active_guides: 3
+  increase_hysteresis: 0.1
+  decrease_hysteresis: 0.1
+assignment:
+  switch_penalty: 0.25
+  reserve_cost: 0.0
+  unmet_target_cost: 1000000.0
+motion:
+  dt: 0.1
+  gain: 1.5
+  max_speed: 1.0
+  tracking_rmse_tolerance: 0.03
+  speed_tolerance: 0.03
+  hold_steps: 10
+  max_steps: 400
+safety:
+  enabled: true
+  min_guide_distance: 0.6
+  min_crowd_distance: 0.85
+  room_margin: 0.25
+  residual_tolerance: 1.0e-09
+  max_projection_sweeps: 200
+benchmark:
+  name: circle
+  source: jupedsim
+crowd:
+  source: jupedsim
+  shape: circle
+  count: 80
+  center:
+  - 10.0
+  - 7.0
+  radius: 3.0
+  region:
+    vertices:
+    - - 13.2
+      - 7.0
+    - - 13.16060268990444
+      - 7.5005902881287385
+    - - 13.043380852144491
+      - 7.988854381999832
+    - - 12.851220877402778
+      - 8.45276959916655
+    - - 12.588854381999832
+      - 8.880912807335914
+    - - 12.262741699796953
+      - 9.262741699796953
+    - - 11.880912807335914
+      - 9.588854381999832
+    - - 11.45276959916655
+      - 9.851220877402778
+    - - 10.988854381999833
+      - 10.043380852144491
+    - - 10.50059028812874
+      - 10.16060268990444
+    - - 10.0
+      - 10.2
+    - - 9.499409711871262
+      - 10.16060268990444
+    - - 9.01114561800017
+      - 10.043380852144491
+    - - 8.54723040083345
+      - 9.851220877402778
+    - - 8.119087192664086
+      - 9.588854381999832
+    - - 7.737258300203048
+      - 9.262741699796953
+    - - 7.411145618000168
+      - 8.880912807335914
+    - - 7.148779122597222
+      - 8.452769599166551
+    - - 6.956619147855509
+      - 7.9888543819998326
+    - - 6.83939731009556
+      - 7.500590288128739
+    - - 6.8
+      - 7.0
+    - - 6.839397310095559
+      - 6.4994097118712615
+    - - 6.956619147855507
+      - 6.01114561800017
+    - - 7.148779122597222
+      - 5.547230400833451
+    - - 7.411145618000168
+      - 5.119087192664086
+    - - 7.737258300203047
+      - 4.737258300203048
+    - - 8.119087192664086
+      - 4.411145618000168
+    - - 8.547230400833449
+      - 4.148779122597222
+    - - 9.011145618000167
+      - 3.9566191478555086
+    - - 9.49940971187126
+      - 3.8393973100955594
+    - - 10.0
+      - 3.8
+    - - 10.500590288128738
+      - 3.839397310095559
+    - - 10.98885438199983
+      - 3.956619147855508
+    - - 11.45276959916655
+      - 4.148779122597222
+    - - 11.880912807335914
+      - 4.411145618000168
+    - - 12.262741699796951
+      - 4.737258300203047
+    - - 12.588854381999832
+      - 5.119087192664085
+    - - 12.851220877402778
+      - 5.54723040083345
+    - - 13.043380852144491
+      - 6.0111456180001674
+    - - 13.16060268990444
+      - 6.499409711871261
+  spacing:
+    distance_to_agents: 0.35
+    distance_to_polygon: 0.2
+  seed: 9

@@ -1,0 +1,533 @@
+{
+  "scope": "Step-1 source robustness: synthetic vs JuPedSim",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "failure_policy": "Failures remain in denominator.",
+  "pairing_note": "Pairs match nominal geometry, crowd count, room, controller and evaluation settings. They do not claim identical point-process distributions.",
+  "groups": {
+    "circle/jupedsim": {
+      "n_total": 20,
+      "n_successful": 20,
+      "success_rate": 1.0,
+      "metrics": {
+        "coverage_ratio": {
+          "n": 20,
+          "mean": 0.9384027777777778,
+          "std": 0.03304663192242901,
+          "min": 0.9,
+          "max": 1.0
+        },
+        "max_euclidean_boundary_distance": {
+          "n": 20,
+          "mean": 1.4828159742590354,
+          "std": 0.16919244654814,
+          "min": 1.1626168752053212,
+          "max": 1.8380668199743793
+        },
+        "radial_deployment_error": {
+          "n": 20,
+          "mean": 0.4560676321259088,
+          "std": 0.06490901478180369,
+          "min": 0.32815010276030326,
+          "max": 0.5621748363129635
+        },
+        "angular_uniformity_error": {
+          "n": 20,
+          "mean": 0.27908889696206207,
+          "std": 0.10529703875915229,
+          "min": 0.055555555555555886,
+          "max": 0.36470159030648813
+        },
+        "minimum_inter_guider_distance": {
+          "n": 20,
+          "mean": 1.1495335292535493,
+          "std": 0.22979938535534516,
+          "min": 0.868968036519403,
+          "max": 1.6120615011306796
+        },
+        "guide_crowd_safety_violation_count": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "active_guide_count": {
+          "n": 20,
+          "mean": 6.35,
+          "std": 3.265046142980138,
+          "min": 0.0,
+          "max": 8.0
+        },
+        "periodic_max_arc_gap": {
+          "n": 16,
+          "mean": 2.2426443097180275,
+          "std": 0.04794196380772576,
+          "min": 2.1902157516549146,
+          "max": 2.408462010811819
+        },
+        "episode_final_tracking_rmse": {
+          "n": 16,
+          "mean": 0.008537402963541774,
+          "std": 0.020211724400635102,
+          "min": 0.0018572680917369033,
+          "max": 0.08381398127247759
+        },
+        "safety_projected_steps": {
+          "n": 20,
+          "mean": 43.95,
+          "std": 85.08291621459004,
+          "min": 0.0,
+          "max": 400.0
+        },
+        "safety_infeasible_steps": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    "circle/synthetic": {
+      "n_total": 20,
+      "n_successful": 20,
+      "success_rate": 1.0,
+      "metrics": {
+        "coverage_ratio": {
+          "n": 20,
+          "mean": 0.9668749999999999,
+          "std": 0.03477707655347467,
+          "min": 0.8944444444444445,
+          "max": 1.0
+        },
+        "max_euclidean_boundary_distance": {
+          "n": 20,
+          "mean": 1.4062318324564262,
+          "std": 0.1831202940384944,
+          "min": 1.172061057338188,
+          "max": 1.794260044690031
+        },
+        "radial_deployment_error": {
+          "n": 20,
+          "mean": 0.449301403283153,
+          "std": 0.07443412032876622,
+          "min": 0.29090885105869047,
+          "max": 0.6029527490921794
+        },
+        "angular_uniformity_error": {
+          "n": 20,
+          "mean": 0.16258305614516044,
+          "std": 0.11466089457150432,
+          "min": 0.027777777777778245,
+          "max": 0.32650986419400235
+        },
+        "minimum_inter_guider_distance": {
+          "n": 20,
+          "mean": 1.3056217467048226,
+          "std": 0.28810412563437326,
+          "min": 0.7850494417437318,
+          "max": 1.669674065145827
+        },
+        "guide_crowd_safety_violation_count": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "active_guide_count": {
+          "n": 20,
+          "mean": 2.65,
+          "std": 3.7173136876824877,
+          "min": 0.0,
+          "max": 8.0
+        },
+        "periodic_max_arc_gap": {
+          "n": 7,
+          "mean": 2.276543635623471,
+          "std": 0.10189213680430302,
+          "min": 2.190848083937283,
+          "max": 2.45367803059783
+        },
+        "episode_final_tracking_rmse": {
+          "n": 7,
+          "mean": 0.048196678245136085,
+          "std": 0.09798380166066367,
+          "min": 0.0022262741315938928,
+          "max": 0.2661754330822993
+        },
+        "safety_projected_steps": {
+          "n": 20,
+          "mean": 47.45,
+          "std": 121.36394808482807,
+          "min": 0.0,
+          "max": 400.0
+        },
+        "safety_infeasible_steps": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    "ellipse/jupedsim": {
+      "n_total": 20,
+      "n_successful": 20,
+      "success_rate": 1.0,
+      "metrics": {
+        "coverage_ratio": {
+          "n": 20,
+          "mean": 0.9650694444444445,
+          "std": 0.024980804033806404,
+          "min": 0.9236111111111112,
+          "max": 1.0
+        },
+        "max_euclidean_boundary_distance": {
+          "n": 20,
+          "mean": 1.446383853574507,
+          "std": 0.17034887927889394,
+          "min": 1.1791488900721085,
+          "max": 1.809119695451635
+        },
+        "radial_deployment_error": {
+          "n": 20,
+          "mean": 0.5191497969371064,
+          "std": 0.058840483396297306,
+          "min": 0.4141351401854425,
+          "max": 0.6316267111010632
+        },
+        "angular_uniformity_error": {
+          "n": 20,
+          "mean": 0.2259133431786336,
+          "std": 0.11623710227611003,
+          "min": 0.027777777777778526,
+          "max": 0.3905544942524103
+        },
+        "minimum_inter_guider_distance": {
+          "n": 20,
+          "mean": 1.1724915709258694,
+          "std": 0.27048941986021474,
+          "min": 0.7872144824917274,
+          "max": 1.6221865043718473
+        },
+        "guide_crowd_safety_violation_count": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "active_guide_count": {
+          "n": 20,
+          "mean": 5.1,
+          "std": 3.851178903578542,
+          "min": 0.0,
+          "max": 8.0
+        },
+        "periodic_max_arc_gap": {
+          "n": 13,
+          "mean": 2.250530876074668,
+          "std": 0.1053800055639046,
+          "min": 2.1929474675897715,
+          "max": 2.4920248786129644
+        },
+        "episode_final_tracking_rmse": {
+          "n": 13,
+          "mean": 0.0034945414980766154,
+          "std": 0.001542782833189366,
+          "min": 0.0017651835595454365,
+          "max": 0.006316074669303029
+        },
+        "safety_projected_steps": {
+          "n": 20,
+          "mean": 22.0,
+          "std": 16.603740859406226,
+          "min": 0.0,
+          "max": 36.0
+        },
+        "safety_infeasible_steps": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    "ellipse/synthetic": {
+      "n_total": 20,
+      "n_successful": 20,
+      "success_rate": 1.0,
+      "metrics": {
+        "coverage_ratio": {
+          "n": 20,
+          "mean": 0.9624305555555557,
+          "std": 0.040433694489836906,
+          "min": 0.8847222222222222,
+          "max": 1.0
+        },
+        "max_euclidean_boundary_distance": {
+          "n": 20,
+          "mean": 1.479884744095401,
+          "std": 0.24032567263025487,
+          "min": 1.2185767596321901,
+          "max": 1.9521845779326983
+        },
+        "radial_deployment_error": {
+          "n": 20,
+          "mean": 0.49340659392148434,
+          "std": 0.0637532490618718,
+          "min": 0.32931709621125976,
+          "max": 0.6248218039633403
+        },
+        "angular_uniformity_error": {
+          "n": 20,
+          "mean": 0.16100542753740546,
+          "std": 0.11631338284077505,
+          "min": 0.05555555555555543,
+          "max": 0.43067653892738433
+        },
+        "minimum_inter_guider_distance": {
+          "n": 20,
+          "mean": 1.2635880439363079,
+          "std": 0.2518631848901252,
+          "min": 0.7686857725200439,
+          "max": 1.6269467473472663
+        },
+        "guide_crowd_safety_violation_count": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "active_guide_count": {
+          "n": 20,
+          "mean": 2.5,
+          "std": 3.5018791947662677,
+          "min": 0.0,
+          "max": 8.0
+        },
+        "periodic_max_arc_gap": {
+          "n": 7,
+          "mean": 2.375099254889251,
+          "std": 0.10829799833143051,
+          "min": 2.210917105761487,
+          "max": 2.4944106620410036
+        },
+        "episode_final_tracking_rmse": {
+          "n": 7,
+          "mean": 0.02457938156110012,
+          "std": 0.05202145608467993,
+          "min": 0.001811158688167357,
+          "max": 0.14183603518392104
+        },
+        "safety_projected_steps": {
+          "n": 20,
+          "mean": 29.55,
+          "std": 88.60228997872282,
+          "min": 0.0,
+          "max": 400.0
+        },
+        "safety_infeasible_steps": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    "irregular/jupedsim": {
+      "n_total": 20,
+      "n_successful": 20,
+      "success_rate": 1.0,
+      "metrics": {
+        "coverage_ratio": {
+          "n": 20,
+          "mean": 0.9326388888888889,
+          "std": 0.044488967100082544,
+          "min": 0.8486111111111111,
+          "max": 0.9833333333333333
+        },
+        "max_euclidean_boundary_distance": {
+          "n": 20,
+          "mean": 1.6242864729584554,
+          "std": 0.2451611652304755,
+          "min": 1.3392886081406774,
+          "max": 2.0821422595598236
+        },
+        "radial_deployment_error": {
+          "n": 20,
+          "mean": 0.5537000429462131,
+          "std": 0.06231691273838919,
+          "min": 0.4707042780646418,
+          "max": 0.7141688127311938
+        },
+        "angular_uniformity_error": {
+          "n": 20,
+          "mean": 0.17898869212881474,
+          "std": 0.11893422116241283,
+          "min": 0.027777777777778276,
+          "max": 0.374798278413216
+        },
+        "minimum_inter_guider_distance": {
+          "n": 20,
+          "mean": 1.4014708404778211,
+          "std": 0.3463236234867534,
+          "min": 0.7121659725677194,
+          "max": 1.8085523216910482
+        },
+        "guide_crowd_safety_violation_count": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "active_guide_count": {
+          "n": 20,
+          "mean": 3.35,
+          "std": 4.221187161525959,
+          "min": 0.0,
+          "max": 9.0
+        },
+        "periodic_max_arc_gap": {
+          "n": 8,
+          "mean": 2.3378459006813417,
+          "std": 0.0665506501162406,
+          "min": 2.2415213178860505,
+          "max": 2.4556500387155626
+        },
+        "episode_final_tracking_rmse": {
+          "n": 8,
+          "mean": 0.07938059524094972,
+          "std": 0.08152666647503175,
+          "min": 0.002067488086755877,
+          "max": 0.19245099737892732
+        },
+        "safety_projected_steps": {
+          "n": 20,
+          "mean": 87.65,
+          "std": 160.95349933247311,
+          "min": 0.0,
+          "max": 400.0
+        },
+        "safety_infeasible_steps": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    },
+    "irregular/synthetic": {
+      "n_total": 20,
+      "n_successful": 20,
+      "success_rate": 1.0,
+      "metrics": {
+        "coverage_ratio": {
+          "n": 20,
+          "mean": 0.9250694444444443,
+          "std": 0.05087656543691083,
+          "min": 0.7791666666666667,
+          "max": 0.9902777777777778
+        },
+        "max_euclidean_boundary_distance": {
+          "n": 20,
+          "mean": 1.6749833187055505,
+          "std": 0.1849798173949403,
+          "min": 1.3483800371144596,
+          "max": 2.021042269449661
+        },
+        "radial_deployment_error": {
+          "n": 20,
+          "mean": 0.5290917384320003,
+          "std": 0.06441997478572907,
+          "min": 0.39327644390022537,
+          "max": 0.6638092869682427
+        },
+        "angular_uniformity_error": {
+          "n": 20,
+          "mean": 0.16751095537148003,
+          "std": 0.13282564003007843,
+          "min": 0.027777777777778314,
+          "max": 0.3906374801450447
+        },
+        "minimum_inter_guider_distance": {
+          "n": 20,
+          "mean": 1.3221277190829386,
+          "std": 0.30085893458239776,
+          "min": 0.7525165669777288,
+          "max": 1.801645640872929
+        },
+        "guide_crowd_safety_violation_count": {
+          "n": 20,
+          "mean": 0.05,
+          "std": 0.22360679774997894,
+          "min": 0.0,
+          "max": 1.0
+        },
+        "active_guide_count": {
+          "n": 20,
+          "mean": 2.7,
+          "std": 3.7850119933064525,
+          "min": 0.0,
+          "max": 8.0
+        },
+        "periodic_max_arc_gap": {
+          "n": 7,
+          "mean": 2.2971200652568116,
+          "std": 0.050806221410303394,
+          "min": 2.224885108609822,
+          "max": 2.3813371112020247
+        },
+        "episode_final_tracking_rmse": {
+          "n": 7,
+          "mean": 0.15541103426762595,
+          "std": 0.04449295759638255,
+          "min": 0.0882109938814047,
+          "max": 0.22778651604741257
+        },
+        "safety_projected_steps": {
+          "n": 20,
+          "mean": 140.0,
+          "std": 195.74419397183718,
+          "min": 0.0,
+          "max": 400.0
+        },
+        "safety_infeasible_steps": {
+          "n": 20,
+          "mean": 0.0,
+          "std": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        }
+      }
+    }
+  }
+}

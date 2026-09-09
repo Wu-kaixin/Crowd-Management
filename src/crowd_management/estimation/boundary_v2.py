@@ -393,49 +393,256 @@ def _adaptive_alpha_curve(
     points: Array,
     config: BoundaryV2Config,
 ) -> tuple[Array | None, dict[str, float | int | str]]:
-    pairwise = np.linalg.norm(points[:, None, :] - points[None, :, :], axis=2)
+    pairwise = np.linalg.norm(
+        points[:, None, :] - points[None, :, :],
+        axis=2,
+    )
     np.fill_diagonal(pairwise, np.inf)
-    median_nearest = float(np.median(np.min(pairwise, axis=1)))
-    if config.alpha_radius is not None:
-        radii = [float(config.alpha_radius)]
-    else:
-        base = max(config.alpha_scale * median_nearest, config.sample_spacing)
-        radii = [base * float(factor) for factor in config.alpha_growth_factors]
 
-    last: dict[str, float | int | str] = {"reason": "alpha_no_candidate_attempted"}
-    for attempt, radius in enumerate(radii, start=1):
-        curve, diagnostics = _alpha_shape_candidate(points, radius)
-        last = {**diagnostics, "alpha_attempt": attempt, "median_nearest_distance": median_nearest}
-        if curve is None:
-            continue
-        selection_coverage = min(
-            1.0,
-            config.min_observation_coverage + max(2.0 / len(points), 0.03),
+    median_nearest = float(
+        np.median(
+            np.min(pairwise, axis=1)
         )
-        for smoothing_passes in range(config.alpha_smoothing_passes, -1, -1):
-            smoothed = _smooth_closed_curve(curve, smoothing_passes)
-            coverage = _observation_coverage_ratio(points, smoothed)
-            last["observation_coverage_ratio"] = coverage
-            last["alpha_selection_coverage"] = selection_coverage
-            last["alpha_smoothing_passes"] = smoothing_passes
-            if coverage >= selection_coverage:
-                trial = boundary_v2_from_curve(
-                    smoothed,
-                    safety_distance=config.safety_distance,
-                    sample_spacing=config.sample_spacing,
-                    method="alpha_shape",
-                    room_size=config.room_size,
-                    room_margin=config.room_margin,
+    )
+
+    if config.alpha_radius is not None:
+        radii = [
+            float(config.alpha_radius)
+        ]
+    else:
+        base = max(
+            config.alpha_scale * median_nearest,
+            config.sample_spacing,
+        )
+
+        radii = [
+            base * float(factor)
+            for factor in config.alpha_growth_factors
+        ]
+
+    selection_coverage = min(
+        1.0,
+        config.min_observation_coverage
+        + max(
+            2.0 / len(points),
+            0.03,
+        ),
+    )
+
+    # -----------------------------------------------------
+    # Diagnostic accumulators.
+    # These do NOT change the acceptance criterion.
+    # -----------------------------------------------------
+    best_raw_coverage = -np.inf
+    best_resampled_coverage = -np.inf
+
+    best_raw_radius = float("nan")
+    best_resampled_radius = float("nan")
+
+    candidate_count = 0
+    geometry_valid_candidate_count = 0
+
+    final_reason = "alpha_no_candidate_attempted"
+
+    last: dict[str, float | int | str] = {
+        "reason": final_reason,
+        "median_nearest_distance": median_nearest,
+        "alpha_selection_coverage": selection_coverage,
+        "alpha_required_resampled_coverage": (
+            config.min_observation_coverage
+        ),
+    }
+
+    for attempt, radius in enumerate(
+        radii,
+        start=1,
+    ):
+        curve, diagnostics = _alpha_shape_candidate(
+            points,
+            radius,
+        )
+
+        last = {
+            **last,
+            **diagnostics,
+            "alpha_attempt": attempt,
+            "alpha_radius": float(radius),
+            "median_nearest_distance": median_nearest,
+            "alpha_selection_coverage": selection_coverage,
+            "alpha_required_resampled_coverage": (
+                config.min_observation_coverage
+            ),
+        }
+
+        if curve is None:
+            final_reason = str(
+                diagnostics.get(
+                    "reason",
+                    "alpha_candidate_unavailable",
                 )
-                if isinstance(trial, BoundaryEstimateFailure):
-                    last["reason"] = f"alpha_candidate_{trial.diagnostics['reason']}"
-                    continue
-                resampled_coverage = _observation_coverage_ratio(points, trial.curve_points)
-                last["resampled_observation_coverage_ratio"] = resampled_coverage
-                if resampled_coverage >= config.min_observation_coverage:
-                    return smoothed, last
-                last["reason"] = "alpha_insufficient_observation_coverage_after_resampling"
-        last["reason"] = "alpha_insufficient_observation_coverage"
+            )
+
+            last["reason"] = final_reason
+            continue
+
+        candidate_count += 1
+
+        for smoothing_passes in range(
+            config.alpha_smoothing_passes,
+            -1,
+            -1,
+        ):
+            smoothed = _smooth_closed_curve(
+                curve,
+                smoothing_passes,
+            )
+
+            coverage = (
+                _observation_coverage_ratio(
+                    points,
+                    smoothed,
+                )
+            )
+
+            if coverage > best_raw_coverage:
+                best_raw_coverage = coverage
+                best_raw_radius = float(radius)
+
+            last[
+                "observation_coverage_ratio"
+            ] = coverage
+
+            last[
+                "alpha_smoothing_passes"
+            ] = smoothing_passes
+
+            if coverage < selection_coverage:
+                final_reason = (
+                    "alpha_raw_observation_coverage_below_selection_threshold"
+                )
+
+                last["reason"] = final_reason
+                continue
+
+            trial = boundary_v2_from_curve(
+                smoothed,
+                safety_distance=config.safety_distance,
+                sample_spacing=config.sample_spacing,
+                method="alpha_shape",
+                room_size=config.room_size,
+                room_margin=config.room_margin,
+            )
+
+            if isinstance(
+                trial,
+                BoundaryEstimateFailure,
+            ):
+                final_reason = (
+                    "alpha_candidate_geometry_invalid:"
+                    + str(
+                        trial.diagnostics.get(
+                            "reason",
+                            "unknown",
+                        )
+                    )
+                )
+
+                last["reason"] = final_reason
+                last[
+                    "candidate_geometry_status"
+                ] = trial.status
+
+                continue
+
+            geometry_valid_candidate_count += 1
+
+            resampled_coverage = (
+                _observation_coverage_ratio(
+                    points,
+                    trial.curve_points,
+                )
+            )
+
+            if (
+                resampled_coverage
+                > best_resampled_coverage
+            ):
+                best_resampled_coverage = (
+                    resampled_coverage
+                )
+                best_resampled_radius = float(
+                    radius
+                )
+
+            last[
+                "resampled_observation_coverage_ratio"
+            ] = resampled_coverage
+
+            if (
+                resampled_coverage
+                >= config.min_observation_coverage
+            ):
+                last.update(
+                    {
+                        "reason": "alpha_candidate_accepted",
+                        "candidate_count": candidate_count,
+                        "geometry_valid_candidate_count": (
+                            geometry_valid_candidate_count
+                        ),
+                        "best_raw_observation_coverage": float(
+                            best_raw_coverage
+                        ),
+                        "best_resampled_observation_coverage": float(
+                            best_resampled_coverage
+                        ),
+                        "best_raw_alpha_radius": float(
+                            best_raw_radius
+                        ),
+                        "best_resampled_alpha_radius": float(
+                            best_resampled_radius
+                        ),
+                    }
+                )
+
+                return smoothed, last
+
+            final_reason = (
+                "alpha_resampled_observation_coverage_below_threshold"
+            )
+
+            last["reason"] = final_reason
+
+    last.update(
+        {
+            "reason": final_reason,
+            "candidate_count": candidate_count,
+            "geometry_valid_candidate_count": (
+                geometry_valid_candidate_count
+            ),
+            "best_raw_observation_coverage": (
+                float(best_raw_coverage)
+                if np.isfinite(best_raw_coverage)
+                else -1.0
+            ),
+            "best_resampled_observation_coverage": (
+                float(best_resampled_coverage)
+                if np.isfinite(best_resampled_coverage)
+                else -1.0
+            ),
+            "best_raw_alpha_radius": (
+                float(best_raw_radius)
+                if np.isfinite(best_raw_radius)
+                else -1.0
+            ),
+            "best_resampled_alpha_radius": (
+                float(best_resampled_radius)
+                if np.isfinite(best_resampled_radius)
+                else -1.0
+            ),
+            "alpha_radius_attempt_count": len(radii),
+        }
+    )
+
     return None, last
 
 

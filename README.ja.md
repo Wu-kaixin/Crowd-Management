@@ -4,9 +4,11 @@
 
 [English](README.md) | [Traditional Chinese](README.zh-TW.md) | [Japanese](README.ja.md)
 
-現在の中心は **ABCG: Adaptive Boundary-Coverage Guidance** です。
+> **この文書はブランチ `feature/jupedsim-step1` 向けです（凍結済み `main` のリリースノートではありません）。**
 
-PR6 では alpha-shape による非凸境界推定、bootstrap 不確実性、U/C 型の留保形状に対する各 30 個の対応 seed、消融、95% 信頼区間、失敗ギャラリーを追加しました。クリーンな凍結コミット `f2494922b2431bfd9a37a247add8a79acfdc18ed` から G0-G6 がすべて PASS となり、**ABCG-v2 Step 1 は research-complete** です。これは静的な単一群衆のシミュレーションに限定され、動的群衆、人間行動、封じ込め効果、避難改善、無条件の安全性を証明するものではありません。
+現在の中心は **ABCG: Adaptive Boundary-Coverage Guidance** です。本ブランチの新規内容は **JuPedSim 静的群衆ソース** と **synthetic↔JuPedSim のペア評価** です（Step 1 では歩行者ダイナミクスを進めません）。
+
+`main` 上の凍結コミット `f2494922…` における G0–G6 PASS / research-complete 主張は、本ブランチで再凍結していません。ローカル配対結果（120 実行、うち **62 `BOUNDARY_INVALID`** — 主因 `alpha_insufficient_observation_coverage`）の詳細は英語 [README.md](README.md) を参照してください。
 
 - 静的な未知群衆を点群として表現します。
 - 群衆の中心と境界を推定します。
