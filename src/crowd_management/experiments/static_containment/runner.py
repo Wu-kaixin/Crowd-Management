@@ -260,7 +260,14 @@ def run_static_containment(
             config=cfg.heterogeneity,
             seed=cfg.seed + 100003,
         )
-        np.savez_compressed(output / "crowd_attributes.npz", **crowd_attributes)
+        np.savez_compressed(
+            output / "crowd_attributes.npz",
+            agent_id=crowd_attributes["agent_id"],
+            radius=crowd_attributes["radius"],
+            desired_speed=crowd_attributes["desired_speed"],
+            time_gap=crowd_attributes["time_gap"],
+            heterogeneity_enabled=crowd_attributes["heterogeneity_enabled"],
+        )
     np.savez_compressed(output / "crowd_points.npz", positions=crowd_points)
     np.savez_compressed(
         output / "crowd_truth.npz",
