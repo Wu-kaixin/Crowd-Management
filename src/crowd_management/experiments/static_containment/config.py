@@ -31,8 +31,14 @@ class VisualizationConfig:
     @classmethod
     def from_dict(cls, raw: dict[str, object] | None) -> VisualizationConfig:
         data = raw or {}
-        render_every = int(data.get("render_every", 1))
-        max_fps = float(data.get("max_fps", 20.0))
+        render_every_raw = data.get("render_every", 1)
+        max_fps_raw = data.get("max_fps", 20.0)
+        if isinstance(render_every_raw, bool) or not isinstance(render_every_raw, (int, float)):
+            raise TypeError("visualization.render_every must be numeric.")
+        if isinstance(max_fps_raw, bool) or not isinstance(max_fps_raw, (int, float)):
+            raise TypeError("visualization.max_fps must be numeric.")
+        render_every = int(render_every_raw)
+        max_fps = float(max_fps_raw)
         if render_every < 1:
             raise ValueError("visualization.render_every must be a positive integer.")
         if not np.isfinite(max_fps) or max_fps <= 0.0:

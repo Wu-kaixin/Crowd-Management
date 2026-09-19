@@ -10,7 +10,6 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-
 METRICS = {
     "coverage_ratio": "higher",
     "max_euclidean_boundary_distance": "lower",
@@ -80,15 +79,14 @@ def paired_effect(
     ci_low, ci_high = bootstrap_ci(delta)
 
     if len(delta) >= 2 and np.std(delta, ddof=1) > 0:
-        t_stat, t_p = stats.ttest_rel(
+        _t_stat, t_p = stats.ttest_rel(
             jupedsim,
             synthetic,
         )
 
         try:
-            w_stat, w_p = stats.wilcoxon(delta)
+            _w_stat, w_p = stats.wilcoxon(delta)
         except ValueError:
-            w_stat = float("nan")
             w_p = float("nan")
 
         standardized_effect = (
@@ -98,9 +96,7 @@ def paired_effect(
             )
         )
     else:
-        t_stat = float("nan")
         t_p = float("nan")
-        w_stat = float("nan")
         w_p = float("nan")
         standardized_effect = float("nan")
 

@@ -4,7 +4,7 @@
 
 [English](README.md) | [Traditional Chinese](README.zh-TW.md) | [Japanese](README.ja.md)
 
-> **本文件描述分支 `STEP1-新方向`，不是已凍結的 `main` 發佈說明。先前的 `main` 已另存為 `archive/main-2026-09-19`。**
+> **本文件描述分支 `STEP1-Research-Extension`，不是已凍結的 `main` 發佈說明。先前的 `main` 已另存為 `archive/main-2026-09-19`。**
 
 主線方法仍是 **ABCG**。本分支新增：
 

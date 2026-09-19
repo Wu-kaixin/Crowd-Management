@@ -30,7 +30,7 @@ The former proof-strengthening branch tip is preserved separately as
 stored as `archive/main-2026-09-19`. See
 [`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
 
-Active Step 1 new-direction work is on `STEP1-新方向`. New work should start from:
+Active Step 1 new-direction work is on `STEP1-Research-Extension`. New work should start from:
 
 ```text
 scripts/run_static_containment.py

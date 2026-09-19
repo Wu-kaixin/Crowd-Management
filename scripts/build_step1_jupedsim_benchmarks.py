@@ -18,12 +18,10 @@ does not provide an exactly matched concave polygon model.
 
 from __future__ import annotations
 
-import copy
 import math
 from pathlib import Path
 
 import yaml
-
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "configs" / "step1_benchmark"

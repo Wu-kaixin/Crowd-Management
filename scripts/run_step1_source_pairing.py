@@ -27,7 +27,6 @@ from crowd_management.experiments.static_containment import (
     run_static_containment,
 )
 
-
 NUMERIC_METRICS = (
     "coverage_ratio",
     "max_euclidean_boundary_distance",
@@ -150,7 +149,12 @@ def run_one(
 
         record["execution_success"] = True
         record["boundary_valid"] = summary.get("boundary_v2_status") == "VALID"
-        record["pipeline_valid"] = summary.get("boundary_v2_status") == "VALID" and summary.get("resource_status") == "VALID" and summary.get("periodic_plan_status") == "VALID" and summary.get("assignment_status") == "VALID"
+        record["pipeline_valid"] = (
+            summary.get("boundary_v2_status") == "VALID"
+            and summary.get("resource_status") == "VALID"
+            and summary.get("periodic_plan_status") == "VALID"
+            and summary.get("assignment_status") == "VALID"
+        )
         record["episode_converged"] = summary.get("episode_status") == "CONVERGED"
         record["scientific_success"] = summary.get("method_status") == "converged_pr5_safety_filtered_episode"
         record["episode_status"] = summary.get(
