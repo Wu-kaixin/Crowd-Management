@@ -20,9 +20,7 @@ Repository and research specification:
 
 - `.gitignore`
 - `AGENTS.md`
-- `README.md`
-- `README.ja.md`
-- `README.zh-TW.md`
+- `README.md`（仓库现仅保留简体中文；原 `README.ja.md` / `README.zh-TW.md` 已删除）
 - `TEST_REPORT.md`
 - `docs/RESEARCH_SPEC.md`
 - `docs/STEP1_FREEZE_AUDIT.md`
