@@ -7,7 +7,13 @@ import inspect
 import numpy as np
 import pytest
 
-from crowd_management.controllers import ABCGv2Config, ABCGv2Controller, AssignmentConfig, assign_guides_to_targets
+from crowd_management.controllers import (
+    ABCGv2Config,
+    ABCGv2Controller,
+    AssignmentConfig,
+    RouteAwareABCGv2Controller,
+    assign_guides_to_targets,
+)
 from crowd_management.crowd.observation import (
     FORBIDDEN_OBSERVATION_FIELDS,
     CrowdObservation,
@@ -28,9 +34,10 @@ def _controller() -> ABCGv2Controller:
 
 
 def test_controller_cannot_access_spawn_polygon() -> None:
-    signature = inspect.signature(ABCGv2Controller.step)
-    for name in signature.parameters:
-        assert name not in FORBIDDEN_OBSERVATION_FIELDS
+    for controller_type in (ABCGv2Controller, RouteAwareABCGv2Controller):
+        signature = inspect.signature(controller_type.step)
+        for name in signature.parameters:
+            assert name not in FORBIDDEN_OBSERVATION_FIELDS
     with pytest.raises(TypeError):
         as_controller_observation({"positions": np.ones((4, 2)), "spawn_polygon": [[0.0, 0.0]]})
     with pytest.raises(ValueError):

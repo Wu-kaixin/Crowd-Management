@@ -15,11 +15,20 @@ from .abcg_v2 import (
     integrate_guide_positions,
     nominal_guide_velocity,
 )
+from .abcg_v2_route import RouteAwareABCGv2Controller
 from .assignment import (
     AssignmentConfig,
     AssignmentResult,
     IdentityPreservingAssigner,
     assign_guides_to_targets,
+)
+from .boundary_route import (
+    BoundaryRouteConfig,
+    RoutePlan,
+    TransitCurve,
+    build_transit_curve,
+    line_of_sight_clear,
+    plan_route_waypoints,
 )
 from .coverage_cvt import BoundaryCVTController
 from .guide_initialization import sample_random_guide_positions
@@ -52,6 +61,7 @@ __all__ = [
     "AssignmentConfig",
     "AssignmentResult",
     "BoundaryCVTController",
+    "BoundaryRouteConfig",
     "LegacyCenterRadiusController",
     "IdentityPreservingAssigner",
     "CoveragePlan",
@@ -64,13 +74,17 @@ __all__ = [
     "ResourceDecision",
     "ResourcePolicy",
     "ResourcePolicyConfig",
+    "RouteAwareABCGv2Controller",
+    "RoutePlan",
     "StaticCircleController",
     "SafetyProjectionResult",
+    "TransitCurve",
     "VelocitySafetyConfig",
     "equal_arc_target_s",
     "sample_random_guide_positions",
     "allocate_guide_resources",
     "assign_guides_to_targets",
+    "build_transit_curve",
     "plan_equal_arc_coverage",
     "plan_periodic_arc_coverage",
     "periodic_uniform_coverage_cost",
@@ -79,5 +93,7 @@ __all__ = [
     "minimum_guide_wall_distance",
     "project_velocity_safety",
     "integrate_guide_positions",
+    "line_of_sight_clear",
     "nominal_guide_velocity",
+    "plan_route_waypoints",
 ]

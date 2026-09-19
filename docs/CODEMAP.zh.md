@@ -2,7 +2,7 @@
 
 一眼分清：**核心算法**、**实验编排**、**输入配置**、**运行输出**、**冻结证据**、**文档/测试**。
 
-权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。Step 1–3 路线见 [`STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
+权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。Step 1–3 路线见 [`STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。Step 1 v2 实验协议见 [`STEP1_V2_PROTOCOL.md`](STEP1_V2_PROTOCOL.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
 
 ---
 
@@ -71,7 +71,7 @@ known Ω_env
   → resources 算要几个 guide
   → periodic_arc_cvt 在部署曲线上布点
   → assignment 身份保持分配
-  → abcg_v2 + safety（含墙约束）闭环速度控制
+  → abcg_v2 或 abcg_v2_route + safety（含墙约束）闭环速度控制
   → live visualization（默认）
   → artifacts 写入 runs/<run>/...
 ```
@@ -91,7 +91,9 @@ known Ω_env
 
 | 文件 | 角色 |
 | --- | --- |
-| `abcg_v2.py` | **主控制器**：固定目标闭环、`step` / episode |
+| `abcg_v2.py` | **冻结主控制器**：固定目标闭环、`step` / episode |
+| `boundary_route.py` | v2 边界感知 waypoint / transit curve（不改 PR5） |
+| `abcg_v2_route.py` | v2 路由 nominal + 原 `project_velocity_safety` |
 | `guide_initialization.py` | 随机未知初值 / endpoint 初值 |
 | `decentralized/` | Step 3 DESIGNED：局部感知 / 通信 / 分配 Protocol |
 | `abcg.py` | v1 端点基线（给 episode 初值） |
@@ -139,7 +141,7 @@ known Ω_env
 | `ci_smoke.yaml` | CI 极小确定性 workload |
 | `step1_known_boundary/*.yaml` | 已知场地边界 + 未知静态人群（JuPedSim spawn 仅仿真器用） |
 
-YAML 里常见块：`scene`（square/rectangle）、`crowd`、`guiders`（含 `init: random|endpoint`）、`heterogeneity`、`containment`、`boundary`、`resources`、`assignment`、`motion`、`safety`、`visualization`。这些是**超参输入**，不是算法本体。路线见 [`docs/STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。
+YAML 里常见块：`scene`（square/rectangle）、`crowd`、`guiders`（含 `init: random|endpoint`）、`heterogeneity`、`containment`、`boundary`（含 `cascade`）、`resources`、`assignment`、`motion`（含 `route_aware` / `transit_clearance`）、`safety`、`visualization`。这些是**超参输入**，不是算法本体。路线见 [`docs/STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。v2 种子协议见 [`docs/STEP1_V2_PROTOCOL.md`](STEP1_V2_PROTOCOL.md)。
 
 ---
 

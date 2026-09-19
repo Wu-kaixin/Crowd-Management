@@ -1,0 +1,134 @@
+{
+  "n": 160,
+  "scientific_success": 153,
+  "scientific_success_rate": 0.95625,
+  "boundary_valid": 160,
+  "TIMEOUT": 7,
+  "BOUNDARY_INVALID": 0,
+  "episode_status_counts": {
+    "CONVERGED": 153,
+    "TIMEOUT": 7
+  },
+  "by_shape": {
+    "circle": {
+      "n": 40,
+      "success": 39,
+      "timeout": 1,
+      "boundary_invalid": 0
+    },
+    "ellipse": {
+      "n": 40,
+      "success": 40,
+      "timeout": 0,
+      "boundary_invalid": 0
+    },
+    "concave": {
+      "n": 40,
+      "success": 34,
+      "timeout": 6,
+      "boundary_invalid": 0
+    },
+    "irregular": {
+      "n": 40,
+      "success": 40,
+      "timeout": 0,
+      "boundary_invalid": 0
+    }
+  },
+  "gate_a_timeout_le_1": false,
+  "gate_b_boundary_invalid_le_1": true,
+  "gates_passed": false,
+  "failures": [
+    {
+      "environment": "square",
+      "shape": "circle",
+      "seed": "115",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.3214626239491073",
+      "safety_projected_steps": "373",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "5",
+      "route_follow_boundary_count": "0"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": "112",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.12404884462054738",
+      "safety_projected_steps": "368",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "5",
+      "route_follow_boundary_count": "0"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": "108",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.6414697834742012",
+      "safety_projected_steps": "350",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "3",
+      "route_follow_boundary_count": "1"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": "115",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.07984136016056034",
+      "safety_projected_steps": "342",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "5",
+      "route_follow_boundary_count": "0"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": "100",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.7775209110847735",
+      "safety_projected_steps": "333",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "2",
+      "route_follow_boundary_count": "0"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": "115",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.07984136016055995",
+      "safety_projected_steps": "340",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "5",
+      "route_follow_boundary_count": "0"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": "112",
+      "failure_reason": "TIMEOUT",
+      "boundary_v2_method": "alpha_shape",
+      "episode_status": "TIMEOUT",
+      "episode_final_tracking_rmse": "0.12404884462054562",
+      "safety_projected_steps": "340",
+      "transit_clearance_used": "0.25",
+      "route_final_approach_count": "5",
+      "route_follow_boundary_count": "0"
+    }
+  ]
+}

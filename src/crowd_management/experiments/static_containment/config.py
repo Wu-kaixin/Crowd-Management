@@ -12,6 +12,7 @@ import numpy as np
 import yaml
 
 from ...controllers import ABCGv2Config, AssignmentConfig, ResourcePolicyConfig, VelocitySafetyConfig
+from ...controllers.boundary_route import BoundaryRouteConfig
 from ...crowd import (
     StaticCrowdConfig,
     StaticHeterogeneityConfig,
@@ -75,6 +76,8 @@ class StaticContainmentConfig:
     visualization: VisualizationConfig = field(default_factory=VisualizationConfig)
     step: int = 1
     guide_init: str = "endpoint"
+    route: BoundaryRouteConfig = field(default_factory=BoundaryRouteConfig)
+    estimator_cascade: bool = False
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> StaticContainmentConfig:
@@ -201,4 +204,14 @@ class StaticContainmentConfig:
             visualization=VisualizationConfig.from_dict(raw.get("visualization")),
             step=int(raw.get("step", 1)),
             guide_init=guide_init,
+            route=BoundaryRouteConfig(
+                enabled=bool(motion.get("route_aware", known_environment)),
+                transit_clearance=float(motion.get("transit_clearance", 0.25)),
+                lookahead=float(motion.get("route_lookahead", 0.8)),
+                approach_radius=float(motion.get("route_approach_radius", 0.40)),
+                entry_sample_spacing=float(motion.get("route_entry_sample_spacing", 0.25)),
+                los_sample_spacing=float(motion.get("route_los_sample_spacing", 0.10)),
+                stall_speed=float(motion.get("route_stall_speed", 0.02)),
+            ),
+            estimator_cascade=bool(boundary.get("cascade", known_environment)),
         )

@@ -40,8 +40,11 @@ Start Core work from:
 scripts/run_static_containment.py
 configs/step1_known_boundary/*.yaml
 src/crowd_management/controllers/abcg_v2.py
+src/crowd_management/controllers/abcg_v2_route.py
+src/crowd_management/controllers/boundary_route.py
 src/crowd_management/scenarios/
 docs/STEP1_RESEARCH_ROADMAP.md
+docs/STEP1_V2_PROTOCOL.md
 ```
 
 Step 2 gather-then-surround (dispersed → gather → surround):

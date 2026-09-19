@@ -5,13 +5,19 @@ from __future__ import annotations
 from dataclasses import dataclass, field, replace
 
 import numpy as np
-from shapely.geometry import MultiPoint
+from shapely.geometry import MultiPoint, Point, Polygon
 
 from ...controllers.periodic_arc_cvt import CoveragePlan, PeriodicArcCVTConfig, plan_periodic_arc_coverage
 from ...controllers.resources import ResourceDecision, ResourcePolicyConfig
 from ...crowd.observation import CrowdObservation, crowd_observation_from_points
-from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, estimate_boundary_v2
-from ...geometry.arclength import resample_closed_curve_by_arclength
+from ...estimation import (
+    BoundaryEstimateFailure,
+    BoundaryEstimateV2,
+    adapt_radial_boundary,
+    estimate_boundary_v2,
+)
+from ...estimation.boundary import estimate_radial_boundary
+from ...geometry.arclength import has_self_intersections, resample_closed_curve_by_arclength
 from ...geometry.deployment_curve import DeploymentCurve, DeploymentCurveFailure, build_deployment_curve
 from ...types import Array
 from .config import StaticContainmentConfig
@@ -69,6 +75,8 @@ def _deploy_from_crowd_estimate(
     crowd_estimate: BoundaryEstimateV2,
     observation: CrowdObservation,
     cfg: StaticContainmentConfig,
+    *,
+    min_crowd_clearance: float | None = None,
 ) -> tuple[BoundaryEstimateV2 | BoundaryEstimateFailure, DeploymentCurve | DeploymentCurveFailure | None]:
     deployment = build_deployment_curve(
         crowd_estimate.curve_points,
@@ -77,7 +85,7 @@ def _deploy_from_crowd_estimate(
         workspace=cfg.scene,
         wall_margin=cfg.safety.room_margin,
         sample_spacing=cfg.boundary_v2.sample_spacing,
-        min_crowd_clearance=None,
+        min_crowd_clearance=min_crowd_clearance,
     )
     if isinstance(deployment, DeploymentCurveFailure):
         failure = BoundaryEstimateFailure(
@@ -105,7 +113,14 @@ def estimate_known_boundary_pipeline(
 
     The controller-facing observation has no spawn polygon. Environment is
     used only as the guide workspace.
+
+    When ``cfg.estimator_cascade`` is true, Core uses an evidence-gated
+    fallback (alpha → radial → conservative convex envelope) without lowering
+    coverage or connectivity thresholds.  Each accepted candidate records the
+    estimator that actually produced it.
     """
+    if bool(getattr(cfg, "estimator_cascade", False)):
+        return estimate_known_boundary_pipeline_cascade(observation, cfg)
     crowd_config = replace(cfg.boundary_v2, safety_distance=0.0, room_size=None)
     crowd_estimate = estimate_boundary_v2(
         observation.controller_points(),
@@ -115,6 +130,274 @@ def estimate_known_boundary_pipeline(
     if isinstance(crowd_estimate, BoundaryEstimateFailure):
         return crowd_estimate, None
     return _deploy_from_crowd_estimate(crowd_estimate, observation, cfg)
+
+
+def _closed_observation_coverage(points: Array, curve: Array) -> float:
+    """Fraction of observations inside or on the candidate crowd polygon."""
+    polygon = Polygon(np.asarray(curve, dtype=float))
+    if polygon.is_empty:
+        return 0.0
+    if not polygon.is_valid:
+        repaired = polygon.buffer(0)
+        if repaired.is_empty or getattr(repaired, "geom_type", "") != "Polygon":
+            return 0.0
+        polygon = repaired
+    cloud = np.asarray(points, dtype=float)
+    inside = [polygon.covers(Point(float(row[0]), float(row[1]))) for row in cloud]
+    return float(np.mean(inside)) if inside else 0.0
+
+
+def _candidate_geometry_ok(curve: Array) -> tuple[bool, str]:
+    points = np.asarray(curve, dtype=float)
+    if points.ndim != 2 or points.shape[1] != 2 or len(points) < 3 or not np.all(np.isfinite(points)):
+        return False, "curve_invalid"
+    try:
+        if has_self_intersections(points):
+            return False, "self_intersection"
+    except ValueError as error:
+        return False, str(error)
+    polygon = Polygon(points)
+    if polygon.is_empty or not polygon.is_valid or polygon.area <= 1.0e-12:
+        return False, "polygon_invalid"
+    if not polygon.exterior.is_simple:
+        return False, "not_simple"
+    return True, "ok"
+
+
+def _with_boundary_method(
+    estimate: BoundaryEstimateV2,
+    method_label: str,
+    attempts: list[tuple[str, object]],
+) -> BoundaryEstimateV2:
+    method_names = {
+        "alpha": estimate.method if estimate.method else "alpha_shape",
+        "radial_fallback": "radial_fallback",
+        "convex_fallback": "convex_fallback",
+    }
+    recorded = method_names.get(method_label, method_label)
+    return BoundaryEstimateV2(
+        curve_points=estimate.curve_points,
+        offset_points=estimate.offset_points,
+        arc_s=estimate.arc_s,
+        length=estimate.length,
+        tangents=estimate.tangents,
+        outward_normals=estimate.outward_normals,
+        uncertainty=estimate.uncertainty,
+        confidence=estimate.confidence,
+        component_count=estimate.component_count,
+        topology_valid=estimate.topology_valid,
+        method=recorded,
+        version=estimate.version,
+        diagnostics=_boundary_diagnostics(
+            {
+                **estimate.diagnostics,
+                "boundary_method": method_label,
+                "estimator_cascade_attempts": attempts,
+            }
+        ),
+    )
+
+
+def _deploy_curve_source(crowd_estimate: BoundaryEstimateV2, observation: CrowdObservation, method_label: str) -> Array:
+    """Use a covering hull for convex fallback so resampling cannot shrink clearance."""
+    if method_label != "convex_fallback":
+        return crowd_estimate.curve_points
+    hull = MultiPoint([tuple(map(float, row)) for row in observation.controller_points()]).convex_hull
+    if hull.geom_type != "Polygon" or hull.is_empty:
+        return crowd_estimate.curve_points
+    coords = np.asarray(hull.exterior.coords[:-1], dtype=float)
+    return coords if len(coords) >= 3 else crowd_estimate.curve_points
+
+
+def _accept_cascade_candidate(
+    crowd_estimate: BoundaryEstimateV2,
+    observation: CrowdObservation,
+    cfg: StaticContainmentConfig,
+    *,
+    method_label: str,
+    attempts: list[tuple[str, object]],
+    require_coverage: bool,
+) -> tuple[BoundaryEstimateV2, DeploymentCurve] | None:
+    source_curve = _deploy_curve_source(crowd_estimate, observation, method_label)
+    geometry_ok, geometry_reason = _candidate_geometry_ok(source_curve)
+    if not geometry_ok:
+        attempts.append((method_label, geometry_reason))
+        return None
+    if require_coverage:
+        coverage = _closed_observation_coverage(observation.controller_points(), source_curve)
+        minimum = float(cfg.boundary_v2.min_observation_coverage)
+        if coverage + 1.0e-12 < minimum:
+            attempts.append((method_label, f"coverage={coverage:.4f}<{minimum:.4f}"))
+            return None
+    source_estimate = crowd_estimate
+    if method_label == "convex_fallback":
+        rebuilt = _crowd_estimate_from_closed_curve(
+            source_curve,
+            sample_spacing=float(cfg.boundary_v2.sample_spacing),
+            method="convex_fallback",
+            diagnostics={"fallback": "convex_hull", "observation_count": int(len(observation.positions))},
+        )
+        if isinstance(rebuilt, BoundaryEstimateFailure):
+            attempts.append((method_label, rebuilt.diagnostics.get("reason", rebuilt.status)))
+            return None
+        source_estimate = rebuilt
+        deployment = build_deployment_curve(
+            source_curve,
+            cfg.safety_distance,
+            crowd_points=observation.positions,
+            workspace=cfg.scene,
+            wall_margin=cfg.safety.room_margin,
+            sample_spacing=cfg.boundary_v2.sample_spacing,
+            min_crowd_clearance=cfg.safety_distance,
+        )
+        if isinstance(deployment, DeploymentCurveFailure):
+            attempts.append((method_label, deployment.reason))
+            return None
+        planned = planning_boundary_from_deployment(source_estimate, deployment)
+        return _with_boundary_method(planned, method_label, attempts), deployment
+    deploy_clearance = None if method_label == "alpha" else cfg.safety_distance
+    planned_result, deployment_result = _deploy_from_crowd_estimate(
+        source_estimate,
+        observation,
+        cfg,
+        min_crowd_clearance=deploy_clearance,
+    )
+    if not isinstance(planned_result, BoundaryEstimateV2) or not isinstance(deployment_result, DeploymentCurve):
+        reason = (
+            getattr(deployment_result, "reason", "deploy_failed")
+            if deployment_result is not None
+            else "deploy_failed"
+        )
+        attempts.append((method_label, reason))
+        return None
+    return _with_boundary_method(planned_result, method_label, attempts), deployment_result
+
+
+def _radial_fallback_estimate(
+    points: Array,
+    cfg: StaticContainmentConfig,
+) -> BoundaryEstimateV2 | BoundaryEstimateFailure:
+    """Radial candidate that does not lower coverage thresholds.
+
+    Connectivity multiplicity is not a radial-geometry requirement, so this
+    path estimates from the full observed cloud after the alpha gate failed.
+    """
+    try:
+        radial = estimate_radial_boundary(
+            points,
+            num_bins=cfg.boundary_v2.radial_bins,
+            safety_distance=0.0,
+            percentile=cfg.boundary_v2.radial_percentile,
+            smoothing_passes=cfg.boundary_v2.radial_smoothing_passes,
+        )
+    except ValueError as error:
+        return BoundaryEstimateFailure(
+            status="BOUNDARY_INVALID",
+            component_count=1,
+            method="radial_fallback",
+            version=2,
+            diagnostics={"reason": str(error)},
+        )
+    adapted = adapt_radial_boundary(
+        radial,
+        sample_spacing=float(cfg.boundary_v2.sample_spacing),
+        safety_distance=0.0,
+        room_size=None,
+        room_margin=0.0,
+    )
+    if isinstance(adapted, BoundaryEstimateFailure):
+        return BoundaryEstimateFailure(
+            status=adapted.status,
+            component_count=adapted.component_count,
+            method="radial_fallback",
+            version=2,
+            diagnostics=dict(adapted.diagnostics),
+        )
+    return BoundaryEstimateV2(
+        curve_points=adapted.curve_points,
+        offset_points=adapted.offset_points,
+        arc_s=adapted.arc_s,
+        length=adapted.length,
+        tangents=adapted.tangents,
+        outward_normals=adapted.outward_normals,
+        uncertainty=adapted.uncertainty,
+        confidence=adapted.confidence,
+        component_count=1,
+        topology_valid=adapted.topology_valid,
+        method="radial_fallback",
+        version=2,
+        diagnostics=_boundary_diagnostics({**adapted.diagnostics, "estimator": "radial_fallback"}),
+    )
+
+
+def estimate_known_boundary_pipeline_cascade(
+    observation: CrowdObservation,
+    cfg: StaticContainmentConfig,
+) -> tuple[BoundaryEstimateV2 | BoundaryEstimateFailure, DeploymentCurve | DeploymentCurveFailure | None]:
+    """Evidence-gated Core cascade: alpha, then radial, then convex envelope."""
+    points = observation.controller_points()
+    attempts: list[tuple[str, object]] = []
+
+    alpha_cfg = replace(cfg.boundary_v2, safety_distance=0.0, room_size=None)
+    alpha = estimate_boundary_v2(points, alpha_cfg, np.random.default_rng(cfg.seed))
+    if isinstance(alpha, BoundaryEstimateV2):
+        accepted = _accept_cascade_candidate(
+            alpha,
+            observation,
+            cfg,
+            method_label="alpha",
+            attempts=attempts,
+            require_coverage=False,
+        )
+        if accepted is not None:
+            return accepted
+    else:
+        attempts.append(("alpha", alpha.diagnostics.get("reason", alpha.status)))
+
+    radial = _radial_fallback_estimate(points, cfg)
+    if isinstance(radial, BoundaryEstimateV2):
+        accepted = _accept_cascade_candidate(
+            radial,
+            observation,
+            cfg,
+            method_label="radial_fallback",
+            attempts=attempts,
+            require_coverage=True,
+        )
+        if accepted is not None:
+            return accepted
+    else:
+        attempts.append(("radial_fallback", radial.diagnostics.get("reason", radial.status)))
+
+    hull = _convex_hull_crowd_estimate(points, sample_spacing=float(cfg.boundary_v2.sample_spacing))
+    if isinstance(hull, BoundaryEstimateV2):
+        accepted = _accept_cascade_candidate(
+            hull,
+            observation,
+            cfg,
+            method_label="convex_fallback",
+            attempts=attempts,
+            require_coverage=True,
+        )
+        if accepted is not None:
+            return accepted
+    else:
+        attempts.append(("convex_fallback", hull.diagnostics.get("reason", hull.status)))
+
+    return (
+        BoundaryEstimateFailure(
+            status="BOUNDARY_INVALID",
+            component_count=1,
+            method="core_estimator_cascade",
+            version=2,
+            diagnostics={
+                "reason": "estimator_cascade_exhausted",
+                "attempts": str(attempts),
+                "boundary_method": "none",
+            },
+        ),
+        None,
+    )
 
 
 def _crowd_estimate_from_closed_curve(
@@ -723,6 +1006,7 @@ __all__ = [
     "build_step1_observation",
     "estimate_group_boundary_pipeline",
     "estimate_known_boundary_pipeline",
+    "estimate_known_boundary_pipeline_cascade",
     "estimate_multi_group_surround_pipeline",
     "partition_observed_components",
     "planning_boundary_from_deployment",

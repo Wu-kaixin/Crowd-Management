@@ -39,7 +39,10 @@ Canonical Core matrix: `configs/step1_known_boundary/benchmark_manifest.yaml`
 
 Live visualization is the interactive default (`visualization.live: true`). Use `--headless` for CI and holdout.
 
-Do **not** add to Core: new estimators, crowd dynamics, gather, split/merge, decentralized communication, or crowd–guide interaction.
+Do **not** add to Core: crowd dynamics, gather, split/merge, decentralized
+communication, or crowd–guide interaction. v2 may add route-aware nominal
+motion and an evidence-gated estimator cascade; it must not lower
+observation-coverage or PR5 thresholds. See [`STEP1_V2_PROTOCOL.md`](STEP1_V2_PROTOCOL.md).
 
 ## Step 1 Extension — CURRENT, out of Core freeze
 
@@ -118,14 +121,19 @@ Read-only TIMEOUT audit (this branch): [`reports/step1_timeout_audit/TIMEOUT_AUD
 All 40 TIMEOUT rows are safety-pin stalls (36 structural, 4 near-miss). None are horizon-sensitive.
 Do not raise `max_steps` on `46ad613`.
 
+**Step 1 v2 (this branch):** structural repairs only — route-aware nominal motion
+and an evidence-gated estimator cascade. Protocol:
+[`docs/STEP1_V2_PROTOCOL.md`](STEP1_V2_PROTOCOL.md).
+Do not retune PR5, `max_steps`, RMSE tolerance, or assignment to chase 99%.
+Seeds 100–119 are `SPENT_REGRESSION`. Development 300–349; intermediate 350–369;
+final untouched holdout 400–449.
+
 Version chain:
 
 ```text
 46ad613  (= step1-known-boundary-freeze)
 │
-├── analysis/step1-timeout-audit     ← this note; read-only
-├── feature/step1-improvement-v2     ← only if Step 1 is revised; new seeds
+├── analysis/step1-timeout-audit     ← read-only
+├── feature/step1-improvement-v2     ← route-aware motion + robust boundary
 └── step2-dynamic-crowd              ← crowd dynamics / gather / interaction
 ```
-
-A later algorithm revision needs new development seeds and a new untouched holdout (for example 200–219).

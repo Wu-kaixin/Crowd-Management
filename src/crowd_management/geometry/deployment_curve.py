@@ -130,17 +130,43 @@ def build_deployment_curve(
         return _failure("OFFSET_INVALID", str(error))
 
     min_observed_clearance = None
+    required_clearance = None if min_crowd_clearance is None else float(min_crowd_clearance)
     if crowd_points is not None and len(np.asarray(crowd_points, dtype=float)):
         observed = np.asarray(crowd_points, dtype=float)
         distances = np.linalg.norm(curve[:, None, :] - observed[None, :, :], axis=2)
         min_observed_clearance = float(np.min(distances))
-        if min_crowd_clearance is not None and min_observed_clearance + 1.0e-9 < float(min_crowd_clearance):
-            return _failure(
-                "OFFSET_INVALID",
-                "deployment_too_close_to_crowd",
-                min_observed_clearance=min_observed_clearance,
-                required_clearance=float(min_crowd_clearance),
-            )
+        if required_clearance is not None and min_observed_clearance + 1.0e-9 < required_clearance:
+            # Arclength resampling of a convex offset chords inward.  Push the
+            # sampled curve back out when the deficit is a sampling sag, not a
+            # leaked crowd estimate.
+            for _ in range(3):
+                if min_observed_clearance + 1.0e-9 >= required_clearance:
+                    break
+                deficit = required_clearance - min_observed_clearance
+                if deficit > 2.0 * float(sample_spacing) + 1.0e-9:
+                    return _failure(
+                        "OFFSET_INVALID",
+                        "deployment_too_close_to_crowd",
+                        min_observed_clearance=min_observed_clearance,
+                        required_clearance=required_clearance,
+                    )
+                pushed = curve + (deficit + 1.0e-4) * normals
+                try:
+                    curve, arc_s, length, tangents, normals = resample_closed_curve_by_arclength(
+                        pushed,
+                        spacing=sample_spacing,
+                    )
+                except ValueError as error:
+                    return _failure("OFFSET_INVALID", str(error))
+                distances = np.linalg.norm(curve[:, None, :] - observed[None, :, :], axis=2)
+                min_observed_clearance = float(np.min(distances))
+            if min_observed_clearance + 1.0e-9 < required_clearance:
+                return _failure(
+                    "OFFSET_INVALID",
+                    "deployment_too_close_to_crowd",
+                    min_observed_clearance=min_observed_clearance,
+                    required_clearance=required_clearance,
+                )
 
     if workspace is not None:
         guide_workspace = workspace.feasible_workspace_polygon(wall_margin)
@@ -160,6 +186,15 @@ def build_deployment_curve(
                     wall_margin=float(wall_margin),
                     environment_is_not_crowd_boundary=True,
                 )
+        inside = workspace.contains(curve, margin=wall_margin)
+        if not bool(np.all(inside)):
+            return _failure(
+                "OFFSET_OUTSIDE_WORKSPACE",
+                "offset_outside_room",
+                outside_count=int(np.count_nonzero(~inside)),
+                wall_margin=float(wall_margin),
+                environment_is_not_crowd_boundary=True,
+            )
 
     return DeploymentCurve(
         curve_points=curve,

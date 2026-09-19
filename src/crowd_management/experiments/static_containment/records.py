@@ -53,6 +53,8 @@ class MethodSummary(TypedDict, total=False):
     sampled_safety_valid: bool
     scientific_success: bool
     failure_reason: str
+    route_enabled: bool
+    transit_clearance_used: float | str | None
     minimum_guide_guide_distance: float | str
     minimum_guide_crowd_distance: float | str
     minimum_guide_wall_distance: float | str

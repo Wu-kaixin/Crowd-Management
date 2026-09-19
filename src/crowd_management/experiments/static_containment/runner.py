@@ -27,6 +27,8 @@ from ...controllers import (
     assign_guides_to_targets,
     plan_periodic_arc_coverage,
 )
+from ...controllers.abcg_v2_route import RouteAwareABCGv2Controller
+from ...controllers.boundary_route import TransitCurve, build_transit_curve, transit_from_deployment
 from ...controllers.guide_initialization import sample_random_guide_positions
 from ...crowd import (
     StaticCrowdTruth,
@@ -117,11 +119,29 @@ def _assemble_method_summary(
         summary["safety_projected_steps"] = diag_int(episode_result.diagnostics, "safety_projected_steps", 0)
         summary["safety_infeasible_steps"] = diag_int(episode_result.diagnostics, "safety_infeasible_steps", 0)
         summary["safety_max_residual_after"] = diag_float(episode_result.diagnostics, "safety_max_residual_after", 0.0)
+        summary["route_enabled"] = bool(episode_result.diagnostics.get("route_enabled", False))
+        clearance_used = episode_result.diagnostics.get("transit_clearance_used", "not_available")
+        if clearance_used is None or isinstance(clearance_used, (int, float, str)):
+            summary["transit_clearance_used"] = clearance_used
+        else:
+            summary["transit_clearance_used"] = str(clearance_used)
+        summary["route_direct_count"] = diag_int(episode_result.diagnostics, "direct_count", 0)
+        summary["route_follow_boundary_count"] = diag_int(episode_result.diagnostics, "follow_boundary_count", 0)
+        summary["route_follow_deployment_count"] = diag_int(
+            episode_result.diagnostics, "follow_deployment_count", 0
+        )
+        summary["route_final_approach_count"] = diag_int(episode_result.diagnostics, "final_approach_count", 0)
     else:
         summary["safety_filter_status"] = "not_available"
         summary["safety_projected_steps"] = 0
         summary["safety_infeasible_steps"] = 0
         summary["safety_max_residual_after"] = "not_available"
+        summary["route_enabled"] = False
+        summary["transit_clearance_used"] = "not_available"
+        summary["route_direct_count"] = 0
+        summary["route_follow_boundary_count"] = 0
+        summary["route_follow_deployment_count"] = 0
+        summary["route_final_approach_count"] = 0
     boundary_valid = isinstance(boundary_v2, BoundaryEstimateV2) or (
         isinstance(boundary_v2, BoundaryEstimateFailure)
         and int(boundary_v2.diagnostics.get("crowd_boundary_valid", 0)) == 1
@@ -288,6 +308,9 @@ def _run_method(
     renderer: Any,
     live: bool,
     planning_labels: Array | None = None,
+    transit_curve: TransitCurve | None = None,
+    inner_curve: TransitCurve | None = None,
+    route_enabled: bool = False,
 ) -> tuple[MethodSummary, dict[str, Any], dict[str, Any]]:
     method_targets, boundary = _controller_targets(method, cfg, crowd_points)
     if cfg.guide_init == "random":
@@ -408,14 +431,28 @@ def _run_method(
         )
     )
     episode_result = (
-        ABCGv2Controller(cfg.motion, cfg.safety).run_fixed_target_episode(
-            initial_guides,
-            periodic_plan.target_xy,
-            assignment_result,
-            precondition_status=resource_status,
-            crowd_points=crowd_observation,
-            room_size=cfg.room_size,
-            on_frame=on_frame if live else None,
+        (
+            RouteAwareABCGv2Controller(cfg.motion, cfg.safety, cfg.route).run_fixed_target_episode(
+                initial_guides,
+                periodic_plan.target_xy,
+                assignment_result,
+                precondition_status=resource_status,
+                crowd_points=crowd_observation,
+                room_size=cfg.room_size,
+                on_frame=on_frame if live else None,
+                transit_curve=transit_curve,
+                inner_curve=inner_curve,
+            )
+            if route_enabled
+            else ABCGv2Controller(cfg.motion, cfg.safety).run_fixed_target_episode(
+                initial_guides,
+                periodic_plan.target_xy,
+                assignment_result,
+                precondition_status=resource_status,
+                crowd_points=crowd_observation,
+                room_size=cfg.room_size,
+                on_frame=on_frame if live else None,
+            )
         )
         if periodic_plan is not None and assignment_result is not None
         else None
@@ -598,6 +635,27 @@ def run_static_containment(
             and resource_decision.active_count > 0
             else None
         )
+    route_enabled = bool(cfg.route.enabled) and not multi_group_mode
+    transit_curve: TransitCurve | None = None
+    inner_curve: TransitCurve | None = None
+    if (
+        route_enabled
+        and isinstance(boundary_v2, BoundaryEstimateV2)
+        and crowd_curve is not None
+    ):
+        fallback = deployment_result if isinstance(deployment_result, DeploymentCurve) else None
+        transit_curve = build_transit_curve(
+            boundary_v2.curve_points,
+            cfg.safety_distance,
+            cfg.route.transit_clearance,
+            crowd_points=crowd_observation.positions,
+            workspace=cfg.scene if cfg.known_environment else None,
+            wall_margin=cfg.safety.room_margin,
+            sample_spacing=float(cfg.boundary_v2.sample_spacing),
+            fallback=fallback,
+        )
+        if fallback is not None:
+            inner_curve = transit_from_deployment(fallback, clearance=0.0)
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
 
@@ -708,6 +766,9 @@ def run_static_containment(
             renderer=viewer,
             live=live_enabled,
             planning_labels=planning_labels,
+            transit_curve=transit_curve,
+            inner_curve=inner_curve,
+            route_enabled=route_enabled,
         )
         results[method] = summary
         assignment_records[method] = assignment_rec

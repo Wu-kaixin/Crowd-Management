@@ -35,8 +35,8 @@ def _configs_from_manifest(path: Path) -> list[Path]:
     return configs
 
 
-def _run_one(payload: tuple[str, str, int, bool]) -> dict[str, object]:
-    config, output, seed, headless = payload
+def _run_one(payload: tuple[str, str, int, bool, bool]) -> dict[str, object]:
+    config, output, seed, headless, save_plots = payload
     config_path = Path(config)
     raw = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     raw["seed"] = int(seed)
@@ -49,7 +49,7 @@ def _run_one(payload: tuple[str, str, int, bool]) -> dict[str, object]:
         resolved,
         resolved.parent,
         methods=["abcg"],
-        save_plots=True,
+        save_plots=save_plots,
         live=not headless,
         headless=headless,
     )
@@ -70,6 +70,11 @@ def main() -> None:
     parser.add_argument("--output", required=True)
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--workers", default="1")
+    parser.add_argument(
+        "--no-save-plots",
+        action="store_true",
+        help="Skip PNG artifacts. Numerics are unchanged; wall-clock only.",
+    )
     args = parser.parse_args()
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
@@ -87,8 +92,9 @@ def main() -> None:
     else:
         workers = max(1, int(args.workers))
 
+    save_plots = not bool(args.no_save_plots)
     jobs = [
-        (str(config), str(output / config.stem), seed, headless)
+        (str(config), str(output / config.stem), seed, headless, save_plots)
         for config in configs
         for seed in seeds
     ]
