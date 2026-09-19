@@ -27,8 +27,11 @@ from ..types import Array, as_vec2
 def _parse_region_vertices(
     raw: dict[str, Any],
 ) -> tuple[tuple[float, float], ...] | None:
+    spawn = raw.get("spawn", {})
     region = raw.get("region", {})
-    vertices = region.get("vertices")
+    vertices = spawn.get("vertices")
+    if vertices is None:
+        vertices = region.get("vertices")
 
     if vertices is None:
         return None
@@ -133,7 +136,7 @@ class StaticCrowdConfig:
         if source == "jupedsim" and region_vertices is None:
             raise ValueError(
                 "JuPedSim crowd source requires "
-                "crowd.region.vertices."
+                "crowd.spawn.vertices or crowd.region.vertices."
             )
 
         count = int(raw["count"])

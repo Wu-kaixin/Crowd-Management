@@ -43,6 +43,12 @@ class StaticHeterogeneityConfig:
     time_gap_min: float = 0.80
     time_gap_max: float = 1.20
 
+    demand_mean: float = 1.00
+    demand_std: float = 0.00
+    demand_min: float = 0.50
+    demand_max: float = 2.50
+    demand_side_bias: str = "none"
+
     @classmethod
     def from_dict(
         cls,
@@ -72,6 +78,11 @@ class StaticHeterogeneityConfig:
             time_gap_std=float(raw.get("time_gap_std", 0.08)),
             time_gap_min=float(raw.get("time_gap_min", 0.80)),
             time_gap_max=float(raw.get("time_gap_max", 1.20)),
+            demand_mean=float(raw.get("demand_mean", 1.00)),
+            demand_std=float(raw.get("demand_std", 0.00)),
+            demand_min=float(raw.get("demand_min", 0.50)),
+            demand_max=float(raw.get("demand_max", 2.50)),
+            demand_side_bias=str(raw.get("demand_side_bias", "none")).strip().lower(),
         )
 
         cfg.validate()
@@ -101,6 +112,15 @@ class StaticHeterogeneityConfig:
             self.time_gap_min,
             self.time_gap_max,
         )
+        _validate_range(
+            "demand",
+            self.demand_mean,
+            self.demand_std,
+            self.demand_min,
+            self.demand_max,
+        )
+        if self.demand_side_bias not in {"none", "positive_x", "right", "left"}:
+            raise ValueError("demand_side_bias must be none, positive_x, right, or left.")
 
 
 def _validate_range(
@@ -155,8 +175,15 @@ def generate_static_agent_attributes(
     count: int,
     config: StaticHeterogeneityConfig,
     seed: int,
+    positions: Array | None = None,
 ) -> dict[str, Array]:
-    """Generate reproducible Step-1 pedestrian attributes."""
+    """Generate reproducible Step-1 pedestrian attributes.
+
+    ``desired_speed`` and ``time_gap`` are metadata / future interface in
+    Step 1 because pedestrians remain static. Demand may be observed and
+    displayed; ABCG-v2 does not currently consume it unless a later
+    ablation wires it in.
+    """
 
     if count <= 0:
         raise ValueError("count must be positive.")
@@ -209,11 +236,35 @@ def generate_static_agent_attributes(
             dtype=float,
         )
 
+    if config.enabled and config.demand_std > 0.0:
+        demand = _bounded_normal(
+            rng,
+            count,
+            config.demand_mean,
+            config.demand_std,
+            config.demand_min,
+            config.demand_max,
+        )
+    else:
+        demand = np.full(count, config.demand_mean, dtype=float)
+
+    if positions is not None and config.demand_side_bias != "none":
+        array = np.asarray(positions, dtype=float)
+        if array.shape != (count, 2):
+            raise ValueError("positions must match attribute count.")
+        mid = 0.5 * (float(np.min(array[:, 0])) + float(np.max(array[:, 0])))
+        high_side = array[:, 0] >= mid
+        if config.demand_side_bias == "left":
+            high_side = array[:, 0] <= mid
+        demand = np.where(high_side, demand * 1.5, demand * 0.75)
+        demand = np.clip(demand, config.demand_min, config.demand_max)
+
     return {
         "agent_id": np.arange(count, dtype=int),
         "radius": radius,
         "desired_speed": desired_speed,
         "time_gap": time_gap,
+        "demand": demand,
         "heterogeneity_enabled": np.full(
             count,
             config.enabled,

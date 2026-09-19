@@ -12,6 +12,12 @@ from .jupedsim_static import (
     generate_jupedsim_static_crowd,
     generate_jupedsim_static_truth,
 )
+from .observation import (
+    FORBIDDEN_OBSERVATION_FIELDS,
+    CrowdObservation,
+    as_controller_observation,
+    crowd_observation_from_points,
+)
 from .source import (
     JuPedSimStaticCrowdSource,
     StaticCrowdSource,
@@ -36,14 +42,18 @@ from .heterogeneity import (
 )
 
 __all__ = [
+    "FORBIDDEN_OBSERVATION_FIELDS",
+    "CrowdObservation",
     "JuPedSimStaticCrowdSource",
     "StaticCrowdConfig",
     "StaticCrowdSource",
     "StaticCrowdTruth",
     "SyntheticStaticCrowdSource",
     "build_center_support_polygon",
+    "as_controller_observation",
     "build_crowd_source",
     "build_spawn_polygon",
+    "crowd_observation_from_points",
     "generate_circle_crowd",
     "generate_ellipse_crowd",
     "generate_jupedsim_static_crowd",
