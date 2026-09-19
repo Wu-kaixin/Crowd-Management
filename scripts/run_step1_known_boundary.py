@@ -35,6 +35,23 @@ def _configs_from_manifest(path: Path) -> list[Path]:
     return configs
 
 
+JobPayload = tuple[str, str, int, bool, bool]
+
+
+def _jobs_from_cases(path: Path, output: Path, headless: bool, save_plots: bool) -> list[JobPayload]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    cases = payload["cases"] if isinstance(payload, dict) else payload
+    root = Path("configs/step1_known_boundary")
+    jobs: list[JobPayload] = []
+    for case in cases:
+        environment = str(case["environment"])
+        shape = str(case["shape"])
+        seed = int(case["seed"])
+        config = root / f"{environment}_{shape}.yaml"
+        jobs.append((str(config), str(output / config.stem), seed, headless, save_plots))
+    return jobs
+
+
 def _run_one(payload: tuple[str, str, int, bool, bool]) -> dict[str, object]:
     config, output, seed, headless, save_plots = payload
     config_path = Path(config)
@@ -66,6 +83,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Known-boundary Step 1 runner.")
     parser.add_argument("--config", action="append", default=[])
     parser.add_argument("--manifest")
+    parser.add_argument("--cases", type=Path, help="JSON list of {environment, shape, seed} development cases.")
     parser.add_argument("--seeds", nargs="+", default=["0"])
     parser.add_argument("--output", required=True)
     parser.add_argument("--headless", action="store_true")
@@ -81,23 +99,25 @@ def main() -> None:
     configs = [Path(item) for item in args.config]
     if args.manifest:
         configs.extend(_configs_from_manifest(Path(args.manifest)))
-    if not configs:
-        raise SystemExit("Provide --config or --manifest.")
+    if args.cases is None and not configs:
+        raise SystemExit("Provide --config, --manifest, or --cases.")
     seeds = _parse_seeds(args.seeds)
     headless = bool(args.headless)
+    save_plots = not bool(args.no_save_plots)
+    if args.cases is not None:
+        jobs = _jobs_from_cases(args.cases, output, headless, save_plots)
+    else:
+        jobs = [
+            (str(config), str(output / config.stem), seed, headless, save_plots)
+            for config in configs
+            for seed in seeds
+        ]
     if not headless:
         workers = 1
     elif args.workers == "auto":
-        workers = select_parallel_plan(max(1, len(configs) * len(seeds)), mode="balanced").workers
+        workers = select_parallel_plan(max(1, len(jobs)), mode="balanced").workers
     else:
         workers = max(1, int(args.workers))
-
-    save_plots = not bool(args.no_save_plots)
-    jobs = [
-        (str(config), str(output / config.stem), seed, headless, save_plots)
-        for config in configs
-        for seed in seeds
-    ]
     rows: list[dict[str, object]] = []
     if workers == 1:
         for job in jobs:

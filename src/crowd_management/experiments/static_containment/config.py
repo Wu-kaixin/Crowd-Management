@@ -212,6 +212,11 @@ class StaticContainmentConfig:
                 entry_sample_spacing=float(motion.get("route_entry_sample_spacing", 0.25)),
                 los_sample_spacing=float(motion.get("route_los_sample_spacing", 0.10)),
                 stall_speed=float(motion.get("route_stall_speed", 0.02)),
+                geodesic_enabled=bool(motion.get("route_geodesic", True)),
+                waypoint_epsilon=float(motion.get("route_waypoint_epsilon", 0.12)),
+                vertex_simplify=float(motion.get("route_vertex_simplify", 0.12)),
+                replan_stall_steps=int(motion.get("route_replan_stall_steps", 8)),
+                replan_speed_ratio=float(motion.get("route_replan_speed_ratio", 0.15)),
             ),
             estimator_cascade=bool(boundary.get("cascade", known_environment)),
         )

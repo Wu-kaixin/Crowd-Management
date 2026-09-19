@@ -55,6 +55,14 @@ class MethodSummary(TypedDict, total=False):
     failure_reason: str
     route_enabled: bool
     transit_clearance_used: float | str | None
+    geodesic_replan_count: int
+    geodesic_wait_steps: int
+    geodesic_fallback_steps: int
+    geodesic_mean_path_length: float | str
+    geodesic_mean_waypoint_count: float | str
+    geodesic_mean_progress: float | str
+    route_crowd_projection_steps: int
+    route_guide_pair_projection_steps: int
     minimum_guide_guide_distance: float | str
     minimum_guide_crowd_distance: float | str
     minimum_guide_wall_distance: float | str

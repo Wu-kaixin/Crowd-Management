@@ -93,7 +93,8 @@ known Ω_env
 | --- | --- |
 | `abcg_v2.py` | **冻结主控制器**：固定目标闭环、`step` / episode |
 | `boundary_route.py` | v2 边界感知 waypoint / transit curve（不改 PR5） |
-| `abcg_v2_route.py` | v2 路由 nominal + 原 `project_velocity_safety` |
+| `safe_geodesic.py` | v2 估计人群膨胀障碍上的 visibility-graph 最短路 |
+| `abcg_v2_route.py` | v2 路由 nominal（geodesic waypoint 或双环 fallback）+ 原 `project_velocity_safety` |
 | `guide_initialization.py` | 随机未知初值 / endpoint 初值 |
 | `decentralized/` | Step 3 DESIGNED：局部感知 / 通信 / 分配 Protocol |
 | `abcg.py` | v1 端点基线（给 episode 初值） |

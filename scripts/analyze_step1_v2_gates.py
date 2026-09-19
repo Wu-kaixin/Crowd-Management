@@ -58,6 +58,14 @@ def summarize(records_path: Path) -> dict[str, object]:
             "follow_deployment_count": row.get("route_follow_deployment_count"),
             "route_final_approach_count": row.get("route_final_approach_count"),
             "route_follow_boundary_count": row.get("route_follow_boundary_count"),
+            "geodesic_replan_count": row.get("geodesic_replan_count"),
+            "geodesic_wait_steps": row.get("geodesic_wait_steps"),
+            "geodesic_fallback_steps": row.get("geodesic_fallback_steps"),
+            "geodesic_mean_path_length": row.get("geodesic_mean_path_length"),
+            "geodesic_mean_waypoint_count": row.get("geodesic_mean_waypoint_count"),
+            "geodesic_mean_progress": row.get("geodesic_mean_progress"),
+            "route_crowd_projection_steps": row.get("route_crowd_projection_steps"),
+            "route_guide_pair_projection_steps": row.get("route_guide_pair_projection_steps"),
         }
         for row in rows
         if not _bool(row.get("scientific_success"))

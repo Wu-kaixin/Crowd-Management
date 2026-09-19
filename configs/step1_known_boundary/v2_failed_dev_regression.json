@@ -1,0 +1,248 @@
+{
+  "name": "FAILED_DEV_REGRESSION",
+  "parent_controller": "step1-v2-dev-dual-ring@649480d",
+  "source": "v2_dev_final_elig 360/400 TIMEOUT rows (development 300-349, reusable)",
+  "n": 40,
+  "cases": [
+    {
+      "environment": "rectangle",
+      "shape": "circle",
+      "seed": 320,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "circle",
+      "seed": 334,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "circle",
+      "seed": 341,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 301,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 308,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 309,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 315,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 322,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 334,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 337,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 343,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 347,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "concave",
+      "seed": 349,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "ellipse",
+      "seed": 323,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 301,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 304,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 307,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 324,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 326,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 329,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 334,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 339,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "rectangle",
+      "shape": "irregular",
+      "seed": 345,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "circle",
+      "seed": 320,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "circle",
+      "seed": 338,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": 308,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": 315,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": 322,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "concave",
+      "seed": 337,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "ellipse",
+      "seed": 330,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "ellipse",
+      "seed": 346,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 301,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 304,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 307,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 324,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 326,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 329,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 332,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 334,
+      "failure_reason": "TIMEOUT"
+    },
+    {
+      "environment": "square",
+      "shape": "irregular",
+      "seed": 339,
+      "failure_reason": "TIMEOUT"
+    }
+  ]
+}

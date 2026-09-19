@@ -135,5 +135,7 @@ Version chain:
 │
 ├── analysis/step1-timeout-audit     ← read-only
 ├── feature/step1-improvement-v2     ← route-aware motion + robust boundary
+│     └── step1-v2-dev-dual-ring @ 649480d   ← 362/400 development
+│           └── feature/step1-v2-safe-geodesic  ← visibility-graph motion
 └── step2-dynamic-crowd              ← crowd dynamics / gather / interaction
 ```

@@ -117,3 +117,45 @@ a generalization claim. Later 300–349 runs compare against 362/400.
 
 Do not open 350–369 until development 300–349 is ≥ 396/400 with each shape
 ≥ 99/100, boundary 400/400, TIMEOUT ≤ 4, and no truth leakage.
+
+## Safe-geodesic motion (current development)
+
+Parent controller: **`step1-v2-dev-dual-ring` @ `649480d` (362/400)**.
+The FINAL-eligibility / escape state machine (360/400) is **not** the next
+parent. It showed that `FOLLOW_DEPLOYMENT ⇄ FINAL_APPROACH` switching is not
+a sufficient repair.
+
+Current experiment on `feature/step1-v2-safe-geodesic`:
+
+1. Inflate the **estimated** crowd polygon: \(\widehat{\mathcal O}\oplus B(d_{\mathrm{safe}})\).
+   Never JuPedSim spawn / truth geometry.
+2. Visibility-graph shortest path from \(p_i\) to \(z_i\).
+3. Follow waypoints; PR5 stall clears the path and replans.
+4. Deterministic WAIT when two guides oppose in a narrow gap
+   (longer remaining path yields; higher id breaks ties).
+5. Dual-ring routing remains fallback only.
+
+Frozen: PR5 distances, `max_steps`, \(v_{\max}\), \(k_p\), RMSE, assignment,
+resource policy, boundary estimator, `transit_clearance`, success definition.
+
+First matrix: `FAILED_DEV_REGRESSION` = the 40 TIMEOUT rows from the 360/400
+state-machine development run (development seeds, reusable). Target
+**40 → ≤ 4**, especially irregular. Do not run 300–349 until that gate is
+read. Do not open 350–369.
+
+Observed on `feature/step1-v2-safe-geodesic` (visibility graph + WAIT +
+stall-replan, PR5 frozen): **16/40 recovered**, **24 TIMEOUT remain**.
+Circle 5/5 and ellipse 3/3 on this slice are solved. Irregular is 2/18.
+Remaining failures split into last-hop crowd pins (RMSE typically
+0.08–0.18, geodesic progress ≈ 0.94) and guide-pair waits. This is **not**
+development closure and not a reason to open 300–349 or 350–369.
+
+```bash
+python scripts/run_step1_known_boundary.py \
+  --cases configs/step1_known_boundary/v2_failed_dev_regression.json \
+  --output runs/step1_v2_failed_dev_regression \
+  --headless --workers auto --no-save-plots
+python scripts/analyze_step1_v2_gates.py \
+  runs/step1_v2_failed_dev_regression/records.csv \
+  --json-out runs/step1_v2_failed_dev_regression/gate_summary.json
+```

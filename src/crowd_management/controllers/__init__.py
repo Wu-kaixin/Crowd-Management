@@ -30,6 +30,10 @@ from .boundary_route import (
     line_of_sight_clear,
     plan_route_waypoints,
 )
+from .safe_geodesic import (
+    inflate_estimated_obstacle,
+    visibility_shortest_path,
+)
 from .coverage_cvt import BoundaryCVTController
 from .guide_initialization import sample_random_guide_positions
 from .legacy_center_radius import LegacyCenterRadiusController
@@ -96,4 +100,6 @@ __all__ = [
     "line_of_sight_clear",
     "nominal_guide_velocity",
     "plan_route_waypoints",
+    "inflate_estimated_obstacle",
+    "visibility_shortest_path",
 ]

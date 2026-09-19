@@ -134,3 +134,63 @@ def test_route_aware_episode_uses_pr5_and_does_not_cross_crowd() -> None:
     path = episode.positions[:, 0, :]
     mid_crossings = path[(np.abs(path[:, 0] - 10.0) < 0.4) & (np.abs(path[:, 1] - 10.0) < 1.0)]
     assert len(mid_crossings) == 0
+
+
+def _wall_curve() -> np.ndarray:
+    return np.array(
+        [
+            [9.4, 3.8],
+            [10.6, 3.8],
+            [10.6, 16.2],
+            [9.4, 16.2],
+        ],
+        dtype=float,
+    )
+
+
+def test_geodesic_waypoints_go_around_estimated_wall() -> None:
+    guides = np.array([[7.5, 10.0]])
+    targets = np.array([[15.0, 10.0]])
+    crowd = _crowd_wall()
+    controller = RouteAwareABCGv2Controller(
+        ABCGv2Config(max_steps=80, v_max=1.0, k_p=1.5),
+        _safety(),
+        BoundaryRouteConfig(),
+    )
+    controller.set_estimated_crowd_curve(_wall_curve())
+    controller.reset(targets, _identity_assignment(1), guides, room_size=np.array([20.0, 20.0]))
+    positions = guides.copy()
+    modes = []
+    for _ in range(50):
+        output = controller.step(crowd, positions, dt=0.1)
+        modes.append(str(output.diagnostics.get("route_modes", ["DIRECT"])[0]))
+        positions = integrate_guide_positions(positions, output.safe_velocity, 0.1)
+    assert any(mode in {"FOLLOW_WAYPOINT", "FINAL_TARGET"} for mode in modes)
+    assert "FINAL_APPROACH" not in modes
+    assert abs(positions[0, 1] - 10.0) > 0.35
+    assert not (abs(positions[0, 0] - 10.0) < 0.4 and abs(positions[0, 1] - 10.0) < 1.0)
+
+
+def test_geodesic_episode_does_not_read_spawn_geometry() -> None:
+    guides = np.array([[7.5, 10.0]])
+    targets = np.array([[15.0, 10.0]])
+    crowd = _crowd_wall()
+    spawn = np.array([[0.0, 0.0], [1.0, 0.0], [1.0, 1.0]], dtype=float)
+    controller = RouteAwareABCGv2Controller(
+        ABCGv2Config(max_steps=40, v_max=1.0, k_p=1.5, hold_steps=5),
+        _safety(),
+        BoundaryRouteConfig(),
+    )
+    episode = controller.run_fixed_target_episode(
+        guides,
+        targets,
+        _identity_assignment(1),
+        crowd_points=crowd,
+        room_size=np.array([20.0, 20.0]),
+        crowd_curve=_wall_curve(),
+    )
+    assert "spawn" not in episode.diagnostics
+    assert "truth" not in episode.diagnostics
+    assert bool(episode.diagnostics.get("geodesic_enabled"))
+    assert spawn[0, 0] == 0.0
+    assert float(episode.diagnostics["minimum_guide_crowd_distance"]) + 1.0e-9 >= 0.85

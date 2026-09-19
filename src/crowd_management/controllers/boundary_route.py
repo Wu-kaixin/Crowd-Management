@@ -44,6 +44,11 @@ class BoundaryRouteConfig:
     entry_sample_spacing: float = 0.25
     los_sample_spacing: float = 0.10
     stall_speed: float = 0.02
+    geodesic_enabled: bool = True
+    waypoint_epsilon: float = 0.12
+    vertex_simplify: float = 0.12
+    replan_stall_steps: int = 8
+    replan_speed_ratio: float = 0.15
 
     def __post_init__(self) -> None:
         for name in (
@@ -53,6 +58,9 @@ class BoundaryRouteConfig:
             "entry_sample_spacing",
             "los_sample_spacing",
             "stall_speed",
+            "waypoint_epsilon",
+            "vertex_simplify",
+            "replan_speed_ratio",
         ):
             value = float(getattr(self, name))
             if not np.isfinite(value) or value < 0.0:
@@ -63,6 +71,19 @@ class BoundaryRouteConfig:
             raise ValueError("approach_radius must be positive.")
         if self.entry_sample_spacing <= 0.0 or self.los_sample_spacing <= 0.0:
             raise ValueError("sample spacings must be positive.")
+        if self.waypoint_epsilon <= 0.0:
+            raise ValueError("waypoint_epsilon must be positive.")
+        if self.replan_speed_ratio <= 0.0 or self.replan_speed_ratio > 1.0:
+            raise ValueError("replan_speed_ratio must be in (0, 1].")
+        if not isinstance(self.geodesic_enabled, (bool, np.bool_)):
+            raise ValueError("geodesic_enabled must be boolean.")
+        if (
+            isinstance(self.replan_stall_steps, bool)
+            or not isinstance(self.replan_stall_steps, (int, np.integer))
+            or int(self.replan_stall_steps) < 1
+        ):
+            raise ValueError("replan_stall_steps must be a positive integer.")
+        object.__setattr__(self, "replan_stall_steps", int(self.replan_stall_steps))
 
 
 @dataclass(frozen=True)

@@ -131,6 +131,22 @@ def _assemble_method_summary(
             episode_result.diagnostics, "follow_deployment_count", 0
         )
         summary["route_final_approach_count"] = diag_int(episode_result.diagnostics, "final_approach_count", 0)
+        summary["geodesic_replan_count"] = diag_int(episode_result.diagnostics, "geodesic_replan_count", 0)
+        summary["geodesic_wait_steps"] = diag_int(episode_result.diagnostics, "geodesic_wait_steps", 0)
+        summary["geodesic_fallback_steps"] = diag_int(episode_result.diagnostics, "geodesic_fallback_steps", 0)
+        summary["geodesic_mean_path_length"] = diag_float(
+            episode_result.diagnostics, "geodesic_mean_path_length", 0.0
+        )
+        summary["geodesic_mean_waypoint_count"] = diag_float(
+            episode_result.diagnostics, "geodesic_mean_waypoint_count", 0.0
+        )
+        summary["geodesic_mean_progress"] = diag_float(episode_result.diagnostics, "geodesic_mean_progress", 0.0)
+        summary["route_crowd_projection_steps"] = diag_int(
+            episode_result.diagnostics, "route_crowd_projection_steps", 0
+        )
+        summary["route_guide_pair_projection_steps"] = diag_int(
+            episode_result.diagnostics, "route_guide_pair_projection_steps", 0
+        )
     else:
         summary["safety_filter_status"] = "not_available"
         summary["safety_projected_steps"] = 0
@@ -142,6 +158,14 @@ def _assemble_method_summary(
         summary["route_follow_boundary_count"] = 0
         summary["route_follow_deployment_count"] = 0
         summary["route_final_approach_count"] = 0
+        summary["geodesic_replan_count"] = 0
+        summary["geodesic_wait_steps"] = 0
+        summary["geodesic_fallback_steps"] = 0
+        summary["geodesic_mean_path_length"] = "not_available"
+        summary["geodesic_mean_waypoint_count"] = "not_available"
+        summary["geodesic_mean_progress"] = "not_available"
+        summary["route_crowd_projection_steps"] = 0
+        summary["route_guide_pair_projection_steps"] = 0
     boundary_valid = isinstance(boundary_v2, BoundaryEstimateV2) or (
         isinstance(boundary_v2, BoundaryEstimateFailure)
         and int(boundary_v2.diagnostics.get("crowd_boundary_valid", 0)) == 1
@@ -442,6 +466,7 @@ def _run_method(
                 on_frame=on_frame if live else None,
                 transit_curve=transit_curve,
                 inner_curve=inner_curve,
+                crowd_curve=crowd_curve,
             )
             if route_enabled
             else ABCGv2Controller(cfg.motion, cfg.safety).run_fixed_target_episode(
