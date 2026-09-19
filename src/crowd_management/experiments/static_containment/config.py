@@ -5,9 +5,10 @@ ROLE: INPUT BINDING — load configs/*.yaml into typed StaticContainmentConfig.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
+import numpy as np
 import yaml
 
 from ...controllers import ABCGv2Config, AssignmentConfig, ResourcePolicyConfig, VelocitySafetyConfig
@@ -16,13 +17,40 @@ from ...crowd import (
     StaticHeterogeneityConfig,
 )
 from ...estimation import BoundaryV2Config
+from ...scenarios import RectangularScenario
 from ...types import Array, as_vec2
+
+
+@dataclass(frozen=True)
+class VisualizationConfig:
+    live: bool = True
+    render_every: int = 1
+    max_fps: float = 20.0
+    show_trails: bool = True
+
+    @classmethod
+    def from_dict(cls, raw: dict[str, object] | None) -> VisualizationConfig:
+        data = raw or {}
+        render_every = int(data.get("render_every", 1))
+        max_fps = float(data.get("max_fps", 20.0))
+        if render_every < 1:
+            raise ValueError("visualization.render_every must be a positive integer.")
+        if not np.isfinite(max_fps) or max_fps <= 0.0:
+            raise ValueError("visualization.max_fps must be finite and positive.")
+        return cls(
+            live=bool(data.get("live", True)),
+            render_every=render_every,
+            max_fps=max_fps,
+            show_trails=bool(data.get("show_trails", True)),
+        )
 
 
 @dataclass(frozen=True)
 class StaticContainmentConfig:
     seed: int
     room_size: Array
+    scene: RectangularScenario
+    known_environment: bool
     crowd: StaticCrowdConfig
     heterogeneity: StaticHeterogeneityConfig
     guide_count: int
@@ -36,13 +64,31 @@ class StaticContainmentConfig:
     motion: ABCGv2Config
     safety: VelocitySafetyConfig
     boundary_v2: BoundaryV2Config
+    visualization: VisualizationConfig = field(default_factory=VisualizationConfig)
+    step: int = 1
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> StaticContainmentConfig:
         with open(path, encoding="utf-8") as f:
             raw = yaml.safe_load(f)
         seed = int(raw.get("seed", 0))
-        room_size = as_vec2(raw.get("room", {}).get("size", [20.0, 14.0]), "room.size")
+        scene_raw = raw.get("scene") or {}
+        room_raw = raw.get("room") or {}
+        if scene_raw:
+            width = float(scene_raw.get("width", (room_raw.get("size") or [20.0, 14.0])[0]))
+            height = float(scene_raw.get("height", (room_raw.get("size") or [20.0, 14.0])[1]))
+            scene_type = str(scene_raw.get("type", "square" if np.isclose(width, height) else "rectangle"))
+            if scene_raw.get("closed", True) is False:
+                raise ValueError("Step 1 requires a closed environment (scene.closed: true).")
+            if scene_raw.get("openings"):
+                raise ValueError("Step 1 does not implement environment openings.")
+            scene = RectangularScenario(name=scene_type, width=width, height=height)
+            room_size = scene.room_size
+            known_environment = True
+        else:
+            room_size = as_vec2(room_raw.get("size", [20.0, 14.0]), "room.size")
+            scene = RectangularScenario.from_size(room_size)
+            known_environment = False
         containment = raw.get("containment", {})
         coverage_radius = float(containment.get("coverage_radius", 1.2))
         resources = raw.get("resources", {})
@@ -50,9 +96,12 @@ class StaticContainmentConfig:
         motion = raw.get("motion", {})
         safety = raw.get("safety", {})
         boundary = raw.get("boundary", {})
+        wall_margin = float(safety.get("wall_margin", safety.get("room_margin", 0.25)))
         return cls(
             seed=seed,
             room_size=room_size,
+            scene=scene,
+            known_environment=known_environment,
             crowd=StaticCrowdConfig.from_dict(raw["crowd"], seed=seed),
             heterogeneity=StaticHeterogeneityConfig.from_dict(raw.get("heterogeneity", {})),
             guide_count=int(raw.get("guiders", {}).get("count", 8)),
@@ -87,7 +136,7 @@ class StaticContainmentConfig:
                     safety.get("min_guide_distance", containment.get("min_guider_distance", 0.55))
                 ),
                 min_crowd_distance=float(safety.get("min_crowd_distance", containment.get("safety_distance", 0.8))),
-                room_margin=float(safety.get("room_margin", 0.25)),
+                room_margin=wall_margin,
                 residual_tolerance=float(safety.get("residual_tolerance", 1.0e-9)),
                 max_projection_sweeps=int(safety.get("max_projection_sweeps", 200)),
             ),
@@ -122,4 +171,6 @@ class StaticContainmentConfig:
                     else None
                 ),
             ),
+            visualization=VisualizationConfig.from_dict(raw.get("visualization")),
+            step=int(raw.get("step", 1)),
         )

@@ -32,8 +32,12 @@ from ...crowd import (
     build_crowd_source,
     generate_static_agent_attributes,
 )
+from ...crowd.observation import CrowdObservation
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, estimate_boundary_v2
+from ...geometry.deployment_curve import DeploymentCurve
 from ...types import Array
+from ...visualization.live_step1 import Step1Frame, build_renderer
+from ...visualization.static_step1 import save_final_scene
 from .artifacts import (
     diag_float,
     diag_int,
@@ -44,6 +48,7 @@ from .artifacts import (
     save_resource_decision,
 )
 from .config import StaticContainmentConfig
+from .known_boundary import build_step1_observation, estimate_known_boundary_pipeline
 from .manifest import build_manifest
 from .methods import _controller_targets
 from .records import MethodSummary
@@ -107,19 +112,138 @@ def _assemble_method_summary(
         summary["safety_projected_steps"] = 0
         summary["safety_infeasible_steps"] = 0
         summary["safety_max_residual_after"] = "not_available"
-    summary["method_status"] = (
-        "converged_pr5_safety_filtered_episode"
-        if truth.valid
-        and geometry_valid
+    boundary_valid = isinstance(boundary_v2, BoundaryEstimateV2) or (
+        isinstance(boundary_v2, BoundaryEstimateFailure)
+        and int(boundary_v2.diagnostics.get("crowd_boundary_valid", 0)) == 1
+    )
+    deployment_valid = isinstance(boundary_v2, BoundaryEstimateV2)
+    assignment_valid = assignment_result is not None and assignment_result.status == "VALID"
+    episode_converged = episode_result is not None and episode_result.status == "CONVERGED"
+    sampled_safety_valid = (
+        episode_result is not None
+        and diag_int(episode_result.diagnostics, "safety_infeasible_steps", 0) == 0
+        and episode_result.status != "SAFETY_INFEASIBLE"
+    )
+    execution_success = episode_result is not None or episode_skipped_status not in {
+        "BOUNDARY_INVALID",
+        "OBSERVATION_INVALID",
+    }
+    scientific_success = (
+        truth.valid
+        and deployment_valid
         and resource_status == "VALID"
         and plan_valid
-        and assignment_result is not None
-        and assignment_result.status == "VALID"
-        and episode_result is not None
-        and episode_result.status == "CONVERGED"
+        and assignment_valid
+        and episode_converged
+        and sampled_safety_valid
+    )
+    summary["execution_success"] = bool(execution_success)
+    summary["boundary_valid"] = bool(boundary_valid)
+    summary["deployment_valid"] = bool(deployment_valid)
+    summary["resource_valid"] = resource_status == "VALID"
+    summary["plan_valid"] = bool(plan_valid)
+    summary["assignment_valid"] = bool(assignment_valid)
+    summary["episode_converged"] = bool(episode_converged)
+    summary["sampled_safety_valid"] = bool(sampled_safety_valid)
+    summary["scientific_success"] = bool(scientific_success)
+    summary["failure_reason"] = (
+        "none"
+        if scientific_success
+        else str(
+            episode_result.status
+            if episode_result is not None
+            else episode_skipped_status
+        )
+    )
+    if episode_result is not None:
+        summary["minimum_guide_guide_distance"] = _finite_or_unavailable(
+            diag_float(episode_result.diagnostics, "minimum_guide_guide_distance", float("nan"))
+        )
+        summary["minimum_guide_crowd_distance"] = _finite_or_unavailable(
+            diag_float(episode_result.diagnostics, "minimum_guide_crowd_distance", float("nan"))
+        )
+        summary["minimum_guide_wall_distance"] = _finite_or_unavailable(
+            diag_float(episode_result.diagnostics, "minimum_guide_wall_distance", float("nan"))
+        )
+    else:
+        summary["minimum_guide_guide_distance"] = "not_available"
+        summary["minimum_guide_crowd_distance"] = "not_available"
+        summary["minimum_guide_wall_distance"] = "not_available"
+    summary["method_status"] = (
+        "converged_pr5_safety_filtered_episode"
+        if scientific_success
         else "diagnostic_only"
     )
     return summary
+
+
+def _finite_or_unavailable(value: object) -> float | str:
+    number = _finite_or_none(value)
+    return number if number is not None else "not_available"
+
+
+def _finite_or_none(value: object) -> float | None:
+    try:
+        number = float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+    if not np.isfinite(number):
+        return None
+    return number
+
+
+def _build_frame(
+    *,
+    cfg: StaticContainmentConfig,
+    crowd_observation: CrowdObservation,
+    guides: Array,
+    initial_guides: Array,
+    active_ids: tuple[int, ...],
+    reserve_ids: tuple[int, ...],
+    crowd_curve: Array | None,
+    deployment_curve: Array | None,
+    targets: Array | None,
+    trails: Array | None,
+    state: str,
+    step: int,
+    time: float,
+    tracking_rmse: float | None,
+    max_arc_gap: float | None,
+    safety_status: str,
+    min_gg: float | None,
+    min_gc: float | None,
+    min_gw: float | None,
+    failed: bool,
+    failure_reason: str | None,
+) -> Step1Frame:
+    return Step1Frame(
+        scenario_name=cfg.scene.name,
+        seed=cfg.seed,
+        time=time,
+        step=step,
+        environment_vertices=cfg.scene.boundary_vertices(),
+        crowd_points=crowd_observation.positions,
+        crowd_radii=crowd_observation.radii,
+        crowd_demand=crowd_observation.demand,
+        estimated_crowd_boundary=crowd_curve,
+        deployment_curve=deployment_curve,
+        target_positions=targets,
+        initial_guides=initial_guides,
+        current_guides=guides,
+        active_ids=active_ids,
+        reserve_ids=reserve_ids,
+        trails=trails,
+        controller_state=state,
+        tracking_rmse=tracking_rmse,
+        active_guide_count=len(active_ids),
+        max_arc_gap=max_arc_gap,
+        min_guide_guide_distance=min_gg,
+        min_guide_crowd_distance=min_gc,
+        min_guide_wall_distance=min_gw,
+        safety_status=safety_status,
+        failed=failed,
+        failure_reason=failure_reason,
+    )
 
 
 def _run_method(
@@ -127,12 +251,17 @@ def _run_method(
     *,
     cfg: StaticContainmentConfig,
     crowd_points: Array,
+    crowd_observation: CrowdObservation,
     truth: StaticCrowdTruth,
     boundary_v2: BoundaryEstimateV2 | BoundaryEstimateFailure,
+    crowd_curve: Array | None,
+    deployment_curve: Array | None,
     resource_decision: ResourceDecision | None,
     periodic_plan: CoveragePlan | None,
     output: Path,
     save_plots: bool,
+    renderer: Any,
+    live: bool,
 ) -> tuple[MethodSummary, dict[str, Any], dict[str, Any]]:
     targets, boundary = _controller_targets(method, cfg, crowd_points)
     initial_summary = containment_summary(
@@ -159,14 +288,88 @@ def _run_method(
         episode_skipped_status = "ASSIGNMENT_INFEASIBLE"
     else:
         episode_skipped_status = "DEGRADED"
+    trail_frames: list[Array] = []
+
+    def on_frame(frame: dict[str, Any]) -> None:
+        positions = np.asarray(frame["positions"], dtype=float)
+        trail_frames.append(positions.copy())
+        output_obj = frame.get("output")
+        active_ids = output_obj.active_ids if output_obj is not None else tuple(range(len(positions)))
+        reserve_ids = output_obj.reserve_ids if output_obj is not None else ()
+        diagnostics = output_obj.diagnostics if output_obj is not None else {}
+        renderer.update(
+            _build_frame(
+                cfg=cfg,
+                crowd_observation=crowd_observation,
+                guides=positions,
+                initial_guides=targets,
+                active_ids=active_ids,
+                reserve_ids=reserve_ids,
+                crowd_curve=crowd_curve,
+                deployment_curve=deployment_curve if deployment_curve is not None else (
+                    boundary_v2.offset_points if isinstance(boundary_v2, BoundaryEstimateV2) else None
+                ),
+                targets=periodic_plan.target_xy if periodic_plan is not None else None,
+                trails=np.stack(trail_frames, axis=0) if trail_frames else None,
+                state=str(frame["state"]),
+                step=int(frame["step_index"]),
+                time=float(frame["time"]),
+                tracking_rmse=_finite_or_none(diagnostics.get("tracking_rmse")) if diagnostics else None,
+                max_arc_gap=float(periodic_plan.max_arc_gap) if periodic_plan is not None else None,
+                safety_status=(
+                    str(diagnostics.get("safety_status", "not_available"))
+                    if diagnostics
+                    else "not_available"
+                ),
+                min_gg=_finite_or_none(diagnostics.get("minimum_guide_guide_distance")) if diagnostics else None,
+                min_gc=_finite_or_none(diagnostics.get("minimum_guide_crowd_distance")) if diagnostics else None,
+                min_gw=_finite_or_none(diagnostics.get("minimum_guide_wall_distance")) if diagnostics else None,
+                failed=bool(frame.get("failed")),
+                failure_reason=str(frame["state"]) if frame.get("failed") else None,
+            )
+        )
+
+    start_failed = not (
+        plan_valid
+        and assignment_result is not None
+        and resource_status == "VALID"
+        and geometry_valid
+    )
+    start_state = "INIT" if not start_failed else episode_skipped_status
+    renderer.start(
+        _build_frame(
+            cfg=cfg,
+            crowd_observation=crowd_observation,
+            guides=targets,
+            initial_guides=targets,
+            active_ids=tuple(range(len(targets))),
+            reserve_ids=(),
+            crowd_curve=crowd_curve,
+            deployment_curve=deployment_curve,
+            targets=periodic_plan.target_xy if periodic_plan is not None else None,
+            trails=None,
+            state=start_state,
+            step=0,
+            time=0.0,
+            tracking_rmse=None,
+            max_arc_gap=float(periodic_plan.max_arc_gap) if periodic_plan is not None else None,
+            safety_status="not_available",
+            min_gg=None,
+            min_gc=None,
+            min_gw=None,
+            failed=start_failed,
+            failure_reason=episode_skipped_status if start_failed else None,
+        )
+    )
     episode_result = (
         ABCGv2Controller(cfg.motion, cfg.safety).run_fixed_target_episode(
             targets,
             periodic_plan.target_xy,
             assignment_result,
             precondition_status=resource_status,
-            crowd_points=crowd_points,
+            crowd_points=crowd_observation,
             room_size=cfg.room_size,
+            on_frame=on_frame if live else None,
         )
         if periodic_plan is not None and assignment_result is not None
         else None
@@ -220,6 +423,37 @@ def _run_method(
             method_dir / "containment.png",
             title=f"{method}: static containment",
         )
+        final_frame = _build_frame(
+            cfg=cfg,
+            crowd_observation=crowd_observation,
+            guides=final_guide_points,
+            initial_guides=targets,
+            active_ids=tuple(int(i) for i in range(len(final_guide_points)))
+            if episode_result is None
+            else tuple(int(i) for i in np.flatnonzero(episode_result.guide_to_target >= 0)),
+            reserve_ids=()
+            if episode_result is None
+            else tuple(int(i) for i in episode_result.reserve_guide_ids),
+            crowd_curve=crowd_curve,
+            deployment_curve=deployment_curve
+            if deployment_curve is not None
+            else (boundary_v2.offset_points if isinstance(boundary_v2, BoundaryEstimateV2) else None),
+            targets=periodic_plan.target_xy if periodic_plan is not None else None,
+            trails=episode_result.positions if episode_result is not None else None,
+            state=summary["episode_status"],
+            step=int(summary["episode_control_steps"]),
+            time=float(summary["episode_control_steps"]) * cfg.motion.dt,
+            tracking_rmse=_finite_or_none(summary["episode_final_tracking_rmse"]),
+            max_arc_gap=_finite_or_none(summary["periodic_max_arc_gap"]),
+            safety_status=str(summary["safety_filter_status"]),
+            min_gg=_finite_or_none(summary["minimum_guide_guide_distance"]),
+            min_gc=_finite_or_none(summary["minimum_guide_crowd_distance"]),
+            min_gw=_finite_or_none(summary["minimum_guide_wall_distance"]),
+            failed=not bool(summary["scientific_success"]),
+            failure_reason=None if summary["scientific_success"] else str(summary["failure_reason"]),
+        )
+        save_final_scene(final_frame, method_dir / "final_scene.png")
+        renderer.save_final(method_dir / "final_scene.png", final_frame)
     return summary, assignment_rec, episode_rec
 
 
@@ -228,17 +462,48 @@ def run_static_containment(
     output_dir: str | Path,
     methods: list[str] | None = None,
     save_plots: bool = True,
+    live: bool | None = None,
+    headless: bool = False,
+    renderer: Any | None = None,
 ) -> dict[str, MethodSummary]:
     config_path = Path(config_path)
     cfg = StaticContainmentConfig.from_yaml(config_path)
+    if headless:
+        live_enabled = False
+    elif live is None:
+        live_enabled = bool(cfg.known_environment and cfg.visualization.live)
+    else:
+        live_enabled = bool(live)
     crowd_source = build_crowd_source(cfg.crowd)
     crowd_points = crowd_source.observe()
+    crowd_attributes = generate_static_agent_attributes(
+        count=len(crowd_points),
+        config=cfg.heterogeneity,
+        seed=cfg.seed + 100003,
+        positions=crowd_points,
+    )
+    crowd_observation = build_step1_observation(crowd_points, crowd_attributes)
     truth = crowd_source.truth(
         safety_distance=(
             cfg.safety_distance
         )
     )
-    boundary_v2 = estimate_boundary_v2(crowd_points, cfg.boundary_v2, np.random.default_rng(cfg.seed))
+    deployment_result = None
+    crowd_curve: Array | None = None
+    deployment_curve: Array | None = None
+    if cfg.known_environment:
+        boundary_v2, deployment_result = estimate_known_boundary_pipeline(crowd_observation, cfg)
+        if isinstance(boundary_v2, BoundaryEstimateV2):
+            crowd_curve = boundary_v2.curve_points
+            deployment_curve = boundary_v2.offset_points
+        elif isinstance(deployment_result, DeploymentCurve):
+            crowd_curve = None
+            deployment_curve = deployment_result.curve_points
+    else:
+        boundary_v2 = estimate_boundary_v2(crowd_points, cfg.boundary_v2, np.random.default_rng(cfg.seed))
+        if isinstance(boundary_v2, BoundaryEstimateV2):
+            crowd_curve = boundary_v2.curve_points
+            deployment_curve = boundary_v2.offset_points
     resource_decision = (
         ResourcePolicy(cfg.resource_policy).decide(boundary_v2.length, cfg.guide_count)
         if isinstance(boundary_v2, BoundaryEstimateV2)
@@ -254,18 +519,20 @@ def run_static_containment(
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
 
+    np.savez_compressed(
+        output / "crowd_observation.npz",
+        positions=crowd_observation.positions,
+        radii=crowd_observation.radii if crowd_observation.radii is not None else np.empty(0),
+        demand=crowd_observation.demand if crowd_observation.demand is not None else np.empty(0),
+    )
     if cfg.heterogeneity.enabled:
-        crowd_attributes = generate_static_agent_attributes(
-            count=len(crowd_points),
-            config=cfg.heterogeneity,
-            seed=cfg.seed + 100003,
-        )
         np.savez_compressed(
             output / "crowd_attributes.npz",
             agent_id=crowd_attributes["agent_id"],
             radius=crowd_attributes["radius"],
             desired_speed=crowd_attributes["desired_speed"],
             time_gap=crowd_attributes["time_gap"],
+            demand=crowd_attributes["demand"],
             heterogeneity_enabled=crowd_attributes["heterogeneity_enabled"],
         )
     np.savez_compressed(output / "crowd_points.npz", positions=crowd_points)
@@ -280,7 +547,33 @@ def run_static_containment(
         truth_status=np.array(truth.status),
         shape=np.array(truth.shape),
     )
+    np.savez_compressed(
+        output / "evaluator_truth.npz",
+        boundary_points=truth.boundary_points,
+        safety_points=truth.safety_points,
+        component_ids=truth.component_ids,
+        valid=np.array(truth.valid, dtype=bool),
+        status=np.array(truth.status),
+        spawn_vertices=np.asarray(cfg.crowd.region_vertices, dtype=float)
+        if cfg.crowd.region_vertices is not None
+        else np.empty((0, 2)),
+        environment_vertices=cfg.scene.boundary_vertices(),
+        note=np.array("evaluator_only_not_for_controller"),
+    )
     save_boundary_v2_artifacts(output, boundary_v2)
+    if isinstance(boundary_v2, BoundaryEstimateV2):
+        np.savez_compressed(
+            output / "boundary_estimate.npz",
+            curve_points=boundary_v2.curve_points,
+            offset_points=boundary_v2.offset_points,
+            arc_s=boundary_v2.arc_s,
+            length=np.array(boundary_v2.length),
+        )
+        np.savez_compressed(
+            output / "deployment_geometry.npz",
+            curve_points=boundary_v2.offset_points,
+            length=np.array(boundary_v2.length),
+        )
     save_resource_decision(output, resource_decision)
     save_periodic_plan_artifacts(output, periodic_plan)
 
@@ -289,6 +582,12 @@ def run_static_containment(
     with open(output / "config_resolved.yaml", "w", encoding="utf-8") as f:
         yaml.safe_dump(resolved_config, f, sort_keys=False, allow_unicode=True)
 
+    viewer = renderer if renderer is not None else build_renderer(
+        live=live_enabled,
+        render_every=cfg.visualization.render_every,
+        max_fps=cfg.visualization.max_fps,
+        show_trails=cfg.visualization.show_trails,
+    )
     results: dict[str, MethodSummary] = {}
     assignment_records: dict[str, dict[str, object]] = {}
     episode_records: dict[str, dict[str, object]] = {}
@@ -297,16 +596,23 @@ def run_static_containment(
             method,
             cfg=cfg,
             crowd_points=crowd_points,
+            crowd_observation=crowd_observation,
             truth=truth,
             boundary_v2=boundary_v2,
+            crowd_curve=crowd_curve,
+            deployment_curve=deployment_curve,
             resource_decision=resource_decision,
             periodic_plan=periodic_plan,
             output=output,
             save_plots=save_plots,
+            renderer=viewer,
+            live=live_enabled,
         )
         results[method] = summary
         assignment_records[method] = assignment_rec
         episode_records[method] = episode_rec
+
+    viewer.close()
 
     with open(output / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(
