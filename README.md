@@ -297,7 +297,7 @@ archive/g7-proof-strengthening-failed-2026-07-20
 - 已知边界开发矩阵（本分支）：**2 种环境 × 4 种形状 × 5 个种子 = 40** 次 ABCG 运行；**32 次 `CONVERGED`**，**6 次 `BOUNDARY_INVALID`**，**2 次 `TIMEOUT`**。失败仍计入分母。Holdout 种子 100-119 尚未运行。
 - 套件规模（权威；由 `scripts/check_readme_consistency.py` 同步）：
   <!-- TEST_COUNT_START -->
-  212
+  230
   <!-- TEST_COUNT_END -->
 - CI：Linux + Windows，见 [`.github/workflows/ci.yml`](.github/workflows/ci.yml)（单元测试、限定范围的 lint/类型检查、README 一致性、确定性 smoke、schema 回归）
 - 正式 G6（继承证据）：600 条主记录 — [G6 报告](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)

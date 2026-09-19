@@ -172,6 +172,72 @@ def generate_static_crowd_truth(
         component_count = 2
         valid = False
         status = "out_of_scope_multicomponent"
+    elif config.is_multi or shape in {"multi", "dispersed"}:
+        if not config.is_multi:
+            raise ValueError("shape multi/dispersed requires crowd.groups with at least two entries.")
+        if shape == "dispersed" or config.is_dispersed:
+            # Evaluator envelope: convex hull of cluster disks (single component).
+            from shapely.geometry import Point
+
+            disks = [
+                Point(float(group.center[0]), float(group.center[1])).buffer(float(group.radius))
+                for group in config.groups
+            ]
+            union = disks[0]
+            for disk in disks[1:]:
+                union = union.union(disk)
+            hull = union.convex_hull
+            if hull.is_empty or hull.geom_type != "Polygon":
+                raise ValueError("dispersed envelope truth failed to form a polygon.")
+            coords = np.asarray(hull.exterior.coords[:-1], dtype=float)
+            # Resample roughly by arc-length for a stable sample count.
+            from shapely.geometry import LineString
+
+            line = LineString(hull.exterior.coords)
+            length = float(line.length)
+            distances = np.linspace(0.0, length, samples, endpoint=False)
+            boundary = np.asarray([line.interpolate(float(d)).coords[0] for d in distances], dtype=float)
+            if safety_distance == 0.0:
+                safety = boundary.copy()
+            else:
+                grown = hull.buffer(float(safety_distance))
+                grown_line = LineString(grown.exterior.coords)
+                grown_len = float(grown_line.length)
+                safety = np.asarray(
+                    [
+                        grown_line.interpolate(float(d)).coords[0]
+                        for d in np.linspace(0.0, grown_len, samples, endpoint=False)
+                    ],
+                    dtype=float,
+                )
+            components = np.zeros(samples, dtype=int)
+            component_count = 1
+            valid = True
+            status = "valid"
+            shape = "dispersed"
+            del coords
+        else:
+            per_group = max(8, samples // len(config.groups))
+            boundaries: list[Array] = []
+            safeties: list[Array] = []
+            components_list: list[Array] = []
+            for index, group in enumerate(config.groups):
+                group_truth = generate_static_crowd_truth(
+                    group,
+                    safety_distance=safety_distance,
+                    num_samples=per_group,
+                )
+                boundaries.append(group_truth.boundary_points)
+                safeties.append(group_truth.safety_points)
+                components_list.append(np.full(len(group_truth.boundary_points), index, dtype=int))
+            boundary = np.vstack(boundaries)
+            safety = np.vstack(safeties)
+            components = np.concatenate(components_list)
+            component_count = len(config.groups)
+            # Known multi-group surround: each cluster has its own truth ring.
+            valid = True
+            status = "valid"
+            shape = "multi"
     else:
         raise ValueError(f"Unsupported static crowd truth shape: {config.shape}")
 

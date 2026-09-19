@@ -2,7 +2,7 @@
 
 一眼分清：**核心算法**、**实验编排**、**输入配置**、**运行输出**、**冻结证据**、**文档/测试**。
 
-权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
+权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。Step 1–3 路线见 [`STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
 
 ---
 
@@ -28,7 +28,7 @@ configs/*.yaml          ──输入──►  scripts/*.py（薄 CLI）
 | 角色 | 目录 / 文件 | 你改它意味着什么 |
 | --- | --- | --- |
 | **核心算法** | `src/.../controllers/`, `estimation/`, `geometry/`, `crowd/`, `scenarios/` | 改科学结果；需重新跑评测 |
-| **编排胶水** | `experiments/`, `evaluation/`, `runtime/`, `reporting/` | 改流程/并行/落盘，通常不改公式 |
+| **编排胶水** | `experiments/`（含 `static_containment/`、`step2_gather/`）, `evaluation/`, `runtime/`, `reporting/` | 改流程/并行/落盘，通常不改公式 |
 | **入口 CLI** | `scripts/` | 只解析参数，逻辑在包内 |
 | **输入** | `configs/*.yaml` | 场景与超参 |
 | **本地输出** | `runs/`, `outputs/`, `.tmp/` | gitignore，可删可重跑 |
@@ -81,10 +81,10 @@ known Ω_env
 | 路径 | 职责 | 关键文件 |
 | --- | --- | --- |
 | `crowd/` | 静态人群点云 + `CrowdObservation` 隔离 | `static_crowd.py`, `observation.py`, `truth.py`, `jupedsim_static.py` |
-| `scenarios/` | 已知场地 \(\Omega_{\mathrm{env}}\) | `rectangular.py` |
+| `scenarios/` | 已知场地 \(\Omega_{\mathrm{env}}\)；`registry` 可扩展类型 | `rectangular.py`, `registry.py` |
 | `estimation/` | 未知人群边界估计 | `boundary.py`（v1 径向）, `boundary_v2.py`（PR6 alpha+bootstrap） |
 | `geometry/` | 闭曲线 + 部署缓冲 | `arclength.py`, `deployment_curve.py` |
-| `controllers/` | **ABCG 数学核心**（优先读这里） | 见下表 |
+| `controllers/` | **ABCG 数学核心**（优先读这里） | 见下表；`decentralized/` 为 Step 3 DESIGNED 接口 |
 | `visualization/` | 实时窗口 / 终帧；控制器不得 import | `live_step1.py`, `static_step1.py` |
 
 #### `controllers/` 子模块（核心中的核心）
@@ -92,6 +92,8 @@ known Ω_env
 | 文件 | 角色 |
 | --- | --- |
 | `abcg_v2.py` | **主控制器**：固定目标闭环、`step` / episode |
+| `guide_initialization.py` | 随机未知初值 / endpoint 初值 |
+| `decentralized/` | Step 3 DESIGNED：局部感知 / 通信 / 分配 Protocol |
 | `abcg.py` | v1 端点基线（给 episode 初值） |
 | `periodic_arc_cvt.py` | 等弧 / 周期 Lloyd 覆盖规划 |
 | `resources.py` | `ceil(L/g_req)`、迟滞、容量不足状态 |
@@ -137,7 +139,7 @@ known Ω_env
 | `ci_smoke.yaml` | CI 极小确定性 workload |
 | `step1_known_boundary/*.yaml` | 已知场地边界 + 未知静态人群（JuPedSim spawn 仅仿真器用） |
 
-YAML 里常见块：`crowd`（输入点云形状）、`guiders`、`containment`、`boundary`、`resources`、`assignment`、`motion`、`safety`。这些是**超参输入**，不是算法本体。
+YAML 里常见块：`scene`（square/rectangle）、`crowd`、`guiders`（含 `init: random|endpoint`）、`heterogeneity`、`containment`、`boundary`、`resources`、`assignment`、`motion`、`safety`、`visualization`。这些是**超参输入**，不是算法本体。路线见 [`docs/STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。
 
 ---
 

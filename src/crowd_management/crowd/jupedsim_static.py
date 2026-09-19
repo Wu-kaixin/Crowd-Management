@@ -139,6 +139,10 @@ def generate_jupedsim_static_crowd(
             "requires source='jupedsim'."
         )
 
+    if config.is_multi:
+        parts = [generate_jupedsim_static_crowd(group) for group in config.groups]
+        return np.vstack(parts)
+
     polygon = build_spawn_polygon(
         config
     )
@@ -259,6 +263,95 @@ def generate_jupedsim_static_truth(
     if safety_distance < 0.0:
         raise ValueError(
             "safety_distance must be non-negative."
+        )
+
+    if config.is_multi:
+        if config.is_dispersed:
+            from shapely.geometry import Point
+            from shapely.geometry import LineString as _LineString
+
+            disks = [
+                Point(float(group.center[0]), float(group.center[1])).buffer(
+                    float(max(group.radius - group.distance_to_polygon, 0.2))
+                )
+                for group in config.groups
+            ]
+            union = disks[0]
+            for disk in disks[1:]:
+                union = union.union(disk)
+            hull = union.convex_hull
+            if hull.is_empty or hull.geom_type != "Polygon":
+                raise ValueError("dispersed JuPedSim envelope truth failed to form a polygon.")
+            samples = int(num_samples)
+            line = _LineString(hull.exterior.coords)
+            length = float(line.length)
+            boundary_points = np.asarray(
+                [line.interpolate(float(d)).coords[0] for d in np.linspace(0.0, length, samples, endpoint=False)],
+                dtype=float,
+            )
+            if safety_distance == 0.0:
+                safety_points = boundary_points.copy()
+            else:
+                grown = hull.buffer(float(safety_distance))
+                grown_line = _LineString(grown.exterior.coords)
+                grown_len = float(grown_line.length)
+                safety_points = np.asarray(
+                    [
+                        grown_line.interpolate(float(d)).coords[0]
+                        for d in np.linspace(0.0, grown_len, samples, endpoint=False)
+                    ],
+                    dtype=float,
+                )
+            return StaticCrowdTruth(
+                shape="dispersed",
+                boundary_points=boundary_points,
+                safety_points=safety_points,
+                component_ids=np.zeros(samples, dtype=int),
+                component_count=1,
+                valid=True,
+                status="valid",
+                diagnostics={
+                    "reference": "jupedsim_dispersed_convex_envelope",
+                    "source": "jupedsim",
+                    "jupedsim_version": _jupedsim_version(),
+                    "group_count": len(config.groups),
+                    "group_counts": [int(group.count) for group in config.groups],
+                    "safety_distance": float(safety_distance),
+                    "truth_exposed_to_controller": False,
+                },
+            )
+        boundaries: list[Array] = []
+        safeties: list[Array] = []
+        component_ids: list[Array] = []
+        per_group = max(8, int(num_samples // len(config.groups)))
+        for index, group in enumerate(config.groups):
+            group_truth = generate_jupedsim_static_truth(
+                group,
+                safety_distance=safety_distance,
+                num_samples=per_group,
+            )
+            boundaries.append(group_truth.boundary_points)
+            safeties.append(group_truth.safety_points)
+            component_ids.append(
+                np.full(len(group_truth.boundary_points), index, dtype=int)
+            )
+        return StaticCrowdTruth(
+            shape="multi",
+            boundary_points=np.vstack(boundaries),
+            safety_points=np.vstack(safeties),
+            component_ids=np.concatenate(component_ids),
+            component_count=len(config.groups),
+            valid=True,
+            status="valid",
+            diagnostics={
+                "reference": "jupedsim_multi_group_rings",
+                "source": "jupedsim",
+                "jupedsim_version": _jupedsim_version(),
+                "group_count": len(config.groups),
+                "group_counts": [int(group.count) for group in config.groups],
+                "safety_distance": float(safety_distance),
+                "truth_exposed_to_controller": False,
+            },
         )
 
     support_polygon = (

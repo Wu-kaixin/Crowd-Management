@@ -27,6 +27,7 @@ from ...controllers import (
     assign_guides_to_targets,
     plan_periodic_arc_coverage,
 )
+from ...controllers.guide_initialization import sample_random_guide_positions
 from ...crowd import (
     StaticCrowdTruth,
     build_crowd_source,
@@ -36,7 +37,7 @@ from ...crowd.observation import CrowdObservation
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, estimate_boundary_v2
 from ...geometry.deployment_curve import DeploymentCurve
 from ...types import Array
-from ...visualization.live_step1 import Step1Frame, build_renderer
+from ...visualization.live_step1 import NullStep1Renderer, Step1Frame, build_renderer
 from ...visualization.static_step1 import save_final_scene
 from .artifacts import (
     diag_float,
@@ -48,7 +49,11 @@ from .artifacts import (
     save_resource_decision,
 )
 from .config import StaticContainmentConfig
-from .known_boundary import build_step1_observation, estimate_known_boundary_pipeline
+from .known_boundary import (
+    build_step1_observation,
+    estimate_known_boundary_pipeline,
+    estimate_multi_group_surround_pipeline,
+)
 from .manifest import build_manifest
 from .methods import _controller_targets
 from .records import MethodSummary
@@ -215,7 +220,13 @@ def _build_frame(
     min_gw: float | None,
     failed: bool,
     failure_reason: str | None,
+    guide_to_target: Array | None = None,
+    crowd_component_ids: Array | None = None,
 ) -> Step1Frame:
+    halo = max(float(cfg.safety.min_guide_distance) * 0.5, 0.2)
+    body = max(min(halo * 0.4, 0.18), 0.08)
+    group_count = len(cfg.crowd.groups) if cfg.crowd.is_multi else 1
+    labels = crowd_component_ids
     return Step1Frame(
         scenario_name=cfg.scene.name,
         seed=cfg.seed,
@@ -243,6 +254,15 @@ def _build_frame(
         safety_status=safety_status,
         failed=failed,
         failure_reason=failure_reason,
+        max_steps=int(cfg.motion.max_steps),
+        guide_body_radius=body,
+        guide_halo_radius=halo,
+        min_guide_distance_req=float(cfg.safety.min_guide_distance),
+        min_crowd_distance_req=float(cfg.safety.min_crowd_distance),
+        min_wall_distance_req=float(cfg.safety.room_margin),
+        guide_to_target=None if guide_to_target is None else np.asarray(guide_to_target, dtype=int),
+        crowd_component_ids=None if labels is None else np.asarray(labels, dtype=int),
+        crowd_group_count=group_count,
     )
 
 
@@ -262,10 +282,23 @@ def _run_method(
     save_plots: bool,
     renderer: Any,
     live: bool,
+    planning_labels: Array | None = None,
 ) -> tuple[MethodSummary, dict[str, Any], dict[str, Any]]:
-    targets, boundary = _controller_targets(method, cfg, crowd_points)
+    method_targets, boundary = _controller_targets(method, cfg, crowd_points)
+    if cfg.guide_init == "random":
+        initial_guides = sample_random_guide_positions(
+            cfg.scene,
+            cfg.guide_count,
+            seed=cfg.seed + 17,
+            wall_margin=cfg.safety.room_margin,
+            min_guide_distance=cfg.safety.min_guide_distance,
+            crowd_points=crowd_points,
+            min_crowd_distance=cfg.safety.min_crowd_distance,
+        )
+    else:
+        initial_guides = np.asarray(method_targets, dtype=float)
     initial_summary = containment_summary(
-        targets,
+        method_targets,
         crowd_points,
         boundary,
         cfg.coverage_radius,
@@ -276,7 +309,7 @@ def _run_method(
     plan_valid = periodic_plan is not None and periodic_plan.status == "VALID" and periodic_plan.converged
     resource_status = resource_decision.status if resource_decision is not None else "RESOURCE_SKIPPED_BOUNDARY_INVALID"
     assignment_result = (
-        assign_guides_to_targets(targets, periodic_plan.target_xy, cfg.assignment)
+        assign_guides_to_targets(initial_guides, periodic_plan.target_xy, cfg.assignment)
         if plan_valid and periodic_plan is not None
         else None
     )
@@ -302,7 +335,7 @@ def _run_method(
                 cfg=cfg,
                 crowd_observation=crowd_observation,
                 guides=positions,
-                initial_guides=targets,
+                initial_guides=initial_guides,
                 active_ids=active_ids,
                 reserve_ids=reserve_ids,
                 crowd_curve=crowd_curve,
@@ -326,6 +359,10 @@ def _run_method(
                 min_gw=_finite_or_none(diagnostics.get("minimum_guide_wall_distance")) if diagnostics else None,
                 failed=bool(frame.get("failed")),
                 failure_reason=str(frame["state"]) if frame.get("failed") else None,
+                guide_to_target=(
+                    assignment_result.guide_to_target if assignment_result is not None else None
+                ),
+                crowd_component_ids=planning_labels,
             )
         )
 
@@ -340,9 +377,9 @@ def _run_method(
         _build_frame(
             cfg=cfg,
             crowd_observation=crowd_observation,
-            guides=targets,
-            initial_guides=targets,
-            active_ids=tuple(range(len(targets))),
+            guides=initial_guides,
+            initial_guides=initial_guides,
+            active_ids=tuple(range(len(initial_guides))),
             reserve_ids=(),
             crowd_curve=crowd_curve,
             deployment_curve=deployment_curve,
@@ -359,11 +396,15 @@ def _run_method(
             min_gw=None,
             failed=start_failed,
             failure_reason=episode_skipped_status if start_failed else None,
+            guide_to_target=(
+                assignment_result.guide_to_target if assignment_result is not None else None
+            ),
+            crowd_component_ids=planning_labels,
         )
     )
     episode_result = (
         ABCGv2Controller(cfg.motion, cfg.safety).run_fixed_target_episode(
-            targets,
+            initial_guides,
             periodic_plan.target_xy,
             assignment_result,
             precondition_status=resource_status,
@@ -374,7 +415,7 @@ def _run_method(
         if periodic_plan is not None and assignment_result is not None
         else None
     )
-    final_guide_points = episode_result.positions[-1] if episode_result is not None else targets
+    final_guide_points = episode_result.positions[-1] if episode_result is not None else initial_guides
     final_summary = containment_summary(
         final_guide_points,
         crowd_points,
@@ -405,8 +446,10 @@ def _run_method(
         method_dir / "containment_state.npz",
         crowd_points=crowd_points,
         guide_points=final_guide_points,
-        guide_initial_points=targets,
+        guide_initial_points=initial_guides,
         guide_final_points=final_guide_points,
+        guide_method_endpoints=method_targets,
+        guide_init_mode=np.array(cfg.guide_init),
         boundary_points=boundary.boundary_points,
         safety_points=boundary.safety_points,
         center=boundary.center,
@@ -427,7 +470,7 @@ def _run_method(
             cfg=cfg,
             crowd_observation=crowd_observation,
             guides=final_guide_points,
-            initial_guides=targets,
+            initial_guides=initial_guides,
             active_ids=tuple(int(i) for i in range(len(final_guide_points)))
             if episode_result is None
             else tuple(int(i) for i in np.flatnonzero(episode_result.guide_to_target >= 0)),
@@ -451,6 +494,12 @@ def _run_method(
             min_gw=_finite_or_none(summary["minimum_guide_wall_distance"]),
             failed=not bool(summary["scientific_success"]),
             failure_reason=None if summary["scientific_success"] else str(summary["failure_reason"]),
+            guide_to_target=(
+                None
+                if episode_result is None
+                else np.asarray(episode_result.guide_to_target, dtype=int)
+            ),
+            crowd_component_ids=planning_labels,
         )
         save_final_scene(final_frame, method_dir / "final_scene.png")
         renderer.save_final(method_dir / "final_scene.png", final_frame)
@@ -465,6 +514,7 @@ def run_static_containment(
     live: bool | None = None,
     headless: bool = False,
     renderer: Any | None = None,
+    hold_window: bool | None = None,
 ) -> dict[str, MethodSummary]:
     config_path = Path(config_path)
     cfg = StaticContainmentConfig.from_yaml(config_path)
@@ -474,6 +524,7 @@ def run_static_containment(
         live_enabled = bool(cfg.known_environment and cfg.visualization.live)
     else:
         live_enabled = bool(live)
+    hold_enabled = bool(cfg.visualization.hold_window if hold_window is None else hold_window)
     crowd_source = build_crowd_source(cfg.crowd)
     crowd_points = crowd_source.observe()
     crowd_attributes = generate_static_agent_attributes(
@@ -483,6 +534,10 @@ def run_static_containment(
         positions=crowd_points,
     )
     crowd_observation = build_step1_observation(crowd_points, crowd_attributes)
+    from ...crowd import crowd_component_ids as _crowd_component_ids
+
+    # Generator labels are evaluator/viz only — never fed into planning.
+    evaluator_labels = _crowd_component_ids(cfg.crowd)
     truth = crowd_source.truth(
         safety_distance=(
             cfg.safety_distance
@@ -491,7 +546,26 @@ def run_static_containment(
     deployment_result = None
     crowd_curve: Array | None = None
     deployment_curve: Array | None = None
-    if cfg.known_environment:
+    resource_decision: ResourceDecision | None = None
+    periodic_plan = None
+    planning_labels = evaluator_labels
+    multi_group_mode = bool(
+        cfg.known_environment and cfg.crowd.is_multi and not cfg.crowd.is_dispersed
+    )
+    if multi_group_mode:
+        multi = estimate_multi_group_surround_pipeline(crowd_observation, cfg)
+        boundary_v2 = multi.boundary_v2
+        deployment_result = multi.deployment
+        resource_decision = multi.resource_decision
+        periodic_plan = multi.periodic_plan
+        crowd_curve = multi.crowd_curve_display
+        deployment_curve = multi.deployment_curve_display
+        if multi.observed_component_ids is not None:
+            planning_labels = np.asarray(multi.observed_component_ids, dtype=int)
+        if isinstance(boundary_v2, BoundaryEstimateV2):
+            crowd_curve = boundary_v2.curve_points if crowd_curve is None else crowd_curve
+            deployment_curve = boundary_v2.offset_points if deployment_curve is None else deployment_curve
+    elif cfg.known_environment:
         boundary_v2, deployment_result = estimate_known_boundary_pipeline(crowd_observation, cfg)
         if isinstance(boundary_v2, BoundaryEstimateV2):
             crowd_curve = boundary_v2.curve_points
@@ -504,18 +578,19 @@ def run_static_containment(
         if isinstance(boundary_v2, BoundaryEstimateV2):
             crowd_curve = boundary_v2.curve_points
             deployment_curve = boundary_v2.offset_points
-    resource_decision = (
-        ResourcePolicy(cfg.resource_policy).decide(boundary_v2.length, cfg.guide_count)
-        if isinstance(boundary_v2, BoundaryEstimateV2)
-        else None
-    )
-    periodic_plan = (
-        plan_periodic_arc_coverage(boundary_v2, resource_decision.active_count, PeriodicArcCVTConfig())
-        if isinstance(boundary_v2, BoundaryEstimateV2)
-        and resource_decision is not None
-        and resource_decision.active_count > 0
-        else None
-    )
+    if not multi_group_mode:
+        resource_decision = (
+            ResourcePolicy(cfg.resource_policy).decide(boundary_v2.length, cfg.guide_count)
+            if isinstance(boundary_v2, BoundaryEstimateV2)
+            else None
+        )
+        periodic_plan = (
+            plan_periodic_arc_coverage(boundary_v2, resource_decision.active_count, PeriodicArcCVTConfig())
+            if isinstance(boundary_v2, BoundaryEstimateV2)
+            and resource_decision is not None
+            and resource_decision.active_count > 0
+            else None
+        )
     output = Path(output_dir)
     output.mkdir(parents=True, exist_ok=True)
 
@@ -524,6 +599,15 @@ def run_static_containment(
         positions=crowd_observation.positions,
         radii=crowd_observation.radii if crowd_observation.radii is not None else np.empty(0),
         demand=crowd_observation.demand if crowd_observation.demand is not None else np.empty(0),
+    )
+    np.savez_compressed(
+        output / "crowd_component_ids.npz",
+        evaluator_component_ids=evaluator_labels,
+        planning_component_ids=planning_labels,
+        group_count=np.array(len(cfg.crowd.groups) if cfg.crowd.is_multi else 1, dtype=int),
+        note=np.array(
+            "evaluator_ids_from_generator; planning_ids_from_observation_only"
+        ),
     )
     if cfg.heterogeneity.enabled:
         np.savez_compressed(
@@ -587,7 +671,16 @@ def run_static_containment(
         render_every=cfg.visualization.render_every,
         max_fps=cfg.visualization.max_fps,
         show_trails=cfg.visualization.show_trails,
+        block=bool(hold_enabled and live_enabled),
     )
+    if live_enabled and isinstance(viewer, NullStep1Renderer):
+        print("[live] warning: NullStep1Renderer injected; no GUI window will open.", flush=True)
+    elif live_enabled:
+        print(
+            "[live] visualization enabled "
+            f"(hold_window={hold_enabled}).",
+            flush=True,
+        )
     results: dict[str, MethodSummary] = {}
     assignment_records: dict[str, dict[str, object]] = {}
     episode_records: dict[str, dict[str, object]] = {}
@@ -607,6 +700,7 @@ def run_static_containment(
             save_plots=save_plots,
             renderer=viewer,
             live=live_enabled,
+            planning_labels=planning_labels,
         )
         results[method] = summary
         assignment_records[method] = assignment_rec

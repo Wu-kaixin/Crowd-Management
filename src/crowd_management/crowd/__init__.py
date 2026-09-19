@@ -26,11 +26,14 @@ from .source import (
 )
 from .static_crowd import (
     StaticCrowdConfig,
+    circle_spawn_vertices,
+    crowd_component_ids,
     generate_circle_crowd,
     generate_ellipse_crowd,
     generate_nonconvex_crowd,
     generate_static_crowd,
     generate_two_cluster_crowd,
+    sample_dispersed_centers,
 )
 from .truth import (
     StaticCrowdTruth,
@@ -46,6 +49,9 @@ __all__ = [
     "CrowdObservation",
     "JuPedSimStaticCrowdSource",
     "StaticCrowdConfig",
+    "circle_spawn_vertices",
+    "crowd_component_ids",
+    "sample_dispersed_centers",
     "StaticCrowdSource",
     "StaticCrowdTruth",
     "SyntheticStaticCrowdSource",

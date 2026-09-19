@@ -59,6 +59,114 @@ def _parse_region_vertices(
     )
 
 
+def circle_spawn_vertices(
+    center: Array,
+    radius: float,
+    *,
+    samples: int = 36,
+) -> tuple[tuple[float, float], ...]:
+    """Build a regular polygon spawn region from centre + radius."""
+    if samples < 3:
+        raise ValueError("samples must be at least 3.")
+    if not np.isfinite(radius) or radius <= 0.0:
+        raise ValueError("radius must be finite and positive.")
+    centre = as_vec2(center, "center")
+    angles = np.linspace(0.0, 2.0 * np.pi, samples, endpoint=False)
+    return tuple(
+        (float(centre[0] + radius * np.cos(theta)), float(centre[1] + radius * np.sin(theta)))
+        for theta in angles
+    )
+
+
+def sample_dispersed_centers(
+    workspace: Array,
+    count: int,
+    *,
+    margin: float,
+    min_separation: float,
+    seed: int,
+    max_attempts: int = 5000,
+) -> Array:
+    """Sample separated cluster centres inside an axis-aligned workspace."""
+    size = as_vec2(workspace, "workspace")
+    if count < 1:
+        raise ValueError("dispersed cluster count must be positive.")
+    if not np.isfinite(margin) or margin < 0.0:
+        raise ValueError("margin must be finite and non-negative.")
+    if not np.isfinite(min_separation) or min_separation < 0.0:
+        raise ValueError("min_separation must be finite and non-negative.")
+    low = np.array([margin, margin], dtype=float)
+    high = size - margin
+    if np.any(high <= low):
+        raise ValueError("workspace margin leaves an empty region for dispersed centres.")
+    rng = np.random.default_rng(int(seed))
+    centres = np.zeros((count, 2), dtype=float)
+    placed = 0
+    attempts = 0
+    while placed < count and attempts < max_attempts:
+        attempts += 1
+        candidate = rng.uniform(low, high)
+        if placed > 0 and min_separation > 0.0:
+            if np.any(np.linalg.norm(centres[:placed] - candidate, axis=1) < min_separation):
+                continue
+        centres[placed] = candidate
+        placed += 1
+    if placed < count:
+        raise RuntimeError(
+            f"Could not place {count} dispersed centres with min_separation={min_separation} "
+            f"in workspace {size.tolist()} (placed {placed}). Reduce cluster_count or separation."
+        )
+    return centres
+
+
+def _expand_dispersed_groups(
+    raw: dict[str, Any],
+    *,
+    source: str,
+    seed: int,
+    distance_to_agents: float,
+    distance_to_polygon: float,
+) -> list[dict[str, Any]]:
+    """Turn a ``dispersed`` block into concrete group dicts."""
+    block = dict(raw.get("dispersed") or {})
+    cluster_count = int(block.get("cluster_count", raw.get("cluster_count", 8)))
+    people_per = int(block.get("people_per_cluster", block.get("per_cluster", 5)))
+    cluster_radius = float(block.get("cluster_radius", block.get("radius", 0.9)))
+    min_sep = float(block.get("min_center_separation", 2.5))
+    margin = float(block.get("margin", 2.5))
+    workspace = as_vec2(block.get("workspace", [20.0, 20.0]), "dispersed.workspace")
+    if cluster_count < 2:
+        raise ValueError("dispersed.cluster_count must be at least 2.")
+    if people_per < 1:
+        raise ValueError("dispersed.people_per_cluster must be positive.")
+    centres = sample_dispersed_centers(
+        workspace,
+        cluster_count,
+        margin=margin + cluster_radius,
+        min_separation=min_sep,
+        seed=int(block.get("seed", seed + 101)),
+    )
+    groups: list[dict[str, Any]] = []
+    for index, centre in enumerate(centres):
+        groups.append(
+            {
+                "source": source,
+                "shape": "circle",
+                "count": people_per,
+                "center": [float(centre[0]), float(centre[1])],
+                "radius": cluster_radius,
+                "seed": int(seed + 31 * (index + 1)),
+                "noise_std": float(raw.get("noise_std", 0.04)),
+                "spacing": {
+                    "distance_to_agents": distance_to_agents,
+                    "distance_to_polygon": distance_to_polygon,
+                },
+            }
+        )
+    return groups
+
+
+
 @dataclass(frozen=True)
 class StaticCrowdConfig:
     # ---------------------------------------------------------
@@ -86,6 +194,21 @@ class StaticCrowdConfig:
     region_vertices: tuple[tuple[float, float], ...] | None = None
     distance_to_agents: float = 0.45
     distance_to_polygon: float = 0.20
+
+    # ---------------------------------------------------------
+    # Multi-crowd (same room): 2+ disjoint groups. Step 1 remains
+    # single-component for ABCG; multi groups are explicit
+    # out-of-scope pressure / visualization scenarios.
+    # ---------------------------------------------------------
+    groups: tuple["StaticCrowdConfig", ...] = ()
+
+    @property
+    def is_multi(self) -> bool:
+        return len(self.groups) >= 2
+
+    @property
+    def is_dispersed(self) -> bool:
+        return self.shape.lower().replace("-", "_") == "dispersed" and self.is_multi
 
     @classmethod
     def from_dict(
@@ -129,6 +252,79 @@ class StaticCrowdConfig:
         if distance_to_polygon < 0.0:
             raise ValueError(
                 "distance_to_polygon must be non-negative."
+            )
+
+        shape_hint = str(raw.get("shape", "circle")).strip().lower().replace("-", "_")
+        groups_raw = list(raw.get("groups") or [])
+        if (shape_hint == "dispersed" or raw.get("dispersed")) and not groups_raw:
+            groups_raw = _expand_dispersed_groups(
+                raw,
+                source=source,
+                seed=seed,
+                distance_to_agents=distance_to_agents,
+                distance_to_polygon=distance_to_polygon,
+            )
+            shape_hint = "dispersed"
+
+        if groups_raw:
+            if len(groups_raw) < 2:
+                raise ValueError("crowd.groups must contain at least two groups.")
+            if any(isinstance(item, dict) and item.get("groups") for item in groups_raw):
+                raise ValueError("Nested crowd.groups are not supported.")
+            parsed_groups: list[StaticCrowdConfig] = []
+            for index, item in enumerate(groups_raw):
+                if not isinstance(item, dict):
+                    raise TypeError(f"crowd.groups[{index}] must be a mapping.")
+                group_raw = {
+                    "source": source,
+                    "shape": str(item.get("shape", "circle")),
+                    "count": int(item["count"]),
+                    "center": item.get("center", [0.0, 0.0]),
+                    "radius": float(item.get("radius", 2.0)),
+                    "noise_std": float(item.get("noise_std", raw.get("noise_std", 0.04))),
+                    "seed": int(item.get("seed", seed + 17 * (index + 1))),
+                    "spacing": {
+                        "distance_to_agents": float(
+                            item.get("spacing", {}).get("distance_to_agents", distance_to_agents)
+                        ),
+                        "distance_to_polygon": float(
+                            item.get("spacing", {}).get("distance_to_polygon", distance_to_polygon)
+                        ),
+                    },
+                }
+                if "axes" in item:
+                    group_raw["axes"] = item["axes"]
+                if "rotation_deg" in item:
+                    group_raw["rotation_deg"] = item["rotation_deg"]
+                if "spawn" in item or "region" in item:
+                    if "spawn" in item:
+                        group_raw["spawn"] = item["spawn"]
+                    if "region" in item:
+                        group_raw["region"] = item["region"]
+                elif source == "jupedsim":
+                    centre = as_vec2(item.get("center", [0.0, 0.0]), f"crowd.groups[{index}].center")
+                    radius = float(item.get("radius", 2.0))
+                    group_raw["spawn"] = {
+                        "vertices": [
+                            [float(x), float(y)]
+                            for x, y in circle_spawn_vertices(centre, radius)
+                        ]
+                    }
+                parsed_groups.append(cls.from_dict(group_raw, seed=int(group_raw["seed"])))
+
+            total_count = int(sum(group.count for group in parsed_groups))
+            centres = np.vstack([group.center for group in parsed_groups])
+            resolved_shape = "dispersed" if shape_hint == "dispersed" else "multi"
+            return cls(
+                source=source,
+                shape=resolved_shape,
+                count=total_count,
+                center=np.mean(centres, axis=0),
+                radius=float(np.mean([group.radius for group in parsed_groups])),
+                seed=int(raw.get("seed", seed)),
+                distance_to_agents=distance_to_agents,
+                distance_to_polygon=distance_to_polygon,
+                groups=tuple(parsed_groups),
             )
 
         region_vertices = _parse_region_vertices(raw)
@@ -176,7 +372,17 @@ class StaticCrowdConfig:
             region_vertices=region_vertices,
             distance_to_agents=distance_to_agents,
             distance_to_polygon=distance_to_polygon,
+            groups=(),
         )
+
+
+def crowd_component_ids(config: StaticCrowdConfig) -> Array:
+    """Return per-person group labels for multi-crowd scenarios."""
+    if not config.is_multi:
+        return np.zeros(int(config.count), dtype=int)
+    parts = [np.full(int(group.count), index, dtype=int) for index, group in enumerate(config.groups)]
+    return np.concatenate(parts)
+
 
 
 def _rng(
@@ -461,6 +667,12 @@ def generate_static_crowd(
         .lower()
         .replace("-", "_")
     )
+
+    if config.is_multi or shape in {"multi", "dispersed"}:
+        if not config.is_multi:
+            raise ValueError("shape multi/dispersed requires crowd.groups with at least two entries.")
+        parts = [generate_static_crowd(group) for group in config.groups]
+        return np.vstack(parts)
 
     if shape == "circle":
         return generate_circle_crowd(

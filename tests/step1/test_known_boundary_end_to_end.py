@@ -75,7 +75,21 @@ def test_guide_guide_safety() -> None:
     assert minimum_guide_guide_distance(guides) == 5.0
 
 
-def test_live_renderer_smoke() -> None:
+def test_visualization_hold_window_default() -> None:
+    from crowd_management.experiments.static_containment import StaticContainmentConfig
+
+    cfg = StaticContainmentConfig.from_yaml(REPO / "configs/step1_known_boundary/square_circle.yaml")
+    assert cfg.visualization.live is True
+    assert cfg.visualization.hold_window is True
+
+
+def test_live_renderer_defaults_to_blocking_window() -> None:
+    from crowd_management.visualization.live_step1 import Step1LiveRenderer, build_renderer
+
+    renderer = build_renderer(live=True)
+    assert isinstance(renderer, Step1LiveRenderer)
+    assert renderer.block is True
+
     renderer = build_renderer(live=False)
     frame = Step1Frame(
         scenario_name="square",
@@ -155,6 +169,26 @@ def test_step1_square_end_to_end(tmp_path: Path) -> None:
     loaded = np.load(tmp_path / "crowd_observation.npz")
     assert "positions" in loaded.files
     assert "spawn" not in loaded.files
+    state = np.load(tmp_path / "abcg" / "containment_state.npz")
+    assert str(state["guide_init_mode"]) == "random"
+    initial = np.asarray(state["guide_initial_points"], dtype=float)
+    endpoints = np.asarray(state["guide_method_endpoints"], dtype=float)
+    assert initial.shape == endpoints.shape
+    # Random unknown spawn must not collapse onto the endpoint plan.
+    assert not np.allclose(initial, endpoints, atol=1e-6)
+
+
+def test_known_boundary_defaults_to_random_guide_init() -> None:
+    cfg = StaticContainmentConfig.from_yaml(REPO / "configs/step1_known_boundary/square_circle.yaml")
+    assert cfg.guide_init == "random"
+    assert cfg.scene.name == "square"
+    assert cfg.scene.closed
+
+
+def test_legacy_room_config_defaults_to_endpoint_guide_init() -> None:
+    cfg = StaticContainmentConfig.from_yaml(REPO / "configs/ci_smoke.yaml")
+    assert cfg.guide_init == "endpoint"
+    assert cfg.known_environment is False
 
 
 def test_step1_rectangle_end_to_end(tmp_path: Path) -> None:

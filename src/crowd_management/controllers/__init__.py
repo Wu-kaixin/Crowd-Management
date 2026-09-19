@@ -22,6 +22,7 @@ from .assignment import (
     assign_guides_to_targets,
 )
 from .coverage_cvt import BoundaryCVTController
+from .guide_initialization import sample_random_guide_positions
 from .legacy_center_radius import LegacyCenterRadiusController
 from .periodic_arc_cvt import (
     CoveragePlan,
@@ -67,6 +68,7 @@ __all__ = [
     "SafetyProjectionResult",
     "VelocitySafetyConfig",
     "equal_arc_target_s",
+    "sample_random_guide_positions",
     "allocate_guide_resources",
     "assign_guides_to_targets",
     "plan_equal_arc_coverage",

@@ -1,6 +1,9 @@
 r"""Step 1 known-environment scenario contract.
 
 ROLE: CORE GEOMETRY — known venue \(\Omega_{\mathrm{env}}\), not crowd geometry.
+
+CURRENT implementations: closed square / rectangle via ``RectangularScenario``.
+Register additional venue types with ``scenarios.register_scenario`` (Step 2+).
 """
 
 from __future__ import annotations

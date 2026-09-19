@@ -7,6 +7,7 @@ scene:
   closed: true
   openings: []
 guiders:
+  init: random
   count: 12
 heterogeneity:
   enabled: true
@@ -78,6 +79,7 @@ visualization:
   render_every: 1
   max_fps: 20
   show_trails: true
+  hold_window: true
 crowd:
   source: jupedsim
   shape: circle

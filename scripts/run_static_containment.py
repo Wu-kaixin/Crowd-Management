@@ -7,6 +7,11 @@ INPUT:  --config configs/static_crowd_*.yaml or configs/step1_known_boundary/*.y
 OUTPUT: --output runs/<run_name>/  (summary.json, manifest.json, per-method/)
 
 Live visualization is the default. Use --headless for CI and unattended runs.
+
+PowerShell (one line, do not use bash ``\\`` continuations):
+
+    conda activate abcg
+    python scripts/run_static_containment.py --config configs/step1_known_boundary/square_circle.yaml --output runs/step1_square_circle --methods abcg
 """
 
 from __future__ import annotations
@@ -17,7 +22,9 @@ from crowd_management.experiments.static_containment import run_static_containme
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run static unknown-crowd containment with live Step 1 visualization.")
+    parser = argparse.ArgumentParser(
+        description="Run static unknown-crowd containment with live Step 1 visualization."
+    )
     parser.add_argument("--config", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument(
@@ -32,6 +39,11 @@ def main() -> None:
         action="store_true",
         help="Disable the live window (CI, tests, unattended benchmarks).",
     )
+    parser.add_argument(
+        "--no-hold-window",
+        action="store_true",
+        help="Close the live window immediately when the episode ends.",
+    )
     args = parser.parse_args()
     results = run_static_containment(
         args.config,
@@ -40,6 +52,7 @@ def main() -> None:
         save_plots=not args.skip_plots,
         live=not args.headless,
         headless=args.headless,
+        hold_window=None if args.headless else (not args.no_hold_window),
     )
     for method, summary in results.items():
         print(

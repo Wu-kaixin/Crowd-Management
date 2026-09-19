@@ -34,8 +34,19 @@ Active Step 1 new-direction work is on `STEP1-Research-Extension`. New work shou
 
 ```text
 scripts/run_static_containment.py
-configs/static_crowd_*.yaml
-src/crowd_management/controllers/abcg.py
+configs/step1_known_boundary/*.yaml
+src/crowd_management/controllers/abcg_v2.py
+src/crowd_management/scenarios/
+docs/STEP1_RESEARCH_ROADMAP.md
+```
+
+Step 2 gather-then-surround (dispersed → gather → surround):
+
+```text
+scripts/run_gather_then_surround.py
+configs/step2_gather/square_dispersed_gather.yaml
+src/crowd_management/controllers/step2_gather/
+src/crowd_management/experiments/step2_gather/
 ```
 
 ## Environment

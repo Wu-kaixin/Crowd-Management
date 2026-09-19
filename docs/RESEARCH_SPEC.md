@@ -10,7 +10,11 @@ Step 1 studies guide-agent deployment around one static crowd under these
 assumptions:
 
 - The **environment boundary** \(\partial\Omega_{\mathrm{env}}\) is known.
-  Step 1 currently supports a closed square or closed rectangle.
+  Step 1 currently supports a closed square or closed rectangle
+  (`scenarios.register_scenario`; see [`STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)).
+- Guide agents spawn at **random unknown** positions in the feasible workspace
+  (`guiders.init: random` for known-boundary configs), then track the
+  deployment curve. Legacy `room.size` configs keep `endpoint` init.
 - The crowd's location, scale, distribution, and boundary \(\partial\Omega_c\)
   are unknown before operation and are **not** replaced by the room polygon.
 - JuPedSim may use a spawn polygon to generate a physically spaced static

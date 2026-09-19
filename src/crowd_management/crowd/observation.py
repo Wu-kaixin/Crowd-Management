@@ -29,6 +29,10 @@ FORBIDDEN_OBSERVATION_FIELDS = frozenset(
         "shape_label",
         "crowd_center",
         "crowd_radius",
+        "component_ids",
+        "crowd_component_ids",
+        "group_labels",
+        "group_id",
         "evaluator_truth",
     }
 )
