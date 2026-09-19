@@ -1,0 +1,157 @@
+step: 1
+seed: 0
+scene:
+  type: square
+  width: 20.0
+  height: 20.0
+  closed: true
+  openings: []
+guiders:
+  count: 4
+heterogeneity:
+  enabled: true
+  radius_mean: 0.2
+  radius_std: 0.015
+  radius_min: 0.17
+  radius_max: 0.23
+  desired_speed_mean: 1.25
+  desired_speed_std: 0.1
+  desired_speed_min: 0.95
+  desired_speed_max: 1.55
+  time_gap_mean: 1.0
+  time_gap_std: 0.08
+  time_gap_min: 0.8
+  time_gap_max: 1.2
+  demand_mean: 1.0
+  demand_std: 0.0
+  demand_min: 0.5
+  demand_max: 2.5
+  demand_side_bias: none
+containment:
+  safety_distance: 0.85
+  coverage_radius: 1.25
+  min_guider_distance: 0.6
+  boundary_bins: 72
+  boundary_sample_spacing: 0.08
+boundary:
+  estimator: alpha
+  alpha_scale: 2.5
+  alpha_growth_factors:
+  - 1.0
+  - 1.25
+  - 1.5
+  - 2.0
+  - 3.0
+  - 4.0
+  alpha_smoothing_passes: 5
+  min_observation_points: 8
+  min_observation_coverage: 0.8
+  bootstrap_samples: 8
+  bootstrap_min_success_fraction: 0.5
+  bootstrap_confidence_floor: 0.15
+resources:
+  required_arc_gap: 2.5
+  min_active_guides: 3
+  increase_hysteresis: 0.1
+  decrease_hysteresis: 0.1
+assignment:
+  switch_penalty: 0.25
+  reserve_cost: 0.0
+  unmet_target_cost: 1000000.0
+motion:
+  dt: 0.1
+  gain: 1.5
+  max_speed: 1.0
+  tracking_rmse_tolerance: 0.03
+  speed_tolerance: 0.03
+  hold_steps: 10
+  max_steps: 400
+safety:
+  enabled: true
+  min_guide_distance: 0.6
+  min_crowd_distance: 0.85
+  wall_margin: 0.25
+  residual_tolerance: 1.0e-09
+  max_projection_sweeps: 200
+visualization:
+  live: true
+  render_every: 1
+  max_fps: 20
+  show_trails: true
+crowd:
+  source: jupedsim
+  shape: circle
+  count: 120
+  center:
+  - 10.0
+  - 10.0
+  radius: 3.0
+  spawn:
+    vertices:
+    - - 14.8
+      - 10.0
+    - - 14.707769
+      - 10.936434
+    - - 14.434622
+      - 11.83688
+    - - 13.991054
+      - 12.666737
+    - - 13.394113
+      - 13.394113
+    - - 12.666737
+      - 13.991054
+    - - 11.83688
+      - 14.434622
+    - - 10.936434
+      - 14.707769
+    - - 10.0
+      - 14.8
+    - - 9.063566
+      - 14.707769
+    - - 8.16312
+      - 14.434622
+    - - 7.333263
+      - 13.991054
+    - - 6.605887
+      - 13.394113
+    - - 6.008946
+      - 12.666737
+    - - 5.565378
+      - 11.83688
+    - - 5.292231
+      - 10.936434
+    - - 5.2
+      - 10.0
+    - - 5.292231
+      - 9.063566
+    - - 5.565378
+      - 8.16312
+    - - 6.008946
+      - 7.333263
+    - - 6.605887
+      - 6.605887
+    - - 7.333263
+      - 6.008946
+    - - 8.16312
+      - 5.565378
+    - - 9.063566
+      - 5.292231
+    - - 10.0
+      - 5.2
+    - - 10.936434
+      - 5.292231
+    - - 11.83688
+      - 5.565378
+    - - 12.666737
+      - 6.008946
+    - - 13.394113
+      - 6.605887
+    - - 13.991054
+      - 7.333263
+    - - 14.434622
+      - 8.16312
+    - - 14.707769
+      - 9.063566
+  spacing:
+    distance_to_agents: 0.35
+    distance_to_polygon: 0.2

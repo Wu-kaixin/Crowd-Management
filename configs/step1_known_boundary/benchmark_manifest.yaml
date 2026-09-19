@@ -1,0 +1,39 @@
+name: step1_known_boundary_holdout
+environments:
+- square
+- rectangle
+shapes:
+- circle
+- ellipse
+- concave
+- irregular
+development_seeds:
+- 0
+- 1
+- 2
+- 3
+- 4
+holdout_seeds:
+- 100
+- 101
+- 102
+- 103
+- 104
+- 105
+- 106
+- 107
+- 108
+- 109
+- 110
+- 111
+- 112
+- 113
+- 114
+- 115
+- 116
+- 117
+- 118
+- 119
+methods:
+- abcg
+live_default: true
