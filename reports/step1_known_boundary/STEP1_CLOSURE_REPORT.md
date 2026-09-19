@@ -186,3 +186,11 @@ Holdout `TIMEOUT`（40）集中在 concave（18）与 irregular（11），ellips
 1. 推送本提交，确认 Linux / Windows / static-analysis / smoke 全绿。
 2. 可选：对 TIMEOUT 做失败审计（不改参、不重跑 holdout 当调参）。
 3. 然后才进入真正的 Step 2（行为异质性、gather、行人动力学）。
+
+## 9. Postscript（analysis 分支；不属于 freeze SHA）
+
+GitHub CI 已全绿。annotated tag `step1-known-boundary-freeze` 打在
+`46ad61309e61353d262f54813062d51999ccb13e`。
+TIMEOUT 审计见 [`../step1_timeout_audit/TIMEOUT_AUDIT.md`](../step1_timeout_audit/TIMEOUT_AUDIT.md)：
+40/40 为 safety-pin stall（36 structural + 4 near-miss），0 个 horizon-sensitive。
+Holdout 种子 100–119 保持已打开，不再当作独立测试。
