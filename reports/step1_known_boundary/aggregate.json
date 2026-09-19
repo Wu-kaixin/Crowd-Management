@@ -1,0 +1,130 @@
+{
+  "all": {
+    "n": 40,
+    "execution_success_rate": 0.85,
+    "scientific_success_rate": 0.8,
+    "boundary_valid_rate": 0.85,
+    "deployment_valid_rate": 0.85,
+    "convergence_rate": 0.8,
+    "mean_coverage_all": 0.9669791666666667,
+    "mean_tracking_rmse_all": 0.012947360465186025,
+    "failures": {
+      "BOUNDARY_INVALID": 6,
+      "TIMEOUT": 2
+    }
+  },
+  "by_environment": {
+    "square": {
+      "n": 20,
+      "execution_success_rate": 0.85,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 0.85,
+      "deployment_valid_rate": 0.85,
+      "convergence_rate": 0.8,
+      "mean_coverage_all": 0.9669444444444445,
+      "mean_tracking_rmse_all": 0.01295428891872094,
+      "failures": {
+        "BOUNDARY_INVALID": 3,
+        "TIMEOUT": 1
+      }
+    },
+    "rectangle": {
+      "n": 20,
+      "execution_success_rate": 0.85,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 0.85,
+      "deployment_valid_rate": 0.85,
+      "convergence_rate": 0.8,
+      "mean_coverage_all": 0.967013888888889,
+      "mean_tracking_rmse_all": 0.012940432011651109,
+      "failures": {
+        "BOUNDARY_INVALID": 3,
+        "TIMEOUT": 1
+      }
+    }
+  },
+  "by_shape": {
+    "circle": {
+      "n": 10,
+      "execution_success_rate": 0.6,
+      "scientific_success_rate": 0.6,
+      "boundary_valid_rate": 0.6,
+      "deployment_valid_rate": 0.6,
+      "convergence_rate": 0.6,
+      "mean_coverage_all": 0.9997222222222222,
+      "mean_tracking_rmse_all": 0.004202285171056993,
+      "failures": {
+        "BOUNDARY_INVALID": 4
+      }
+    },
+    "ellipse": {
+      "n": 10,
+      "execution_success_rate": 0.8,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 0.8,
+      "deployment_valid_rate": 0.8,
+      "convergence_rate": 0.8,
+      "mean_coverage_all": 0.9844444444444445,
+      "mean_tracking_rmse_all": 0.0026332070774741467,
+      "failures": {
+        "BOUNDARY_INVALID": 2
+      }
+    },
+    "concave": {
+      "n": 10,
+      "execution_success_rate": 1.0,
+      "scientific_success_rate": 1.0,
+      "boundary_valid_rate": 1.0,
+      "deployment_valid_rate": 1.0,
+      "convergence_rate": 1.0,
+      "mean_coverage_all": 0.9048611111111111,
+      "mean_tracking_rmse_all": 0.006165035862287379,
+      "failures": {}
+    },
+    "irregular": {
+      "n": 10,
+      "execution_success_rate": 1.0,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 1.0,
+      "deployment_valid_rate": 1.0,
+      "convergence_rate": 0.8,
+      "mean_coverage_all": 0.9788888888888889,
+      "mean_tracking_rmse_all": 0.033228052954731586,
+      "failures": {
+        "TIMEOUT": 2
+      }
+    }
+  },
+  "by_heterogeneity": {
+    "True": {
+      "n": 40,
+      "execution_success_rate": 0.85,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 0.85,
+      "deployment_valid_rate": 0.85,
+      "convergence_rate": 0.8,
+      "mean_coverage_all": 0.9669791666666667,
+      "mean_tracking_rmse_all": 0.012947360465186025,
+      "failures": {
+        "BOUNDARY_INVALID": 6,
+        "TIMEOUT": 2
+      }
+    }
+  },
+  "by_split": {
+    "development": {
+      "n": 40,
+      "execution_success_rate": 0.85,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 0.85,
+      "deployment_valid_rate": 0.85,
+      "convergence_rate": 0.8,
+      "mean_coverage_all": 0.9669791666666667,
+      "mean_tracking_rmse_all": 0.012947360465186025,
+      "failures": {
+        "BOUNDARY_INVALID": 6,
+        "TIMEOUT": 2
+      }
+    }
+  }
+}

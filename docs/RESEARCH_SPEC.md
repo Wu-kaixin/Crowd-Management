@@ -9,14 +9,21 @@ Baseline: `main@fe4e7c1dd310c4eaef814c70e9edb34ec02227ae`.
 Step 1 studies guide-agent deployment around one static crowd under these
 assumptions:
 
-- The crowd's location, scale, and boundary are unknown before operation.
-- A centralized, global 2D point-cloud observation is available during a run.
+- The **environment boundary** \(\partial\Omega_{\mathrm{env}}\) is known.
+  Step 1 currently supports a closed square or closed rectangle.
+- The crowd's location, scale, distribution, and boundary \(\partial\Omega_c\)
+  are unknown before operation and are **not** replaced by the room polygon.
+- JuPedSim may use a spawn polygon to generate a physically spaced static
+  crowd. That polygon is simulator/evaluator data only and is never an ABCG
+  input.
+- A centralized, global 2D point-cloud observation (plus allowed attributes)
+  is available during a run.
 - The crowd is static and does not react to guide agents.
 - Communication is unrestricted.
 - The eventual control input is guide velocity, with `p_dot = u` and a speed
   limit.
-- The output is a guide distribution around a safe offset of the estimated
-  crowd boundary.
+- The output is a guide distribution around a safe offset of the **estimated**
+  crowd boundary, checked against the known guide workspace.
 
 Autonomous search, dynamic/multiple crowds, split/merge tracking, crowd-guide
 behavior response, local communication, video perception, frontends, hardware,

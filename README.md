@@ -17,7 +17,13 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 
 This document describes branch **`feature/jupedsim-step1`**, not a frozen `main` release note.
 
-Crowd Management remains a Python research prototype for **static unknown-crowd containment** (ABCG). On this branch the new work is a **JuPedSim-backed static crowd source** and a **paired synthetic↔JuPedSim Step-1 source-robustness evaluation**. JuPedSim is used only to place physically spaced pedestrian centres; **no pedestrian dynamics are advanced** in Step 1.
+**Step 1:** known closed environment boundary + one unknown static crowd + global observations + unrestricted guide communication + external guide agents.
+
+The environment boundary is known. The crowd boundary is not known.
+
+JuPedSim spawn geometry is simulator-only initialization data and evaluator truth; it is not exposed to ABCG. The controller receives observed pedestrian positions and allowed attributes only.
+
+Crowd Management remains a Python research prototype for **static unknown-crowd containment** (ABCG). This branch keeps the JuPedSim static source and source-pairing evidence, and closes Step 1 around **known \(\partial\Omega_{\mathrm{env}}\)** (closed square/rectangle) with live visualization. JuPedSim is used only to place physically spaced pedestrian centres; **no pedestrian dynamics are advanced** in Step 1.
 
 > Research prototype only — not a calibrated safety product or certified controller.
 > Local pairing evidence below is exploratory; it does **not** replace the frozen G6 research-complete claim on `main` @ `f2494922…`.
@@ -30,13 +36,27 @@ Crowd Management remains a Python research prototype for **static unknown-crowd 
 | --- | --- |
 | Crowd source | `crowd.source: synthetic \| jupedsim` (static point clouds) |
 | JuPedSim role | Spawn centres inside a polygon with spacing constraints; evaluator-only truth from centre-support geometry |
-| Benchmarks | `configs/step1_benchmark/` (circle / ellipse / irregular pairs + concave pressure case) |
-| Evaluation | `scripts/run_step1_source_pairing.py` + `scripts/analyze_step1_source_pairing.py` |
+| Benchmarks | `configs/step1_known_boundary/` (square/rectangle × crowd shapes + stress cases); pairing configs retained |
+| Evaluation | `scripts/run_step1_known_boundary.py` + `scripts/analyze_step1_known_boundary.py`; pairing scripts retained |
+| Visualization | Live matplotlib window by default; `--headless` for CI |
 | Frozen G6 / PR6 on `main` | Still the Step-1 research-complete baseline; **not re-run / not re-frozen here** |
 
 Entry points:
 
 ```bash
+# Single known-boundary experiment (live window by default)
+python scripts/run_static_containment.py \
+  --config configs/step1_known_boundary/square_irregular.yaml \
+  --output runs/step1_square_irregular_seed0 \
+  --methods abcg
+
+# Headless CI / unattended
+python scripts/run_static_containment.py \
+  --config configs/step1_known_boundary/square_circle.yaml \
+  --output runs/step1_square_circle_headless \
+  --methods abcg \
+  --headless
+
 # JuPedSim static smoke
 python scripts/jupedsim_static_smoke.py
 
@@ -276,9 +296,10 @@ Inspect with `git switch archive/legacy-evacuation-2026-07-21` or `git switch ar
 - Method family: ABCG static unknown-crowd containment
 - Step 1 on `main`: **research-complete** (G0–G6 @ `f2494922…`); **this branch is experimental source-robustness work**
 - Local pairing snapshot: 120 runs; **62 `BOUNDARY_INVALID`** (mostly `alpha_insufficient_observation_coverage`); **43 `CONVERGED`**; **15 `TIMEOUT`**
+- Known-boundary development matrix (this branch): **2 environments × 4 shapes × 5 seeds = 40** ABCG runs; **32 `CONVERGED`**, **6 `BOUNDARY_INVALID`**, **2 `TIMEOUT`**. Failures remain in the denominator. Holdout seeds 100-119 not yet run.
 - Suite size (authoritative; synced by `scripts/check_readme_consistency.py`):
   <!-- TEST_COUNT_START -->
-  189
+  212
   <!-- TEST_COUNT_END -->
 - CI: Linux + Windows via [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (unit tests, scoped lint/type-check, README consistency, deterministic smoke, schema regression)
 - Formal G6 (inherited evidence): 600 primary records — [G6 report](reports/step1_g6_compliance/G6_COMPLIANCE_REPORT.md)
