@@ -12,9 +12,16 @@ from dataclasses import asdict, dataclass, field
 
 import numpy as np
 
+from ..crowd.observation import CrowdObservation, as_controller_observation
 from ..types import Array
 from .assignment import AssignmentResult
-from .safety import VelocitySafetyConfig, project_velocity_safety
+from .safety import (
+    VelocitySafetyConfig,
+    minimum_guide_crowd_distance,
+    minimum_guide_guide_distance,
+    minimum_guide_wall_distance,
+    project_velocity_safety,
+)
 
 
 @dataclass(frozen=True)
@@ -125,7 +132,10 @@ class ConvergenceStateMachine:
             "DEGRADED",
             "BOUNDARY_INVALID",
             "OFFSET_INVALID",
+            "OFFSET_OUTSIDE_WORKSPACE",
+            "DEPLOYMENT_INFEASIBLE",
             "CAPACITY_SHORTFALL",
+            "PLAN_INVALID",
             "ASSIGNMENT_INFEASIBLE",
             "SAFETY_INFEASIBLE",
             "TIMEOUT",
@@ -278,7 +288,10 @@ class ABCGv2Controller:
                 "DEGRADED",
                 "BOUNDARY_INVALID",
                 "OFFSET_INVALID",
+                "OFFSET_OUTSIDE_WORKSPACE",
+                "DEPLOYMENT_INFEASIBLE",
                 "CAPACITY_SHORTFALL",
+                "PLAN_INVALID",
                 "ASSIGNMENT_INFEASIBLE",
                 "SAFETY_INFEASIBLE",
             }
@@ -291,18 +304,21 @@ class ABCGv2Controller:
         elif self.safety_config.enabled and room is None:
             self._machine.stop("SAFETY_INFEASIBLE")
 
-    def step(self, observation: Array, guide_state: Array, dt: float) -> ControlOutput:
+    def step(self, observation: Array | CrowdObservation, guide_state: Array, dt: float) -> ControlOutput:
         """Return one velocity command from the current measured state.
 
-        ``observation`` is the finite global crowd point set ``(N, 2)`` in
-        metres and ``guide_state`` is the measured ``(M, 2)`` guide position
-        array. ``dt`` is the positive control period in seconds.  The caller is
-        responsible for applying ``safe_velocity`` to the plant and feeding the
-        next measured guide state back into this method.
+        ``observation`` is either a finite global crowd point set ``(N, 2)``
+        or a ``CrowdObservation``. Spawn polygons, evaluator truth, and
+        crowd-shape labels are rejected. ``guide_state`` is the measured
+        ``(M, 2)`` guide position array. ``dt`` is the positive control
+        period in seconds.  The caller is responsible for applying
+        ``safe_velocity`` to the plant and feeding the next measured guide
+        state back into this method.
         """
         if self._targets is None or self._guide_to_target is None or self._machine is None:
             raise RuntimeError("reset must be called before step.")
-        crowd = _points(observation, "observation")
+        crowd_observation = as_controller_observation(observation)
+        crowd = crowd_observation.controller_points()
         guides = _points(guide_state, "guide_state")
         control_dt = float(dt)
         if len(guides) != self._guide_count:
@@ -360,12 +376,28 @@ class ABCGv2Controller:
             safety_status = safety.status
             safety_residual = safety.max_residual_after
             safety_emergency = safety.emergency_stop
+            type_residuals = {
+                kind: safety.constraint_residuals_after[safety.constraint_kinds == kind]
+                for kind in ("guide_pair", "crowd", "room")
+            }
             safety_diagnostics: dict[str, object] = {
                 "safety_constraint_count": safety.constraint_count,
                 "safety_violated_constraint_count": safety.violated_constraint_count,
                 "safety_projection_sweeps": safety.projection_sweeps,
                 "safety_max_residual_before": safety.max_residual_before,
                 "safety_max_residual_after": safety.max_residual_after,
+                "safety_max_guide_pair_residual_after": max(
+                    0.0,
+                    float(np.max(type_residuals["guide_pair"])) if len(type_residuals["guide_pair"]) else 0.0,
+                ),
+                "safety_max_crowd_residual_after": max(
+                    0.0,
+                    float(np.max(type_residuals["crowd"])) if len(type_residuals["crowd"]) else 0.0,
+                ),
+                "safety_max_room_residual_after": max(
+                    0.0,
+                    float(np.max(type_residuals["room"])) if len(type_residuals["room"]) else 0.0,
+                ),
                 "safety_control_adjustment_norm": safety.control_adjustment_norm,
                 "safety_emergency_stop": safety.emergency_stop,
                 "safety_constraint_type_counts": dict(safety.constraint_type_counts),
@@ -381,6 +413,9 @@ class ABCGv2Controller:
                 "safety_projection_sweeps": 0,
                 "safety_max_residual_before": 0.0,
                 "safety_max_residual_after": 0.0,
+                "safety_max_guide_pair_residual_after": 0.0,
+                "safety_max_crowd_residual_after": 0.0,
+                "safety_max_room_residual_after": 0.0,
                 "safety_control_adjustment_norm": 0.0,
                 "safety_emergency_stop": False,
                 "safety_constraint_type_counts": {"guide_pair": 0, "crowd": 0, "room": 0},
@@ -418,6 +453,14 @@ class ABCGv2Controller:
         elif safety_status == "SAFETY_INFEASIBLE":
             events.append("safety:SAFETY_INFEASIBLE")
 
+        wall_room = self._room_size if self._room_size is not None else np.array([np.inf, np.inf], dtype=float)
+        clearance = {
+            "minimum_guide_guide_distance": minimum_guide_guide_distance(guides),
+            "minimum_guide_crowd_distance": minimum_guide_crowd_distance(guides, crowd),
+            "minimum_guide_wall_distance": minimum_guide_wall_distance(guides, wall_room)
+            if self._room_size is not None
+            else float("inf"),
+        }
         self._previous_tracking_rmse = tracking_rmse
         self._step_index += 1
         return ControlOutput(
@@ -439,6 +482,7 @@ class ABCGv2Controller:
                 "assigned_targets": assigned_targets.copy(),
                 "safety_status": safety_status,
                 **safety_diagnostics,
+                **clearance,
             },
         )
 
@@ -451,8 +495,29 @@ class ABCGv2Controller:
         active_mask: Array,
         status: str,
         reason: str,
+        crowd_points: Array | CrowdObservation | None = None,
+        room_size: Array | None = None,
+        on_frame: object | None = None,
     ) -> EpisodeResult:
         guide_count = len(positions)
+        if isinstance(crowd_points, CrowdObservation):
+            crowd = crowd_points.controller_points()
+        elif crowd_points is not None:
+            crowd = as_controller_observation(crowd_points).controller_points()
+        else:
+            crowd = np.empty((0, 2), dtype=float)
+        wall_room = np.asarray(room_size, dtype=float) if room_size is not None else np.array([np.inf, np.inf])
+        if callable(on_frame):
+            on_frame(
+                {
+                    "step_index": 0,
+                    "time": 0.0,
+                    "positions": positions.copy(),
+                    "state": status,
+                    "output": None,
+                    "failed": True,
+                }
+            )
         return EpisodeResult(
             times=np.array([0.0], dtype=float),
             positions=positions[None, :, :],
@@ -486,6 +551,16 @@ class ABCGv2Controller:
             diagnostics={
                 "motion_model": "p_dot_equals_u_explicit_euler",
                 "safety_filter_status": "ENABLED_PR5" if self.safety_config.enabled else "DISABLED_PR5",
+                "safety_projected_steps": 0,
+                "safety_infeasible_steps": 0,
+                "safety_max_residual_after": 0.0,
+                "minimum_guide_guide_distance": minimum_guide_guide_distance(positions),
+                "minimum_guide_crowd_distance": minimum_guide_crowd_distance(positions, crowd),
+                "minimum_guide_wall_distance": (
+                    minimum_guide_wall_distance(positions, wall_room)
+                    if room_size is not None
+                    else float("inf")
+                ),
                 "safety_config": asdict(self.safety_config),
                 "config": asdict(self.config),
             },
@@ -497,8 +572,9 @@ class ABCGv2Controller:
         target_positions: Array,
         assignment: AssignmentResult,
         precondition_status: str = "VALID",
-        crowd_points: Array | None = None,
+        crowd_points: Array | CrowdObservation | None = None,
         room_size: Array | None = None,
+        on_frame: object | None = None,
     ) -> EpisodeResult:
         positions = _points(initial_positions, "initial_positions")
         targets = _points(target_positions, "target_positions")
@@ -516,6 +592,9 @@ class ABCGv2Controller:
                 active_mask,
                 "ASSIGNMENT_INFEASIBLE",
                 "assignment_shape_mismatch",
+                crowd_points=crowd_points,
+                room_size=room_size,
+                on_frame=on_frame,
             )
         active_mask = guide_to_target >= 0
         if np.any(guide_to_target[active_mask] >= len(targets)):
@@ -527,6 +606,9 @@ class ABCGv2Controller:
                 np.zeros(len(positions), dtype=bool),
                 "ASSIGNMENT_INFEASIBLE",
                 "assignment_target_index_out_of_range",
+                crowd_points=crowd_points,
+                room_size=room_size,
+                on_frame=on_frame,
             )
         assigned_targets = positions.copy()
         assigned_targets[active_mask] = targets[guide_to_target[active_mask]]
@@ -536,7 +618,10 @@ class ABCGv2Controller:
                 "DEGRADED",
                 "BOUNDARY_INVALID",
                 "OFFSET_INVALID",
+                "OFFSET_OUTSIDE_WORKSPACE",
+                "DEPLOYMENT_INFEASIBLE",
                 "CAPACITY_SHORTFALL",
+                "PLAN_INVALID",
                 "ASSIGNMENT_INFEASIBLE",
             }
             status = precondition_status if precondition_status in allowed else "DEGRADED"
@@ -548,6 +633,9 @@ class ABCGv2Controller:
                 active_mask,
                 status,
                 f"precondition_{precondition_status.lower()}",
+                crowd_points=crowd_points,
+                room_size=room_size,
+                on_frame=on_frame,
             )
         if assignment.status != "VALID":
             status = "CAPACITY_SHORTFALL" if assignment.status == "CAPACITY_SHORTFALL" else "ASSIGNMENT_INFEASIBLE"
@@ -559,6 +647,9 @@ class ABCGv2Controller:
                 active_mask,
                 status,
                 f"assignment_{assignment.status.lower()}",
+                crowd_points=crowd_points,
+                room_size=room_size,
+                on_frame=on_frame,
             )
         if not np.any(active_mask):
             return self._terminal_episode(
@@ -569,6 +660,9 @@ class ABCGv2Controller:
                 active_mask,
                 "DEGRADED",
                 "no_active_assignments",
+                crowd_points=crowd_points,
+                room_size=room_size,
+                on_frame=on_frame,
             )
         if self.safety_config.enabled and (crowd_points is None or room_size is None):
             return self._terminal_episode(
@@ -579,20 +673,27 @@ class ABCGv2Controller:
                 active_mask,
                 "SAFETY_INFEASIBLE",
                 "safety_context_missing",
+                crowd_points=crowd_points,
+                room_size=room_size,
+                on_frame=on_frame,
             )
 
-        safety_crowd = (
-            np.asarray(crowd_points, dtype=float)
-            if crowd_points is not None
-            else np.empty((0, 2), dtype=float)
-        )
-        safety_room = (
-            np.asarray(room_size, dtype=float)
-            if room_size is not None
-            else np.array([1.0, 1.0], dtype=float)
-        )
+        if isinstance(crowd_points, CrowdObservation):
+            safety_crowd: Array = crowd_points.controller_points()
+        elif crowd_points is not None:
+            safety_crowd = as_controller_observation(crowd_points).controller_points()
+        else:
+            safety_crowd = np.empty((0, 2), dtype=float)
 
-        machine = ConvergenceStateMachine(self.config.hold_steps)
+        self.reset(
+            targets,
+            assignment,
+            positions,
+            room_size=room_size,
+            precondition_status="VALID",
+        )
+        assert self._machine is not None
+
         position_frames = [positions.copy()]
         velocity_frames = [np.zeros_like(positions)]
         nominal_frames: list[Array] = []
@@ -615,98 +716,50 @@ class ABCGv2Controller:
         safety_room_residual_after_frames: list[float] = []
         safety_adjustment_frames: list[float] = []
         safety_emergency_frames: list[bool] = []
+        guide_guide_frames = [minimum_guide_guide_distance(positions)]
+        guide_crowd_frames = [minimum_guide_crowd_distance(positions, safety_crowd)]
+        guide_wall_frames = [
+            minimum_guide_wall_distance(positions, room_size)
+            if room_size is not None
+            else float("inf")
+        ]
         stop_reason = "maximum_steps_reached"
 
+        def _emit(frame: dict[str, object]) -> None:
+            if callable(on_frame):
+                on_frame(frame)
+
+        _emit(
+            {
+                "step_index": 0,
+                "time": 0.0,
+                "positions": positions.copy(),
+                "state": "INIT",
+                "output": None,
+                "failed": False,
+            }
+        )
+
         for _ in range(self.config.max_steps):
-            nominal = nominal_guide_velocity(
-                positions,
-                assigned_targets,
-                active_mask,
-                self.config.k_p,
-                self.config.v_max,
-            )
-            if self.safety_config.enabled:
-                safety = project_velocity_safety(
-                    positions,
-                    nominal,
-                    safety_crowd,
-                    safety_room,
-                    self.config.dt,
-                    self.config.v_max,
-                    self.safety_config,
-                )
-                applied = safety.applied_control
-                safety_status = safety.status
-                safety_constraint_count = safety.constraint_count
-                safety_guide_pair_constraint_count = safety.constraint_type_counts["guide_pair"]
-                safety_crowd_constraint_count = safety.constraint_type_counts["crowd"]
-                safety_room_constraint_count = safety.constraint_type_counts["room"]
-                safety_violated_count = safety.violated_constraint_count
-                safety_sweeps = safety.projection_sweeps
-                safety_residual_before = safety.max_residual_before
-                safety_residual_after = safety.max_residual_after
-                type_residuals = {
-                    kind: safety.constraint_residuals_after[safety.constraint_kinds == kind]
-                    for kind in ("guide_pair", "crowd", "room")
-                }
-                safety_guide_pair_residual_after = max(
-                    0.0,
-                    float(np.max(type_residuals["guide_pair"]))
-                    if len(type_residuals["guide_pair"])
-                    else 0.0,
-                )
-                safety_crowd_residual_after = max(
-                    0.0,
-                    float(np.max(type_residuals["crowd"])) if len(type_residuals["crowd"]) else 0.0,
-                )
-                safety_room_residual_after = max(
-                    0.0,
-                    float(np.max(type_residuals["room"])) if len(type_residuals["room"]) else 0.0,
-                )
-                safety_adjustment = safety.control_adjustment_norm
-                safety_emergency = safety.emergency_stop
-            else:
-                applied = nominal.copy()
-                safety_status = "DISABLED"
-                safety_constraint_count = 0
-                safety_guide_pair_constraint_count = 0
-                safety_crowd_constraint_count = 0
-                safety_room_constraint_count = 0
-                safety_violated_count = 0
-                safety_sweeps = 0
-                safety_residual_before = 0.0
-                safety_residual_after = 0.0
-                safety_guide_pair_residual_after = 0.0
-                safety_crowd_residual_after = 0.0
-                safety_room_residual_after = 0.0
-                safety_adjustment = 0.0
-                safety_emergency = False
+            output = self.step(safety_crowd, positions, self.config.dt)
+            applied = output.safe_velocity
+            nominal = output.preferred_velocity
+            diagnostics = output.diagnostics
+            safety_status = str(diagnostics.get("safety_status", "DISABLED"))
             next_positions = integrate_guide_positions(positions, applied, self.config.dt)
             next_error = _tracking_rmse(next_positions, assigned_targets, active_mask)
-            max_speed = float(np.max(np.linalg.norm(applied, axis=1))) if len(applied) else 0.0
-
-            if safety_status == "SAFETY_INFEASIBLE":
-                state = machine.stop("SAFETY_INFEASIBLE")
+            max_speed = float(diagnostics.get("max_speed", 0.0))
+            state = output.state
+            if state == "SAFETY_INFEASIBLE":
                 stop_reason = "velocity_safety_projection_infeasible"
-            elif (
-                safety_status != "PROJECTED"
-                and next_error > error_frames[-1] + self.config.error_increase_tolerance
-            ):
-                state = machine.stop("DEGRADED")
+            elif state == "DEGRADED":
                 stop_reason = "tracking_error_increased"
-            else:
-                criteria_met = (
-                    next_error <= self.config.tracking_rmse_tolerance
-                    and max_speed <= self.config.speed_tolerance
-                    and (
-                        not self.safety_config.enabled
-                        or (
-                            not safety_emergency
-                            and safety_residual_after <= self.safety_config.residual_tolerance
-                        )
-                    )
-                )
-                state = machine.update(criteria_met)
+            elif state == "CONVERGED":
+                stop_reason = "hold_window_satisfied"
+
+            counts = diagnostics.get("safety_constraint_type_counts", {"guide_pair": 0, "crowd": 0, "room": 0})
+            if not isinstance(counts, dict):
+                counts = {"guide_pair": 0, "crowd": 0, "room": 0}
 
             nominal_frames.append(nominal)
             applied_frames.append(applied)
@@ -715,32 +768,53 @@ class ABCGv2Controller:
             state_frames.append(state)
             error_frames.append(next_error)
             speed_frames.append(max_speed)
-            hold_frames.append(machine.hold_count)
+            hold_frames.append(int(diagnostics.get("hold_count", 0)))
             safety_status_frames.append(safety_status)
-            safety_constraint_frames.append(safety_constraint_count)
-            safety_guide_pair_constraint_frames.append(safety_guide_pair_constraint_count)
-            safety_crowd_constraint_frames.append(safety_crowd_constraint_count)
-            safety_room_constraint_frames.append(safety_room_constraint_count)
-            safety_violated_frames.append(safety_violated_count)
-            safety_sweep_frames.append(safety_sweeps)
-            safety_residual_before_frames.append(safety_residual_before)
-            safety_residual_after_frames.append(safety_residual_after)
-            safety_guide_pair_residual_after_frames.append(safety_guide_pair_residual_after)
-            safety_crowd_residual_after_frames.append(safety_crowd_residual_after)
-            safety_room_residual_after_frames.append(safety_room_residual_after)
-            safety_adjustment_frames.append(safety_adjustment)
-            safety_emergency_frames.append(safety_emergency)
+            safety_constraint_frames.append(int(diagnostics.get("safety_constraint_count", 0)))
+            safety_guide_pair_constraint_frames.append(int(counts.get("guide_pair", 0)))
+            safety_crowd_constraint_frames.append(int(counts.get("crowd", 0)))
+            safety_room_constraint_frames.append(int(counts.get("room", 0)))
+            safety_violated_frames.append(int(diagnostics.get("safety_violated_constraint_count", 0)))
+            safety_sweep_frames.append(int(diagnostics.get("safety_projection_sweeps", 0)))
+            safety_residual_before_frames.append(float(diagnostics.get("safety_max_residual_before", 0.0)))
+            safety_residual_after_frames.append(float(diagnostics.get("safety_max_residual_after", 0.0)))
+            safety_guide_pair_residual_after_frames.append(
+                float(diagnostics.get("safety_max_guide_pair_residual_after", 0.0))
+            )
+            safety_crowd_residual_after_frames.append(
+                float(diagnostics.get("safety_max_crowd_residual_after", 0.0))
+            )
+            safety_room_residual_after_frames.append(
+                float(diagnostics.get("safety_max_room_residual_after", 0.0))
+            )
+            safety_adjustment_frames.append(float(diagnostics.get("safety_control_adjustment_norm", 0.0)))
+            safety_emergency_frames.append(bool(diagnostics.get("safety_emergency_stop", False)))
+            guide_guide_frames.append(minimum_guide_guide_distance(next_positions))
+            guide_crowd_frames.append(minimum_guide_crowd_distance(next_positions, safety_crowd))
+            guide_wall_frames.append(
+                minimum_guide_wall_distance(next_positions, room_size)
+                if room_size is not None
+                else float("inf")
+            )
             positions = next_positions
-
-            if machine.terminal:
-                stop_reason = "hold_window_satisfied" if state == "CONVERGED" else stop_reason
+            _emit(
+                {
+                    "step_index": int(diagnostics.get("step_index", len(applied_frames) - 1)) + 1,
+                    "time": float(len(applied_frames)) * self.config.dt,
+                    "positions": positions.copy(),
+                    "state": state,
+                    "output": output,
+                    "failed": state not in {"TRACK", "HOLD", "CONVERGED", "INIT"},
+                }
+            )
+            if self._machine.terminal:
                 break
 
-        if not machine.terminal:
-            machine.timeout()
+        if not self._machine.terminal:
+            self._machine.timeout()
             state_frames[-1] = "TIMEOUT"
 
-        status = machine.state
+        status = self._machine.state
         guide_count = len(positions)
         return EpisodeResult(
             times=np.arange(len(position_frames), dtype=float) * self.config.dt,
@@ -789,6 +863,9 @@ class ABCGv2Controller:
                     np.count_nonzero(np.asarray(safety_status_frames) == "SAFETY_INFEASIBLE")
                 ),
                 "safety_max_residual_after": float(max(safety_residual_after_frames, default=0.0)),
+                "minimum_guide_guide_distance": float(np.min(np.asarray(guide_guide_frames, dtype=float))),
+                "minimum_guide_crowd_distance": float(np.min(np.asarray(guide_crowd_frames, dtype=float))),
+                "minimum_guide_wall_distance": float(np.min(np.asarray(guide_wall_frames, dtype=float))),
                 "safety_config": asdict(self.safety_config),
                 "tracking_error_nonincreasing": bool(
                     np.all(np.diff(np.asarray(error_frames)) <= self.config.error_increase_tolerance)
