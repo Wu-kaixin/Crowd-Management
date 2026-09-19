@@ -13,7 +13,7 @@
 
 </div>
 
-本文档描述分支 **`STEP1-Research-Extension`**，不是冻结的 `main` 发布说明。此前的 `main` 尖端保存在 `archive/main-2026-09-19`。
+本文档描述活跃开发分支 **`STEP1-Research-Extension`**。GitHub `main` 现已保留完成的 Step 1 Core 基线（holdout 110/160 = 68.8%）；G6 时代的 `main` 尖端仍在 `archive/main-2026-09-19`。
 
 **Step 1：** 已知封闭环境边界 + 一个未知静态人群 + 全局观测 + 无限制引导通信 + 外部引导智能体。
 
@@ -24,7 +24,7 @@ JuPedSim 生成几何只作为仿真器初始化数据与评估器真值，不�
 Crowd Management 仍是用于**静态未知人群围堵**（ABCG）的 Python 研究原型。本分支保留 JuPedSim 静态源与源配对证据，并在已知 \(\partial\Omega_{\mathrm{env}}\)（封闭正方形/矩形）周围闭合 Step 1，同时提供实时可视化。JuPedSim **仅用于**放置物理间隔的行人中心；Step 1 **不推进行人动力学**。
 
 > 仅供研究原型使用 — 不是经过标定的安全产品，也不是已认证控制器。
-> 下方本地配对证据是探索性的；它**不能替代** `main` @ `f2494922…` 上冻结的 G6 research-complete 声明。
+> 下方本地配对证据是探索性的；它**不能替代** `archive/main-2026-09-19` @ `f2494922…` 上冻结的 G6 research-complete 声明，也不能把 holdout 68.8% 说成算法已验证成功。
 
 ---
 
@@ -37,7 +37,8 @@ Crowd Management 仍是用于**静态未知人群围堵**（ABCG）的 Python �
 | 基准 | `configs/step1_known_boundary/`（正方形/矩形 × 人群形状 + 压力场景）；配对配置保留 |
 | 评估 | `scripts/run_step1_known_boundary.py` + `scripts/analyze_step1_known_boundary.py`；配对脚本保留 |
 | 可视化 | 默认实时 matplotlib 窗口；CI 用 `--headless` |
-| `main` 上冻结的 G6 / PR6 | 仍是 Step-1 research-complete 基线；**此处不重跑 / 不重新冻结** |
+| 当前 `main` | 保留 Step 1 Core 基线（`step1-known-boundary-freeze` + holdout 110/160）；继续在本分支开发 |
+| G6 / PR6 | 仍在 `archive/main-2026-09-19`；**此处不重跑 / 不重新冻结** |
 
 入口：
 
@@ -290,9 +291,10 @@ archive/g7-proof-strengthening-failed-2026-07-20
 
 ## 开发状态
 
-- 分支：**`STEP1-Research-Extension`**（已知环境边界 + 未知静态人群）
+- 活跃开发分支：**`STEP1-Research-Extension`**（已知环境边界 + 未知静态人群）
 - 方法族：ABCG 静态未知人群围堵
-- 冻结的此前 `main`：`archive/main-2026-09-19`（G0–G6 research-complete @ `f2494922…`）；该线不在此重新冻结
+- 当前 `main`：保留 Step 1 Core 基线（holdout **110/160 = 68.8%**，tag `step1-known-boundary-freeze`）
+- G6 时代 `main`：`archive/main-2026-09-19`（G0–G6 research-complete @ `f2494922…`）；该线不在此重新冻结
 - 本地配对快照：120 次运行；**62 次 `BOUNDARY_INVALID`**（多为 `alpha_insufficient_observation_coverage`）；**43 次 `CONVERGED`**；**15 次 `TIMEOUT`**
 - 已知边界开发矩阵（Core）：**2 种环境 × 4 种形状 × 5 个开发种子 = 40** 次；**32/40 科学成功**。独立 holdout 种子 100–119：**160** 次，**110/160 = 68.8%** 科学成功；失败计入分母。见 [Step 1 闭合报告](reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md)。
 - 套件规模（权威；由 `scripts/check_readme_consistency.py` 同步）：

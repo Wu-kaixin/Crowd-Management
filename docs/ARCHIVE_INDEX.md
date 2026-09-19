@@ -4,9 +4,11 @@ This file records historical branch snapshots that are intentionally kept outsid
 
 ## Active branch policy
 
-Active Step 1 work lives on **`STEP1-Research-Extension`** (known closed environment boundary + unknown static crowd).
+Active Step 1 development lives on **`STEP1-Research-Extension`** (known closed environment boundary + unknown static crowd).
 
-The previous GitHub `main` tip (G6 research-complete ABCG, including mathematical-verification evidence) is stored as the read-only snapshot **`archive/main-2026-09-19`**. The `main` ref itself is left at that same commit unless explicitly retargeted. Historical experimental or pre-ABCG evacuation lines must not be merged wholesale into the active line.
+GitHub **`main`** now preserves the completed Step 1 Core baseline: freeze tag `step1-known-boundary-freeze` @ `46ad613`, independent holdout **110/160 = 68.8%**, and the read-only TIMEOUT audit. Continue new work on `STEP1-Research-Extension`; merge back to `main` only when a later baseline should replace this snapshot.
+
+The previous GitHub `main` tip (G6 research-complete ABCG, including mathematical-verification evidence) remains the read-only snapshot **`archive/main-2026-09-19`**. Historical experimental or pre-ABCG evacuation lines must not be merged wholesale into the active line.
 
 ## Preserved snapshots
 
@@ -20,7 +22,7 @@ The G7 failure is research evidence, not a successful deployment result. Preserv
 
 ## Mathematical verification
 
-The former `math-verification-main-v1` work was merged into `main` through PR #15. Those reports, Wolfram sources, figures, integrity checks, and machine-readable artifacts are retained on `archive/main-2026-09-19` (and on the `main` ref while it still points at that snapshot).
+The former `math-verification-main-v1` work was merged into the previous `main` through PR #15. Those reports, Wolfram sources, figures, integrity checks, and machine-readable artifacts are retained on `archive/main-2026-09-19`.
 
 ## Reuse rule
 
@@ -37,4 +39,4 @@ git switch archive/g7-proof-strengthening-failed-2026-07-20
 git switch archive/main-2026-09-19
 ```
 
-New development should return to `STEP1-Research-Extension` before editing active research code. Inspect the frozen previous main with `git switch archive/main-2026-09-19`.
+New development should return to `STEP1-Research-Extension` before editing active research code. Inspect the frozen G6-era main with `git switch archive/main-2026-09-19`.

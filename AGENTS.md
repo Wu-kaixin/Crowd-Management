@@ -26,9 +26,10 @@ archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
 ```
 
 The former proof-strengthening branch tip is preserved separately as
-`archive/g7-proof-strengthening-failed-2026-07-20`. The previous `main` tip is
-stored as `archive/main-2026-09-19`. See
-[`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
+`archive/g7-proof-strengthening-failed-2026-07-20`. The G6-era `main` tip is
+stored as `archive/main-2026-09-19`. Current `main` preserves the completed
+Step 1 Core baseline. Continue development on `STEP1-Research-Extension`.
+See [`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
 
 Active Step 1 Core closure is on `STEP1-Research-Extension`. Do not add
 algorithms, crowd dynamics, gather, or multi-crowd features to Core. Evidence:
