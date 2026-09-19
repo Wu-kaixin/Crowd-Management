@@ -11,11 +11,11 @@ Research simulator for adaptive guide-agent deployment around unknown crowds.
 ![CI](https://github.com/Wu-kaixin/Crowd-Management/actions/workflows/ci.yml/badge.svg)
 ![Version](https://img.shields.io/badge/Version-0.1.0-informational.svg)
 ![Visualization](https://img.shields.io/badge/Visualization-Matplotlib-orange.svg)
-![Branch](https://img.shields.io/badge/branch-feature%2Fjupedsim--step1-orange.svg)
+![Branch](https://img.shields.io/badge/branch-STEP1--%E6%96%B0%E6%96%B9%E5%90%91-orange.svg)
 
 </div>
 
-This document describes branch **`feature/jupedsim-step1`**, not a frozen `main` release note.
+This document describes branch **`STEP1-新方向`**, not a frozen `main` release note. The previous `main` tip is stored as `archive/main-2026-09-19`.
 
 **Step 1:** known closed environment boundary + one unknown static crowd + global observations + unrestricted guide communication + external guide agents.
 
@@ -286,15 +286,15 @@ archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
 archive/g7-proof-strengthening-failed-2026-07-20
 ```
 
-Inspect with `git switch archive/legacy-evacuation-2026-07-21` or `git switch archive/g7-proof-strengthening-failed-2026-07-20`. These are historical/read-only snapshots; merge JuPedSim work through review, do not treat this feature branch as `main`.
+Inspect with `git switch archive/legacy-evacuation-2026-07-21`, `git switch archive/g7-proof-strengthening-failed-2026-07-20`, or `git switch archive/main-2026-09-19`. These are historical/read-only snapshots. Active Step 1 new-direction work is on `STEP1-新方向`.
 
 ---
 
 ## Development Status
 
-- Branch: **`feature/jupedsim-step1`** (JuPedSim static source + paired source evaluation)
+- Branch: **`STEP1-新方向`** (known environment boundary + unknown static crowd)
 - Method family: ABCG static unknown-crowd containment
-- Step 1 on `main`: **research-complete** (G0–G6 @ `f2494922…`); **this branch is experimental source-robustness work**
+- Frozen previous `main`: `archive/main-2026-09-19` (G0–G6 research-complete @ `f2494922…`); that line is not re-frozen here
 - Local pairing snapshot: 120 runs; **62 `BOUNDARY_INVALID`** (mostly `alpha_insufficient_observation_coverage`); **43 `CONVERGED`**; **15 `TIMEOUT`**
 - Known-boundary development matrix (this branch): **2 environments × 4 shapes × 5 seeds = 40** ABCG runs; **32 `CONVERGED`**, **6 `BOUNDARY_INVALID`**, **2 `TIMEOUT`**. Failures remain in the denominator. Holdout seeds 100-119 not yet run.
 - Suite size (authoritative; synced by `scripts/check_readme_consistency.py`):

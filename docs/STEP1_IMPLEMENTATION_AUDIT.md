@@ -1,6 +1,6 @@
 # Step 1 implementation audit
 
-Branch: `feature/jupedsim-step1` @ `fe45551`  
+Branch: `STEP1-新方向` (renamed from `feature/jupedsim-step1`; audit SHA `fe45551`)  
 Date: 2026-09-19  
 Frozen Step 1 definition for this rebuild:
 

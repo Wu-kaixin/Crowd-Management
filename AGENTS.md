@@ -26,10 +26,11 @@ archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
 ```
 
 The former proof-strengthening branch tip is preserved separately as
-`archive/g7-proof-strengthening-failed-2026-07-20`. See
+`archive/g7-proof-strengthening-failed-2026-07-20`. The previous `main` tip is
+stored as `archive/main-2026-09-19`. See
 [`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
 
-New work should start from:
+Active Step 1 new-direction work is on `STEP1-新方向`. New work should start from:
 
 ```text
 scripts/run_static_containment.py

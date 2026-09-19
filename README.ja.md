@@ -4,7 +4,7 @@
 
 [English](README.md) | [Traditional Chinese](README.zh-TW.md) | [Japanese](README.ja.md)
 
-> **この文書はブランチ `feature/jupedsim-step1` 向けです（凍結済み `main` のリリースノートではありません）。**
+> **この文書はブランチ `STEP1-新方向` 向けです（凍結済み `main` のリリースノートではありません）。以前の `main` は `archive/main-2026-09-19` に保存しています。**
 
 現在の中心は **ABCG: Adaptive Boundary-Coverage Guidance** です。本ブランチの新規内容は **JuPedSim 静的群衆ソース** と **synthetic↔JuPedSim のペア評価** です（Step 1 では歩行者ダイナミクスを進めません）。
 
