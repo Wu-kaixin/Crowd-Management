@@ -3,8 +3,15 @@
 ROLE: ENTRY ONLY — parses args; logic is in
 crowd_management.experiments.static_containment.run_static_containment.
 
-INPUT:  --config configs/static_crowd_*.yaml
+INPUT:  --config configs/static_crowd_*.yaml or configs/step1_known_boundary/*.yaml
 OUTPUT: --output runs/<run_name>/  (summary.json, manifest.json, per-method/)
+
+Live visualization is the default. Use --headless for CI and unattended runs.
+
+PowerShell (one line, do not use bash ``\\`` continuations):
+
+    conda activate abcg
+    python scripts/run_static_containment.py --config configs/step1_known_boundary/square_circle.yaml --output runs/step1_square_circle --methods abcg
 """
 
 from __future__ import annotations
@@ -15,7 +22,9 @@ from crowd_management.experiments.static_containment import run_static_containme
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run static unknown-crowd containment baselines.")
+    parser = argparse.ArgumentParser(
+        description="Run static unknown-crowd containment with live Step 1 visualization."
+    )
     parser.add_argument("--config", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument(
@@ -25,8 +34,26 @@ def main() -> None:
         choices=["random", "static_circle", "legacy_center_radius", "abcg"],
     )
     parser.add_argument("--skip-plots", action="store_true")
+    parser.add_argument(
+        "--headless",
+        action="store_true",
+        help="Disable the live window (CI, tests, unattended benchmarks).",
+    )
+    parser.add_argument(
+        "--no-hold-window",
+        action="store_true",
+        help="Close the live window immediately when the episode ends.",
+    )
     args = parser.parse_args()
-    results = run_static_containment(args.config, args.output, methods=args.methods, save_plots=not args.skip_plots)
+    results = run_static_containment(
+        args.config,
+        args.output,
+        methods=args.methods,
+        save_plots=not args.skip_plots,
+        live=not args.headless,
+        headless=args.headless,
+        hold_window=None if args.headless else (not args.no_hold_window),
+    )
     for method, summary in results.items():
         print(
             f"{method}: coverage={summary['coverage_ratio']:.3f}, "
@@ -37,6 +64,7 @@ def main() -> None:
             f"resource_status={summary['resource_status']}, "
             f"assignment_status={summary['assignment_status']}, "
             f"episode_status={summary['episode_status']}, "
+            f"scientific_success={summary.get('scientific_success')}, "
             f"safety_filter_status={summary['safety_filter_status']}, "
             f"safety_projected_steps={summary['safety_projected_steps']}"
         )

@@ -32,7 +32,6 @@ from crowd_management.containment_metrics import (  # noqa: E402
 from crowd_management.controllers.abcg_v2 import (  # noqa: E402
     ABCGv2Config,
     ABCGv2Controller,
-    integrate_guide_positions,
     nominal_guide_velocity,
 )
 from crowd_management.controllers.assignment import (  # noqa: E402
@@ -734,7 +733,7 @@ def export_statistics() -> None:
     }
 
     # Synthetic-record aggregation: failure denominator and missing pairs.
-    from crowd_management.evaluation.step1_g6 import G6EvaluationConfig, METRIC_DIRECTIONS
+    from crowd_management.evaluation.step1_g6 import METRIC_DIRECTIONS, G6EvaluationConfig
     from crowd_management.evaluation.step1_g6.aggregate import _aggregate, _paired_comparisons
 
     config = G6EvaluationConfig(seeds=tuple(range(6)), scenarios=("circle",), methods=("uniform_arc", "abcg_v2"))

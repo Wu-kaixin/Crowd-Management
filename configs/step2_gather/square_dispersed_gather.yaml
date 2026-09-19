@@ -1,0 +1,98 @@
+step: 2
+seed: 0
+scene:
+  type: square
+  width: 20.0
+  height: 20.0
+  closed: true
+  openings: []
+guiders:
+  init: random
+  count: 14
+heterogeneity:
+  enabled: true
+  radius_mean: 0.2
+  radius_std: 0.015
+  radius_min: 0.17
+  radius_max: 0.23
+  desired_speed_mean: 1.25
+  desired_speed_std: 0.1
+  desired_speed_min: 0.95
+  desired_speed_max: 1.55
+  time_gap_mean: 1.0
+  time_gap_std: 0.08
+  time_gap_min: 0.8
+  time_gap_max: 1.2
+  demand_mean: 1.0
+  demand_std: 0.0
+  demand_min: 0.5
+  demand_max: 2.5
+  demand_side_bias: none
+containment:
+  safety_distance: 0.85
+  coverage_radius: 1.25
+  min_guider_distance: 0.6
+  boundary_bins: 72
+  boundary_sample_spacing: 0.1
+boundary:
+  estimator: alpha
+  alpha_scale: 3.0
+  alpha_growth_factors: [1.0, 1.25, 1.5, 2.0, 3.0, 4.0, 6.0]
+  alpha_smoothing_passes: 5
+  min_observation_points: 8
+  min_observation_coverage: 0.55
+  connectivity_radius: 4.0
+  min_component_fraction: 0.05
+  bootstrap_samples: 0
+  bootstrap_min_success_fraction: 0.5
+  bootstrap_confidence_floor: 0.15
+resources:
+  required_arc_gap: 2.8
+  min_active_guides: 4
+  increase_hysteresis: 0.1
+  decrease_hysteresis: 0.1
+assignment:
+  switch_penalty: 0.25
+  reserve_cost: 0.0
+  unmet_target_cost: 1000000.0
+motion:
+  dt: 0.1
+  gain: 1.6
+  max_speed: 1.2
+  tracking_rmse_tolerance: 0.08
+  speed_tolerance: 0.05
+  hold_steps: 12
+  max_steps: 900
+safety:
+  enabled: true
+  min_guide_distance: 0.55
+  min_crowd_distance: 0.85
+  wall_margin: 0.25
+  residual_tolerance: 1.0e-09
+  max_projection_sweeps: 200
+visualization:
+  live: true
+  render_every: 1
+  max_fps: 20
+  show_trails: true
+  hold_window: true
+# Step 2 B: dispersed clusters gather to a rendezvous, then ABCG surrounds.
+gather:
+  gather_radius: 2.8
+  gather_fraction: 0.88
+  max_gather_steps: 400
+  max_surround_steps: 450
+  guide_standoff: 4.0
+  pedestrian_speed: 0.9
+crowd:
+  source: jupedsim
+  shape: dispersed
+  spacing:
+    distance_to_agents: 0.32
+    distance_to_polygon: 0.18
+  dispersed:
+    cluster_count: 10
+    people_per_cluster: 5
+    cluster_radius: 0.85
+    min_center_separation: 3.0
+    margin: 2.2

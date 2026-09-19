@@ -1,0 +1,5 @@
+group,n,scientific_success_rate,boundary_valid_rate,deployment_valid_rate,convergence_rate
+circle,50,0.82,0.88,0.88,0.82
+ellipse,50,0.68,0.84,0.84,0.68
+concave,50,0.6,0.96,0.96,0.6
+irregular,50,0.74,1.0,1.0,0.74

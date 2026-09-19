@@ -1,0 +1,189 @@
+{
+  "all": {
+    "n": 200,
+    "execution_success_rate": 0.92,
+    "scientific_success_rate": 0.71,
+    "boundary_valid_rate": 0.92,
+    "deployment_valid_rate": 0.92,
+    "convergence_rate": 0.71,
+    "sampled_safety_rate": 0.92,
+    "mean_coverage_all": 0.9120763888888889,
+    "mean_tracking_rmse_all": 0.2423783767308754,
+    "scientific_success_count": 142,
+    "boundary_valid_count": 184,
+    "converged_count": 142,
+    "failures": {
+      "BOUNDARY_INVALID": 16,
+      "TIMEOUT": 42
+    }
+  },
+  "by_environment": {
+    "square": {
+      "n": 100,
+      "execution_success_rate": 0.92,
+      "scientific_success_rate": 0.74,
+      "boundary_valid_rate": 0.92,
+      "deployment_valid_rate": 0.92,
+      "convergence_rate": 0.74,
+      "sampled_safety_rate": 0.92,
+      "mean_coverage_all": 0.9155138888888888,
+      "mean_tracking_rmse_all": 0.19122247076701163,
+      "scientific_success_count": 74,
+      "boundary_valid_count": 92,
+      "converged_count": 74,
+      "failures": {
+        "BOUNDARY_INVALID": 8,
+        "TIMEOUT": 18
+      }
+    },
+    "rectangle": {
+      "n": 100,
+      "execution_success_rate": 0.92,
+      "scientific_success_rate": 0.68,
+      "boundary_valid_rate": 0.92,
+      "deployment_valid_rate": 0.92,
+      "convergence_rate": 0.68,
+      "sampled_safety_rate": 0.92,
+      "mean_coverage_all": 0.9086388888888889,
+      "mean_tracking_rmse_all": 0.2935342826947392,
+      "scientific_success_count": 68,
+      "boundary_valid_count": 92,
+      "converged_count": 68,
+      "failures": {
+        "BOUNDARY_INVALID": 8,
+        "TIMEOUT": 24
+      }
+    }
+  },
+  "by_shape": {
+    "circle": {
+      "n": 50,
+      "execution_success_rate": 0.88,
+      "scientific_success_rate": 0.82,
+      "boundary_valid_rate": 0.88,
+      "deployment_valid_rate": 0.88,
+      "convergence_rate": 0.82,
+      "sampled_safety_rate": 0.88,
+      "mean_coverage_all": 0.9582222222222222,
+      "mean_tracking_rmse_all": 0.12285975013561175,
+      "scientific_success_count": 41,
+      "boundary_valid_count": 44,
+      "converged_count": 41,
+      "failures": {
+        "BOUNDARY_INVALID": 6,
+        "TIMEOUT": 3
+      }
+    },
+    "ellipse": {
+      "n": 50,
+      "execution_success_rate": 0.84,
+      "scientific_success_rate": 0.68,
+      "boundary_valid_rate": 0.84,
+      "deployment_valid_rate": 0.84,
+      "convergence_rate": 0.68,
+      "sampled_safety_rate": 0.84,
+      "mean_coverage_all": 0.8658888888888889,
+      "mean_tracking_rmse_all": 0.27045562849653404,
+      "scientific_success_count": 34,
+      "boundary_valid_count": 42,
+      "converged_count": 34,
+      "failures": {
+        "BOUNDARY_INVALID": 8,
+        "TIMEOUT": 8
+      }
+    },
+    "concave": {
+      "n": 50,
+      "execution_success_rate": 0.96,
+      "scientific_success_rate": 0.6,
+      "boundary_valid_rate": 0.96,
+      "deployment_valid_rate": 0.96,
+      "convergence_rate": 0.6,
+      "sampled_safety_rate": 0.96,
+      "mean_coverage_all": 0.8588611111111111,
+      "mean_tracking_rmse_all": 0.32664207776376375,
+      "scientific_success_count": 30,
+      "boundary_valid_count": 48,
+      "converged_count": 30,
+      "failures": {
+        "BOUNDARY_INVALID": 2,
+        "TIMEOUT": 18
+      }
+    },
+    "irregular": {
+      "n": 50,
+      "execution_success_rate": 1.0,
+      "scientific_success_rate": 0.74,
+      "boundary_valid_rate": 1.0,
+      "deployment_valid_rate": 1.0,
+      "convergence_rate": 0.74,
+      "sampled_safety_rate": 1.0,
+      "mean_coverage_all": 0.9653333333333334,
+      "mean_tracking_rmse_all": 0.24307672365998131,
+      "scientific_success_count": 37,
+      "boundary_valid_count": 50,
+      "converged_count": 37,
+      "failures": {
+        "TIMEOUT": 13
+      }
+    }
+  },
+  "by_heterogeneity": {
+    "True": {
+      "n": 200,
+      "execution_success_rate": 0.92,
+      "scientific_success_rate": 0.71,
+      "boundary_valid_rate": 0.92,
+      "deployment_valid_rate": 0.92,
+      "convergence_rate": 0.71,
+      "sampled_safety_rate": 0.92,
+      "mean_coverage_all": 0.9120763888888889,
+      "mean_tracking_rmse_all": 0.2423783767308754,
+      "scientific_success_count": 142,
+      "boundary_valid_count": 184,
+      "converged_count": 142,
+      "failures": {
+        "BOUNDARY_INVALID": 16,
+        "TIMEOUT": 42
+      }
+    }
+  },
+  "by_split": {
+    "development": {
+      "n": 40,
+      "execution_success_rate": 0.85,
+      "scientific_success_rate": 0.8,
+      "boundary_valid_rate": 0.85,
+      "deployment_valid_rate": 0.85,
+      "convergence_rate": 0.8,
+      "sampled_safety_rate": 0.85,
+      "mean_coverage_all": 0.9669791666666667,
+      "mean_tracking_rmse_all": 0.012947360465186025,
+      "scientific_success_count": 32,
+      "boundary_valid_count": 34,
+      "converged_count": 32,
+      "failures": {
+        "BOUNDARY_INVALID": 6,
+        "TIMEOUT": 2
+      }
+    },
+    "holdout": {
+      "n": 160,
+      "execution_success_rate": 0.9375,
+      "scientific_success_rate": 0.6875,
+      "boundary_valid_rate": 0.9375,
+      "deployment_valid_rate": 0.9375,
+      "convergence_rate": 0.6875,
+      "sampled_safety_rate": 0.9375,
+      "mean_coverage_all": 0.8983506944444445,
+      "mean_tracking_rmse_all": 0.29438274041776497,
+      "scientific_success_count": 110,
+      "boundary_valid_count": 150,
+      "converged_count": 110,
+      "failures": {
+        "BOUNDARY_INVALID": 10,
+        "TIMEOUT": 40
+      }
+    }
+  }
+}

@@ -1,26 +1,73 @@
-"""Crowd representations for the adaptive guide-agent deployment line.
+"""Crowd representations for adaptive guide-agent deployment.
 
-ROLE: CORE DATA GENERATORS — synthetic static point clouds + independent analytic truth.
-Truth is for evaluation only; controllers must not depend on it at runtime.
+Step 1 supports simulator-independent static crowd observations.
+
+Truth objects are evaluation-only and must never be passed to
+controllers or estimators.
 """
 
+from .jupedsim_static import (
+    build_center_support_polygon,
+    build_spawn_polygon,
+    generate_jupedsim_static_crowd,
+    generate_jupedsim_static_truth,
+)
+from .observation import (
+    FORBIDDEN_OBSERVATION_FIELDS,
+    CrowdObservation,
+    as_controller_observation,
+    crowd_observation_from_points,
+)
+from .source import (
+    JuPedSimStaticCrowdSource,
+    StaticCrowdSource,
+    SyntheticStaticCrowdSource,
+    build_crowd_source,
+)
 from .static_crowd import (
     StaticCrowdConfig,
+    circle_spawn_vertices,
+    crowd_component_ids,
     generate_circle_crowd,
     generate_ellipse_crowd,
     generate_nonconvex_crowd,
     generate_static_crowd,
     generate_two_cluster_crowd,
+    sample_dispersed_centers,
 )
-from .truth import StaticCrowdTruth, generate_static_crowd_truth
+from .truth import (
+    StaticCrowdTruth,
+    generate_static_crowd_truth,
+)
+from .heterogeneity import (
+    StaticHeterogeneityConfig,
+    generate_static_agent_attributes,
+)
 
 __all__ = [
+    "FORBIDDEN_OBSERVATION_FIELDS",
+    "CrowdObservation",
+    "JuPedSimStaticCrowdSource",
     "StaticCrowdConfig",
+    "circle_spawn_vertices",
+    "crowd_component_ids",
+    "sample_dispersed_centers",
+    "StaticCrowdSource",
     "StaticCrowdTruth",
+    "SyntheticStaticCrowdSource",
+    "build_center_support_polygon",
+    "as_controller_observation",
+    "build_crowd_source",
+    "build_spawn_polygon",
+    "crowd_observation_from_points",
     "generate_circle_crowd",
     "generate_ellipse_crowd",
+    "generate_jupedsim_static_crowd",
+    "generate_jupedsim_static_truth",
     "generate_nonconvex_crowd",
     "generate_static_crowd",
     "generate_static_crowd_truth",
     "generate_two_cluster_crowd",
+    "StaticHeterogeneityConfig",
+    "generate_static_agent_attributes",
 ]

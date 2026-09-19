@@ -1,0 +1,3 @@
+failure_reason,count
+TIMEOUT,42
+BOUNDARY_INVALID,16

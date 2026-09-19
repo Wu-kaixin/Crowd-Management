@@ -2,7 +2,7 @@
 
 一眼分清：**核心算法**、**实验编排**、**输入配置**、**运行输出**、**冻结证据**、**文档/测试**。
 
-权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
+权威研究契约见 [`RESEARCH_SPEC.md`](RESEARCH_SPEC.md)。Step 1–3 路线见 [`STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。日常从哪里开工见根目录 [`AGENTS.md`](../AGENTS.md)。历史研究快照见 [`ARCHIVE_INDEX.md`](ARCHIVE_INDEX.md)。
 
 ---
 
@@ -27,8 +27,8 @@ configs/*.yaml          ──输入──►  scripts/*.py（薄 CLI）
 
 | 角色 | 目录 / 文件 | 你改它意味着什么 |
 | --- | --- | --- |
-| **核心算法** | `src/.../controllers/`, `estimation/`, `geometry/`, `crowd/` | 改科学结果；需重新跑评测 |
-| **编排胶水** | `experiments/`, `evaluation/`, `runtime/`, `reporting/` | 改流程/并行/落盘，通常不改公式 |
+| **核心算法** | `src/.../controllers/`, `estimation/`, `geometry/`, `crowd/`, `scenarios/` | 改科学结果；需重新跑评测 |
+| **编排胶水** | `experiments/`（含 `static_containment/`、`step2_gather/`）, `evaluation/`, `runtime/`, `reporting/` | 改流程/并行/落盘，通常不改公式 |
 | **入口 CLI** | `scripts/` | 只解析参数，逻辑在包内 |
 | **输入** | `configs/*.yaml` | 场景与超参 |
 | **本地输出** | `runs/`, `outputs/`, `.tmp/` | gitignore，可删可重跑 |
@@ -64,13 +64,15 @@ Crowd-Management/
 静态围堵一次完整流水线（`run_static_containment`）：
 
 ```text
-crowd 生成点云
-  → estimation 估边界（boundary_v2）
+known Ω_env
+  → JuPedSim/static crowd observation (no spawn to ABCG)
+  → estimation 估未知人群边界（boundary_v2）
+  → geometry.deployment_curve 缓冲部署曲线
   → resources 算要几个 guide
-  → periodic_arc_cvt 在安全偏移曲线上布点
+  → periodic_arc_cvt 在部署曲线上布点
   → assignment 身份保持分配
-  → abcg_v2 + safety 闭环速度控制
-  → containment_metrics 算指标
+  → abcg_v2 + safety（含墙约束）闭环速度控制
+  → live visualization（默认）
   → artifacts 写入 runs/<run>/...
 ```
 
@@ -78,19 +80,20 @@ crowd 生成点云
 
 | 路径 | 职责 | 关键文件 |
 | --- | --- | --- |
-| `crowd/` | 静态人群点云生成 + 独立解析真值 | `static_crowd.py`, `truth.py` |
-| `estimation/` | 边界估计 | `boundary.py`（v1 径向）, `boundary_v2.py`（PR6 alpha+bootstrap） |
-| `geometry/` | 闭曲线弧长、重采样、自交等 | `arclength.py` |
-| `controllers/` | **ABCG 数学核心**（优先读这里） | 见下表 |
-| `containment_metrics.py` | 覆盖率等指标 | — |
-| `containment_visualization.py` | 画 `containment.png` | — |
-| `types.py` | 共享类型 | — |
+| `crowd/` | 静态人群点云 + `CrowdObservation` 隔离 | `static_crowd.py`, `observation.py`, `truth.py`, `jupedsim_static.py` |
+| `scenarios/` | 已知场地 \(\Omega_{\mathrm{env}}\)；`registry` 可扩展类型 | `rectangular.py`, `registry.py` |
+| `estimation/` | 未知人群边界估计 | `boundary.py`（v1 径向）, `boundary_v2.py`（PR6 alpha+bootstrap） |
+| `geometry/` | 闭曲线 + 部署缓冲 | `arclength.py`, `deployment_curve.py` |
+| `controllers/` | **ABCG 数学核心**（优先读这里） | 见下表；`decentralized/` 为 Step 3 DESIGNED 接口 |
+| `visualization/` | 实时窗口 / 终帧；控制器不得 import | `live_step1.py`, `static_step1.py` |
 
 #### `controllers/` 子模块（核心中的核心）
 
 | 文件 | 角色 |
 | --- | --- |
 | `abcg_v2.py` | **主控制器**：固定目标闭环、`step` / episode |
+| `guide_initialization.py` | 随机未知初值 / endpoint 初值 |
+| `decentralized/` | Step 3 DESIGNED：局部感知 / 通信 / 分配 Protocol |
 | `abcg.py` | v1 端点基线（给 episode 初值） |
 | `periodic_arc_cvt.py` | 等弧 / 周期 Lloyd 覆盖规划 |
 | `resources.py` | `ceil(L/g_req)`、迟滞、容量不足状态 |
@@ -134,8 +137,9 @@ crowd 生成点云
 | `static_crowd_safety_infeasible.yaml` | 安全投影不可行 |
 | `static_crowd_timeout.yaml` | 未收敛/超时路径 |
 | `ci_smoke.yaml` | CI 极小确定性 workload |
+| `step1_known_boundary/*.yaml` | 已知场地边界 + 未知静态人群（JuPedSim spawn 仅仿真器用） |
 
-YAML 里常见块：`crowd`（输入点云形状）、`guiders`、`containment`、`boundary`、`resources`、`assignment`、`motion`、`safety`。这些是**超参输入**，不是算法本体。
+YAML 里常见块：`scene`（square/rectangle）、`crowd`、`guiders`（含 `init: random|endpoint`）、`heterogeneity`、`containment`、`boundary`、`resources`、`assignment`、`motion`、`safety`、`visualization`。这些是**超参输入**，不是算法本体。路线见 [`docs/STEP1_RESEARCH_ROADMAP.md`](STEP1_RESEARCH_ROADMAP.md)。
 
 ---
 
@@ -143,7 +147,9 @@ YAML 里常见块：`crowd`（输入点云形状）、`guiders`、`containment`�
 
 | 脚本 | 调用的包 | 典型输出目录 |
 | --- | --- | --- |
-| `run_static_containment.py` | `experiments.static_containment` | `runs/static_containment_*` |
+| `run_static_containment.py` | `experiments.static_containment` | `runs/static_containment_*`（默认 live） |
+| `run_step1_known_boundary.py` | `experiments.static_containment` | `runs/` 或 `reports/step1_known_boundary_*` |
+| `analyze_step1_known_boundary.py` | 分层成功率（失败留在分母） | `reports/step1_known_boundary/` |
 | `run_step1_g6_compliance.py` | `evaluation.step1_g6` | `reports/step1_g6_compliance` + `runs/...` |
 | `run_step1_pr6_evaluation.py` | `evaluation.step1_pr6` | `reports/step1_pr6_evaluation` |
 | `run_ci_smoke.py` | smoke 路径 | `artifacts/ci_smoke` |
@@ -155,9 +161,9 @@ YAML 里常见块：`crowd`（输入点云形状）、`guiders`、`containment`�
 
 ```bash
 python scripts/run_static_containment.py \
-  --config configs/static_crowd_circle.yaml \
-  --output runs/static_containment_circle \
-  --methods random static_circle legacy_center_radius abcg
+  --config configs/step1_known_boundary/square_irregular.yaml \
+  --output runs/step1_square_irregular_seed0 \
+  --methods abcg
 ```
 
 ---
@@ -169,9 +175,12 @@ python scripts/run_static_containment.py \
 ```text
 runs/foo/
 ├── config_resolved.yaml      # 本次实际配置快照
+├── crowd_observation.npz     # 控制器可见观测（无 spawn）
+├── evaluator_truth.npz       # 评测真值（控制器看不到）
 ├── crowd_points.npz          # 输入点云（生成结果）
 ├── crowd_truth.npz           # 独立真值边界（评测用，控制器看不到）
-├── boundary_v2.npz + *_status.json
+├── boundary_estimate.npz / boundary_v2.npz + *_status.json
+├── deployment_geometry.npz
 ├── resource_decision.json
 ├── periodic_plan.npz + *_status.json
 ├── manifest.json             # 整次 run 状态机摘要（是否收敛/失败原因）
@@ -180,8 +189,9 @@ runs/foo/
     ├── containment_state.npz
     ├── metrics.json
     ├── assignment.npz + assignment_status.json
-    ├── episode.npz + episode_status.json
-    └── containment.png
+    ├── episode.npz + trajectory.npz + safety_trace.npz
+    ├── episode_status.json
+    └── final_scene.png / containment.png
 ```
 
 **读结果优先看**：`summary.json`（各方法指标）→ `manifest.json`（整 run 成败）→ 某方法下的 `metrics.json` / 图。

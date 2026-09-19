@@ -22,6 +22,7 @@ from .assignment import (
     assign_guides_to_targets,
 )
 from .coverage_cvt import BoundaryCVTController
+from .guide_initialization import sample_random_guide_positions
 from .legacy_center_radius import LegacyCenterRadiusController
 from .periodic_arc_cvt import (
     CoveragePlan,
@@ -34,7 +35,14 @@ from .periodic_arc_cvt import (
 )
 from .random_deployment import RandomDeploymentController
 from .resources import ResourceDecision, ResourcePolicy, ResourcePolicyConfig, allocate_guide_resources
-from .safety import SafetyProjectionResult, VelocitySafetyConfig, project_velocity_safety
+from .safety import (
+    SafetyProjectionResult,
+    VelocitySafetyConfig,
+    minimum_guide_crowd_distance,
+    minimum_guide_guide_distance,
+    minimum_guide_wall_distance,
+    project_velocity_safety,
+)
 from .static_circle import StaticCircleController
 
 __all__ = [
@@ -60,11 +68,15 @@ __all__ = [
     "SafetyProjectionResult",
     "VelocitySafetyConfig",
     "equal_arc_target_s",
+    "sample_random_guide_positions",
     "allocate_guide_resources",
     "assign_guides_to_targets",
     "plan_equal_arc_coverage",
     "plan_periodic_arc_coverage",
     "periodic_uniform_coverage_cost",
+    "minimum_guide_crowd_distance",
+    "minimum_guide_guide_distance",
+    "minimum_guide_wall_distance",
     "project_velocity_safety",
     "integrate_guide_positions",
     "nominal_guide_velocity",

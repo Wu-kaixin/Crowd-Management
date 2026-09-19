@@ -431,6 +431,43 @@ def enforce_minimum_separation(points: Array, min_distance: float, iterations: i
     return out
 
 
+def minimum_guide_guide_distance(positions: Array) -> float:
+    """Return the minimum pairwise guide distance, or +inf if fewer than two guides."""
+    current = _finite_points(positions, "positions", allow_empty=True)
+    if len(current) < 2:
+        return float("inf")
+    deltas = current[:, None, :] - current[None, :, :]
+    distances = np.sqrt(np.sum(deltas * deltas, axis=2))
+    np.fill_diagonal(distances, np.inf)
+    return float(np.min(distances))
+
+
+def minimum_guide_crowd_distance(positions: Array, crowd_points: Array) -> float:
+    """Return the minimum guide–crowd distance, or +inf if either set is empty."""
+    current = _finite_points(positions, "positions", allow_empty=True)
+    crowd = _finite_points(crowd_points, "crowd_points", allow_empty=True)
+    if len(current) == 0 or len(crowd) == 0:
+        return float("inf")
+    deltas = current[:, None, :] - crowd[None, :, :]
+    distances = np.sqrt(np.sum(deltas * deltas, axis=2))
+    return float(np.min(distances))
+
+
+def minimum_guide_wall_distance(positions: Array, room_size: Array) -> float:
+    """Return the minimum distance from guides to an origin-aligned room wall."""
+    current = _finite_points(positions, "positions", allow_empty=True)
+    room = np.asarray(room_size, dtype=float)
+    if room.shape != (2,) or not np.all(np.isfinite(room)) or np.any(room <= 0.0):
+        raise ValueError("room_size must be a finite positive length-2 vector.")
+    if len(current) == 0:
+        return float("inf")
+    left = current[:, 0]
+    right = room[0] - current[:, 0]
+    bottom = current[:, 1]
+    top = room[1] - current[:, 1]
+    return float(np.min(np.minimum(np.minimum(left, right), np.minimum(bottom, top))))
+
+
 def clip_to_room(points: Array, room_size: Array, margin: float = 0.25) -> Array:
     room = np.asarray(room_size, dtype=float)
     return np.clip(np.asarray(points, dtype=float), margin, room - margin)

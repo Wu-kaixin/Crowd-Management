@@ -164,6 +164,26 @@ def save_episode_artifacts(
         converged=np.array(episode.converged, dtype=bool),
         stop_reason=np.array(episode.stop_reason),
     )
+    np.savez_compressed(
+        method_dir / "trajectory.npz",
+        times=episode.times,
+        positions=episode.positions,
+        velocities=episode.velocities,
+        target_positions=episode.target_positions,
+        tracking_rmse=episode.tracking_rmse,
+    )
+    np.savez_compressed(
+        method_dir / "safety_trace.npz",
+        safety_status_history=episode.safety_status_history,
+        safety_constraint_count=episode.safety_constraint_count,
+        safety_guide_pair_constraint_count=episode.safety_guide_pair_constraint_count,
+        safety_crowd_constraint_count=episode.safety_crowd_constraint_count,
+        safety_room_constraint_count=episode.safety_room_constraint_count,
+        safety_violated_constraint_count=episode.safety_violated_constraint_count,
+        safety_projection_sweeps=episode.safety_projection_sweeps,
+        safety_max_residual_after=episode.safety_max_residual_after,
+        safety_emergency_stop_history=episode.safety_emergency_stop_history,
+    )
     return record
 
 

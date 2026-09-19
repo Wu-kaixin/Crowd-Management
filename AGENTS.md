@@ -26,15 +26,30 @@ archive/legacy-evacuation-2026-07-21:src/crowd_management/legacy/
 ```
 
 The former proof-strengthening branch tip is preserved separately as
-`archive/g7-proof-strengthening-failed-2026-07-20`. See
+`archive/g7-proof-strengthening-failed-2026-07-20`. The previous `main` tip is
+stored as `archive/main-2026-09-19`. See
 [`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
 
-New work should start from:
+Active Step 1 Core closure is on `STEP1-Research-Extension`. Do not add
+algorithms, crowd dynamics, gather, or multi-crowd features to Core. Evidence:
+[`reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md`](reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md).
+Start Core work from:
 
 ```text
 scripts/run_static_containment.py
-configs/static_crowd_*.yaml
-src/crowd_management/controllers/abcg.py
+configs/step1_known_boundary/*.yaml
+src/crowd_management/controllers/abcg_v2.py
+src/crowd_management/scenarios/
+docs/STEP1_RESEARCH_ROADMAP.md
+```
+
+Step 2 gather-then-surround (dispersed → gather → surround):
+
+```text
+scripts/run_gather_then_surround.py
+configs/step2_gather/square_dispersed_gather.yaml
+src/crowd_management/controllers/step2_gather/
+src/crowd_management/experiments/step2_gather/
 ```
 
 ## Environment

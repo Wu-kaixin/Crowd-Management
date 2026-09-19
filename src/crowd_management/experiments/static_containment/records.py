@@ -43,6 +43,19 @@ class MethodSummary(TypedDict, total=False):
     safety_projected_steps: int
     safety_infeasible_steps: int
     safety_max_residual_after: float | str
+    execution_success: bool
+    boundary_valid: bool
+    deployment_valid: bool
+    resource_valid: bool
+    plan_valid: bool
+    assignment_valid: bool
+    episode_converged: bool
+    sampled_safety_valid: bool
+    scientific_success: bool
+    failure_reason: str
+    minimum_guide_guide_distance: float | str
+    minimum_guide_crowd_distance: float | str
+    minimum_guide_wall_distance: float | str
 
 
 class ManifestConfigBlock(TypedDict):
