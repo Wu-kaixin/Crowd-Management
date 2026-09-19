@@ -1,16 +1,16 @@
-# configs/ — INPUT only
+# configs/ — 仅作输入
 
-Scenario YAML for static containment and CI smoke. Not algorithm code.
+静态围堵场景与 CI smoke 的 YAML。此处不是算法代码。
 
-| File | Consumed by | Scenario |
+| 文件 | 调用方 | 场景 |
 |------|-------------|----------|
-| `static_crowd_circle.yaml` | `scripts/run_static_containment.py` | circle crowd (primary demo) |
-| `static_crowd_ellipse.yaml` | `scripts/run_static_containment.py` | ellipse crowd |
-| `static_crowd_nonconvex.yaml` | `scripts/run_static_containment.py` | nonconvex crowd |
-| `static_crowd_two_clusters.yaml` | `scripts/run_static_containment.py` | two-cluster crowd |
-| `static_crowd_capacity_shortfall.yaml` | `scripts/run_static_containment.py` | capacity-shortfall stress |
-| `static_crowd_safety_infeasible.yaml` | `scripts/run_static_containment.py` | safety-infeasible stress |
-| `static_crowd_timeout.yaml` | `scripts/run_static_containment.py` | timeout stress |
-| `ci_smoke.yaml` | `scripts/run_ci_smoke.py` | CI smoke (short horizon) |
+| `static_crowd_circle.yaml` | `scripts/run_static_containment.py` | 圆形人群（主演示） |
+| `static_crowd_ellipse.yaml` | `scripts/run_static_containment.py` | 椭圆人群 |
+| `static_crowd_nonconvex.yaml` | `scripts/run_static_containment.py` | 非凸人群 |
+| `static_crowd_two_clusters.yaml` | `scripts/run_static_containment.py` | 双簇人群 |
+| `static_crowd_capacity_shortfall.yaml` | `scripts/run_static_containment.py` | 容量不足压力场景 |
+| `static_crowd_safety_infeasible.yaml` | `scripts/run_static_containment.py` | 安全不可行压力场景 |
+| `static_crowd_timeout.yaml` | `scripts/run_static_containment.py` | 超时压力场景 |
+| `ci_smoke.yaml` | `scripts/run_ci_smoke.py` | CI smoke（短时域） |
 
-Map: [`docs/CODEMAP.zh.md`](docs/CODEMAP.zh.md)
+地图：[`docs/CODEMAP.zh.md`](docs/CODEMAP.zh.md)

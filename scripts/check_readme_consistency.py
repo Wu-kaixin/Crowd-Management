@@ -81,8 +81,9 @@ def check(repo: Path) -> list[str]:
         if pattern.search(text):
             errors.append(f"README.md still contains obsolete test-count pattern: {pattern.pattern}")
 
-    if "Development Status" in text and text.count("## Development Status") != 1:
-        errors.append("README.md must contain exactly one Development Status section")
+    status_headings = text.count("## 开发状态") + text.count("## Development Status")
+    if status_headings != 1:
+        errors.append("README.md must contain exactly one 开发状态 / Development Status section")
 
     if not CI_BADGE_PATTERN.search(text):
         errors.append("README.md must include a GitHub Actions CI badge pointing at ci.yml")
