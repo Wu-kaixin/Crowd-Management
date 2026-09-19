@@ -108,3 +108,24 @@ Package: `src/crowd_management/controllers/decentralized/`.
 - Wall-opening containment, multi-crowd tracking, local sensing, video perception, hardware, human trials.
 - Feeding spawn / truth / room polygons into ABCG as a crowd boundary.
 - Claiming ABCG is validated against *behavioral* heterogeneous crowds. Step 1 only has representation-level heterogeneity.
+
+## After freeze (analysis only; not Core code)
+
+Software baseline: annotated tag `step1-known-boundary-freeze` @ `46ad613`.
+Independent holdout remains **110/160 = 68.8%**. Seeds **100–119 are spent**.
+
+Read-only TIMEOUT audit (this branch): [`reports/step1_timeout_audit/TIMEOUT_AUDIT.md`](../reports/step1_timeout_audit/TIMEOUT_AUDIT.md).
+All 40 TIMEOUT rows are safety-pin stalls (36 structural, 4 near-miss). None are horizon-sensitive.
+Do not raise `max_steps` on `46ad613`.
+
+Version chain:
+
+```text
+46ad613  (= step1-known-boundary-freeze)
+│
+├── analysis/step1-timeout-audit     ← this note; read-only
+├── feature/step1-improvement-v2     ← only if Step 1 is revised; new seeds
+└── step2-dynamic-crowd              ← crowd dynamics / gather / interaction
+```
+
+A later algorithm revision needs new development seeds and a new untouched holdout (for example 200–219).
