@@ -81,6 +81,7 @@ def test_static_containment_cli_runs(tmp_path):
             "--methods",
             "abcg",
             "--skip-plots",
+            "--headless",
         ],
         cwd=repo,
         env=env,

@@ -1,5 +1,7 @@
 # Step 1 已知边界结果
 
+正式闭合报告（开发集 + holdout、范围冻结、失败审计）：[`STEP1_CLOSURE_REPORT.md`](STEP1_CLOSURE_REPORT.md)。
+
 环境边界已知。人群边界未知。
 JuPedSim 生成几何仅供评估器/仿真器使用，不暴露给 ABCG。
 
@@ -103,4 +105,4 @@ JuPedSim 生成几何仅供评估器/仿真器使用，不暴露给 ABCG。
 - 种子 1、4：两侧均为 BOUNDARY_INVALID（`alpha_resampled_observation_coverage_below_threshold` 类）
 - 该静态 Step 1 控制器上未测到可度量的异构效应。`desired_speed` 与 `time_gap` 仍为元数据；需求/半径被观测到，但此处未改变 ABCG 输出。
 
-Holdout 种子 100-119 未用于调参，也尚未运行。
+Holdout 种子 100-119 未用于调参。独立 160-run 结果见 [`STEP1_CLOSURE_REPORT.md`](STEP1_CLOSURE_REPORT.md)（科学成功 110/160）。

@@ -17,7 +17,12 @@ from ...crowd import build_crowd_source, generate_static_agent_attributes
 from ...experiments.static_containment.config import StaticContainmentConfig
 from ...experiments.static_containment.known_boundary import build_step1_observation
 from ...types import Array
-from ...visualization.live_step1 import NullStep1Renderer, Step1Frame, build_renderer
+from ...visualization.live_step1 import (
+    NullStep1Renderer,
+    Step1Frame,
+    build_renderer,
+    display_is_unattended,
+)
 from ...visualization.static_step1 import save_final_scene
 
 
@@ -70,6 +75,8 @@ def run_gather_then_surround(
         live_enabled = bool(cfg.visualization.live)
     else:
         live_enabled = bool(live)
+    if live_enabled and display_is_unattended():
+        live_enabled = False
     hold_enabled = bool(cfg.visualization.hold_window if hold_window is None else hold_window)
 
     crowd_source = build_crowd_source(cfg.crowd)

@@ -83,6 +83,7 @@ class StaticContainmentConfig:
         seed = int(raw.get("seed", 0))
         scene_raw = raw.get("scene") or {}
         room_raw = raw.get("room") or {}
+        scene: RectangularScenario
         if scene_raw:
             if "width" not in scene_raw and room_raw.get("size"):
                 scene_raw = {
@@ -90,9 +91,10 @@ class StaticContainmentConfig:
                     "width": float(room_raw["size"][0]),
                     "height": float(room_raw["size"][1]),
                 }
-            scene = build_scenario(scene_raw)
-            if not isinstance(scene, RectangularScenario):
+            built = build_scenario(scene_raw)
+            if not isinstance(built, RectangularScenario):
                 raise TypeError("Step 1 currently requires a RectangularScenario.")
+            scene = built
             room_size = scene.room_size
             known_environment = True
         else:

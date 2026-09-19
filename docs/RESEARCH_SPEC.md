@@ -1,12 +1,32 @@
 # ABCG-v2 Step 1 Research and Development Specification
 
-Status: **ABCG-v2 Step 1 research-complete**. PR0-PR6 and G0-G6 passed from the clean implementation freeze `f2494922b2431bfd9a37a247add8a79acfdc18ed`.
+Status: **ABCG-v2 Step 1 Core closure recorded** on `STEP1-Research-Extension`.
+The inherited G0–G6 line remains research-complete at `f2494922b2431bfd9a37a247add8a79acfdc18ed`.
+Known-boundary Core evidence: [`reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md`](../reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md)
+(development 32/40, holdout 110/160; failures kept in the denominator).
 Authority: `AGENTS.md` and `ABCG-v2 Step 1 Core Development Specification` (2026-07-18).
 Baseline: `main@fe4e7c1dd310c4eaef814c70e9edb34ec02227ae`.
 
 ## 1. Research scope
 
-Step 1 studies guide-agent deployment around one static crowd under these
+**Step 1 Core** (the only freeze / paper-baseline claim) is guide-agent
+deployment around **one static crowd**:
+
+- Known closed environment \(\partial\Omega_{\mathrm{env}}\) (square or rectangle).
+- Unknown crowd boundary \(\partial\Omega_c\).
+- Moderate **representation-level** heterogeneity (`radius`, `desired_speed`,
+  `time_gap`, optional `demand`). Pedestrians do not move; speed and time-gap
+  are metadata, not a behavioral effect. Behavioral heterogeneity is Step 2.
+- Global observation, free communication, velocity-controlled external guides
+  with random unknown initial positions.
+
+The following live on this branch but are **outside Step 1 Core**:
+
+- Multi-crowd static surround and dispersed static surround (Step 1 Extension).
+- Gather-then-surround (Step 2 prototype).
+- Decentralized / limited-communication protocols (Step 3, DESIGNED).
+
+Step 1 Core studies guide-agent deployment around one static crowd under these
 assumptions:
 
 - The **environment boundary** \(\partial\Omega_{\mathrm{env}}\) is known.

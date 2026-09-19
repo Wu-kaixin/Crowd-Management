@@ -18,6 +18,19 @@ import numpy as np
 
 from ..types import Array
 
+_NONINTERACTIVE_BACKENDS = {"agg", "pdf", "svg", "ps", "cairo", "template"}
+
+
+def display_is_unattended() -> bool:
+    """True on CI or non-interactive matplotlib backends. A GUI must not block."""
+    import os
+
+    if os.environ.get("CI", "").strip().lower() in {"1", "true", "yes"}:
+        return True
+    backend = os.environ.get("MPLBACKEND", "").strip().lower()
+    return backend in _NONINTERACTIVE_BACKENDS
+
+
 # README / figures_baseline palette
 _COLOR_CROWD = "#4c78a8"
 _COLOR_CROWD_GROUPS = ("#4c78a8", "#59a14f", "#b07aa1", "#edc948", "#76b7b2")
@@ -570,7 +583,7 @@ class Step1LiveRenderer:
         if self._plt is None or self._fig is None:
             self.closed = True
             return
-        if self.block:
+        if self.block and not display_is_unattended():
             print("[live] Holding window open — close it to finish.", flush=True)
             self._plt.show(block=True)
         else:

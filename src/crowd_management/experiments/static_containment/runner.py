@@ -37,7 +37,12 @@ from ...crowd.observation import CrowdObservation
 from ...estimation import BoundaryEstimateFailure, BoundaryEstimateV2, estimate_boundary_v2
 from ...geometry.deployment_curve import DeploymentCurve
 from ...types import Array
-from ...visualization.live_step1 import NullStep1Renderer, Step1Frame, build_renderer
+from ...visualization.live_step1 import (
+    NullStep1Renderer,
+    Step1Frame,
+    build_renderer,
+    display_is_unattended,
+)
 from ...visualization.static_step1 import save_final_scene
 from .artifacts import (
     diag_float,
@@ -524,6 +529,8 @@ def run_static_containment(
         live_enabled = bool(cfg.known_environment and cfg.visualization.live)
     else:
         live_enabled = bool(live)
+    if live_enabled and renderer is None and display_is_unattended():
+        live_enabled = False
     hold_enabled = bool(cfg.visualization.hold_window if hold_window is None else hold_window)
     crowd_source = build_crowd_source(cfg.crowd)
     crowd_points = crowd_source.observe()

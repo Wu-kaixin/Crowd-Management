@@ -1,0 +1,3 @@
+group,n,scientific_success_rate,boundary_valid_rate,deployment_valid_rate,convergence_rate
+square,80,0.725,0.9375,0.9375,0.725
+rectangle,80,0.65,0.9375,0.9375,0.65

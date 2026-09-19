@@ -17,6 +17,19 @@ from ...types import Array
 from .config import StaticContainmentConfig
 
 
+def _boundary_diagnostics(data: dict[str, object]) -> dict[str, float | int | str]:
+    """Coerce planner diagnostics to the estimator's scalar/string map."""
+    out: dict[str, float | int | str] = {}
+    for key, value in data.items():
+        if isinstance(value, bool):
+            out[str(key)] = int(value)
+        elif isinstance(value, (int, float, str)):
+            out[str(key)] = value
+        else:
+            out[str(key)] = str(value)
+    return out
+
+
 def build_step1_observation(
     crowd_points: Array,
     attributes: dict[str, Array] | None,
@@ -122,7 +135,7 @@ def _crowd_estimate_from_closed_curve(
             component_count=1,
             method=method,
             version=2,
-            diagnostics={"reason": str(error), **{k: v for k, v in diagnostics.items() if isinstance(v, (int, float, str))}},
+            diagnostics=_boundary_diagnostics({"reason": str(error), **diagnostics}),
         )
     count = len(curve)
     return BoundaryEstimateV2(
@@ -138,7 +151,7 @@ def _crowd_estimate_from_closed_curve(
         topology_valid=True,
         method=method,
         version=2,
-        diagnostics={"status": "VALID", **diagnostics},
+        diagnostics=_boundary_diagnostics({"status": "VALID", **diagnostics}),
     )
 
 
@@ -188,7 +201,7 @@ def estimate_group_boundary_pipeline(
         room_size=None,
         estimator="alpha",
         bootstrap_samples=0,
-        connectivity_radius=max(float(cfg.boundary_v2.connectivity_radius), 1.5),
+        connectivity_radius=max(float(cfg.boundary_v2.connectivity_radius or 1.5), 1.5),
         min_observation_coverage=min(float(cfg.boundary_v2.min_observation_coverage), 0.55),
         min_component_fraction=min(float(cfg.boundary_v2.min_component_fraction), 0.05),
         alpha_growth_factors=tuple(
@@ -210,7 +223,7 @@ def estimate_group_boundary_pipeline(
         room_size=None,
         estimator="radial",
         bootstrap_samples=0,
-        connectivity_radius=max(float(cfg.boundary_v2.connectivity_radius), 2.0),
+        connectivity_radius=max(float(cfg.boundary_v2.connectivity_radius or 2.0), 2.0),
         min_component_fraction=min(float(cfg.boundary_v2.min_component_fraction), 0.05),
     )
     radial = estimate_boundary_v2(points, radial_cfg, np.random.default_rng(cfg.seed + seed_offset + 1))
@@ -239,11 +252,13 @@ def estimate_group_boundary_pipeline(
                 topology_valid=True,
                 method="convex_hull",
                 version=2,
-                diagnostics={
-                    **planned.diagnostics,
-                    "group_estimate_cascade": attempts,
-                    "fallback": "convex_hull",
-                },
+                diagnostics=_boundary_diagnostics(
+                    {
+                        **planned.diagnostics,
+                        "group_estimate_cascade": attempts,
+                        "fallback": "convex_hull",
+                    }
+                ),
             )
             return planned, deployment
         attempts.append(("hull_deploy", getattr(deployment, "reason", "deploy_failed")))
@@ -496,10 +511,12 @@ def estimate_multi_group_surround_pipeline(
             component_count=len(unique),
             method="multi_group",
             version=2,
-            diagnostics={
-                "reason": "zero_guides_allocated_to_a_group",
-                "group_allocations": list(allocations),
-            },
+            diagnostics=_boundary_diagnostics(
+                {
+                    "reason": "zero_guides_allocated_to_a_group",
+                    "group_allocations": list(allocations),
+                }
+            ),
         )
         return MultiGroupSurroundResult(
             boundary_v2=failure,
@@ -521,11 +538,13 @@ def estimate_multi_group_surround_pipeline(
                 component_count=len(unique),
                 method="multi_group",
                 version=2,
-                diagnostics={
-                    "reason": "group_periodic_plan_invalid",
-                    "plan_status": plan.status,
-                    "group_allocations": list(allocations),
-                },
+                diagnostics=_boundary_diagnostics(
+                    {
+                        "reason": "group_periodic_plan_invalid",
+                        "plan_status": plan.status,
+                        "group_allocations": list(allocations),
+                    }
+                ),
             )
             return MultiGroupSurroundResult(
                 boundary_v2=failure,
@@ -556,17 +575,19 @@ def estimate_multi_group_surround_pipeline(
         topology_valid=True,
         method="multi_group_known_boundary",
         version=2,
-        diagnostics={
-            "mode": "multi_group_surround",
-            "partition": "observed_connectivity",
-            "partition_radius": partition_radius,
-            "group_count": len(unique),
-            "group_lengths": lengths,
-            "group_allocations": list(allocations),
-            "deployment_status": "VALID",
-            "used_environment_as_crowd_boundary": False,
-            "used_generator_component_ids": False,
-        },
+        diagnostics=_boundary_diagnostics(
+            {
+                "mode": "multi_group_surround",
+                "partition": "observed_connectivity",
+                "partition_radius": partition_radius,
+                "group_count": len(unique),
+                "group_lengths": lengths,
+                "group_allocations": list(allocations),
+                "deployment_status": "VALID",
+                "used_environment_as_crowd_boundary": False,
+                "used_generator_component_ids": False,
+            }
+        ),
     )
     return MultiGroupSurroundResult(
         boundary_v2=joined,
@@ -599,8 +620,8 @@ def _allocate_guides_by_length(lengths: list[float], total: int, *, floor_each: 
             alloc[int(index)] = 1
         return alloc
     floor = max(0, min(int(floor_each), total // count))
-    alloc = np.full(count, floor, dtype=int)
-    remaining = int(total) - int(alloc.sum())
+    counts = np.full(count, floor, dtype=int)
+    remaining = int(total) - int(counts.sum())
     weights = np.asarray(lengths, dtype=float)
     weights = np.maximum(weights, 1.0e-9)
     weights = weights / float(weights.sum())
@@ -610,7 +631,7 @@ def _allocate_guides_by_length(lengths: list[float], total: int, *, floor_each: 
     frac_order = np.argsort(-(raw - add))
     for index in range(leftover):
         add[int(frac_order[index])] += 1
-    return (alloc + add).tolist()
+    return (counts + add).tolist()
 
 
 def _multi_resource_decision(

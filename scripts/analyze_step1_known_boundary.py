@@ -63,18 +63,31 @@ def _seed_split(rows: list[dict[str, str]]) -> dict[str, list[dict[str, str]]]:
     return grouped
 
 
+def _fmt_optional(value: object) -> str:
+    if value is None:
+        return "n/a"
+    try:
+        return f"{float(value):.4f}"
+    except (TypeError, ValueError):
+        return "n/a"
+
+
 def _fmt_block(title: str, block: dict[str, object]) -> list[str]:
     failures = block.get("failures") or {}
     failure_text = ", ".join(f"{key}={value}" for key, value in failures.items()) or "none"
+    n = int(block["n"])
     return [
         f"## {title}",
         "",
-        f"- n: {block['n']}",
+        f"- n: {n}",
         f"- execution success: {float(block['execution_success_rate']):.3f}",
-        f"- scientific success: {float(block['scientific_success_rate']):.3f}",
-        f"- boundary valid: {float(block['boundary_valid_rate']):.3f}",
+        f"- scientific success: {block.get('scientific_success_count', 0)}/{n} = {float(block['scientific_success_rate']):.3f}",
+        f"- boundary valid: {block.get('boundary_valid_count', 0)}/{n} = {float(block['boundary_valid_rate']):.3f}",
         f"- deployment valid: {float(block['deployment_valid_rate']):.3f}",
-        f"- convergence: {float(block['convergence_rate']):.3f}",
+        f"- convergence: {block.get('converged_count', 0)}/{n} = {float(block['convergence_rate']):.3f}",
+        f"- sampled safety: {float(block.get('sampled_safety_rate') or 0.0):.3f}",
+        f"- mean coverage: {_fmt_optional(block.get('mean_coverage_all'))}",
+        f"- mean tracking RMSE (reported rows): {_fmt_optional(block.get('mean_tracking_rmse_all'))}",
         f"- failures (kept in denominator): {failure_text}",
         "",
     ]
@@ -92,8 +105,12 @@ def _block(rows: list[dict[str, str]]) -> dict[str, object]:
         "boundary_valid_rate": _rate(rows, "boundary_valid"),
         "deployment_valid_rate": _rate(rows, "deployment_valid"),
         "convergence_rate": _rate(rows, "episode_converged"),
+        "sampled_safety_rate": _rate(rows, "sampled_safety_valid"),
         "mean_coverage_all": _mean(rows, "coverage_ratio"),
         "mean_tracking_rmse_all": _mean(rows, "episode_final_tracking_rmse"),
+        "scientific_success_count": sum(_flag(row, "scientific_success") for row in rows),
+        "boundary_valid_count": sum(_flag(row, "boundary_valid") for row in rows),
+        "converged_count": sum(_flag(row, "episode_converged") for row in rows),
         "failures": dict(failures),
     }
 

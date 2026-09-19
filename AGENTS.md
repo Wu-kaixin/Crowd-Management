@@ -30,7 +30,10 @@ The former proof-strengthening branch tip is preserved separately as
 stored as `archive/main-2026-09-19`. See
 [`docs/ARCHIVE_INDEX.md`](docs/ARCHIVE_INDEX.md) before reusing historical code.
 
-Active Step 1 new-direction work is on `STEP1-Research-Extension`. New work should start from:
+Active Step 1 Core closure is on `STEP1-Research-Extension`. Do not add
+algorithms, crowd dynamics, gather, or multi-crowd features to Core. Evidence:
+[`reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md`](reports/step1_known_boundary/STEP1_CLOSURE_REPORT.md).
+Start Core work from:
 
 ```text
 scripts/run_static_containment.py

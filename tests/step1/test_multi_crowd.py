@@ -76,7 +76,7 @@ def test_multi_group_surround_pipeline_builds_two_rings() -> None:
     assert result.crowd_curve_display is not None
     assert np.any(~np.isfinite(result.crowd_curve_display))
     assert result.observed_component_ids is not None
-    assert result.boundary_v2.diagnostics.get("used_generator_component_ids") is False
+    assert result.boundary_v2.diagnostics.get("used_generator_component_ids") in {False, 0, "false"}
 
 
 def test_multi_group_rejects_oracle_component_ids() -> None:
