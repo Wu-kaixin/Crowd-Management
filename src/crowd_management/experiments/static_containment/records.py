@@ -55,6 +55,10 @@ class MethodSummary(TypedDict, total=False):
     failure_reason: str
     route_enabled: bool
     transit_clearance_used: float | str | None
+    route_direct_count: int
+    route_follow_boundary_count: int
+    route_follow_deployment_count: int
+    route_final_approach_count: int
     minimum_guide_guide_distance: float | str
     minimum_guide_crowd_distance: float | str
     minimum_guide_wall_distance: float | str
